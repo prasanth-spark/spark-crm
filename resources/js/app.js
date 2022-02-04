@@ -20,7 +20,7 @@ import "./ckeditor";
 import "./validation";
 import "./zoom";
 import "./notification";
-import "./tabulator";
+import "../../public/dist/js/tabulator";
 import "./calendar";
 
 /*
