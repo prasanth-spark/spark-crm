@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
-use App\Http\Request\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Request\LoginRequest;
 
 class AuthController extends Controller
 {
@@ -15,8 +15,7 @@ class AuthController extends Controller
      */
     public function loginView()
     {
-        // return view('admin::auth.login');
-        return view('login/main', [
+        return view('admin/login/main', [
             'layout' => 'login'
         ]);
     }

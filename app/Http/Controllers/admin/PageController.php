@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 
@@ -14,7 +14,7 @@ class PageController extends Controller
      */
     public function dashboardOverview1()
     {
-        return view('pages/dashboard-overview-1', [
+        return view('admin/pages/dashboard-overview-1', [
             // Specify the base layout.
             // Eg: 'side-menu', 'simple-menu', 'top-menu', 'login'
             // The default value is 'side-menu'
@@ -31,7 +31,7 @@ class PageController extends Controller
      */
     public function dashboardOverview2()
     {
-        return view('pages/dashboard-overview-2');
+        return view('admin/pages/dashboard-overview-2');
     }
 
     /**
@@ -42,7 +42,7 @@ class PageController extends Controller
      */
     public function dashboardOverview3()
     {
-        return view('pages/dashboard-overview-3');
+        return view('admin/pages/dashboard-overview-3');
     }
 
     /**
@@ -53,7 +53,7 @@ class PageController extends Controller
      */
     public function inbox()
     {
-        return view('pages/inbox');
+        return view('admin/pages/inbox');
     }
 
     /**
@@ -64,7 +64,7 @@ class PageController extends Controller
      */
     public function fileManager()
     {
-        return view('pages/file-manager');
+        return view('admin/pages/file-manager');
     }
 
     /**
@@ -75,7 +75,7 @@ class PageController extends Controller
      */
     public function pointOfSale()
     {
-        return view('pages/point-of-sale');
+        return view('admin/pages/point-of-sale');
     }
 
     /**
@@ -86,7 +86,7 @@ class PageController extends Controller
      */
     public function chat()
     {
-        return view('pages/chat');
+        return view('admin/pages/chat');
     }
 
     /**
@@ -97,7 +97,7 @@ class PageController extends Controller
      */
     public function post()
     {
-        return view('pages/post');
+        return view('admin/pages/post');
     }
 
     /**
@@ -108,7 +108,7 @@ class PageController extends Controller
      */
     public function calendar()
     {
-        return view('pages/calendar');
+        return view('admin/pages/calendar');
     }
 
     /**
@@ -119,7 +119,7 @@ class PageController extends Controller
      */
     public function crudDataList()
     {
-        return view('pages/crud-data-list');
+        return view('admin/pages/crud-data-list');
     }
 
     /**

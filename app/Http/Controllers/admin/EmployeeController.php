@@ -1,13 +1,13 @@
 <?php
 
-namespace Employeecrm\Admin\App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use Employeecrm\Admin\App\Http\Requests\EmployeeValidationRequest;
+use App\Http\Request\EmployeeValidationRequest;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 
@@ -28,7 +28,7 @@ class EmployeeController extends Controller
     {
         $bankName=$this->bankdetails->get();
         $accountType=$this->accountType->get();
-        return view('admin::employee/employee-form',compact('bankName','accountType')); 
+        return view('admin/employee/employee-form',compact('bankName','accountType')); 
     }
 
      /**
@@ -71,20 +71,10 @@ class EmployeeController extends Controller
      public function employeeList()
      {
          $employeeList=$this->employee->tobase()->get();
-         return view('admin::employee/employee-list',compact('employeeList'));
+         return view('admin/employee/employee-list',compact('employeeList'));
+       
      }
-
-    /**
-     * Add Employee.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function employeeResponseData()
-    {
-      $responceData=$this->employee->tobase()->get()->toJson();
-        return response()->json([$responceData]);  
-    }
-
+     
     /**
      *  Employee Details
      *
@@ -93,8 +83,8 @@ class EmployeeController extends Controller
      */
     public function employeeDetails($id)
     {
-        $employeeView=$this->employee->where('id',$id)->with('bankNameToEmployee','accountTypeToEmployee') ->first();  
-        return view('admin::employee/employee-view',compact('employeeView'));
+        $employeeView=$this->employee->where('id',$id)->with('bankNameToEmployee','accountTypeToEmployee') ->first(); 
+        return view('admin/employee/employee-view',compact('employeeView'));
     }
 
     /**
@@ -105,10 +95,10 @@ class EmployeeController extends Controller
      */
     public function employeeEdit($id)
     {
-        $employeeEdit=$this->employee->where('id',$id)->with('bankNameToEmployee','accountTypeToEmployee') ->first();
+        $employeeEdit=$this->employee->where('id',$id)->with('bankNameToEmployee','accountTypeToEmployee')->first();
         $bankName=$this->bankdetails->get();
         $accountType=$this->accountType->get();
-        return view('admin::employee/employee-edit',compact('employeeEdit','bankName','accountType'));
+        return view('admin/employee/employee-edit',compact('employeeEdit','bankName','accountType'));
     }
        /**
      * Update Employee.
@@ -163,7 +153,7 @@ class EmployeeController extends Controller
      */
     public function fileUpload()
     {
-        return view('admin::employee/file-upload');
+        return view('admin/employee/file-upload');
     }
 
     /**

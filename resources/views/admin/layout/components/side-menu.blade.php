@@ -1,11 +1,11 @@
-@extends('../layout/main')
+@extends('../../layout/main')
 
 @section('head')
     @yield('subhead')
 @endsection
 
 @section('content')
-    @include('../layout/components/mobile-menu')
+    @include('../../layout/components/mobile-menu')
     <div class="flex overflow-hidden">
         <!-- BEGIN: Side Menu -->
         <nav class="side-nav">
@@ -78,7 +78,7 @@
         <!-- END: Side Menu -->
         <!-- BEGIN: Content -->
         <div class="content @yield('content-modifier')">
-            @include('../layout/components/top-bar')
+            @include('../../layout/components/top-bar')
             @yield('subcontent')
         </div>
         <!-- END: Content -->

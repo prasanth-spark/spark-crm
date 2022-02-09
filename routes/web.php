@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\DarkModeController;
+use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\PageController;
+use App\Http\Controllers\admin\DarkModeController;
+use App\Http\Controllers\admin\EmployeeController;
+use App\Http\Controllers\employee\LoginController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +25,6 @@ Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('d
 Route::middleware('loggedin')->group(function() {
     Route::get('login', [AuthController::class, 'loginView'])->name('login-view');
     Route::post('login', [AuthController::class, 'login'])->name('login');
-    Route::get('register', [AuthController::class, 'registerView'])->name('register-view');
-    Route::post('register', [AuthController::class, 'register'])->name('register');
 });
 
 Route::middleware('auth')->group(function() {
@@ -86,3 +88,28 @@ Route::middleware('auth')->group(function() {
     Route::get('slider-page', [PageController::class, 'slider'])->name('slider');
     Route::get('image-zoom-page', [PageController::class, 'imageZoom'])->name('image-zoom');
 });
+
+    Route::get('/employee-form', [EmployeeController::class, 'employeeForm'])->name('employee-form');
+    Route::post('/employee-add', [EmployeeController::class, 'employeeAdd'])->name('employee-add');
+    Route::get('/employee-list', [EmployeeController::class, 'employeeList'])->name('employee-list');
+    Route::get('/employee-details/{id}', [EmployeeController::class, 'employeeDetails'])->name('employee-details');
+    Route::get('/employee-edit/{id}', [EmployeeController::class, 'employeeEdit'])->name('employee-edit');
+    Route::post('/employee-update', [EmployeeController::class, 'employeeUpdate'])->name('employee-update');
+    Route::post('/employee-delete', [EmployeeController::class, 'employeeDelete'])->name('employee-delete');
+
+
+    Route::get('/file-upload', [EmployeeController::class, 'fileUpload'])->name('file-upload');
+    Route::post('/employee-list-import', [EmployeeController::class, 'employeeListImport'])->name('employee-list-import');
+    Route::get('/employee-list-export', [EmployeeController::class, 'employeeListExport'])->name('employee-list-export');
+
+
+//employee register and login start
+
+Route::group(['prefix'=> 'employee'], function(){
+    Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
+    Route::post('register-employee',[LoginController::class, 'registerEmployee'])->name('employee-register');
+    Route::get('login-form',[LoginController::class, 'loginForm'])->name('login-view');
+    Route::post('login-employee',[LoginController::class, 'loginEmployee'])->name('employee-login');
+});
+
+//employee register and login end

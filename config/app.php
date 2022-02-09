@@ -175,7 +175,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
-        Employeecrm\Admin\AdminServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
