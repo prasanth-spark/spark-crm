@@ -17,17 +17,15 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Default credentials
-        \App\Models\User::updateOrCreate([
-
-                'email' => 'admin123@gmail.com', 
-            ],
+        \App\Models\User::updateOrCreate(
             [ 
-                'name' => 'sparkout1233455',
-                'email' => 'admin123@gmail.com',
+                'id'=>'uuid',
+                'name' => 'sparkouttech',
+                'email' => 'admin@sparkouttech.com', 
                 'email_verified_at' => now(),
-                'password' => Hash::make('12345678'), // password
+                'password' => Hash::make('12345'), // password
                 'gender' => 'male',
-                'active' => 1,
+                'active'=>'2',
                 'remember_token' => Str::random(10),
                 'created_at' =>now(),
                 'updated_at' =>now()           

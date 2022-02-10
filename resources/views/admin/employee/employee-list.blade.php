@@ -1,4 +1,5 @@
-@extends('../layout/' . $layout)
+@extends('../admin/layout/components/' . $layout)
+
 
 @section('subhead')
     <title>Employee List</title>

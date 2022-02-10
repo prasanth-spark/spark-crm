@@ -31,6 +31,6 @@ class BirthdayReminder extends Mailable
     public function build()
     {
         return $this->subject('Birthday Notification')
-        ->view('birthday');
+        ->view('admin/birthday');
     }
 }

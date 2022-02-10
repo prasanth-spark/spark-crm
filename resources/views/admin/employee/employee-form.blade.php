@@ -1,4 +1,4 @@
-@extends('../layout/' . $layout)
+@extends('../admin/layout/components/' . $layout)
 
 @section('subhead')
     <title>Employee Add</title>
@@ -144,7 +144,7 @@
                         </div>
                      </div>  
                     </div>
-                    <div class="col-span-12 md:col-span-6">
+                    <div class="grid grid-cols-12 gap-6 mt-5">
                       <div class="col-span-12 md:col-span-6">
                         <div class="input-form mt-3">
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
@@ -162,18 +162,24 @@
                         </div>
                      </div>
                     </div>
-                        <div class="input-form mt-3">
+                    <div class="grid grid-cols-12 gap-6 mt-5">
+                      <div class="col-span-12 md:col-span-6">
+                         <div class="input-form mt-3">
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                 IFSC Code<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, IFSC code </span>
                             </label>
                             <input id="regular-form-4" type="text" class="form-control" placeholder="IFSC Code" name='ifsc_code' required>
-                        </div>
+                         </div>
+                      </div>
+                      <div class="col-span-12 md:col-span-6">
                         <div class="input-form mt-3">
                             <label for="regular-form-4"class="form-label w-full flex flex-col sm:flex-row">
                                 Branch Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, branch name</span>
                             </label>
                             <input id="regular-form-4" type="text" class="form-control" placeholder="Branch Name" name='branch_name' required>
                         </div>
+                      </div>
+                    </div>   
                         <div class="input-form mt-3">
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Account Type</label>
                             
