@@ -5,6 +5,7 @@ namespace App\Http\View\Composers;
 use Illuminate\View\View;
 use App\Main\TopMenu;
 use App\Main\SideMenu;
+use App\Main\employee\EmployeeSideMenu;
 use App\Main\SimpleMenu;
 
 class MenuComposer
@@ -27,6 +28,7 @@ class MenuComposer
 
         $view->with('top_menu', TopMenu::menu());
         $view->with('side_menu', SideMenu::menu());
+        $view->with('employee_side_menu',EmployeeSideMenu::menu());
         $view->with('simple_menu', SimpleMenu::menu());
         $view->with('first_level_active_index', $activeMenu['first_level_active_index']);
         $view->with('second_level_active_index', $activeMenu['second_level_active_index']);
