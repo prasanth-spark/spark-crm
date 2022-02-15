@@ -6,6 +6,8 @@ use App\Http\Controllers\admin\PageController;
 use App\Http\Controllers\admin\DarkModeController;
 use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\employee\LoginController;
+use App\Http\Controllers\employee\AttendanceController;
+
 
 
 
@@ -110,6 +112,9 @@ Route::group(['prefix'=> 'employee'], function(){
     Route::post('register-employee',[LoginController::class, 'registerEmployee'])->name('employee-register');
     Route::get('login-form',[LoginController::class, 'loginForm'])->name('login-view');
     Route::post('login-employee',[LoginController::class, 'loginEmployee'])->name('employee-login');
+
+    Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
+    Route::post('attendance-detail',[AttendanceController::class, 'employeeAttendance'])->name('attendance-detail');
 });
 
 //employee register and login end
