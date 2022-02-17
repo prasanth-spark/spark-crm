@@ -127,6 +127,14 @@ class SideMenu
                 ],
                 'title' => 'Post'
             ],
+            'Attendance' => [
+                'icon' => 'calendar',
+                'route_name' => 'admin-attendance-module',
+                'title' => 'Attendance',
+                'params' => [
+                'layout' => 'side-menu',
+                    ],
+             ],
             'calendar' => [
                 'icon' => 'calendar',
                 'route_name' => 'calendar',

@@ -1,5 +1,4 @@
-@extends('../layout/' . $layout)
-
+@extends('../admin/layout/components/' . $layout)
 @section('subhead')
     <title>Point of Sale - Tinker - Tailwind HTML Admin Template</title>
 @endsection

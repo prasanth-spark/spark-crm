@@ -482,7 +482,7 @@ class PageController extends Controller
      */
     public function alert()
     {
-        return view('pages/alert');
+        return view('admin/pages/alert');
     }
 
     /**
@@ -526,7 +526,7 @@ class PageController extends Controller
      */
     public function typography()
     {
-        return view('pages/typography');
+        return view('admin/pages/typography');
     }
 
     /**
@@ -537,7 +537,7 @@ class PageController extends Controller
      */
     public function icon()
     {
-        return view('pages/icon');
+        return view('admin/pages/icon');
     }
 
     /**
@@ -559,7 +559,7 @@ class PageController extends Controller
      */
     public function regularForm()
     {
-        return view('pages/regular-form');
+        return view('admin/pages/regular-form');
     }
 
     /**
@@ -570,7 +570,7 @@ class PageController extends Controller
      */
     public function datepicker()
     {
-        return view('pages/datepicker');
+        return view('admin/pages/datepicker');
     }
 
     /**
@@ -581,7 +581,7 @@ class PageController extends Controller
      */
     public function tomSelect()
     {
-        return view('pages/tom-select');
+        return view('admin/pages/tom-select');
     }
 
     /**
@@ -592,7 +592,7 @@ class PageController extends Controller
      */
     public function fileUpload()
     {
-        return view('pages/file-upload');
+        return view('admin/pages/file-upload');
     }
 
     /**
@@ -603,7 +603,7 @@ class PageController extends Controller
      */
     public function wysiwygEditor()
     {
-        return view('pages/wysiwyg-editor');
+        return view('admin/pages/wysiwyg-editor');
     }
 
     /**
@@ -614,7 +614,7 @@ class PageController extends Controller
      */
     public function validation()
     {
-        return view('pages/validation');
+        return view('admin/pages/validation');
     }
 
     /**
@@ -625,7 +625,7 @@ class PageController extends Controller
      */
     public function chart()
     {
-        return view('pages/chart');
+        return view('admin/pages/chart');
     }
 
     /**
@@ -636,7 +636,7 @@ class PageController extends Controller
      */
     public function slider()
     {
-        return view('pages/slider');
+        return view('admin/pages/slider');
     }
 
     /**
@@ -647,6 +647,6 @@ class PageController extends Controller
      */
     public function imageZoom()
     {
-        return view('pages/image-zoom');
+        return view('admin/pages/image-zoom');
     }
 }

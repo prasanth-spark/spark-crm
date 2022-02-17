@@ -1,4 +1,4 @@
-@extends('../layout/' . $layout)
+@extends('../admin/layout/components/' . $layout)
 
 @section('subhead')
     <title>Icon - Tinker - Tailwind HTML Admin Template</title>

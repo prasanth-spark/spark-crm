@@ -208,4 +208,8 @@ class EmployeeController extends Controller
     }
     }
 
+    public function adminAttendance(){
+      return view('admin/employee/employee-attendance');
+    
+    }
 }

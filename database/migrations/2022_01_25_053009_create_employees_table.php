@@ -38,7 +38,7 @@ class CreateEmployeesTable extends Migration
             $table->uuid('account_type_id')->nullable()->index();
             $table->foreign('account_type_id')->references('id')->on('account_types');
             $table->timestamp('email_verified_at')->nullable();
-            $table->tinyInteger('status')->comment('0-active, 1-inactive');
+            $table->tinyInteger('status')->nullable()->default(1);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

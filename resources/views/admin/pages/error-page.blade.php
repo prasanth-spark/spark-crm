@@ -1,5 +1,4 @@
-@extends('../layout/' . $layout)
-
+@extends('../admin/layout/components/' . $layout)
 @section('head')
     <title>Error Page - Tinker - Tailwind HTML Admin Template</title>
 @endsection

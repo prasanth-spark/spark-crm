@@ -100,6 +100,9 @@ Route::middleware('auth')->group(function() {
     Route::post('/employee-delete', [EmployeeController::class, 'employeeDelete'])->name('employee-delete');
 
 
+    Route::get('/attendance', [EmployeeController::class, 'adminAttendance'])->name('admin-attendance-module');
+
+
     Route::get('/file-upload', [EmployeeController::class, 'fileUpload'])->name('file-upload');
     Route::post('/employee-list-import', [EmployeeController::class, 'employeeListImport'])->name('employee-list-import');
     Route::get('/employee-list-export', [EmployeeController::class, 'employeeListExport'])->name('employee-list-export');
