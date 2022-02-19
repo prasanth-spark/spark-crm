@@ -15,6 +15,7 @@ use Session;
 
 
 
+
 class LoginController extends Controller
 {
     public function __construct(User $user, RoleModel $rolemodel)
@@ -41,7 +42,12 @@ class LoginController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function registerEmployee(RegisterRequest $request)
+    public function registerEmployee($id)
+    {
+        $user = $this->user->where('id',$id)->first();
+        return view('employee/user-dashboard',compact('user')); 
+    }
+    public function userDashboard(RegisterRequest $request)
     {
         $userCredentials = $this->user->create([
             'name' => $request->name,

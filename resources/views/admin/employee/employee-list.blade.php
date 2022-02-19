@@ -1,6 +1,5 @@
 @extends('../admin/layout/components/' . $layout)
 
-
 @section('subhead')
 <title>Employee List</title>
 <script src="https://code.jquery.com/jquery-1.12.3.js"></script>

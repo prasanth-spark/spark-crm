@@ -40,7 +40,7 @@
             <div class="error">{{ session('success') }}</div>                   
              @endif
                         <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
-                        <form action="{{route('employee-register')}}" method="post">
+                        <form action="{{route('user-dashboard')}}" method="post">
                             @csrf
                         <div class="intro-x mt-8">
                             <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Name" name="name">

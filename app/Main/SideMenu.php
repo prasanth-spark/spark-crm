@@ -41,6 +41,14 @@ class SideMenu
                     ],
                 ]
             ],
+            'Attendance' => [
+                'icon' => 'calendar',
+                'route_name' => 'admin-attendance-module',
+                'title' => 'Attendance',
+                'params' => [
+                'layout' => 'side-menu',
+                    ],
+            ]       
         ];
     }
 }
