@@ -112,12 +112,15 @@ Route::middleware('auth')->group(function() {
 
 Route::group(['prefix'=> 'employee'], function(){
     Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
-    Route::post('register-employee',[LoginController::class, 'registerEmployee'])->name('employee-register');
+    Route::get('user-register/{id}',[LoginController::class, 'registerEmployee'])->name('user-register');
+    Route::post('user-dashboard',[LoginController::class, 'userDashboard'])->name('user-dashboard');
     Route::get('login-form',[LoginController::class, 'loginForm'])->name('login-view');
     Route::post('login-employee',[LoginController::class, 'loginEmployee'])->name('employee-login');
 
     Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
-    Route::post('attendance-detail',[AttendanceController::class, 'employeeAttendance'])->name('attendance-detail');
+    Route::get('attendance-status/{status}',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
+    Route::get('leave-request/{leave_type}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
+    Route::post('attendance-list',[AttendanceController::class, 'attendanceList'])->name('attendance-list');
 });
 
 //employee register and login end

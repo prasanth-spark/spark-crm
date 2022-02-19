@@ -13,6 +13,7 @@ use Session;
 
 
 
+
 class LoginController extends Controller
 {
     public function __construct(User $user)
@@ -37,14 +38,20 @@ class LoginController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function registerEmployee(RegisterRequest $request)
+    public function registerEmployee($id)
     {
-        $this->user->create([
+        $user = $this->user->where('id',$id)->first();
+        return view('employee/user-dashboard',compact('user')); 
+    }
+    public function userDashboard(RegisterRequest $request)
+    {
+       $user= $this->user->create([
             'name'=>$request->name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
         ]);
-        return view('/employee/user-dashboard');
+        $request->session()->put('user_id', $user->id);
+        return redirect('/employee/user-register');
     }
 
      /**
@@ -66,9 +73,10 @@ class LoginController extends Controller
     public function loginEmployee(LoginRequest $request)
     {
         $employee = $this->user->where('email',$request->email)->first();
+        // dd($employee);
         if ($employee && Hash::check($request->password, $employee->password)) {
-            $request->session()->put('employee', $employee->email);
-            return view('/employee/user-dashboard');
+            $request->session()->put('user_id', $employee->id);
+            return redirect('/employee/user-register/'.$employee->id);
         }else{
             return back();
         }
