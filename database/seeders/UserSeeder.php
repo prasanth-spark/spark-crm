@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Faker\Provider\Uuid;
 use Hash;
+use DB;
 
 class UserSeeder extends Seeder
 {
@@ -16,16 +18,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Default credentials
-        \App\Models\User::updateOrCreate(
+        DB::table('users')->insert(
             [ 
-                'id'=>'uuid',
+                'id' => Uuid::uuid(),
                 'name' => 'sparkouttech',
                 'email' => 'admin@sparkouttech.com', 
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345'), // password
-                'gender' => 'male',
-                'active'=>'2',
+                'status'=>'0',
                 'remember_token' => Str::random(10),
                 'created_at' =>now(),
                 'updated_at' =>now()           

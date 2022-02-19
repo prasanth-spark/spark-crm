@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Helper\UuidModel;
 
 class User extends Authenticatable
 {
@@ -17,8 +18,9 @@ class User extends Authenticatable
      *
      * @var array
      */
+    use UuidModel;
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role_id', 'team_id',
     ];
 
     /**
@@ -40,13 +42,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that appends to returned entities.
-     *
-     * @var array
-     */
-    protected $appends = ['photo'];
-
-    /**
      * The getter that return accessible URL for user photo.
      *
      * @var array
@@ -58,5 +53,26 @@ class User extends Authenticatable
         } else {
             return url('media-example/no-image.png');
         }
+    }
+
+    public function roleToUser()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+
+    public function teamToUser()
+    {
+        return $this->belongsTo(Team::class, 'team_id', 'id');
+    }
+
+    public function userDetail()
+    {
+        return $this->hasOne(UserDetails::class, 'user_id', 'id');
+    }
+
+    public function getSingleUser($id)
+    {
+        return $this->where('id', $id)->first();
     }
 }
