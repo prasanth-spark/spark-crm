@@ -9,11 +9,11 @@ use App\Helper\UuidModel;
 class BankDetails extends Model
 {
     use UuidModel;
-    protected $table='bank_details';
+    protected $table = 'bank_details';
     protected $guarded = [];
 
     public function bankName()
     {
-        return $this->hasone(Employee::class,'bank_id','id');
+        return $this->hasone(UserDetails::class, 'bank_id', 'id');
     }
 }

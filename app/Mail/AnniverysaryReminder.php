@@ -20,7 +20,7 @@ class AnniverysaryReminder extends Mailable
      */
     public function __construct($employee)
     {
-        $this->employee=$employee;
+        $this->employee = $employee;
     }
 
     /**
@@ -31,6 +31,6 @@ class AnniverysaryReminder extends Mailable
     public function build()
     {
         return $this->subject('Anniverysary Notification')
-        ->view('anniverysary');
+            ->view('admin/anniverysary');
     }
 }

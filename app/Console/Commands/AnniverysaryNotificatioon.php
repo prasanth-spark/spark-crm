@@ -14,7 +14,7 @@ class AnniverysaryNotificatioon extends Command
      *
      * @var string
      */
-    protected $signature = 'notification:mail';
+    protected $signature = 'anniverysary:mail';
 
     /**
      * The console command description.
