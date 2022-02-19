@@ -15,7 +15,7 @@ class DailyNotification extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'birthday:mail';
 
     /**
      * The console command description.

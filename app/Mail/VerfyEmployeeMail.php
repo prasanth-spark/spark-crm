@@ -6,21 +6,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Employee;
 
-
-class BirthdayReminder extends Mailable
+class VerfyEmployeeMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $employee;
+    public $user;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($employee)
+    public function __construct($user)
     {
-        $this->employee = $employee;
+        $this->user = $user;
     }
 
     /**
@@ -30,7 +29,7 @@ class BirthdayReminder extends Mailable
      */
     public function build()
     {
-        return $this->subject('Birthday Notification')
-            ->view('admin/birthday');
+        return $this->subject('User verification')
+            ->view('admin/verificationmail');
     }
 }
