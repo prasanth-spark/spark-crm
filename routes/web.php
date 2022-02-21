@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\DarkModeController;
 use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\employee\LoginController;
 use App\Http\Controllers\employee\AttendanceController;
+use App\Http\Controllers\employee\TaskController;
 
 
 
@@ -53,6 +54,25 @@ Route::get('/employee-list-export', [EmployeeController::class, 'employeeListExp
 //employee register and login start
 
 Route::group(['prefix'=> 'employee'], function(){
+    Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
+    Route::post('register-employee',[LoginController::class, 'registerEmployee'])->name('employee-register');
+    Route::get('login-form',[LoginController::class, 'loginForm'])->name('login-view');
+    Route::post('login-employee',[LoginController::class, 'loginEmployee'])->name('employee-login');
+    
+
+Route::middleware('employee_auth')->group(function() {
+    Route::get('/user_dashboard',[LoginController::class, 'employeeDashboard'])->name('employee-dashboard');
+    Route::get('logout-employee', [LoginController::class, 'logout'])->name('employee-logout');
+
+//task sheet form
+    Route::get('/task-form', [TaskController::class, 'taskForm'])->name('task-form');
+    Route::post('/task-add', [TaskController::class, 'taskAdd'])->name('task-add');
+    Route::get('/task-list',[TaskController::class,'taskList'])->name('task-list');
+    Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
+    Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
+    Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
+    // Route::post('/task-delete', [TaskController::class, 'taskDelete'])->name('task-delete');
+    });
 Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
 Route::get('user-register/{id}',[LoginController::class, 'registerEmployee'])->name('user-register');
 Route::post('user-dashboard',[LoginController::class, 'userDashboard'])->name('user-dashboard');

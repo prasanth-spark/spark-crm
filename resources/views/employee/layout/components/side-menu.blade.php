@@ -78,7 +78,7 @@
         <!-- END: Side Menu -->
         <!-- BEGIN: Content -->
         <div class="content @yield('content-modifier')">
-            @include('../../layout/components/top-bar')
+            @include('../employee/layout/components/top-bar')
             @yield('subcontent')
         </div>
         <!-- END: Content -->

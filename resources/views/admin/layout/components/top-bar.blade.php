@@ -3,7 +3,7 @@
     <!-- BEGIN: Breadcrumb -->
     <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
         <a href="">Application</a>
-        <i data-feather="chevron-right" class="breadcrumb__icon"></i>
+        <em data-feather="chevron-right" class="breadcrumb__icon"></em>
         <a href="" class="breadcrumb--active">Dashboard</a>
     </div>
     <!-- END: Breadcrumb -->
@@ -105,21 +105,21 @@
                 </div>
                 <div class="p-2">
                     <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
-                        <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile
+                        <em data-feather="user" class="w-4 h-4 mr-2"></em> Profile
                     </a>
                     <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
-                        <i data-feather="edit" class="w-4 h-4 mr-2"></i> Add Account
+                        <em data-feather="edit" class="w-4 h-4 mr-2"></em> Add Account
                     </a>
                     <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
-                        <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password
+                        <em data-feather="lock" class="w-4 h-4 mr-2"></em> Reset Password
                     </a>
                     <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
-                        <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help
+                        <em data-feather="help-circle" class="w-4 h-4 mr-2"></em> Help
                     </a>
                 </div>
                 <div class="p-2 border-t border-black border-opacity-5 dark:border-dark-3">
                     <a href="{{ route('logout') }}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
-                        <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout
+                        <em data-feather="toggle-right" class="w-4 h-4 mr-2"></em> Logout
                     </a>
                 </div>
             </div>

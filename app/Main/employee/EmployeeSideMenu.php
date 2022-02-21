@@ -45,7 +45,7 @@ class EmployeeSideMenu
             ],
             'Task' => [
                 'icon' => 'home',
-                'route_name' => 'dashboard-overview-1',
+                'route_name' => 'task-list',
                 'title' => 'Task',
                 'params' => [
                     'layout' => 'side-menu',
