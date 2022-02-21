@@ -15,7 +15,9 @@
     </head>
     <!-- END: Head -->
     <body class="login">
+       
         <div class="container sm:px-10">
+      
             <div class="block xl:grid grid-cols-2 gap-4">
                 <!-- BEGIN: Register Info -->
                 <div class="hidden xl:flex flex-col min-h-screen">
@@ -34,8 +36,11 @@
                         <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                             Sign Up
                         </h2>
+                        @if(session('success'))
+            <div class="error">{{ session('success') }}</div>                   
+             @endif
                         <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
-                        <form action="{{route('employee-register')}}" method="post">
+                        <form action="{{route('user-dashboard')}}" method="post">
                             @csrf
                         <div class="intro-x mt-8">
                             <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Name" name="name">
@@ -50,6 +55,18 @@
                             @error('password')
                                  <span style="color:red">{{$message}}</span>
                             @enderror
+                            <div class="input-form mt-3">
+                            
+                               <select placeholder="Account Type" type="text" class="tom-select w-full intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" id="regular-form-4" name='role' >
+                               <option value selected="selected" disabled="disabled" >Select Role</option>
+                                    @foreach($role as $c)
+                                      <option value="{{$c->id}}" >{{$c->role}}</option>
+                                    @endforeach
+                               </select>
+                             @error('role')
+                                 <span style="color:red">{{$message}}</span>
+                            @enderror
+                        </div>
                         </div>
                         <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                             <button type="submit" class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Register</button>

@@ -25,8 +25,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('command:name')->daily();
-        $schedule->command('notification:mail')->daily();
+        
+        $schedule->command('birthday:mail')->daily();
+        $schedule->command('anniverysary:mail')->daily();
+        $schedule->command('daily:status')->weekdays()->at('20:00');
+        $schedule->command('attendance:status')->weekdays()->at('10:00');
+        $schedule->command('attendance:leave')->weekdays()->at('11:00');
+
+
+      
 
     }
 

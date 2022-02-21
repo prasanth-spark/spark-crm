@@ -20,7 +20,7 @@ class BirthdayReminder extends Mailable
      */
     public function __construct($employee)
     {
-        $this->employee=$employee;
+        $this->employee = $employee;
     }
 
     /**
@@ -31,6 +31,6 @@ class BirthdayReminder extends Mailable
     public function build()
     {
         return $this->subject('Birthday Notification')
-        ->view('birthday');
+            ->view('admin/birthday');
     }
 }

@@ -1,6 +1,6 @@
 @extends('../employee/layout/components/' . $layout)
 @section('subhead')
-    <title>Dashboard - Tinker - Tailwind HTML Admin Template</title>
+    <title>Dashboard Employee-CRM</title>
 @endsection
 
 @section('mobile-menu-modifier')
@@ -18,7 +18,6 @@
                 <div class="mt-6 -mb-6 intro-y">
                     <div class="alert alert-dismissible show box bg-theme-25 text-white flex items-center mb-6" role="alert">
                         <span>
-                            Introducing new dashboard! Download now at <a href="https://themeforest.net/item/midone-jquery-tailwindcss-html-admin-template/26366820" class="underline ml-1" target="blank">themeforest.net</a>.
                             <button class="btn border-transparent bg-theme-26 dark:bg-dark-1 hover:bg-opacity-80 py-0.5 px-2 -my-3 ml-2">Detail</button>
                         </span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
@@ -43,9 +42,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-white text-sm 2xl:text-base font-medium -mb-1">
-                            Hi Angelina, <span class="text-theme-34 dark:text-gray-500 font-normal">welcome back!</span>
-                        </div>
+                        <div class="text-white text-sm 2xl:text-base font-medium -mb-1">    
+                        Hi {{$user['name']}} <span class="text-theme-34 dark:text-gray-500 font-normal">welcome back!</span>
+                    </div>
                         <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 dark:text-gray-500 leading-3 mt-14 2xl:mt-24">
                             My Total Assets
                             <i data-feather="alert-circle" class="tooltip w-5 h-5 ml-1.5 mt-0.5" title="Total value of your sales: $158.409.416"></i>
@@ -529,28 +528,28 @@
                     </div>
                     <!-- END: Recent Activities -->
                     <!-- BEGIN: Transactions -->
-                    <div class="col-span-12 md:col-span-6 2xl:col-span-12 mt-3">
-                        <div class="intro-x flex items-center h-10">
-                            <h2 class="text-lg font-medium truncate mr-5">Transactions</h2>
-                        </div>
-                        <div class="mt-5">
-                            @foreach (array_slice($fakers, 0, 5) as $faker)
-                                <div class="intro-x">
-                                    <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
-                                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                            <img alt="Tinker Tailwind HTML Admin Template" src="{{ asset('dist/images/' . $faker['photos'][0]) }}">
+                        <div class="col-span-12 md:col-span-6 2xl:col-span-12 mt-3">
+                            <div class="intro-x flex items-center h-10">
+                                <h2 class="text-lg font-medium truncate mr-5">Transactions</h2>
+                            </div>
+                            <div class="mt-5">
+                                @foreach (array_slice($fakers, 0, 5) as $faker)
+                                    <div class="intro-x">
+                                        <div class="box px-5 py-3 mb-3 flex items-center zoom-in">
+                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                                                <img alt="Tinker Tailwind HTML Admin Template" src="{{ asset('dist/images/' . $faker['photos'][0]) }}">
+                                            </div>
+                                            <div class="ml-4 mr-auto">
+                                                <div class="font-medium">{{ $faker['users'][0]['name'] }}</div>
+                                                <div class="text-gray-600 text-xs mt-0.5">{{ $faker['dates'][0] }}</div>
+                                            </div>
+                                            <div class="{{ $faker['true_false'][0] ? 'text-theme-20' : 'text-theme-21' }}">{{ $faker['true_false'][0] ? '+' : '-' }}${{ $faker['totals'][0] }}</div>
                                         </div>
-                                        <div class="ml-4 mr-auto">
-                                            <div class="font-medium">{{ $faker['users'][0]['name'] }}</div>
-                                            <div class="text-gray-600 text-xs mt-0.5">{{ $faker['dates'][0] }}</div>
-                                        </div>
-                                        <div class="{{ $faker['true_false'][0] ? 'text-theme-20' : 'text-theme-21' }}">{{ $faker['true_false'][0] ? '+' : '-' }}${{ $faker['totals'][0] }}</div>
                                     </div>
-                                </div>
-                            @endforeach
-                            <a href="" class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-theme-32 dark:border-dark-5 text-theme-33 dark:text-gray-600">View More</a>
+                                @endforeach
+                                <a href="" class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-theme-32 dark:border-dark-5 text-theme-33 dark:text-gray-600">View More</a>
+                            </div>
                         </div>
-                    </div>
                     <!-- END: Transactions -->
                 </div>
             </div>

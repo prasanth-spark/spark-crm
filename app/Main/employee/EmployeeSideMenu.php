@@ -51,6 +51,14 @@ class EmployeeSideMenu
                     'layout' => 'side-menu',
                 ],
             ],
+            'Attendance' => [
+                'icon' => 'home',
+                'route_name' => 'attendance-module',
+                'title' => 'Attendance',
+                'params' => [
+                    'layout' => 'side-menu',
+                ],
+            ],
             
         ];
     }

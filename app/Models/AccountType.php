@@ -9,12 +9,11 @@ use App\Helper\UuidModel;
 class AccountType extends Model
 {
     use UuidModel;
-    protected $table='account_types';
+    protected $table = 'account_types';
     protected $guarded = [];
 
     public function accountType()
     {
-        return $this->hasone(Employee::class,'account_type_id','id');
+        return $this->hasone(UserDetails::class, 'account_type_id', 'id');
     }
-
 }
