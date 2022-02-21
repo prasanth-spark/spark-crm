@@ -30,6 +30,7 @@ class LoginController extends Controller
         return view('employee/auth/employee-register-form'); 
     }
 
+
      /**
      *  Employee Register.
      *
@@ -67,10 +68,32 @@ class LoginController extends Controller
     {
         $employee = $this->user->where('email',$request->email)->first();
         if ($employee && Hash::check($request->password, $employee->password)) {
-            $request->session()->put('employee', $employee->email);
-            return view('/employee/user-dashboard');
+            $request->session()->put('employee', $employee->id);
+            return redirect('/employee/user_dashboard');
         }else{
             return back();
         }
+    }
+
+    /**
+     * Show Dashboard view.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function employeeDashboard()
+    {
+            return view('/employee/user-dashboard');
+    }
+
+      /**
+     * Logout user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout()
+    {
+        \Session::flush();
+        return redirect('employee/login-form');
     }
 }
