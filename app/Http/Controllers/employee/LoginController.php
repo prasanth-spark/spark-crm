@@ -31,7 +31,7 @@ class LoginController extends Controller
      */
     public function registerForm()
     {
-        $role = $this->rolemodel->get();
+        $role = $this->rolemodel->where('id','!=',1)->get();
         return view('employee/auth/employee-register-form', compact('role'));
     }
 

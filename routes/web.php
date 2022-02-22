@@ -22,34 +22,6 @@ use App\Http\Controllers\employee\TaskController;
 |
 */
 
-Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('dark-mode-switcher');
-
-Route::middleware('loggedin')->group(function () {
-    Route::get('login', [AuthController::class, 'loginView'])->name('login-view');
-    Route::post('login', [AuthController::class, 'login'])->name('login');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
-});
-
-Route::get('/employee-form', [EmployeeController::class, 'employeeForm'])->name('employee-form');
-Route::post('/employee-add', [EmployeeController::class, 'employeeAdd'])->name('employee-add');
-Route::get('/employee-list', [EmployeeController::class, 'employeeList'])->name('employee-list');
-Route::get('/employee-details/{id}', [EmployeeController::class, 'employeeDetails'])->name('employee-details');
-Route::get('/employee-edit/{id}', [EmployeeController::class, 'employeeEdit'])->name('employee-edit');
-Route::post('/employee-update', [EmployeeController::class, 'employeeUpdate'])->name('employee-update');
-Route::post('/employee-delete', [EmployeeController::class, 'employeeDelete'])->name('employee-delete');
-
-
-Route::get('/attendance', [EmployeeController::class, 'adminAttendance'])->name('admin-attendance-module');
-
-
-Route::get('/file-upload', [EmployeeController::class, 'fileUpload'])->name('file-upload');
-Route::post('/employee-list-import', [EmployeeController::class, 'employeeListImport'])->name('employee-list-import');
-Route::get('/employee-list-export', [EmployeeController::class, 'employeeListExport'])->name('employee-list-export');
-
 
 //employee register and login start
 
