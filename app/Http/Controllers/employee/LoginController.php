@@ -95,7 +95,7 @@ class LoginController extends Controller
         $employee = $this->user->where('email', $request->email)->first();
         if ($employee && Hash::check($request->password, $employee->password)) {
             $request->session()->put('employee', $employee->id);
-            return redirect('/employee/user_dashboard');
+            return redirect('/employee/employee_dashboard');
         }else{
             return back();
         }
