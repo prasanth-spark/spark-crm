@@ -27,13 +27,17 @@ use App\Http\Controllers\employee\TaskController;
 
 Route::group(['prefix'=> 'employee'], function(){
     Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
-    Route::post('register-employee',[LoginController::class, 'registerEmployee'])->name('employee-register');
+    Route::get('user-register/{id}',[LoginController::class, 'registerEmployee'])->name('user-register');
+    Route::post('user-dashboard',[LoginController::class, 'userDashboard'])->name('user-dashboard');
+    Route::get('login-form-mail/{id}', [LoginController::class, 'loginFormMail'])->name('login-view-mail');
+    Route::post('login-employee', [LoginController::class, 'loginEmployee'])->name('employee-login');
+    Route::get('forgot-password', [LoginController::class, 'forgotPasswordForm'])->name('forgot-view');
     Route::get('login-form',[LoginController::class, 'loginForm'])->name('login-view');
-    Route::post('login-employee',[LoginController::class, 'loginEmployee'])->name('employee-login');
+
     
 
 Route::middleware('employee_auth')->group(function() {
-    Route::get('/user_dashboard',[LoginController::class, 'employeeDashboard'])->name('employee-dashboard');
+    Route::get('/employee_dashboard',[LoginController::class, 'employeeDashboard'])->name('employee-dashboard');
     Route::get('logout-employee', [LoginController::class, 'logout'])->name('employee-logout');
 
 //task sheet form
@@ -43,14 +47,11 @@ Route::middleware('employee_auth')->group(function() {
     Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
     Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
     Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
-    // Route::post('/task-delete', [TaskController::class, 'taskDelete'])->name('task-delete');
+
     });
-Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
-Route::get('user-register/{id}',[LoginController::class, 'registerEmployee'])->name('user-register');
-Route::post('user-dashboard',[LoginController::class, 'userDashboard'])->name('user-dashboard');
-Route::get('login-form-mail/{id}', [LoginController::class, 'loginFormMail'])->name('login-view-mail');
-Route::post('login-employee', [LoginController::class, 'loginEmployee'])->name('employee-login');
-Route::get('forgot-password', [LoginController::class, 'forgotPasswordForm'])->name('forgot-view');
+
+
+
 
 
 // Attendance  
