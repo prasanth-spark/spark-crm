@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Session;
 
 class Authenticate
 {
@@ -14,10 +15,10 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if (!is_null(request()->user())) {
+        if(!empty(Session::get('id'))){
             return $next($request);
-        } else {
-            return redirect('login');
         }
+        return redirect('admin/login');
+     
     }
 }

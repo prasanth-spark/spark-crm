@@ -140,7 +140,7 @@
                         <input id="regular-form-3" class="form-control" value="{{$employeeView->teamToUserDetails ? $employeeView->teamToUserDetails->team : '' }}">
                     </div>
                     <div>
-                        <button class="btn btn-primary mt-5"><a href="/employee-list">Back</a></button>
+                        <button class="btn btn-primary mt-5"><a href="/admin/employee-list">Back</a></button>
                     </div>
                 </div>
                 <!-- END: Validation Form -->

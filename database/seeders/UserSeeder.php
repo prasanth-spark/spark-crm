@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345'), // password
                 'status'=>'0',
+                'role_id'=>'4',
                 'remember_token' => Str::random(10),
                 'created_at' =>now(),
                 'updated_at' =>now()           
