@@ -12,7 +12,7 @@ use App\Models\TeamModel;
 use App\Models\User;
 use App\Jobs\VerfyUserEmailJob;
 use App\Jobs\UpdateUserEmailJob;
-use App\Http\Request\EmployeeValidationRequest;
+// use App\Http\Request\EmployeeValidationRequest;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Hash;
 
@@ -193,7 +193,7 @@ class EmployeeController extends Controller
      */
     public function employeeListExport()
     {
-        return (new FastExcel(Employee::all()))->download('file.xlsx');
+        return (new FastExcel(UserDetails::all()))->download('file.xlsx');
     }
 
     /**

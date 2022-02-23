@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="text-white text-sm 2xl:text-base font-medium -mb-1">    
-                        Hi {{$user['name']}} <span class="text-theme-34 dark:text-gray-500 font-normal">welcome back!</span>
+                        Hi <span class="text-theme-34 dark:text-gray-500 font-normal">welcome back!</span>
                     </div>
                         <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 dark:text-gray-500 leading-3 mt-14 2xl:mt-24">
                             My Total Assets

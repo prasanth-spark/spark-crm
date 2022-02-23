@@ -80,7 +80,7 @@ class LoginController extends Controller
         $this->user->where('id', $id)->update([
             'email_verified_at' => now()
         ]);
-        return view('employee/auth/employee-login-form');
+        return redirect('/view-dashboard');
     }
 
     /**
@@ -91,9 +91,14 @@ class LoginController extends Controller
      */
     public function loginEmployee(LoginRequest $request)
     {
-        $employee = $this->user->where('email', $request->email)->first();
-        if ($employee && Hash::check($request->password, $employee->password)) {
-            $request->session()->put('employee', $employee->email);
+        // dd($request->all());
+        $user = $this->user->where('email', $request->email)->first();
+        // dd($user->email);    
+        $request->session()->put('user_id', $user->id);   
+        $userId= $request->session()->get('user_id');
+        // dd($userId);
+        if ($user && Hash::check($request->password, $user->password)) {
+            $request->session()->put('user_id', $user->id);
             return view('/employee/user-dashboard');
         } else {
             return back();

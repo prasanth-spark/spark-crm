@@ -14,6 +14,7 @@ class PageController extends Controller
      */
     public function dashboardOverview1()
     {
+        // dd("sadfg");
         return view('admin/pages/dashboard-overview-1', [
             // Specify the base layout.
             // Eg: 'side-menu', 'simple-menu', 'top-menu', 'login'

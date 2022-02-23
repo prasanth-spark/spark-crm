@@ -7,19 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VerfyEmployeeMail extends Mailable
+class LeaveAcceptanceMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user;
-
+    public $reason,$user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user,$reason)
     {
-        $this->user = $user;
+        $this->user=$user;
+        $this->reason=$reason;
     }
 
     /**
@@ -29,7 +29,7 @@ class VerfyEmployeeMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('User verification')
-            ->view('admin//email/verificationmail');
+        return $this->subject('Requesting Leave')
+            ->view('employee/email/leave_acceptance');
     }
 }

@@ -27,7 +27,7 @@ class EmployeeSideMenu
                     ],
                     'dashboard-overview-2' => [
                         'icon' => '',
-                        'route_name' => 'dashboard-overview-2',
+                        'route_name' => 'user-dashboard',
                         'params' => [
                             'layout' => 'side-menu',
                         ],
@@ -35,7 +35,7 @@ class EmployeeSideMenu
                     ],
                     'dashboard-overview-3' => [
                         'icon' => '',
-                        'route_name' => 'dashboard-overview-3',
+                        'route_name' => 'user-dashboard',
                         'params' => [
                             'layout' => 'side-menu',
                         ],

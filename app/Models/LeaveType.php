@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LeaveType extends Model
 {
     use HasFactory;
-    protected $table = 'leave_type';
+    protected $table = 'leave_types';
     protected $guarded = [];
 
 public function leaveType()

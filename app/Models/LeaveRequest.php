@@ -11,7 +11,7 @@ class LeaveRequest extends Model
     protected $table = 'leave_requests';
     protected $guarded = [];
 
-  public function leaverequest(){
+  public function leaveRequest(){
      return $this->belongsTo(LeaveType::class,'leave_type_id','id');
   }
 

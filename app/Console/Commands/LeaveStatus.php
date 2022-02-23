@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Console\Commands;
-use App\Models\User;
 use App\Models\Attendance;
 
 use Illuminate\Console\Command;
@@ -39,9 +38,17 @@ class LeaveStatus extends Command
      */
     public function handle()
     {
-            $id = User::where('id')->first();
-            $user = Attendance::where('user_id',$id)
-            ->update(['attendance_status'=>0,'status'=>1]);      
+            
+            $user = Attendance::where('attendance_status','0')
+            ->where('leave_status','0')->where('status','0')->get();
+            foreach($user as $absentese){
+                Attendance::updateOrCreate([
+                'user_id'=>$absentese->id,
+                'attendance_status'=>'0',
+                'leave_status'=>'0',
+                'status'=>'0'
+                ]);
+            }    
     }
              
 }
