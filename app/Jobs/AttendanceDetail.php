@@ -9,9 +9,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Attendance;
-use App\Models\LeaveRequest;
-use App\Models\User;
 use App\Mail\PermissionMail;
 use App\Mail\LeaveMail;
 use Illuminate\Support\Facades\Mail;
@@ -21,17 +18,16 @@ use Illuminate\Support\Facades\Mail;
 class AttendanceDetail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    public $leave,$user;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($leave_type,$userDetail,$status)
+    public function __construct($leave,$user)
     {
-        $this->leave_type=$leave_type;
-        $this->userDetail =$userDetail;
-        $this->status=$status;
+        $this->leave=$leave;
+        $this->user =$user;
 
     }
 
@@ -41,25 +37,19 @@ class AttendanceDetail implements ShouldQueue
      * @return void
      */
     public function handle()
-    {
-        $leaveType =$this->leave_type;
-        $userId=$this->userDetail->id;
-        $user = User::where('id',$userId)->first();
-        $userTeam = $user->team_id;
-        $userRole = $user->role_id;
-            
+    {  
+        $user=$this->user;
+        $leave =$this->leave;
+        $sendMailTo= $user->email;     
+        $reason = $leave->description;
 
-
-
-        
-        if($leaveType==1){    
-          $email = new PermissionMail();
-          Mail::to($this->userDetail['email'])->send($email);
+        if($reason=='Permission'){    
+          $email = new PermissionMail($user);
+          Mail::to($sendMailTo)->send($email);
         }
         else{
-            // $email = new LeaveMail();
-            // Mail::to($this->userDetail['email'])->send($email);      
+            $email =new LeaveMail($user);
+            Mail::to($sendMailTo)->send($email);   
         }
-
     }
 }

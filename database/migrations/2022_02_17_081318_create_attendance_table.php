@@ -14,7 +14,7 @@ class CreateAttendanceTable extends Migration
     public function up()
     {
         Schema::create('attendance', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->index();
             $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('attendance_status')->nullable()->comment('0->absent,1->present');

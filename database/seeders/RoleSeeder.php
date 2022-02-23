@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use DB;
+use App\Models\RoleModel;
 
 class RoleSeeder extends Seeder
 {
@@ -14,9 +14,8 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([
-
-            [
+        RoleModel::insert([
+            [ 
                 'id' => '1',
                 'role' => 'Admin',
                 'status' => '1',

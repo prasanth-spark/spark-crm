@@ -14,15 +14,15 @@ class CreateLeaveRequestsTable extends Migration
     public function up()
     {
         Schema::create('leave_requests', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('leave_type_id');
+            $table->bigIncrements('id')->index();
+            $table->unsignedBigInteger('leave_type_id')->nullable();
             $table->foreign('leave_type_id')->references('id')->on('leave_types');
             $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('description');
-            $table->integer('status')->default('0')->comment('0->pending,1->approved,2->rejected');  
-            $table->dateTime('start_date');
-            $table->dateTime('end_date')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('status')->default('0')->comment('1->pending,2->approved,3->rejected');  
+            $table->string('start_date');
+            $table->string('end_date')->nullable();
             $table->timestamps();
         });
     }

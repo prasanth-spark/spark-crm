@@ -29,6 +29,6 @@ class WelcomeMail extends Mailable
     public function build()
     {
         return $this->subject('Register Notification')
-            ->view('employee/welcomemail');
+            ->view('employee/email/welcomemail');
     }
 }

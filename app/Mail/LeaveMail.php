@@ -6,8 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Attendance;
-use App\Models\LeaveRequest;
 
 class LeaveMail extends Mailable
 {
@@ -18,10 +16,9 @@ class LeaveMail extends Mailable
      *
      * @return void
      */
-    public function __construct($attendance,$leaveRequest)
+    public function __construct($user)
     {
-        $this->attendance = $attendance;
-        $this->leaverequest = $leaveRequest;
+        $this->user = $user;
     }
 
     /**
@@ -31,6 +28,7 @@ class LeaveMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Leave Form')->view('employee/leave');
+        $user=$this->user;
+        return $this->subject('Leave Form')->view('employee/email/leave_form',compact('user'));
     }
 }
