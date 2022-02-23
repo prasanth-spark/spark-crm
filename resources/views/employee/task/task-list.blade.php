@@ -31,7 +31,7 @@
                         <th class="whitespace-nowrap">TASK MODULE</th>
                         <th class="text-center whitespace-nowrap">ESTIMATED HOURS</th>
                         <th class="text-center whitespace-nowrap">WORKED HOURS</th>
-                        <th class="text-center whitespace-nowrap">STATUS</th>
+                        <th class="text-center whitespace-nowrap">TASK STATUS</th>
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                     </tr>
                 </thead>
@@ -43,7 +43,7 @@
                             <td>{{$task->task_module}}</td>  
                             <td>{{$task->estimated_hours}}</td>  
                             <td>{{$task->worked_hours}}</td>
-                            <td>{{$task->status}}</td>
+                            <td>{{$task->task_status}}</td>
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
                                     <a class="flex items-center mr-3" href="{{url('/')}}/employee/task-details/{{$task->id}}">
@@ -52,36 +52,11 @@
                                     <a class="flex items-center mr-3" href="{{url('/')}}/employee/task-edit/{{$task->id}}">
                                         <em data-feather="check-square" class="w-4 h-4 mr-1"></em> Edit
                                     </a>
-                                    {{-- <a class="flex items-center text-theme-21"  data-toggle="modal" data-target="#delete-confirmation-modal-{{$task->id}}">
-                                        <em data-feather="trash-2" class="w-4 h-4 mr-1"></em> Delete
-                                    </a> --}}
+                                   
                                 </div>
                             </td>
                         </tr>
 
-                         <!-- BEGIN: Delete Confirmation Modal -->
-    {{-- <div id="delete-confirmation-modal-{{$task->id}}" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-          <form action="{{route('task-delete')}}" method="post">
-              @csrf
-             <input type="hidden" name="id"  value="{{$task->id}}">
-              <div class="modal-content">
-                <div class="modal-body p-0">
-                    <div class="p-5 text-center">
-                        <em data-feather="x-circle" class="w-16 h-16 text-theme-21 mx-auto mt-3"></em>
-                        <div class="text-3xl mt-5">Are you sure?</div>
-                        <div class="text-gray-600 mt-2">Do you really want to delete these records? <br>This process cannot be undone.</div>
-                    </div>
-                    <div class="px-5 pb-8 text-center">
-                        <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
-                        <button type="submit" class="btn btn-danger w-24">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </form>  
-     </div>
-   </div> --}}
-    <!-- END: Delete Confirmation Modal -->
              @endforeach
                 </tbody>
             </table>
