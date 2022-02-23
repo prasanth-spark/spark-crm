@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/attendance/team-list',[AttendanceController::class, 'attendanceTeamList'])->name('attendance-teamlist');
 
         //Task List
-        Route::get('/task-list', [TaskController::class, 'taskList'])->name('task-list');
+        Route::get('/task-list', [TaskController::class, 'taskList'])->name('employee-task-list');
         Route::post('/team/task-list', [TaskController::class, 'taskTeamList'])->name('task-teamlist');
 
 

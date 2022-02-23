@@ -51,9 +51,6 @@
                             @enderror
                         </div>
                         <div class="intro-x flex text-gray-700 dark:text-gray-600 text-xs sm:text-sm mt-4">
-                            <div class="flex items-center mr-auto">
-                              <a href="#">Reset Password</a>
-                            </div>
                             <a href="{{ route('forgot-view')}}">Forgot Password?</a> 
                         </div>
                         <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
@@ -67,7 +64,6 @@
             </div>
         </div>
         <!-- BEGIN: JS Assets-->
-        <script src="dist/js/app.js"></script>
         <!-- END: JS Assets-->
     </body>
 </html>
