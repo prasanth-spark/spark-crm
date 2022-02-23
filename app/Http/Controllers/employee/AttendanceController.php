@@ -30,7 +30,7 @@ class AttendanceController extends Controller
     }
     public function attendanceStatus(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
             $leaveRequest= $request->select;
             if($leaveRequest==2){
                 $leaveRequest='Leave';
@@ -118,14 +118,6 @@ class AttendanceController extends Controller
 
     }
 }
-
-
-
-
-
-
-
-
 
 // cron->daily->status
             // $user = User::where('status','!=',0)->pluck('id');
