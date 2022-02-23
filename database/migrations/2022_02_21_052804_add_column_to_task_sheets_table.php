@@ -15,7 +15,6 @@ class AddColumnToTaskSheetsTable extends Migration
     {
         Schema::table('task_sheets', function (Blueprint $table) {
             $table->renameColumn('status', 'task_status');
-           
         });
     }
 
