@@ -30,22 +30,19 @@ class AttendanceController extends Controller
         $date = Carbon::now();
         $date = $date->format("d-m-Y");
         $attendance= $this->attendance->where(['user_id' => $userId , 'date' => $date])->first();
-        // dd($attendance); 
-        // dd($user);
+        
         return view('/employee/attendance-module',compact('user'));
     }
     public function attendanceStatus(Request $request)
-    {
-        // dd($request->all());
-            $leaveRequest= $request->select;
-            if($leaveRequest==2){
-                $leaveRequest='Leave';
-            }
-            else{
-                $leaveRequest='Permission';
-            }
-        $userId= $request->session()->get('id');
-        // dd($userId);
+    { 
+        $leaveRequest= $request->select;
+        if($leaveRequest==2){
+            $leaveRequest='Leave';
+        }
+        else{
+            $leaveRequest='Permission';
+        }
+        $userId= $request->session()->get('id');     
         $user = User::find($userId);
         $date = Carbon::now();
         $date = $date->format("d-m-Y");
@@ -106,13 +103,13 @@ class AttendanceController extends Controller
                }
             $teamLeadMail = User::find($teamLead);
             $teamLeadMail =$teamLeadMail->email;
-            // dd($teamLeadMail);
+   
             $job = new LeavePermissionDetail($teamLeadMail,$user,$reason);
                     dispatch($job);
                     return redirect('/employee/attendance-module');
     }
     public function leaveAccepted($id,$status){
-        // dd($status);
+    
       if($status==2){
             LeaveRequest::where('user_id',$id)
                 ->where('status','=','1')

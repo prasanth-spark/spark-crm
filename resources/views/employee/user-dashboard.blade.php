@@ -44,10 +44,15 @@
                         </div>
                         <div class="text-white text-sm 2xl:text-base font-medium -mb-1">    
 <<<<<<< HEAD
+<<<<<<< HEAD
                         Hi <span class="text-theme-34 dark:text-gray-500 font-normal">welcome back!</span>
 =======
                         Hi<span class="text-theme-34 dark:text-gray-500 font-normal">welcome back!</span>
 >>>>>>> 2213201312bbd6e2914af7e908f1de92e5793887
+=======
+
+                        Hi <span class="text-theme-34 dark:text-gray-500 font-normal">welcome back!</span>
+>>>>>>> 440563f032521023db160824284242fc07e7ea0e
                     </div>
                         <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 dark:text-gray-500 leading-3 mt-14 2xl:mt-24">
                             My Total Assets

@@ -23,7 +23,7 @@ use App\Http\Controllers\employee\TaskController;
 */
 
 
-    Route::middleware('userloggedin_auth')->group(function() {   
+    Route::middleware('userloggedin_auth')->group(function() {    
 
             //employee register and login start
             Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
@@ -47,8 +47,8 @@ use App\Http\Controllers\employee\TaskController;
             Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
             Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
             Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
-     
-                // Attendance  
+
+          // Attendance  
             Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
             Route::Post('attendance-status',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
             Route::get('leave-request/{id}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');

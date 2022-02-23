@@ -28,10 +28,14 @@ class EmployeeSideMenu
                     'dashboard-overview-2' => [
                         'icon' => '',
 <<<<<<< HEAD
+<<<<<<< HEAD
                         'route_name' => 'user-dashboard',
 =======
                         'route_name' => 'dashboard-overview-1',
 >>>>>>> 2213201312bbd6e2914af7e908f1de92e5793887
+=======
+                        'route_name' => 'dashboard-overview-1',
+>>>>>>> 440563f032521023db160824284242fc07e7ea0e
                         'params' => [
                             'layout' => 'side-menu',
                         ],
@@ -40,10 +44,14 @@ class EmployeeSideMenu
                     'dashboard-overview-3' => [
                         'icon' => '',
 <<<<<<< HEAD
+<<<<<<< HEAD
                         'route_name' => 'user-dashboard',
 =======
                         'route_name' => 'dashboard-overview-1',
 >>>>>>> 2213201312bbd6e2914af7e908f1de92e5793887
+=======
+                        'route_name' => 'dashboard-overview-1',
+>>>>>>> 440563f032521023db160824284242fc07e7ea0e
                         'params' => [
                             'layout' => 'side-menu',
                         ],
