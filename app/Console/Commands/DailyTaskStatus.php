@@ -51,7 +51,6 @@ class DailyTaskStatus extends Command
             $userMail = $userTask->email;
             $userName=$userTask->name;
             $attendance = Attendance::where('user_id',$taskNotUpdatedUser)->first();
-            dd($attendance);
             $attendanceStatus = isset($attendance->attendance_status)?$attendance->attendance_status:0;
             
             if($attendanceStatus == 1){
