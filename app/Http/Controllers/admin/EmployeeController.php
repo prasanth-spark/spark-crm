@@ -12,12 +12,8 @@ use App\Models\TeamModel;
 use App\Models\User;
 use App\Jobs\VerfyUserEmailJob;
 use App\Jobs\UpdateUserEmailJob;
-<<<<<<< HEAD
-// use App\Http\Request\EmployeeValidationRequest;
-=======
 use App\Http\Request\EmployeeValidationRequest;
 use App\Http\Request\EmployeeUpdateValidationRequest;
->>>>>>> ed03b067dd961aad732526dce02508ef008e136d
 use Rap2hpoutre\FastExcel\FastExcel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;

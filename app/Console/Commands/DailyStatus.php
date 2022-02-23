@@ -39,7 +39,6 @@ class DailyStatus extends Command
      */
     public function handle()
     {
-        $id = User::where('id','51ac94b0-d4a8-4c70-849a-04342d75acff')->first();
-        Attendance::where('user_id',$id->id)->update(['status'=> 0]);
+        // TO DO
     }
 }

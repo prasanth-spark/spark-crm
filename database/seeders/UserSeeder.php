@@ -6,15 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Faker\Provider\Uuid;
 use Illuminate\Support\Facades\Hash;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-use Illuminate\Support\Facades\DB;
->>>>>>> 2213201312bbd6e2914af7e908f1de92e5793887
-=======
->>>>>>> 440563f032521023db160824284242fc07e7ea0e
-
+use App\Models\User;
 class UserSeeder extends Seeder
 {
     /**
