@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\LeaveRequest;
 use App\Models\Attendance;
+use Carbon\Carbon;
 
 
 class AttendanceController extends Controller
@@ -25,6 +26,10 @@ class AttendanceController extends Controller
         
         $userId= $request->session()->get('employee');
         $user=$this->user->find($userId);
+        $date = Carbon::now();
+        $date = $date->format("d-m-Y");
+        $attendance= $this->attendance->where(['user_id' => $userId , 'date' => $date])->first();
+        // dd($attendance); 
         // dd($user);
         return view('/employee/attendance-module',compact('user'));
     }
@@ -32,7 +37,8 @@ class AttendanceController extends Controller
     {
         // dd($request->all());
             $leaveRequest= $request->select;
-            if($leaveRequest==2){
+            if($leaveRequest==2){$date = Carbon::now();
+                $date = $date->format("d-m-Y");
                 $leaveRequest='Leave';
             }
             else{
@@ -41,11 +47,13 @@ class AttendanceController extends Controller
         $userId= $request->session()->get('employee');
         // dd($userId);
         $user = User::find($userId);
+        $date = Carbon::now();
+        $date = $date->format("d-m-Y");
          $attendance =   $this->attendance->create([
                     'user_id'=>$userId,
                     'attendance_status'=>$request->value,
                     'leave_status'=>'0',
-                    'date'=>$request->today_date,
+                    'date'=>$date,
                     'status'=>'1'
                   ]);
             $attendance->save(); 
@@ -70,6 +78,7 @@ class AttendanceController extends Controller
         return view('/employee/request-form',compact('user'));
     }
     public function leaveStatus(Request $request){
+
           $reason = $request->reason;
           $userId= $request->id;
 
@@ -80,13 +89,16 @@ class AttendanceController extends Controller
                             'leave_type_id'=> $request->leave_type,
                             'status'=>'1',
                         ]);
-            //  dd($leaveRequest);
+            
               $user= $this->user->find($userId);
+              
               $userTeam=$user->team_id;
               $teams = $this->userDetail->where('team_id',$userTeam)->get();
+              
               foreach($teams as $team){
                 $role=$team->pluck('role_id');
               } 
+           
               $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','<',$role)->get();
               foreach($teamLeadTeam as $teamLeadTeamId)
                {
@@ -97,7 +109,7 @@ class AttendanceController extends Controller
             // dd($teamLeadMail);
             $job = new LeavePermissionDetail($teamLeadMail,$user,$reason);
                     dispatch($job);
-
+                    return redirect('/employee/attendance-module');
     }
     public function leaveAccepted($id,$status){
         // dd($status);
@@ -114,7 +126,7 @@ class AttendanceController extends Controller
                          ]);    
 
     }
-
+    return redirect('/employee/attendance-module');
 
     }
 }

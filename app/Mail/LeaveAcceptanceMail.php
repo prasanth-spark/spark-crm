@@ -29,7 +29,10 @@ class LeaveAcceptanceMail extends Mailable
      */
     public function build()
     {
+        $user=$this->user;
+        $reason=$this->reason;
+
         return $this->subject('Requesting Leave')
-            ->view('employee/email/leave_acceptance');
+            ->view('employee/email/leave_acceptance',compact('user','reason'));
     }
 }

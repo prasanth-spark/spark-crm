@@ -28,6 +28,7 @@ class PermissionMail extends Mailable
      */
     public function build()
     {
-        return $this->view('employee/email/permission_form');
+        $user = $this->user;
+        return $this->view('employee/email/permission_form',compact('user'));
     }
 }

@@ -28,6 +28,7 @@ class LeaveMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Leave Form')->view('employee/email/leave_form');
+        $user=$this->user;
+        return $this->subject('Leave Form')->view('employee/email/leave_form',compact('user'));
     }
 }

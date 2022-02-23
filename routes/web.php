@@ -54,7 +54,7 @@ Route::get('attendance-module',[AttendanceController::class, 'attendanceModule']
 Route::Post('attendance-status',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
 Route::get('leave-request/{id}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
 Route::post('leave-status',[AttendanceController::class, 'leaveStatus'])->name('leave-status');
-Route::post('leave-accpeted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
+Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
 Route::post('attendance-list',[AttendanceController::class, 'attendanceList'])->name('attendance-list');
 
 

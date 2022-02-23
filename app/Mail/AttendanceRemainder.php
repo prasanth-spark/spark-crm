@@ -29,7 +29,8 @@ class AttendanceRemainder extends Mailable
      */
     public function build()
     {
+        $user=$this->user;
         return $this->subject('Attendance Remainder')
-        ->view('employee/email/attendance_remainder');
+        ->view('employee/email/attendance_remainder',compact('user'));
     }
 }
