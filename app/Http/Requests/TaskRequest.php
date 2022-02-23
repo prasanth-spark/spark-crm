@@ -29,7 +29,7 @@ class TaskRequest extends FormRequest
             'task_module' => 'required',
             'estimated_hours' => 'required|integer',
             'worked_hours' => 'required|integer',
-            'status' => 'required' 
+            'task_status' => 'required' 
         ];
     }
 }

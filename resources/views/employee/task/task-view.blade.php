@@ -44,9 +44,9 @@
                         </div>
                         <div class="input-form mt-3">
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                Status
+                                Task Status
                             </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="Status" name='status' value="{{$taskView->status}}" >
+                            <input id="regular-form-4" type="text" class="form-control" placeholder="Task Status" name='task_status' value="{{$taskView->task_status}}" >
                         </div>
                         
                         <div>

@@ -36,15 +36,19 @@ class TaskController extends Controller
      */
     public function taskAdd(TaskRequest $request){
         // dd($request->session()->get('employee'));
-        $tasks = $this->taskSheet->create([
+        $this->taskSheet->create([
           'user_id' => $request->session()->get('employee'),
           'date' => $request->date,
           'project_name' => $request->project_name,
           'task_module' => $request->task_module,
           'estimated_hours' => $request->estimated_hours,
           'worked_hours' => $request->worked_hours,
-          'status' => $request->status
+          'task_status' => $request->task_status,
+          'status' => '1'
         ]);
+
+        
+       
         return redirect('/employee/task-list');
     }
     
@@ -66,7 +70,7 @@ class TaskController extends Controller
      */
     public function taskDetails($id)
     {
-        $taskView=$this->taskSheet->where('id',$id)->first(); 
+        $taskView=$this->taskSheet->find($id); 
         return view('employee/task/task-view',compact('taskView'));
     }
 
@@ -78,7 +82,7 @@ class TaskController extends Controller
      */
     public function taskEdit($id)
     {
-        $taskEdit=$this->taskSheet->where('id',$id)->first();
+        $taskEdit=$this->taskSheet->find($id);
         return view('employee/task/task-edit',compact('taskEdit'));
     }
 
@@ -88,7 +92,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function taskUpdate(Request $request)
+    public function taskUpdate(TaskRequest $request)
     {
        $this->taskSheet->where('id',$request->id)->update([
         'user_id' => $request->session()->get('employee'),
@@ -97,7 +101,7 @@ class TaskController extends Controller
         'task_module' => $request->task_module,
         'estimated_hours' => $request->estimated_hours,
         'worked_hours' => $request->worked_hours,
-        'status' => $request->status
+        'task_status' => $request->task_status
         ]);
         return redirect('/employee/task-list');
     }
