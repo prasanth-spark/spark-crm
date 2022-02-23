@@ -15,7 +15,7 @@ class CreateTaskSheetsTable extends Migration
     {
         Schema::create('task_sheets', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('user_id');
             $table->date('date');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('project_name');

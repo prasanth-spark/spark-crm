@@ -12,6 +12,8 @@
     <title>Register</title>
     <!-- BEGIN: CSS Assets-->
     <link rel="stylesheet" href="/dist/css/app.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!-- END: CSS Assets-->
 </head>
 <!-- END: Head -->
@@ -38,9 +40,7 @@
                     <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                         Sign Up
                     </h2>
-                    @if(session('success'))
-                    <div class="error">{{ session('success') }}</div>
-                    @endif
+                  
                     <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
                     <form action="{{route('user-dashboard')}}" method="post">
                         @csrf
@@ -72,7 +72,7 @@
                         </div>
                         <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                             <button type="submit" class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Register</button>
-                            <button class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top"><a href="{{ route('login-view')}}">Sign In</a></button>
+                            <button class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top"><a href="{{ route('user-login-view')}}">Sign In</a></button>
                         </div>
                     </form>
                 </div>
@@ -81,7 +81,40 @@
         </div>
     </div>
     <!-- BEGIN: JS Assets-->
-    <script src="dist/js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+        <script>  
+           toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }    
+                    @if(Session::has('success'))
+                    const toastHTML = '{{Session::get('success')}}';
+                    toastr["success"](toastHTML);
+                    @php Session::forget('success'); @endphp
+                    @endif
+                    @if(Session::has('error'))
+                    const toastHTML = '{{Session::get('error')}}';
+                    toastr["error"](toastHTML);
+                    @php Session::forget('error'); @endphp
+                    @endif
+    </script>
     <!-- END: JS Assets-->
 </body>
 

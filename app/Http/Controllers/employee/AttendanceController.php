@@ -19,13 +19,12 @@ class AttendanceController extends Controller
     
 
     public function attendanceModule(Request $request){
-        $userId= $request->session()->get('user_id');
+        $userId= $request->session()->get('id');
         $user=$this->user->where('id',$userId)->first();
         return view('/employee/attendance-module',compact('user'));
     }
     public function attendanceStatus(Request $request,$status)
     {
-        dd($status);
         $userId= $request->session()->get('user_id');
         $this->attendance->create([
             'user_id'=>$userId,
