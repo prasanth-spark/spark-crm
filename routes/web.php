@@ -23,40 +23,37 @@ use App\Http\Controllers\employee\TaskController;
 */
 
 
-//employee register and login start
+    Route::middleware('userloggedin_auth')->group(function() {   
 
-Route::group(['prefix'=> 'employee'], function(){
-    Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
-    Route::get('user-register/{id}',[LoginController::class, 'registerEmployee'])->name('user-register');
-    Route::post('user-dashboard',[LoginController::class, 'userDashboard'])->name('user-dashboard');
-    Route::get('login-form-mail/{id}', [LoginController::class, 'loginFormMail'])->name('login-view-mail');
-    Route::post('login-employee', [LoginController::class, 'loginEmployee'])->name('employee-login');
-    Route::get('forgot-password', [LoginController::class, 'forgotPasswordForm'])->name('forgot-view');
-    Route::get('login-form',[LoginController::class, 'loginForm'])->name('login-view');
+            //employee register and login start
+            Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
+            Route::get('user-register/{id}',[LoginController::class, 'registerEmployee'])->name('user-register');
+            Route::post('user-dashboard',[LoginController::class, 'userDashboard'])->name('user-dashboard');
+            Route::get('login-form-mail/{id}', [LoginController::class, 'loginFormMail'])->name('login-view-mail');
+            Route::post('login-employee', [LoginController::class, 'loginEmployee'])->name('employee-login');
+            Route::get('forgot-password', [LoginController::class, 'forgotPasswordForm'])->name('forgot-view');
+            Route::get('login-form',[LoginController::class, 'loginForm'])->name('user-login-view');
+    });
+  
 
-    
+    Route::middleware('employee_auth')->group(function() {
+            Route::get('/employee_dashboard',[LoginController::class, 'employeeDashboard'])->name('employee-dashboard');
+            Route::get('logout-employee', [LoginController::class, 'logout'])->name('employee-logout');
 
-Route::middleware('employee_auth')->group(function() {
-    Route::get('/employee_dashboard',[LoginController::class, 'employeeDashboard'])->name('employee-dashboard');
-    Route::get('logout-employee', [LoginController::class, 'logout'])->name('employee-logout');
+            //task sheet form
+            Route::get('/task-form', [TaskController::class, 'taskForm'])->name('task-form');
+            Route::post('/task-add', [TaskController::class, 'taskAdd'])->name('task-add');
+            Route::get('/task-list',[TaskController::class,'taskList'])->name('task-list');
+            Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
+            Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
+            Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
+     
+                // Attendance  
+            Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
+            Route::Post('attendance-status',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
+            Route::get('leave-request/{id}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
+            Route::post('leave-status',[AttendanceController::class, 'leaveStatus'])->name('leave-status');
+            Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
+            Route::post('attendance-list',[AttendanceController::class, 'attendanceList'])->name('attendance-list');
 
-//task sheet form
-    Route::get('/task-form', [TaskController::class, 'taskForm'])->name('task-form');
-    Route::post('/task-add', [TaskController::class, 'taskAdd'])->name('task-add');
-    Route::get('/task-list',[TaskController::class,'taskList'])->name('task-list');
-    Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
-    Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
-    Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
-
-// Attendance  
-
-Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
-Route::Post('attendance-status',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
-Route::get('leave-request/{id}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
-Route::post('leave-status',[AttendanceController::class, 'leaveStatus'])->name('leave-status');
-Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
-Route::post('attendance-list',[AttendanceController::class, 'attendanceList'])->name('attendance-list');
-
-
-});
 });

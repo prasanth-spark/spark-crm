@@ -4,10 +4,13 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-use App\Models\User;
 use Faker\Provider\Uuid;
 use Illuminate\Support\Facades\Hash;
+<<<<<<< HEAD
 
+=======
+use Illuminate\Support\Facades\DB;
+>>>>>>> 2213201312bbd6e2914af7e908f1de92e5793887
 
 class UserSeeder extends Seeder
 {
@@ -26,7 +29,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345'), // password
                 'status'=>'0',
-                'role_id'=>'4',
+                'role_id'=>'1',
                 'remember_token' => Str::random(10),
                 'created_at' =>now(),
                 'updated_at' =>now()           

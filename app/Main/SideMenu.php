@@ -61,7 +61,7 @@ class SideMenu
                 'sub_menu' => [
                     'Employee List' => [
                         'icon' => '',
-                        'route_name' => 'task-list',
+                        'route_name' => 'employee-task-list',
                         'params' => [
                             'layout' => 'side-menu',
                         ],

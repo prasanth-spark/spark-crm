@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 class EmployeeAuthenticate
 {
@@ -15,8 +17,7 @@ class EmployeeAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        //dd($request->session()->get('employee'));
-        if (!is_null($request->session()->get('employee'))) {
+        if (!empty(Session::get('id'))) {
             return $next($request);
         } else {
             return redirect('employee/login-form');

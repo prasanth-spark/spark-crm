@@ -18,13 +18,14 @@ class AttendanceController extends Controller
     public function __construct(User $user,UserDetails $userDetails,Attendance $attendance,LeaveRequest $leaveRequest)
     {
         $this->user =$user;
-        $this->userDetail= $userDetails;
+        $this->userDetail= $userDetails;$date = Carbon::now();
+        $date = $date->format("d-m-Y");
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
     }
     public function attendanceModule(Request $request){
         
-        $userId= $request->session()->get('employee');
+        $userId= $request->session()->get('id');
         $user=$this->user->find($userId);
         $date = Carbon::now();
         $date = $date->format("d-m-Y");
@@ -37,16 +38,13 @@ class AttendanceController extends Controller
     {
         // dd($request->all());
             $leaveRequest= $request->select;
-            $date = Carbon::now();
-            $date = $date->format("d-m-Y");
-            $leaveRequest='Leave';
             if($leaveRequest==2){
                 $leaveRequest='Leave';
             }
             else{
                 $leaveRequest='Permission';
             }
-        $userId= $request->session()->get('employee');
+        $userId= $request->session()->get('id');
         // dd($userId);
         $user = User::find($userId);
         $date = Carbon::now();

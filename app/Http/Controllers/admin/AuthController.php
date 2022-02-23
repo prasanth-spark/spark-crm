@@ -45,7 +45,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try{
-            $admin = $this->user->where('email', $request->email)->where('role_id',4)->first();
+            $admin = $this->user->where('email', $request->email)->where('role_id',1)->first();
             if ($admin && Hash::check($request->password, $admin->password)) {
                 Session::put('id', $admin->id);
                 return redirect('/admin/dashboard');

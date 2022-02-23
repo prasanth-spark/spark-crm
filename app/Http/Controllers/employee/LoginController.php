@@ -9,8 +9,8 @@ use App\Models\RoleModel;
 use App\Http\Request\RegisterRequest;
 use App\Http\Request\LoginRequest;
 use App\Jobs\WelcomeEmailJob;
-use Hash;
-use Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 
 
@@ -92,9 +92,10 @@ class LoginController extends Controller
      */
     public function loginEmployee(LoginRequest $request)
     {
-        $employee = $this->user->where('email', $request->email)->first();
-        if ($employee && Hash::check($request->password, $employee->password)) {
-                $request->session()->put('employee', $employee->id);
+        $employee = $this->user->where('email', $request->email)->where('role_id','!=',1)->first();
+        if ($employee && Hash::check($request->password, $employee->password) && !empty($employee->email_verified_at)) {
+            session::put('id', $employee->id);
+            session::put('name', $employee->name);
             return redirect('/employee/employee_dashboard');
         }else{
             return back();
@@ -108,7 +109,7 @@ class LoginController extends Controller
      */
     public function employeeDashboard()
     {
-            return view('/employee/user-dashboard');
+        return view('/employee/user-dashboard');
     }
 
       /**
@@ -119,7 +120,7 @@ class LoginController extends Controller
      */
     public function logout()
     {
-        \Session::flush();
+        Session::flush();
         return redirect('employee/login-form');
     }
 }
