@@ -64,7 +64,6 @@ class AttendanceController extends Controller
                     'start_date'=>$request->start_date,
                     'end_date'=>$request->end_date
                 ]);
-        $leave->save();
         $job = new AttendanceDetail($leave,$user);
                     dispatch($job);
         }
@@ -127,31 +126,5 @@ class AttendanceController extends Controller
 
     }
 }
-
-// cron->daily->status
-            // $user = User::where('status','!=',0)->pluck('id');
-            // $attendance = DB::table('attendance')->pluck('user_id');
-            // $attendanceNotUpdatedUser = array_diff($user,$attendance);
-// job->1st leave mail
-        //  $a=$leave->description;    
-        //   if($a=='permission'){   
-        //   $email = new PermissionMail($user);
-        //   Mail::to($user->email)->send($email);
-        // }
-        // else{
-        // $email =new LeaveMail($user);
-        // Mail::to($user->email)->send($email);   
-        // }
-
-//  teamlead
-            // $user= $this->user->where('id',$userId)->with('userTeamId')->pluck('team_id');
-            // $team = $this->userDetail->where('team_id',$user)->get();
-            // foreach($userTeam as $team){
-            //     $lead = $team->role_id;
-            // $role=$team->pluck('role_id'); 
-            // $teamlead=$this->userDetail->where('team_id','=',$user)->where('role_id','<',$role)->get();
-            //foreach($teamLeadTeam as $teamLeadTeamId){
-            //     $teamLead=$teamLeadTeamId->user_id;
-            //    }
 
 
