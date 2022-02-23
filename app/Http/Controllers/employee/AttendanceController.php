@@ -37,8 +37,10 @@ class AttendanceController extends Controller
     {
         // dd($request->all());
             $leaveRequest= $request->select;
-            if($leaveRequest==2){$date = Carbon::now();
-                $date = $date->format("d-m-Y");
+            $date = Carbon::now();
+            $date = $date->format("d-m-Y");
+            $leaveRequest='Leave';
+            if($leaveRequest==2){
                 $leaveRequest='Leave';
             }
             else{
