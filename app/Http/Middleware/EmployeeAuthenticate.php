@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
-class Authenticate
+class EmployeeAuthenticate
 {
     /**
      * Get the path the user should be redirected to when they are not authenticated.
@@ -13,12 +13,13 @@ class Authenticate
      * @param  \Illuminate\Http\Request  $request
      * @return string|null
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if(!empty(Session::get('id'))){
+        //dd($request->session()->get('employee'));
+        if (!is_null($request->session()->get('employee'))) {
             return $next($request);
+        } else {
+            return redirect('employee/login-form');
         }
-        return redirect('admin/login');
-     
     }
 }

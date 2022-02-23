@@ -38,7 +38,7 @@ class CreateUserDetailsTable extends Migration
             $table->uuid('account_type_id')->nullable()->index();
             $table->foreign('account_type_id')->references('id')->on('account_types');
             $table->timestamp('email_verified_at')->nullable();
-            $table->tinyInteger('status')->comment('0-admin, 1-employee');
+            $table->tinyInteger('status')->nullable()->comment('0-admin, 1-employee');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

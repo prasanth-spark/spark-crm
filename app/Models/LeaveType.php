@@ -11,11 +11,8 @@ class LeaveType extends Model
     protected $table = 'leave_types';
     protected $guarded = [];
 
-public function leaveType()
-{
-    return $this->hasOne(LeaveRequest::class,'leave_type_id','id');
+    public function leaveType()
+    {
+        return $this->hasOne(LeaveRequest::class, 'leave_type_id', 'id');
+    }
 }
-
-}
-
-

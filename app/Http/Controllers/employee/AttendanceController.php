@@ -5,7 +5,6 @@ namespace App\Http\Controllers\employee;
 use App\Http\Controllers\Controller;
 use App\Jobs\AttendanceDetail;
 use App\Jobs\LeavePermissionDetail;
-use App\Mail\LeaveMail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserDetails;
@@ -23,14 +22,15 @@ class AttendanceController extends Controller
         $this->leave_request=$leaveRequest;
     }
     public function attendanceModule(Request $request){
-        $userId= $request->session()->get('user_id');
+        
+        $userId= $request->session()->get('employee');
         $user=$this->user->find($userId);
         // dd($user);
         return view('/employee/attendance-module',compact('user'));
     }
     public function attendanceStatus(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
             $leaveRequest= $request->select;
             if($leaveRequest==2){
                 $leaveRequest='Leave';
@@ -38,7 +38,7 @@ class AttendanceController extends Controller
             else{
                 $leaveRequest='Permission';
             }
-        $userId= $request->session()->get('user_id');
+        $userId= $request->session()->get('employee');
         // dd($userId);
         $user = User::find($userId);
          $attendance =   $this->attendance->create([

@@ -16,16 +16,16 @@ class SideMenu
             'dashboard' => [
                 'icon' => 'home',
                 'title' => 'Dashboard',
-                'sub_menu' => [
-                    'dashboard-overview-1' => [
-                        'icon' => '',
-                        'route_name' => 'dashboard-overview-1',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                        'title' => 'Overview 1'
-                    ],
-                ]
+                // 'sub_menu' => [
+                //     'dashboard-overview-1' => [
+                //         'icon' => '',
+                //         'route_name' => 'dashboard-overview-1',
+                //         'params' => [
+                //             'layout' => 'side-menu',
+                //         ],
+                //         'title' => 'Overview 1'
+                //     ],
+                // ]
             ],
             'Employee Management' => [
                 'icon' => 'home',
@@ -40,15 +40,35 @@ class SideMenu
                         'title' => 'Employee List'
                     ],
                 ]
-            ],
-            'Attendance' => [
-                'icon' => 'calendar',
-                'route_name' => 'admin-attendance-module',
-                'title' => 'Attendance',
-                'params' => [
-                'layout' => 'side-menu',
+            ],    
+            'Employee Attendance' => [
+                'icon' => 'home',
+                'title' => 'Employee Attendance',
+                'sub_menu' => [
+                    'Employee List' => [
+                        'icon' => '',
+                        'route_name' => 'attendance-list',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                        'title' => 'Attendance List'
                     ],
-            ]       
+                ]
+            ],  
+            'Employee Task' => [
+                'icon' => 'home',
+                'title' => 'Employee Task',
+                'sub_menu' => [
+                    'Employee List' => [
+                        'icon' => '',
+                        'route_name' => 'task-list',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                        'title' => 'Task List'
+                    ],
+                ]
+            ],   
         ];
     }
 }

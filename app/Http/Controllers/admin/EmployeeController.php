@@ -12,9 +12,16 @@ use App\Models\TeamModel;
 use App\Models\User;
 use App\Jobs\VerfyUserEmailJob;
 use App\Jobs\UpdateUserEmailJob;
+<<<<<<< HEAD
 // use App\Http\Request\EmployeeValidationRequest;
+=======
+use App\Http\Request\EmployeeValidationRequest;
+use App\Http\Request\EmployeeUpdateValidationRequest;
+>>>>>>> ed03b067dd961aad732526dce02508ef008e136d
 use Rap2hpoutre\FastExcel\FastExcel;
-use Hash;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 
 
 class EmployeeController extends Controller
@@ -35,11 +42,16 @@ class EmployeeController extends Controller
      */
     public function employeeForm()
     {
-        $bankName = $this->bankdetails->get();
-        $accountType = $this->accountType->get();
-        $role = $this->rolemodel->get();
-        $team = $this->teammodel->get();
-        return view('admin/employee/employee-form', compact('bankName', 'accountType', 'role', 'team'));
+        try{
+            $bankName = $this->bankdetails->get();
+            $accountType = $this->accountType->get();
+            $role = $this->rolemodel->where('id','!=',1)->get();
+            $team = $this->teammodel->get();
+            return view('admin/employee/employee-form', compact('bankName', 'accountType', 'role', 'team'));
+        } 
+        catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+        }
     }
 
     /**
@@ -48,49 +60,60 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function employeeAdd(Request $request)
+    public function employeeAdd(EmployeeValidationRequest $request)
     {
-        $userCredentials = $this->user->create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        dispatch(new VerfyUserEmailJob($userCredentials));
+        try{
+                $userCredentials = $this->user->create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ]);
+                dispatch(new VerfyUserEmailJob($userCredentials));
 
-        $this->userdetails->create([
-            'user_id' => $userCredentials->id,
-            'father_name' => $request->father_name,
-            'mother_name' => $request->mother_name,
-            'phone_number' => $request->phone_number,
-            'emergency_contact_number' => $request->emergency_contact_number,
-            'official_email' => $request->official_email,
-            'joined_date' => $request->joined_date,
-            'home_address' => $request->home_address,
-            'date_of_birth' => $request->date_of_birth,
-            'blood_group' => $request->blood_group,
-            'pan_number' => $request->pan_number,
-            'aadhar_number' => $request->aadhar_number,
-            'bank_id' => $request->bank_name,
-            'account_holder_name'    => $request->account_holder_name,
-            'account_number' => $request->account_number,
-            'ifsc_code' => $request->ifsc_code,
-            'branch_name' => $request->branch_name,
-            'account_type_id' => $request->account_type,
-            'role_id' => $request->role,
-            'team_id' => $request->team_name,
-        ]);
-        return redirect('/employee-list');
+                $this->userdetails->create([
+                    'user_id' => $userCredentials->id,
+                    'father_name' => $request->father_name,
+                    'mother_name' => $request->mother_name,
+                    'phone_number' => $request->phone_number,
+                    'emergency_contact_number' => $request->emergency_contact_number,
+                    'official_email' => $request->official_email,
+                    'joined_date' => $request->joined_date,
+                    'home_address' => $request->home_address,
+                    'date_of_birth' => $request->date_of_birth,
+                    'blood_group' => $request->blood_group,
+                    'pan_number' => $request->pan_number,
+                    'aadhar_number' => $request->aadhar_number,
+                    'bank_id' => $request->bank_name,
+                    'account_holder_name'    => $request->account_holder_name,
+                    'account_number' => $request->account_number,
+                    'ifsc_code' => $request->ifsc_code,
+                    'branch_name' => $request->branch_name,
+                    'account_type_id' => $request->account_type,
+                    'role_id' => $request->role,
+                    'team_id' => $request->team_name,
+                ]);
+                return redirect('/admin/employee-list');
+
+           } catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+            }
+          
     }
 
     /**
-     * List Employee.
+     * Employee List .
      *
      * @return \Illuminate\Http\Response
      */
     public function employeeList()
     {
-        $employeeList = $this->user->where('status', '1')->with('userDetail')->get();
-        return view('admin/employee/employee-list', compact('employeeList'));
+        try{
+                $employeeList = $this->user->where('status', '1')->with('userDetail')->get();
+                return view('admin/employee/employee-list', compact('employeeList'));
+
+        }catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+            }
     }
 
     /**
@@ -101,8 +124,13 @@ class EmployeeController extends Controller
      */
     public function employeeDetails($id)
     {
-        $employeeView = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
-        return view('admin/employee/employee-view', compact('employeeView'));
+        try{
+                $employeeView = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
+                return view('admin/employee/employee-view', compact('employeeView'));
+
+        }catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+            }    
     }
 
     /**
@@ -113,12 +141,17 @@ class EmployeeController extends Controller
      */
     public function employeeEdit($id)
     {
-        $employeeEdit = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
-        $bankName = $this->bankdetails->get();
-        $accountType = $this->accountType->get();
-        $role = $this->rolemodel->get();
-        $team = $this->teammodel->get();
-        return view('admin/employee/employee-edit', compact('employeeEdit', 'bankName', 'accountType', 'role', 'team'));
+        try{
+            $employeeEdit = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
+            $bankName = $this->bankdetails->get();
+            $accountType = $this->accountType->get();
+            $role = $this->rolemodel->get();
+            $team = $this->teammodel->get();
+            return view('admin/employee/employee-edit', compact('employeeEdit', 'bankName', 'accountType', 'role', 'team'));
+
+        } catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+            } 
     }
 
     /**
@@ -128,40 +161,45 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function employeeUpdate(Request $request)
+    public function employeeUpdate(EmployeeUpdateValidationRequest $request)
     {
-        $oldUser = $this->user->getSingleUser($request->id);
-        $this->user->where('id', $request->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
-        $user = $this->user->getSingleUser($request->id);
+        // try{
+            $oldUser = $this->user->getSingleUser($request->id);
+            $this->user->where('id', $request->id)->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+            $user = $this->user->getSingleUser($request->id);
 
-        if ($oldUser->email != $user->email) {
-            dispatch(new UpdateUserEmailJob($user));
-        }
-        $this->userdetails->where('user_id', $request->id)->update([
-            'father_name' => $request->father_name,
-            'mother_name' => $request->mother_name,
-            'phone_number' => $request->phone_number,
-            'emergency_contact_number' => $request->emergency_contact_number,
-            'official_email' => $request->official_email,
-            'joined_date' => $request->joined_date,
-            'home_address' => $request->home_address,
-            'date_of_birth' => $request->date_of_birth,
-            'blood_group' => $request->blood_group,
-            'pan_number' => $request->pan_number,
-            'aadhar_number' => $request->aadhar_number,
-            'bank_id' => $request->bank_name,
-            'account_holder_name'    => $request->account_holder_name,
-            'account_number' => $request->account_number,
-            'ifsc_code' => $request->ifsc_code,
-            'branch_name' => $request->branch_name,
-            'account_type_id' => $request->account_type,
-            'role_id' => $request->role,
-            'team_id' => $request->team_name,
-        ]);
-        return redirect('/employee-list');
+            if ($oldUser->email != $user->email) {
+                dispatch(new UpdateUserEmailJob($user));
+            }
+            $this->userdetails->where('user_id', $request->id)->update([
+                'father_name' => $request->father_name,
+                'mother_name' => $request->mother_name,
+                'phone_number' => $request->phone_number,
+                'emergency_contact_number' => $request->emergency_contact_number,
+                'official_email' => $request->official_email,
+                'joined_date' => $request->joined_date,
+                'home_address' => $request->home_address,
+                'date_of_birth' => $request->date_of_birth,
+                'blood_group' => $request->blood_group,
+                'pan_number' => $request->pan_number,
+                'aadhar_number' => $request->aadhar_number,
+                'bank_id' => $request->bank_name,
+                'account_holder_name'    => $request->account_holder_name,
+                'account_number' => $request->account_number,
+                'ifsc_code' => $request->ifsc_code,
+                'branch_name' => $request->branch_name,
+                'account_type_id' => $request->account_type,
+                'role_id' => $request->role,
+                'team_id' => $request->team_name,
+            ]);
+            return redirect('/admin/employee-list');
+
+        // } catch (\Throwable $exception) {
+        //     Log::info($exception->getMessage());
+        //     } 
     }
 
     /**
@@ -172,9 +210,14 @@ class EmployeeController extends Controller
      */
     public function employeeDelete(Request $request)
     {
-        $this->user->where('id', $request->id)->delete();
-        $this->userdetails->where('user_id', $request->id)->delete();
-        return back();
+        try{
+            $this->user->where('id', $request->id)->delete();
+            $this->userdetails->where('user_id', $request->id)->delete();
+            return back();
+
+        } catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+            }
     }
 
     /**
@@ -231,7 +274,7 @@ class EmployeeController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 );
-                Employee::insert($list);
+                UserDetails::insert($list);
                 return back();
             });
         } else {

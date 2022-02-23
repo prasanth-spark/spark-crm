@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Session;
 
 class LoggedIn
 {
@@ -14,10 +15,9 @@ class LoggedIn
      */
     public function handle($request, Closure $next)
     {
-        if (!is_null(request()->user())) {
-            return redirect('/');
-        } else {
-            return $next($request);
+        if(Session::get('id')!=null){
+            return redirect('/admin/dashboard');
         }
+        return $next($request);
     }
 }

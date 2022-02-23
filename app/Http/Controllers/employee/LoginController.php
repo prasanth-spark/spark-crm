@@ -31,11 +31,12 @@ class LoginController extends Controller
      */
     public function registerForm()
     {
-        $role = $this->rolemodel->get();
+        $role = $this->rolemodel->where('id','!=',1)->get();
         return view('employee/auth/employee-register-form', compact('role'));
     }
 
-    /**
+
+     /**
      *  Employee Register.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -91,27 +92,34 @@ class LoginController extends Controller
      */
     public function loginEmployee(LoginRequest $request)
     {
-        // dd($request->all());
-        $user = $this->user->where('email', $request->email)->first();
-        // dd($user->email);    
-        $request->session()->put('user_id', $user->id);   
-        $userId= $request->session()->get('user_id');
-        // dd($userId);
-        if ($user && Hash::check($request->password, $user->password)) {
-            $request->session()->put('user_id', $user->id);
-            return view('/employee/user-dashboard');
-        } else {
+        $employee = $this->user->where('email', $request->email)->first();
+        if ($employee && Hash::check($request->password, $employee->password)) {
+                $request->session()->put('employee', $employee->id);
+            return redirect('/employee/employee_dashboard');
+        }else{
             return back();
         }
     }
 
     /**
-     * Show ForgotpasswordForm view.
+     * Show Dashboard view.
      *
      * @return \Illuminate\Http\Response
      */
-    public function forgotPasswordForm()
+    public function employeeDashboard()
     {
-        return view('employee/auth/employee-forgot-form');
+            return view('/employee/user-dashboard');
+    }
+
+      /**
+     * Logout user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout()
+    {
+        \Session::flush();
+        return redirect('employee/login-form');
     }
 }

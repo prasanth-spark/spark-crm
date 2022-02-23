@@ -16,7 +16,7 @@
 @section('subcontent')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto"></h2>
-    <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+    <div class="w-full sm:w-auto flex mt-4 sm:mt-0 mb-3">
         <button class="btn btn-primary shadow-md mr-2"><a href="{{route('file-upload')}}">File-Upload</a></button>
         <button class="btn btn-primary shadow-md mr-2"><a href="{{route('employee-form')}}">Add New Employee</a></button>
     </div>
@@ -46,10 +46,10 @@
                 <td>{{$list->userDetail->blood_group}}</td>
                 <td class="table-report__action w-56">
                     <div class="flex justify-center items-center">
-                        <a class="flex items-center mr-3" href="{{url('/')}}/employee-details/{{$list->id}}">
+                        <a class="flex items-center mr-3" href="{{url('/')}}/admin/employee-details/{{$list->id}}">
                             <i data-feather="eye" class="w-4 h-4 mr-1"></i> view
                         </a>
-                        <a class="flex items-center mr-3" href="{{url('/')}}/employee-edit/{{$list->id}}">
+                        <a class="flex items-center mr-3" href="{{url('/')}}/admin/employee-edit/{{$list->id}}">
                             <i data-feather="edit" class="w-4 h-4 mr-1"></i> Edit
                         </a>
                         <a class="flex items-center text-theme-21" data-toggle="modal" data-target="#delete-confirmation-modal-{{$list->id}}">
