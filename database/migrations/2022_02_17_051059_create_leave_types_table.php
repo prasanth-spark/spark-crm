@@ -14,9 +14,9 @@ class CreateLeaveTypesTable extends Migration
     public function up()
     {
         Schema::create('leave_types', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('permission');
-            $table->string('leave');
+            $table->bigIncrements('id')->index();
+            $table->string('leave_type');
+            $table->integer('status')->default('1');
             $table->timestamps();
         });
     }

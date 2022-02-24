@@ -11,8 +11,8 @@ class Attendance extends Model
     protected $table = 'attendance';
     protected $guarded = [];
 
-    public function userID()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
+public function userId(){
+     return $this->belongsTo(User::class,'user_id','id');
+}
+
 }

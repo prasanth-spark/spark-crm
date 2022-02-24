@@ -81,7 +81,7 @@ class LoginController extends Controller
         $this->user->where('id', $id)->update([
             'email_verified_at' => now()
         ]);
-        return view('employee/auth/employee-login-form');
+        return redirect('/view-dashboard');
     }
 
     /**

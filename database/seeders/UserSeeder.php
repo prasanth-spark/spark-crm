@@ -6,8 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Faker\Provider\Uuid;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-
+use App\Models\User;
 class UserSeeder extends Seeder
 {
     /**
@@ -17,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert(
+        User::insert(
             [ 
                 'id' => Uuid::uuid(),
                 'name' => 'sparkouttech',

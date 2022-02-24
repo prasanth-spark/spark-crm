@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use DB;
+use App\Models\TeamModel;
 
 class TeamSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class TeamSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('teams')->insert([
+        TeamModel::insert([
             [ 
                 'id' => '1',
                 'team' => 'PHP',
