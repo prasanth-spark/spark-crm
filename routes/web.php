@@ -1,13 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\AuthController;
-use App\Http\Controllers\admin\PageController;
-use App\Http\Controllers\admin\DarkModeController;
-use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\employee\LoginController;
 use App\Http\Controllers\employee\AttendanceController;
 use App\Http\Controllers\employee\TaskController;
+use App\Http\Controllers\employee\UserProfileController;
+
 
 
 
@@ -56,4 +54,9 @@ use App\Http\Controllers\employee\TaskController;
             Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
             Route::post('attendance-list',[AttendanceController::class, 'attendanceList'])->name('attendance-list');
 
-});
+
+            //User Profile
+            Route::get('user-profile-form',[UserProfileController::class, 'userProfileForm'])->name('user-profile-form');
+            Route::post('user-profile-add',[UserProfileController::class, 'userProfileAdd'])->name('user-profile-add');
+              
+    });
