@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Models\TaskSheet;
+use Illuminate\Support\Facades\Session;
+
 
 
 class TaskController extends Controller
@@ -35,9 +37,8 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function taskAdd(TaskRequest $request){
-        // dd($request->session()->get('employee'));
         $this->taskSheet->create([
-          'user_id' => $request->session()->get('employee'),
+          'user_id' => $request->session()->get('id'),
           'date' => $request->date,
           'project_name' => $request->project_name,
           'task_module' => $request->task_module,
@@ -58,7 +59,8 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function taskList(){
-        $tasks=$this->taskSheet->tobase()->get();
+        $userId=Session::get('id');
+        $tasks=$this->taskSheet->where('user_id',$userId)->tobase()->get();
         return view('employee/task/task-list',compact('tasks'));
     }
 
