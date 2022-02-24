@@ -22,37 +22,54 @@
                             </label>
                          <input id="validation-form-1" type="date" class="form-control" placeholder="Date" name="date" value="{{$taskEdit->date}}" required>       
                         </div>
+                        @error('date')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
                          <div class="input-form mt-3">
                             <label for="regular-form-2" class="form-label w-full flex flex-col sm:flex-row">
                                 Project Name
                             </label>
                             <input id="validation-form-2" type="text" class="form-control" placeholder=" Project Name" name='project_name' value="{{$taskEdit->project_name}}" required>
                         </div>
+                        @error('project_name')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
                         <div class="input-form mt-3">
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Module
                             </label>
                             <input id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module' value="{{$taskEdit->task_module}}" required>
                         </div>
+                        @error('task_module')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
                         <div class="input-form mt-3">
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Estimated Hours
                             </label>
                             <input id="regular-form-3" type="text" class="form-control" placeholder=" Estimated Hours" name='estimated_hours' value="{{$taskEdit->estimated_hours}}" required>
                         </div>
+                        @error('estimated_hours')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
                         <div class="input-form mt-3">
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Worked Hours
                             </label>
                             <input id="regular-form-3" type="text" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskEdit->worked_hours}}" required>
                         </div>
+                        @error('worked_hours')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
                         <div class="input-form mt-3">
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                Status
+                                Task Status
                             </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="Status" name='status' value="{{$taskEdit->status}}" >
+                            <input id="regular-form-4" type="text" class="form-control" placeholder="Task Status" name='task_status' value="{{$taskEdit->task_status}}" >
                         </div>
-                        
+                        @error('task_status')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
                         <div>
                             <button type="submit" class="btn btn-primary mt-5">Update</button>
                             <button class="btn btn-primary mt-5"><a href="/employee/task-list">Back</a></button>

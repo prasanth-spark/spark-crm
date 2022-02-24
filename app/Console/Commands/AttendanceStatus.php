@@ -41,12 +41,24 @@ class AttendanceStatus extends Command
      */
     public function handle()
     {
-        $id = User::where('id')->first();
-        $user = Attendance::where('user_id',$id)->first();
-        $status = $user->status;
-        if($status==0){
-            Mail::to($user->email)->send(new AttendanceRemainder($user));
-        }   
-   
+        $user = User::where('status','!=',0)->pluck('id');
+        // dd($user);
+        $attendance = Attendance::pluck('user_id');
+        // dd($user,$attendance);
+        $attendanceNotUpdatedUser = array_diff($user,$attendance);
+        // dd($attendanceNotUpdatedUser);
+        
+        foreach($attendanceNotUpdatedUser as $attendanceUpdatedUser){
+            $userValue = User::find($attendanceUpdatedUser);
+            $userMail = $userValue->email;
+             Attendance::create([
+                'user_id'=>$userValue->id,
+                'attendance_status'=>'0',
+                'leave_status'=>'0',
+                'status'=>'0']);
+        }
+            if('status'==0){
+            Mail::to($userMail)->send(new AttendanceRemainder($user));
+        }  
     }
 }

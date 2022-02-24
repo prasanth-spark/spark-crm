@@ -29,6 +29,6 @@ class UpdateUserMail extends Mailable
     public function build()
     {
         return $this->subject('UpdateMail verification')
-            ->view('admin/updatemail');
+            ->view('admin/email/updatemail');
     }
 }

@@ -77,11 +77,11 @@
                       <div class="col-span-12 md:col-span-6">
                         <div class="input-form mt-3">
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                Status
+                                Task Status
                             </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="Status" name='status'>
+                            <input id="regular-form-4" type="text" class="form-control" placeholder="Task Status" name='task_status'>
                         </div>
-                        @error('status')
+                        @error('task_status')
                         <span style="color:red">{{$message}}</span>
                         @enderror
                       </div> 

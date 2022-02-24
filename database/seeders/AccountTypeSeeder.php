@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Ramsey\Uuid\Uuid;
-use DB;
+use App\Models\AccountType;
 
 class AccountTypeSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class AccountTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('account_types')->insert([
+        AccountType::insert([
             [                
                 'id' => Uuid::uuid4(),
                 'account_type' => 'savings account',

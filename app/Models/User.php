@@ -75,4 +75,13 @@ class User extends Authenticatable
     {
         return $this->where('id', $id)->first();
     }
+
+    public function userTeamId()
+    {
+        return $this->hasMany(UserDetails::class, 'user_id', 'id');
+    }
+    public function userAttendanceId(){
+
+        return $this->hasOne(Attendance::class, 'user_id', 'id');
+    }
 }

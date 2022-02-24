@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Ramsey\Uuid\Uuid;
-use DB;
+use App\Models\BankDetails;
 
 class BankNameSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class BankNameSeeder extends Seeder
     public function run()
     {
         // Default credentials
-        DB::table('bank_details')->insert([
+        BankDetails::insert([
             [                
                 'id' => Uuid::uuid4(),
                 'bank_name' => 'HDFC Bank',

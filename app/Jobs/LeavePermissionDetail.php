@@ -8,22 +8,23 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Mail\VerfyEmployeeMail;
+use App\Mail\LeaveAcceptanceMail;
 use Illuminate\Support\Facades\Mail;
 
-class VerfyUserEmailJob implements ShouldQueue
+class LeavePermissionDetail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $userCredentials;
-
+  public $teamLeadMail,$user,$reason;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($userCredentials)
+    public function __construct($teamLeadMail,$user,$reason)
     {
-        $this->userCredentials = $userCredentials;
+       $this->teamLeadMail=$teamLeadMail;
+       $this->user=$user;
+       $this->reason=$reason;
     }
 
     /**
@@ -33,7 +34,10 @@ class VerfyUserEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        $user = $this->userCredentials;
-        Mail::to($user->email)->send(new  VerfyEmployeeMail($user));
+        $user=$this->user;
+        $reason=$this->reason;
+        $teamLeadMail =$this->teamLeadMail; 
+        $email = new LeaveAcceptanceMail($user,$reason);
+        Mail::to($teamLeadMail)->send($email);
     }
 }

@@ -7,19 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VerfyEmployeeMail extends Mailable
+class TaskRemainderMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user;
-
+    protected $users;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($userName)
     {
-        $this->user = $user;
+        $this->userName = $userName;
     }
 
     /**
@@ -29,7 +28,8 @@ class VerfyEmployeeMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('User verification')
-            ->view('admin//email/verificationmail');
+        return $this->markdown('emails.taskRemainderMail')
+                    ->subject('Remainder')
+                    ->with('users',$this->userName);
     }
 }

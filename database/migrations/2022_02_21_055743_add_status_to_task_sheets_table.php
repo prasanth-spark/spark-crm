@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTeamsTable extends Migration
+class AddStatusToTaskSheetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateTeamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('teams', function (Blueprint $table) {
-            $table->id()->index();
-            $table->string('team',50);
-            $table->tinyInteger('status')->default(1);
-            $table->timestamps();
+        Schema::table('task_sheets', function (Blueprint $table) {
+            $table->string('status')->default(0)->after('task_status');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateTeamsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teams');
+        Schema::table('task_sheets', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 }

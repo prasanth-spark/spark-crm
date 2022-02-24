@@ -21,7 +21,7 @@ use App\Http\Controllers\employee\UserProfileController;
 */
 
 
-    Route::middleware('userloggedin_auth')->group(function() {   
+    Route::middleware('userloggedin_auth')->group(function() {    
 
             //employee register and login start
             Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
@@ -46,24 +46,17 @@ use App\Http\Controllers\employee\UserProfileController;
             Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
             Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
 
-            // Attendance  
+          // Attendance  
             Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
-            Route::get('attendance-status/{status}',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
-            Route::get('leave-request/{leave_type}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
+            Route::Post('attendance-status',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
+            Route::get('leave-request/{id}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
+            Route::post('leave-status',[AttendanceController::class, 'leaveStatus'])->name('leave-status');
+            Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
             Route::post('attendance-list',[AttendanceController::class, 'attendanceList'])->name('attendance-list');
+
 
             //User Profile
             Route::get('user-profile-form',[UserProfileController::class, 'userProfileForm'])->name('user-profile-form');
             Route::post('user-profile-add',[UserProfileController::class, 'userProfileAdd'])->name('user-profile-add');
-
-            
-                     
+              
     });
-
-
-
-
-
-
-
-

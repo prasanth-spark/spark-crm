@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AccountTypeSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(TeamSeeder::class);
-
+        $this->call(LeaveTypeSeeder::class);
     }
 }
