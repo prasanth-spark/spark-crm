@@ -8,12 +8,14 @@ use App\Models\BankDetails;
 use App\Models\RoleModel;
 use App\Models\TeamModel;
 use App\Models\User;
+use App\Models\TaskSheet;
+
 
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user , TaskSheet $tasksheet)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;
@@ -21,6 +23,8 @@ class TaskController extends Controller
         $this->rolemodel   = $rolemodel;
         $this->teammodel   = $teammodel;
         $this->user        = $user;
+        $this->tasksheet        = $tasksheet;
+
     }
      /**
      * Show specified view.
@@ -30,7 +34,20 @@ class TaskController extends Controller
     public function taskList()
     {
          $teamList = $this->teammodel->get();
-         return view('admin/task/task-list',compact('teamList'));
+         $taskList = $this->user->where('role_id','!=',1)->with('userDetail','userDetail.teamToUserDetails','roleToUser','userTask')->get();
+         return view('admin/task/task-list',compact('teamList','taskList'));
+    }
+
+    /**
+     * Task Details view.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function taskDetails($id)
+    {
+         $taskList = $this->tasksheet->where('id',$id)->with('taskToUser','taskToUserDetails.teamToUserDetails','taskToUser.roleToUser')->first();
+     //     dd($taskList);
+         return view('admin/task/task-details',compact('taskList'));
     }
 
       /**
@@ -41,8 +58,13 @@ class TaskController extends Controller
 
      public function taskTeamList(Request $request)
      {
-        $teamList= $this->userdetails->where('team_id',$request->team_name)->get();
-        return view('admin/attendance/teamlist');
+          // dd($request->team_id);
+               //   $t=$request->team_id;
+        $teamList= $this->tasksheet->whereHas('taskToUser.userDetail', function ($query) use($request){
+                    $query->where('team_id','=',$request->team_id);
+                    })->with(['taskToUser','taskToUser.roleToUser','taskToUser.userDetail'])->get();
+     //    dd($teamList);
+        return view('admin/task/task-team-list',compact('teamList'));
      }
 
 }
