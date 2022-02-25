@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Employee;
+use App\Models\UserDetails;
 use App\Mail\AnniverysaryReminder;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class AnniverysaryNotificatioon extends Command
 {
@@ -40,7 +40,7 @@ class AnniverysaryNotificatioon extends Command
      */
     public function handle()
     {
-        $employees = Employee::whereMonth('joined_date', '=', date('m'))->whereDay('joined_date', '=', date('d'))->get(); 
+        $employees = UserDetails::whereMonth('joined_date', '=', date('m'))->whereDay('joined_date', '=', date('d'))->get(); 
 
          foreach($employees as $employee)
          {
