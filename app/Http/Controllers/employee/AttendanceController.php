@@ -59,13 +59,13 @@ class AttendanceController extends Controller
         }
         $userId= $request->session()->get('id');     
         $user = User::find($userId);
-        // $date = Carbon::now();
-        // $date = $date->format("d-m-Y");
+        $date = Carbon::now();
+        $date = $date->format("d-m-Y");
          $attendance =   $this->attendance->create([
                     'user_id'=>$userId,
                     'attendance_status'=>$request->value,
                     'leave_status'=>'0',
-                    'date'=>'1',
+                    'date'=>$date,
                     'status'=> 1
                   ]);
             $attendance->save(); 
