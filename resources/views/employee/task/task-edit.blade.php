@@ -9,10 +9,10 @@
         <div class="intro-y col-span-12 lg:col-span-6">
             <div class="intro-y box">
     <!-- BEGIN: Form Validation -->
-                <div id="form-validation" class="p-5">
+                <div  class="p-5">
                     <div class="preview">
         <!-- BEGIN: Validation Form -->
-            <form class="validate-form" action="{{route('task-update')}}" method="post" id="theForm">
+            <form  action="{{route('task-update')}}" method="post" >
                 <input  type="hidden" name="id"  value="{{$taskEdit->id}}">
                 
                         @csrf
@@ -47,7 +47,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Estimated Hours
                             </label>
-                            <input id="regular-form-3" type="text" class="form-control" placeholder=" Estimated Hours" name='estimated_hours' value="{{$taskEdit->estimated_hours}}" required>
+                            <input id="regular-form-3" type="number" class="form-control" placeholder=" Estimated Hours" name='estimated_hours' value="{{$taskEdit->estimated_hours}}" required>
                         </div>
                         @error('estimated_hours')
                         <span style="color:red">{{$message}}</span>
@@ -56,7 +56,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Worked Hours
                             </label>
-                            <input id="regular-form-3" type="text" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskEdit->worked_hours}}" required>
+                            <input id="regular-form-3" type="number" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskEdit->worked_hours}}" required>
                         </div>
                         @error('worked_hours')
                         <span style="color:red">{{$message}}</span>
@@ -65,7 +65,13 @@
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Status
                             </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="Task Status" name='task_status' value="{{$taskEdit->task_status}}" >
+                        
+                            <select placeholder=" Task Status" type="text" class="tom-select w-full" id="regular-form-4" name='task_status' >
+                                <option value="{{$taskEdit->id}}">@if($taskEdit->task_status == 1)pending @else completed @endif</option>
+                                @foreach($tasks as $task)
+                                <option value="{{$task->id}}">{{$task->task_status}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         @error('task_status')
                         <span style="color:red">{{$message}}</span>
