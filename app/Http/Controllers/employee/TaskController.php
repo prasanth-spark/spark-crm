@@ -8,6 +8,7 @@ use App\Http\Requests\TaskRequest;
 use App\Models\TaskSheet;
 use App\Models\TaskStatus;
 
+
 class TaskController extends Controller
 {
 
@@ -15,7 +16,6 @@ class TaskController extends Controller
     {
         $this->taskSheet = $taskSheet;
         $this->taskStatus = $taskStatus;
-
     }
 
     /**
@@ -57,7 +57,7 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function taskList(){
-        $tasks=$this->taskSheet->tobase()->get();
+        $tasks=$this->taskSheet->get();
         return view('employee/task/task-list',compact('tasks'));
     }
 
