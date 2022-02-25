@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LeaveTypeSeeder::class);
         $this->call(UserSeeder::class);
 
+
     }
 }
