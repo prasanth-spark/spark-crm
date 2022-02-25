@@ -57,13 +57,13 @@ class User extends Authenticatable
 
     public function roleToUser()
     {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
+        return $this->belongsTo(RoleModel::class, 'role_id', 'id');
     }
 
 
     public function teamToUser()
     {
-        return $this->belongsTo(Team::class, 'team_id', 'id');
+        return $this->belongsTo(TeamModel::class, 'team_id', 'id');
     }
 
     public function userDetail()
@@ -83,5 +83,9 @@ class User extends Authenticatable
     public function userAttendanceId(){
 
         return $this->hasOne(Attendance::class, 'user_id', 'id');
+    }
+    public function userTask(){
+
+        return $this->hasMany(TaskSheet::class, 'user_id', 'id');
     }
 }

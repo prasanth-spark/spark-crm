@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Models\TaskSheet;
+use Illuminate\Support\Facades\Session;
 use App\Models\TaskStatus;
 
 class TaskController extends Controller
@@ -57,7 +58,8 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function taskList(){
-        $tasks=$this->taskSheet->tobase()->get();
+        $userId=Session::get('id');
+        $tasks=$this->taskSheet->where('user_id',$userId)->tobase()->get();
         return view('employee/task/task-list',compact('tasks'));
     }
 

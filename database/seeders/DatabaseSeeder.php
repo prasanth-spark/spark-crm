@@ -15,10 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
         $this->call(TeamSeeder::class);
-        $this->call(UserSeeder::class);
         $this->call(BankNameSeeder::class);
         $this->call(AccountTypeSeeder::class);
-        $this->call(TaskStatusSeeder::class);
+        $this->call(LeaveTypeSeeder::class);
+        $this->call(UserSeeder::class);
+
 
     }
 }
