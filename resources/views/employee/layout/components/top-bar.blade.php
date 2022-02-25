@@ -103,7 +103,7 @@
                     <div class="font-medium">{{ Session::get('name') }}</div>
                 </div>
                 <div class="p-2">
-                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
+                    <a href="{{route('user-profile-form')}}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
                         <em data-feather="user" class="w-4 h-4 mr-2"></em> Profile
                     </a>
                     <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">

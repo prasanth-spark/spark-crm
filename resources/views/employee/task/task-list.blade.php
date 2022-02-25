@@ -43,7 +43,11 @@
                             <td>{{$task->task_module}}</td>  
                             <td>{{$task->estimated_hours}}</td>  
                             <td>{{$task->worked_hours}}</td>
-                            <td>{{$task->task_status}}</td>
+                            @if($task->task_status == 1)
+                            <td>Pending</td>
+                            @else 
+                            <td>Completed</td>
+                            @endif
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
                                     <a class="flex items-center mr-3" href="{{url('/')}}/employee/task-details/{{$task->id}}">
