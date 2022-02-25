@@ -18,7 +18,7 @@ class CreateAttendanceTable extends Migration
             $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('attendance_status')->nullable()->comment('0->absent,1->present');
-            $table->integer('leave_status')->default('0')->comment('0->pending,1->approved,2->rejected');  
+            $table->integer('leave_status')->default('0')->comment('1->pending,2->approved,3->rejected');  
             $table->integer('status')->default('0');
             $table->timestamps();
         });
