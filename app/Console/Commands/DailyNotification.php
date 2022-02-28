@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Employee;
+use App\Models\UserDetails;
 use App\Mail\BirthdayReminder;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 
 class DailyNotification extends Command
@@ -41,7 +41,7 @@ class DailyNotification extends Command
      */
     public function handle()
     {
-        $employees = Employee::whereMonth('data_of_birth', '=', date('m'))->whereDay('data_of_birth', '=', date('d'))->get(); 
+        $employees = UserDetails::whereMonth('data_of_birth', '=', date('m'))->whereDay('data_of_birth', '=', date('d'))->get(); 
 
          foreach($employees as $employee)
          {

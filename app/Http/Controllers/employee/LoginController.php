@@ -54,11 +54,12 @@ class LoginController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'status'=>'2',
             'role_id' => $request->role,
         ]);
         dispatch(new WelcomeEmailJob($userCredentials));
 
-        return back()->with('success', 'Verify mail to get in');
+        return back()->with('success', 'Verify mail to get in!. Please wait for the admin approval');
     }
 
     /**
@@ -92,7 +93,7 @@ class LoginController extends Controller
      */
     public function loginEmployee(LoginRequest $request)
     {
-        $employee = $this->user->where('email', $request->email)->where('role_id','!=',1)->first();
+        $employee = $this->user->where('email', $request->email)->where('role_id','!=',1)->where('status',1)->first();
         if ($employee && Hash::check($request->password, $employee->password) && !empty($employee->email_verified_at)) {
             session::put('id', $employee->id);
             session::put('name', $employee->name);
