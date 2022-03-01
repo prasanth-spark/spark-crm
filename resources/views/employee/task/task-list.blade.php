@@ -38,7 +38,38 @@
        
         
         <!-- END: Data List -->
-    
+        <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#tasklist').DataTable({
+                "processing": true,
+                "serverSide": true,
+                paging: true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "lengthChange": true,
+                "bProcessing": true,
+                "bServerSide": true,
+                "destroy": true,
+                "sAjaxSource": "task-pagination",
+
+                columns: [
+                    { data: "id"},
+                    { data: "date" },
+                    { data: "project_name" },
+                    { data: "task_module" },
+                    { data: "estimated_hours"},
+                    { data: "worked_hours"},
+                    { data: "task_status"},
+                    { data: "actions" },
+                ],
+            } );
+        } );
+        </script>
 
 @endsection
 
