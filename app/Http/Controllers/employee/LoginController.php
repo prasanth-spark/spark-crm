@@ -101,7 +101,7 @@ class LoginController extends Controller
             session::put('name', $employee->name);
             return redirect('/employee/employee_dashboard');
         }else{
-            return back();
+            return back()->with('error','Email does not match');
         }
     }
 
