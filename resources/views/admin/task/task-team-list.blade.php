@@ -14,8 +14,8 @@
 @endsection
 
 @section('subcontent')
-<div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto"></h2>
+<div class="intro-y flex flex-col sm:flex-row items-center mt-8 mb-3">
+    <h2 class="text-lg font-medium mr-auto "></h2>
    
     <button class="btn btn-primary mt-5"><a href="/admin/task-list">Back</a></button>
 
@@ -43,7 +43,7 @@
                 <td>{{$team->taskToUser->name}}</td>
                 <td>{{$team->taskToUser->roleToUser->role}}</td>
                 <td>{{$team->project_name}}</td>
-                <td>{{$team->task_status}}</td>
+                <td>{{($team->task_status == 1) ? "pending" : "completed";}}</td>
                 <td>{{$team->task_module}}</td>
                 <td>{{$team->estimated_hours}}</td>
                 <td>{{$team->worked_hours}}</td>

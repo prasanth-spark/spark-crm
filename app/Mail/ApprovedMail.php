@@ -7,19 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-
-class BirthdayReminder extends Mailable
+class ApprovedMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $employee;
+    public $approved;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($employee)
+    public function __construct($approved)
     {
-        $this->employee = $employee;
+        $this->approved=$approved;
     }
 
     /**
@@ -29,7 +29,8 @@ class BirthdayReminder extends Mailable
      */
     public function build()
     {
-        return $this->subject('Birthday Notification')
-            ->view('admin//email/birthday');
+        return $this->subject('Admin Approved')
+            ->view('admin//email/approved-mail');
+    
     }
 }

@@ -1,7 +1,7 @@
 @extends('../admin/layout/components/' . $layout)
 
 @section('subhead')
-    <title>Dashboard - Tinker - Tailwind HTML Admin Template</title>
+    <title>Dashboard - Employee CRM</title>
 @endsection
 
 @section('subcontent')

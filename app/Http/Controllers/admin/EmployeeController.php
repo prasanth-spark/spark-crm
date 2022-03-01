@@ -12,6 +12,7 @@ use App\Models\TeamModel;
 use App\Models\User;
 use App\Jobs\VerfyUserEmailJob;
 use App\Jobs\UpdateUserEmailJob;
+use App\Jobs\AdminApproved;
 use App\Http\Request\EmployeeValidationRequest;
 use App\Http\Request\EmployeeUpdateValidationRequest;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -62,7 +63,10 @@ class EmployeeController extends Controller
                 $userCredentials = $this->user->create([
                     'name' => $request->name,
                     'email' => $request->email,
+                    'status'=>'1',
                     'password' => Hash::make($request->password),
+                    'role_id' => $request->role,
+
                 ]);
                 dispatch(new VerfyUserEmailJob($userCredentials));
 
@@ -85,7 +89,7 @@ class EmployeeController extends Controller
                     'ifsc_code' => $request->ifsc_code,
                     'branch_name' => $request->branch_name,
                     'account_type_id' => $request->account_type,
-                    'role_id' => $request->role,
+                    'role_id' => $userCredentials->role_id,
                     'team_id' => $request->team_name,
                 ]);
                 return redirect('/admin/employee-list');
@@ -104,7 +108,8 @@ class EmployeeController extends Controller
     public function employeeList()
     {
         try{
-                $employeeList = $this->user->where('status', '1')->with('userDetail')->get();
+
+                $employeeList = $this->user->where('status',1)->with('userDetail')->get();
                 return view('admin/employee/employee-list', compact('employeeList'));
 
         }catch (\Throwable $exception) {
@@ -141,7 +146,7 @@ class EmployeeController extends Controller
             $employeeEdit = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
-            $role = $this->rolemodel->get();
+            $role = $this->rolemodel->where('id','!=',1)->get();
             $team = $this->teammodel->get();
             return view('admin/employee/employee-edit', compact('employeeEdit', 'bankName', 'accountType', 'role', 'team'));
 
@@ -215,6 +220,59 @@ class EmployeeController extends Controller
             Log::info($exception->getMessage());
             }
     }
+
+     /**
+     * Show specified view.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function newRegisterList()
+    {
+        try{
+            $newRegisterList = $this->user->whereIn('status', [2, 3])->with('roleToUser')->get();
+            return view('admin/employee/new-register-form', compact('newRegisterList'));
+        } 
+        catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+        }
+    }
+   
+    /**
+     * Approved status .
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adminApproved($id)
+    {
+        try{
+            $adminApprovedMail= $this->user->where('id',$id)->first();
+            $adminApprovedMail->update(['status'=>'3']);
+            dispatch(new AdminApproved($adminApprovedMail));
+             return back();
+        } 
+        catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+        }
+    }
+
+     /**
+     * Rejected status .
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adminRejected($id)
+    {
+        try{
+             $this->user->where('id',$id)->update(['status'=>2]);
+             return back();
+        } 
+        catch (\Throwable $exception) {
+            Log::info($exception->getMessage());
+        }
+    }
+
+
+
 
     /**
      * file upload.

@@ -7,19 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-
-class BirthdayReminder extends Mailable
+class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
-    public $employee;
+    public $details;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($employee)
+    public function __construct($details)
     {
-        $this->employee = $employee;
+        $this->details=$details;
     }
 
     /**
@@ -29,7 +28,7 @@ class BirthdayReminder extends Mailable
      */
     public function build()
     {
-        return $this->subject('Birthday Notification')
-            ->view('admin//email/birthday');
-    }
+        return $this->markdown('employee//email/forgot-password')->with('details',$this->details);
+
+      }
 }
