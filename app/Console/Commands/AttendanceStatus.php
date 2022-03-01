@@ -50,7 +50,6 @@ class AttendanceStatus extends Command
         foreach($attendanceNotUpdatedUser as $attendanceUpdatedUser){
             $userValue = User::find($attendanceUpdatedUser);
             $userMail = $userValue->email;
-            // dd($userMail);
              Attendance::create([
                 'user_id'=>$userValue->id,
                 'attendance_status'=>'0',

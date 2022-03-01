@@ -8,12 +8,13 @@ use App\Models\BankDetails;
 use App\Models\RoleModel;
 use App\Models\TeamModel;
 use App\Models\User;
+use App\Models\Attendance;
 
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user,Attendance $attendance)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;
@@ -21,6 +22,8 @@ class AttendanceController extends Controller
         $this->rolemodel   = $rolemodel;
         $this->teammodel   = $teammodel;
         $this->user        = $user;
+        $this->attendance  = $attendance;
+
     }
      /**
      * Show specified view.
@@ -30,7 +33,8 @@ class AttendanceController extends Controller
     public function attendanceList()
     {
              $teamList = $this->teammodel->get();
-             return view('admin/attendance/attendance-list',compact('teamList'));
+             $attendanceList = $this->attendance->with('attendanceToUser','attendanceToUser.roleToUser','attendanceToUserDetails.teamToUserDetails')->get();
+             return view('admin/attendance/attendance-list',compact('attendanceList','teamList'));
     }
 
       /**
@@ -41,8 +45,10 @@ class AttendanceController extends Controller
 
      public function attendanceTeamList(Request $request)
      {
-        $teamList= $this->userdetails->where('team_id',$request->team_name)->get();
-        return view('admin/attendance/teamlist');
+        $attendanceTeamList= $this->attendance->whereHas('attendanceToUserDetails', function ($query) use($request){
+            $query->where('team_id','=',$request->team_id);
+            })->with('attendanceToUser','attendanceToUser.roleToUser','attendanceToUserDetails')->get();
+        return view('admin/attendance/attendance-teamlist',compact('attendanceTeamList'));
      }
 
 }

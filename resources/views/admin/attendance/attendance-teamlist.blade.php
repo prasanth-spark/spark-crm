@@ -14,18 +14,9 @@
 @endsection
 
 @section('subcontent')
-<div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+<div class="intro-y flex flex-col sm:flex-row items-center mt-8 mb-3">
     <h2 class="text-lg font-medium mr-auto"></h2>
-    <form action="{{route('attendance-teamlist')}}" class="flex w-3/12 mb-3 space-x-4" method="post">
-        @csrf
-        <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4" name='team_id'>
-            <option value selected="selected" disabled="disabled"></option>
-            @foreach($teamList as $t)
-            <option value="{{$t->id}}"> {{$t->team}}</option>
-            @endforeach
-        </select>
-        <button type="submit" class="btn btn-primary mt-0">Submit</button>
-    </form>
+    <button class="btn btn-primary mt-5"><a href="/admin/attendance-list">Back</a></button>
 
 </div>
 <!-- BEGIN: Data List -->
@@ -35,22 +26,17 @@
             <tr>
                 <th class="whitespace-nowrap">DATE</th>
                 <th class="whitespace-nowrap">NAME</th>
-                <th class="whitespace-nowrap">TEAM</th>
                 <th class="whitespace-nowrap">ROLE</th>
                 <th class="whitespace-nowrap">ATTENDANCE STATUS</th>
-                <th class="text-center whitespace-nowrap">ACTIONS</th>
             </tr>
         </thead>
         <tbody>
-        @foreach($attendanceList as $attendance)
-                <tr>  
-
+        @foreach($attendanceTeamList as $attendance)
+                <tr>     
                     <td>{{$attendance->date}}</td>
                     <td>{{$attendance->attendanceToUser->name}}</td>
-                    <td>{{$attendance->attendanceToUserDetails->teamToUserDetails->team}}</td>
                     <td>{{$attendance->attendanceToUser->roleToUser->role}}</td>
                     <td>{{($attendance->attendance_status == 1) ? "present" : "absent";}}</td>
-                    <td></td>
                 </tr>
             @endforeach
         </tbody>

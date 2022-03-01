@@ -46,7 +46,7 @@
                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                             Task Status
                         </label>
-                        <input id="regular-form-4" type="email" class="form-control"  value="{{$taskList->task_status}}">
+                        <input id="regular-form-4" type="email" class="form-control" value="{{($taskList->task_status == 1) ? 'pending' : 'completed';}}">
                     </div>
                     <div class="input-form mt-3">
                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
