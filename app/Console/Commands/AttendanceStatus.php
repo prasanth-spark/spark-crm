@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use App\Mail\AttendanceRemainder;
 use Illuminate\Support\Facades\Mail;
-
+use Carbon\Carbon;
 class AttendanceStatus extends Command
 {
     /**
@@ -41,13 +41,12 @@ class AttendanceStatus extends Command
      */
     public function handle()
     {
-        $user = User::where('status','!=',0)->pluck('id');
-        // dd($user);
-        $attendance = Attendance::pluck('user_id');
-        // dd($user,$attendance);
+        $date = Carbon::now();
+        $date = $date->format("d-m-Y");
+        $user = User::where('status','!=',0)->pluck('id')->toArray();
+        $attendance = Attendance::pluck('user_id')->toArray();
         $attendanceNotUpdatedUser = array_diff($user,$attendance);
-        // dd($attendanceNotUpdatedUser);
-        
+    
         foreach($attendanceNotUpdatedUser as $attendanceUpdatedUser){
             $userValue = User::find($attendanceUpdatedUser);
             $userMail = $userValue->email;
@@ -55,10 +54,9 @@ class AttendanceStatus extends Command
                 'user_id'=>$userValue->id,
                 'attendance_status'=>'0',
                 'leave_status'=>'0',
+                'date'=>$date,
                 'status'=>'0']);
+                Mail::to($userMail)->send(new AttendanceRemainder($userValue));
         }
-            if('status'==0){
-            Mail::to($userMail)->send(new AttendanceRemainder($user));
-        }  
     }
 }
