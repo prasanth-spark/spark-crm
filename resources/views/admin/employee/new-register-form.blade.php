@@ -2,8 +2,14 @@
 
 @section('subhead')
 <title>Employee List</title>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 <link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
 @endsection
 
@@ -11,9 +17,7 @@
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto"></h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0 mb-3">
-        <button class="btn btn-primary shadow-md mr-2"><a href="{{route('file-upload')}}">File-Upload</a></button>
-        <button class="btn btn-primary shadow-md mr-2"><a href="{{route('employee-form')}}">Add New Employee</a></button>
-        <button class="btn btn-primary shadow-md mr-2"><a href="{{route('new-register-list')}}">New Register List</a></button>
+        <button class="btn btn-primary shadow-md mr-2"><a href="{{route('employee-list')}}">Back</a></button>
     </div>
 </div>
 <!-- BEGIN: Data List -->
@@ -21,35 +25,25 @@
     <table id="employeelist" class="table table-report -mt-2">
         <thead>
             <tr>
-                <th class="whitespace-nowrap">EMPLOYEE-CODE</th>
                 <th class="whitespace-nowrap">NAME</th>
-                <th class="whitespace-nowrap">FATHER NAME</th>
-                <th class="text-center whitespace-nowrap">MOTHER NAME</th>
-                <th class="text-center whitespace-nowrap">PHONE</th>
-                <th class="text-center whitespace-nowrap">BLOOD GROUP</th>
+                <th class="whitespace-nowrap">ROLE</th>
                 <th class="text-center whitespace-nowrap">ACTIONS</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($employeeList as $list)
+            @foreach($newRegisterList as $list)
             <tr>
-                <td>{{isset($list->userDetail->employee_id) ? $list->userDetail->employee_id:''}}</td>
                 <td>{{$list->name}}</td>
-                <td>{{isset($list->userDetail->father_name) ? $list->userDetail->father_name:''}}</td>
-                <td>{{isset($list->userDetail->mother_name) ? $list->userDetail->mother_name:''}}</td>
-                <td>{{isset($list->userDetail->phone_number) ? $list->userDetail->phone_number:''}}</td>
-                <td>{{isset($list->userDetail->blood_group) ? $list->userDetail->blood_group:''}}</td>
+                <td>{{isset($list->roleToUser->role) ? $list->roleToUser->role:''}}</td>
                 <td class="table-report__action w-56">
-                    <div class="flex justify-center items-center">
-                        <a class="flex items-center mr-3" href="{{url('/')}}/admin/employee-details/{{$list->id}}">
-                            <i data-feather="eye" class="w-4 h-4 mr-1"></i> view
+                    <div class="flex justify-center items-center space-x-6">
+                        <a class="flex items-center text-theme-20" href="{{url('/')}}/admin/approved/{{$list->id}}">
+                            <i data-feather="edit" class="w-4 h-4 mr-1"></i> Approved
                         </a>
-                        <a class="flex items-center mr-3" href="{{url('/')}}/admin/employee-edit/{{$list->id}}">
-                            <i data-feather="edit" class="w-4 h-4 mr-1"></i> Edit
+                        <a class="flex items-center text-theme-21" href="{{url('/')}}/admin/rejected/{{$list->id}}">
+                            <i data-feather="edit" class="w-4 h-4 mr-1"></i> Rejected
                         </a>
-                        <a class="flex items-center text-theme-21" data-toggle="modal" data-target="#delete-confirmation-modal-{{$list->id}}">
-                            <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete
-                        </a>
+  
                     </div>
                 </td>
             </tr>

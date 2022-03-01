@@ -30,12 +30,10 @@ class AttendanceController extends Controller
         $date = Carbon::now();
         $date = $date->format("d-m-Y");
         $attendance= $this->attendance->where(['user_id' => $userId ,'date' => $date])->first();
-    // dd($attendance);    
         return view('/employee/attendance-module',compact('user','attendance'));
     }
     public function attendanceStatus(Request $request)
     { 
-    //  dd($request->all());
         $date = date_create($request->start_date);
         $edate = date_create($request->end_date);
         $diff_date = date_diff($date,$edate);
@@ -88,7 +86,6 @@ class AttendanceController extends Controller
         $user= $this->user->find($id);
         $userId = $user->id;
         $userLd = $this->leave_request->where('user_id',$userId)->first();
-        // dd($userLd->start_date);
         return view('/employee/request-form',compact('user','userLd'));
     }
     public function leaveStatus(Request $request)
