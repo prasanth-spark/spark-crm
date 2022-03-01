@@ -7,19 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ApprovedMail extends Mailable
+class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
-    public $approved;
-
+    public $details;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($approved)
+    public function __construct($details)
     {
-        $this->approved=$approved;
+        $this->details=$details;
     }
 
     /**
@@ -29,8 +28,7 @@ class ApprovedMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Admin Approved')
-            ->view('admin//email/approved-mail');
-    
-    }
+        return $this->markdown('employee//email/forgot-password')->with('details',$this->details);
+
+      }
 }

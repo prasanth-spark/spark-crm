@@ -65,6 +65,8 @@ class EmployeeController extends Controller
                     'email' => $request->email,
                     'status'=>'1',
                     'password' => Hash::make($request->password),
+                    'role_id' => $request->role,
+
                 ]);
                 dispatch(new VerfyUserEmailJob($userCredentials));
 
@@ -87,7 +89,7 @@ class EmployeeController extends Controller
                     'ifsc_code' => $request->ifsc_code,
                     'branch_name' => $request->branch_name,
                     'account_type_id' => $request->account_type,
-                    'role_id' => $request->role,
+                    'role_id' => $userCredentials->role_id,
                     'team_id' => $request->team_name,
                 ]);
                 return redirect('/admin/employee-list');
@@ -144,7 +146,7 @@ class EmployeeController extends Controller
             $employeeEdit = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
-            $role = $this->rolemodel->get();
+            $role = $this->rolemodel->where('id','!=',1)->get();
             $team = $this->teammodel->get();
             return view('admin/employee/employee-edit', compact('employeeEdit', 'bankName', 'accountType', 'role', 'team'));
 
@@ -234,8 +236,7 @@ class EmployeeController extends Controller
             Log::info($exception->getMessage());
         }
     }
-
-
+   
     /**
      * Approved status .
      *

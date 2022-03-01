@@ -9,6 +9,7 @@ use App\Models\TaskSheet;
 use Illuminate\Support\Facades\Session;
 use App\Models\TaskStatus;
 
+
 class TaskController extends Controller
 {
 
@@ -16,7 +17,6 @@ class TaskController extends Controller
     {
         $this->taskSheet = $taskSheet;
         $this->taskStatus = $taskStatus;
-
     }
 
     /**
@@ -58,8 +58,10 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function taskList(){
+
         $userId=Session::get('id');
         $tasks=$this->taskSheet->where('user_id',$userId)->tobase()->get();
+
         return view('employee/task/task-list',compact('tasks'));
     }
 

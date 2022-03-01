@@ -31,9 +31,14 @@
                 
             @csrf   
            
-            <button type="button" id="present" class="btn btn-success w-24 mt-4 " name="active" value="1">Active</button>
-            <button type="button" id="absent" class="btn btn-danger w-24 mt-4 cursor-not-allowed " name="inactive" value="0">Inactive</button>
+            <button type="button" id="present" class="btn btn-success w-24 mt-4" name="active" value="1">Active</button>
+            <button type="button" id="absent" class="btn btn-danger w-24 mt-4" name="inactive" value="0">Inactive</button>
+            <input type="text"  id="attendance" class=" form-control text-theme-25 mt-2 mb-4" data-single-mode="true">
             <input type="hidden" id="value" name="value" value="">
+            @isset($attendance)
+            <input type="hidden" id="user" name="user" value="{{$attendance->attendance_status}}">
+            @endisset
+
         <!-- </div> -->
     </div>
     <div class="intro-y col-span-12 lg:col-span-6 box p-4">
@@ -44,10 +49,10 @@
             <option value="2">Leave </option>
         </select>
             
-        <label  class="form-label text-theme-34 mt-2"  >From</label>
-            <input name="start_date" id="start_date" class="datepicker form-control" data-single-mode="true" >
+        <label  class="form-label text-theme-34 mt-2">From</label>
+            <input type="date" name="start_date" id="start_date" class=" form-control" data-single-mode="true" >@error('start_date')<span style="color:red">{{$message}}</span>@enderror
         <label  class="form-label text-theme-34 mt-2">To</label>
-            <input name="end_date" id="end_date" class="datepicker form-control" data-single-mode="true">    
+            <input type="date" name="end_date" id="end_date" class=" form-control" data-single-mode="true">@error('end_date')<span style="color:red">{{$message}}</span>@enderror    
         <!-- </div> -->
     </div>   
     </div>
@@ -58,27 +63,46 @@
 </div>
 
 <button class="cursor-not-allowed">
-  Button
-</button>
-
+  Buttonform-control
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-    $("#absent").click(function(){
+    $("#absent").click(function(){  
+        $("#attendance").hide();
     	var status = $("#absent").attr("value");
         $( "#present" ).prop( "disabled", true );
-        alert(status);
         $('#value').val(status);
-  
     });
      $("#present").click(function(){
+        $("#attendance").hide();
     	var status = $("#present").attr("value");
          $( "#absent" ).prop( "disabled", true );
-        alert(status);
         $('#value').val(status);
     });
+    $("#attendance").show(); 
+    var user = $("#user").attr("value");
+    if(user== null){
+        $("#attendance").hide();
+        $("#present").show();
+        $("#absent").show();
+    }
+    else if(user == 2){
+        $( "#present" ).hide();
+        $( "#absent" ).hide();
+        $('#attendance').val("You are registered as Absent");
+    }
+    else if(user == 1){
+        $("#absent").prop( "disabled", true );
+        $("#present").hide();
+        $("#attendance").val("Your attendance registered as Present")
+    }
+    else{
+        $( "#present" ).prop( "disabled", true );
+        $("#absent").hide();
+        $("#attendance").val("Your Leave Permission taken to your team lead")
+    }
 });
 </script>
 

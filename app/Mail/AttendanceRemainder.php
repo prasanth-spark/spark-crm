@@ -6,20 +6,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
+
 
 class AttendanceRemainder extends Mailable
 {
     use Queueable, SerializesModels;
-
+    protected $userValue;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($userValue)
     {
-        $this->user =$user;
+        $this->userValue =$userValue;
     }
 
     /**
@@ -29,8 +29,8 @@ class AttendanceRemainder extends Mailable
      */
     public function build()
     {
-        $user=$this->user;
+        $userValue=$this->userValue;
         return $this->subject('Attendance Remainder')
-        ->view('employee/email/attendance_remainder',compact('user'));
+        ->view('employee/email/attendance_remainder',compact('userValue'));
     }
 }

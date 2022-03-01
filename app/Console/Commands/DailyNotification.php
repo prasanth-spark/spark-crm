@@ -41,11 +41,11 @@ class DailyNotification extends Command
      */
     public function handle()
     {
-        $employees = UserDetails::whereMonth('data_of_birth', '=', date('m'))->whereDay('data_of_birth', '=', date('d'))->get(); 
+        $employees = UserDetails::whereMonth('date_of_birth', '=', date('m'))->whereDay('date_of_birth', '=', date('d'))->with('user')->get(); 
 
          foreach($employees as $employee)
          {
-            Mail::to($employee->email)->send(new BirthdayReminder($employee));
+            Mail::to($employee->user->email)->send(new BirthdayReminder($employee));
             
          }
 

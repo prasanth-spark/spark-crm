@@ -31,6 +31,11 @@ use App\Http\Controllers\employee\UserProfileController;
             Route::post('login-employee', [LoginController::class, 'loginEmployee'])->name('employee-login');
             Route::get('forgot-password', [LoginController::class, 'forgotPasswordForm'])->name('forgot-view');
             Route::get('login-form',[LoginController::class, 'loginForm'])->name('user-login-view');
+            Route::post('forgot-form-verify', [LoginController::class, 'forgotFormVerify'])->name('forgot-form-verify');
+            Route::get('reset-password-view/{id}', [LoginController::class, 'resetPasswordView'])->name('reset-password-view');
+            Route::post('reset-password', [LoginController::class, 'resetPassword'])->name('reset-password');
+             
+
     });
   
 

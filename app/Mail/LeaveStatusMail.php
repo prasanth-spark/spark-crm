@@ -7,19 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ApprovedMail extends Mailable
+class LeaveStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $approved;
-
+    public  $user,$status;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($approved)
+    public function __construct($user,$status)
     {
-        $this->approved=$approved;
+        $this->user = $user;
+        $this->status = $status;
     }
 
     /**
@@ -29,8 +29,10 @@ class ApprovedMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Admin Approved')
-            ->view('admin//email/approved-mail');
-    
+        $status =$this->status;
+        $user = $this->user;
+        
+        return $this->$this->subject('Leave Status')
+        ->view('employee/email/leave_status',compact('user','status'));
     }
 }
