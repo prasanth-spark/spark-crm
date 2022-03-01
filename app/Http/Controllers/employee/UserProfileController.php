@@ -58,7 +58,10 @@ class UserProfileController extends Controller
     {
         $userID = Session::get('id');
         $user = $this->user->where('id', $userID)->first();
-        $user->update(['status'=>1]);
+        $this->user->where('id',$user->id)->update([
+            'team_id'=>$request->team_name,
+            'status'=>1
+      ]);
         $userdetails = $this->userdetails->where('user_id', $userID)->first();
         if(isset($userdetails)){
             $userdetails->update([
@@ -85,7 +88,6 @@ class UserProfileController extends Controller
                 'status'=>'1',
 
             ]);
-    
             return redirect('/employee/employee_dashboard')->with('success', 'Profile Updated Successfully');
 
         }
@@ -112,7 +114,6 @@ class UserProfileController extends Controller
             'role_id' => $user->role_id,
             'team_id' => $request->team_name,
         ]);
-
         return redirect('/employee/employee_dashboard')->with('success', 'Profile Added Successfully');
         }  
     }

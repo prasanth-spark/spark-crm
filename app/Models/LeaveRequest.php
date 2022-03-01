@@ -15,4 +15,8 @@ class LeaveRequest extends Model
   {
     return $this->belongsTo(LeaveType::class, 'leave_type_id', 'id');
   }
+  public function permissionType()
+  {
+      return $this->belongsTo(PermissionType::class, 'permission_type_id', 'id');
+  }
 }
