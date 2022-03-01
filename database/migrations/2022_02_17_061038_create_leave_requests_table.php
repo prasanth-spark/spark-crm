@@ -20,7 +20,7 @@ class CreateLeaveRequestsTable extends Migration
             $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('description')->nullable();
-            $table->integer('status')->default('0')->comment('1->pending,2->approved,3->rejected');  
+            $table->integer('leave_status')->default('0')->comment('0->job_not_started,1->pending,2->approved,3->rejected');  
             $table->string('start_date');
             $table->string('end_date')->nullable();
             $table->timestamps();

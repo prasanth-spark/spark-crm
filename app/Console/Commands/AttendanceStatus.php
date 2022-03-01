@@ -43,7 +43,7 @@ class AttendanceStatus extends Command
     {
         $date = Carbon::now();
         $date = $date->format("d-m-Y");
-        $user = User::where('status','!=',0)->pluck('id')->toArray();
+        $user = User::where('role_id','!=',1)->pluck('id')->toArray();
         $attendance = Attendance::pluck('user_id')->toArray();
         $attendanceNotUpdatedUser = array_diff($user,$attendance);
     

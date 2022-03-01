@@ -16,9 +16,10 @@ class PermissionMail extends Mailable
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user,$leave)
     {
         $this->user =$user;
+        $this->leave =$leave;
     }
 
     /**
@@ -29,6 +30,8 @@ class PermissionMail extends Mailable
     public function build()
     {
         $user = $this->user;
-        return $this->view('employee/email/permission_form',compact('user'));
+        $leave=$this->leave;
+        $permissionId = $leave->permission_type_id;
+        return $this->view('employee/email/permission_form',compact('user','permissionId'));
     }
 }

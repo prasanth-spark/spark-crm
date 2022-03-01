@@ -5,9 +5,7 @@ use App\Http\Controllers\employee\LoginController;
 use App\Http\Controllers\employee\AttendanceController;
 use App\Http\Controllers\employee\TaskController;
 use App\Http\Controllers\employee\UserProfileController;
-
-
-
+use App\Models\Attendance;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,15 +52,14 @@ use App\Http\Controllers\employee\UserProfileController;
 
           // Attendance  
             Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
-            Route::Post('attendance-status',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
+            Route::post('attendance-status',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
             Route::get('leave-request/{id}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
             Route::post('leave-status',[AttendanceController::class, 'leaveStatus'])->name('leave-status');
             Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
             Route::post('attendance-list',[AttendanceController::class, 'attendanceList'])->name('attendance-list');
 
-
             //User Profile
             Route::get('user-profile-form',[UserProfileController::class, 'userProfileForm'])->name('user-profile-form');
             Route::post('user-profile-add',[UserProfileController::class, 'userProfileAdd'])->name('user-profile-add');
-              
-    });
+        
+        });

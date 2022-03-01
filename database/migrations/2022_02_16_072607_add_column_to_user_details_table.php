@@ -29,7 +29,8 @@ class AddColumnToUserDetailsTable extends Migration
     public function down()
     {
         Schema::table('user_details', function (Blueprint $table) {
-            //
+            $table->dropColumn('role_id'); 
+             $table->dropColumn('team_id');
         });
     }
 }
