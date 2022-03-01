@@ -51,4 +51,17 @@ class AttendanceController extends Controller
         return view('admin/attendance/attendance-teamlist',compact('attendanceTeamList'));
      }
 
+
+     /**
+     * Show Absent List view.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function absentList()
+    {
+             $teamList = $this->teammodel->get();
+            //  $attendanceList = $this->attendance->with('attendanceToUser','attendanceToUser.roleToUser','attendanceToUserDetails.teamToUserDetails')->get();
+             return view('admin/absent/absent-list',compact('teamList'));
+    }
+
 }

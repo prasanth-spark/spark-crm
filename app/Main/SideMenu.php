@@ -53,6 +53,14 @@ class SideMenu
                         ],
                         'title' => 'Attendance List'
                     ],
+                    [
+                        'icon' => '',
+                        'route_name' => 'absent-list',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                        'title' => 'Absent List'
+                    ],
                 ]
             ],  
             'Employee Task' => [

@@ -33,14 +33,18 @@
     <table id="employeelist" class="table table-report -mt-2">
         <thead>
             <tr>
-                <th class="whitespace-nowrap">DATE</th>
                 <th class="whitespace-nowrap">NAME</th>
                 <th class="whitespace-nowrap">TEAM</th>
                 <th class="whitespace-nowrap">ROLE</th>
-                <th class="whitespace-nowrap">ATTENDANCE STATUS</th>
+                <th class="whitespace-nowrap">LEAVE TYPE</th>
+                <th class="whitespace-nowrap">LEAVE STATUS</th>
+                <th class="whitespace-nowrap">FROM DATE</th>
+                <th class="whitespace-nowrap">END DATE</th>
+
+
             </tr>
         </thead>
-        <tbody>
+     {{--   <tbody>
         @foreach($attendanceList as $attendance)
                 <tr>  
 
@@ -51,7 +55,7 @@
                     <td>{{($attendance->attendance_status == 1) ? "present" : "absent";}}</td>
                 </tr>
             @endforeach
-        </tbody>
+        </tbody> --}}
     </table>
 </div>
 

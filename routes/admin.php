@@ -58,6 +58,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/attendance-list', [AttendanceController::class, 'attendanceList'])->name('attendance-list');
         Route::post('/attendance/team-list',[AttendanceController::class, 'attendanceTeamList'])->name('attendance-teamlist');
 
+        //Absent List
+        Route::get('/absent-list', [AttendanceController::class, 'absentList'])->name('absent-list');
+
+
         //Task List
         Route::get('/task-list', [TaskController::class, 'taskList'])->name('employee-task-list');
         Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
