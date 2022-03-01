@@ -44,14 +44,12 @@ class AttendanceStatus extends Command
         $date = Carbon::now();
         $date = $date->format("d-m-Y");
         $user = User::where('role_id','!=',1)->pluck('id')->toArray();
-        dd($user);
         $attendance = Attendance::pluck('user_id')->toArray();
         $attendanceNotUpdatedUser = array_diff($user,$attendance);
     
         foreach($attendanceNotUpdatedUser as $attendanceUpdatedUser){
             $userValue = User::find($attendanceUpdatedUser);
             $userMail = $userValue->email;
-            // dd($userMail);
              Attendance::create([
                 'user_id'=>$userValue->id,
                 'attendance_status'=>'0',

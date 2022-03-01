@@ -40,6 +40,7 @@ class AttendanceController extends Controller
         $edate = date_create($request->end_date);
         $diff_date = date_diff($date,$edate);
         $leaveDays = $diff_date->format("%a"); 
+
         $start_date = date('d-m-Y', strtotime($request->start_date));
         $end_date = date('d-m-Y', strtotime($request->end_date));   
 
@@ -64,6 +65,7 @@ class AttendanceController extends Controller
                     'permission_hours_to'=>$request->permission_hours_to,
                     'start_date'=>$today_date,
                     'end_date'=>$today_date,
+                    'leave_counts'=>null,
                 ]);
                 $job = new AttendanceDetail($leave,$user);
                     dispatch($job);
@@ -74,7 +76,7 @@ class AttendanceController extends Controller
                 Attendance::where('user_id',$regUserId)->update([
                     'attendance'=>$request->value,
                     'attendance_status'=> $request->value,
-                    'in_active_id'=>$in_active_id
+                    'in_active'=>$in_active_id
                  ]);
                 $leave = $this->leave_request->create([               
                     'leave_type_id'=> 4,
@@ -86,6 +88,7 @@ class AttendanceController extends Controller
                     'permission_hours_to'=>null,   
                     'start_date'=>$start_date,
                     'end_date'=>$end_date,
+                    'leave_counts'=>$leaveDays,
                 ]);
                 $job = new AttendanceDetail($leave,$user);
                     dispatch($job);   
@@ -123,7 +126,7 @@ class AttendanceController extends Controller
                     'attendance'=>$attendanceValue,
                     'date'=>$date,
                     'attendance_status'=>2,
-                    'in_active_id'=>$request->select,
+                    'in_active'=>$request->select,
                     'status'=> 1
                 ]);
                 $leave = $this->leave_request->create([               
@@ -136,6 +139,7 @@ class AttendanceController extends Controller
                     'permission_hours_to'=>null,   
                     'start_date'=>$start_date,
                     'end_date'=>$end_date,
+                    'leave_counts'=>$leaveDays,
                 ]);
                 $job = new AttendanceDetail($leave,$user);
                     dispatch($job);   
@@ -147,7 +151,7 @@ class AttendanceController extends Controller
                 'attendance'=>$attendanceValue,
                 'date'=>$date,
                 'attendance_status'=>2,
-                'in_active_id'=>$request->select,
+                'in_active'=>$request->select,
                 'status'=> 1
             ]);
            
@@ -161,6 +165,7 @@ class AttendanceController extends Controller
                 'permission_hours_to'=>$request->permission_hours_to,
                 'start_date'=>$today_date,
                 'end_date'=>$today_date,
+                'leave_counts'=>null,
             ]);
             $job = new AttendanceDetail($leave,$user);
                 dispatch($job);
@@ -171,7 +176,7 @@ class AttendanceController extends Controller
                 'attendance'=>$attendanceValue,
                 'date'=>$date,
                 'attendance_status'=>1,
-                'in_active_id'=>null,
+                'in_active'=>null,
                 'status'=> 1
             ]);
         }
@@ -213,8 +218,7 @@ class AttendanceController extends Controller
             LeaveRequest::where('user_id',$userId)
                 ->where('leave_status','=',1)
                 ->update(['leave_status'=> $status,
-                         ]);    
-               $status = 'Accepeted';                              
+                         ]);                              
       }
     else{
         LeaveRequest::where('user_id',$userId)
@@ -222,8 +226,7 @@ class AttendanceController extends Controller
                 ->update([
                     'leave_type_id'=> 4,
                     'leave_status'=> $status,
-                         ]);  
-                $status= 'Rejected';       
+                         ]);         
     }
         $job = new LeaveMailSend($status,$user);
                 dispatch($job);

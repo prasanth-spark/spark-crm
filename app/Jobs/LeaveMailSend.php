@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\Mail;
 class LeaveMailSend implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $user,$status;
+    public $status,$user;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($user,$status)
+    public function __construct($status,$user)
     {
-        $this->user = $user;
         $this->status = $status; 
+        $this->user = $user;
+        
     }
 
     /**
@@ -33,10 +34,10 @@ class LeaveMailSend implements ShouldQueue
      */
     public function handle()
     {
+        $status= $this->status;
         $user= $this->user;
         $userMail = $user->email;
-        $status= $this->status;
-        $email = new LeaveStatusMail($user,$status);
+        $email = new LeaveStatusMail($status,$user);
         Mail::to($userMail)->send($email);
 
     }

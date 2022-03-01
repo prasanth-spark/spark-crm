@@ -26,7 +26,7 @@ class AddColumnToAttendanceTable extends Migration
     public function down()
     {
         Schema::table('attendance', function (Blueprint $table) {
-            //
+            $table->dropColumn('date');
         });
     }
 }

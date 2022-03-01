@@ -18,6 +18,7 @@ class AddColumnInLeaveRequestsTable extends Migration
             $table->foreign('permission_type_id')->references('id')->on('permission_types');
             $table->char('permission_hours_from', 250)->nullable()->after('leave_status');
             $table->char('permission_hours_to', 250)->nullable()->after('permission_hours_from');
+            $table->integer('leave_counts')->nullable()->after('end_date');
         });
     }
 
