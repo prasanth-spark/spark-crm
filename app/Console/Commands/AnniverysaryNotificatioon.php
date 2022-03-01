@@ -40,11 +40,10 @@ class AnniverysaryNotificatioon extends Command
      */
     public function handle()
     {
-        $employees = UserDetails::whereMonth('joined_date', '=', date('m'))->whereDay('joined_date', '=', date('d'))->get(); 
-
+        $employees = UserDetails::whereMonth('joined_date', '=', date('m'))->whereDay('joined_date', '=', date('d'))->with('user')->get(); 
          foreach($employees as $employee)
-         {
-            Mail::to($employee->email)->send(new AnniverysaryReminder($employee));    
+         {            
+            Mail::to($employee->user->email)->send(new AnniverysaryReminder($employee));    
          }   
     }
 }

@@ -2,15 +2,9 @@
 
 @section('subhead')
     <title>Task List</title>
-    <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
-    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
-    <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-    <link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
+    {{-- <link rel="stylesheet" type="text/css" href="{{URL::asset('public/app-assets/vendors/css/tables/datatable/datatables.min.css')}}"> --}}
+    
+   
 @endsection
 
 @section('subcontent')
@@ -26,6 +20,7 @@
             <table id="tasklist" class="table table-report -mt-2">
                 <thead>
                     <tr>
+                         <th scope="col">SI.No</th>
                         <th class="whitespace-nowrap">DATE</th>
                         <th class="whitespace-nowrap">PROJECT NAME</th>
                         <th class="whitespace-nowrap">TASK MODULE</th>
@@ -36,44 +31,46 @@
                     </tr>
                 </thead>
                 <tbody>
-              @foreach($tasks as $task)
-                        <tr>
-                            <td>{{$task->date}}</td>
-                            <td>{{$task->project_name}}</td>
-                            <td>{{$task->task_module}}</td>  
-                            <td>{{$task->estimated_hours}}</td>  
-                            <td>{{$task->worked_hours}}</td>
-                            @if($task->task_status == 1)
-                            <td>Pending</td>
-                            @else 
-                            <td>Completed</td>
-                            @endif
-                            <td class="table-report__action w-56">
-                                <div class="flex justify-center items-center">
-                                    <a class="flex items-center mr-3" href="{{url('/')}}/employee/task-details/{{$task->id}}">
-                                        <em data-feather="check-square" class="w-4 h-4 mr-1"></em> view
-                                    </a>
-                                    <a class="flex items-center mr-3" href="{{url('/')}}/employee/task-edit/{{$task->id}}">
-                                        <em data-feather="check-square" class="w-4 h-4 mr-1"></em> Edit
-                                    </a>
-                                   
-                                </div>
-                            </td>
-                        </tr>
-
-             @endforeach
+           
                 </tbody>
             </table>
         </div>
-
+       
+        
         <!-- END: Data List -->
+        <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
         <script>
-            $(document).ready( function () {
-                $('#tasklist').DataTable()
+            $(document).ready(function() {
+                $('#tasklist').DataTable({
+                "processing": true,
+                "serverSide": true,
+                paging: true,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "lengthChange": true,
+                "bProcessing": true,
+                "bServerSide": true,
+                "destroy": true,
+                "sAjaxSource": "task-pagination",
+
+                columns: [
+                    { data: "id"},
+                    { data: "date" },
+                    { data: "project_name" },
+                    { data: "task_module" },
+                    { data: "estimated_hours"},
+                    { data: "worked_hours"},
+                    { data: "task_status"},
+                    { data: "actions" },
+                ],
             } );
-            </script>
-      
-   
+        } );
+        </script>
+
 @endsection
 
 

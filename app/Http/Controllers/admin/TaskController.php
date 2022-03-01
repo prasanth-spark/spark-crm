@@ -17,12 +17,12 @@ class TaskController extends Controller
 {
     public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user , TaskSheet $tasksheet)
     {
-        $this->userdetails = $userdetails;
-        $this->accountType = $accountType;
-        $this->bankdetails = $bankdetails;
-        $this->rolemodel   = $rolemodel;
-        $this->teammodel   = $teammodel;
-        $this->user        = $user;
+        $this->userdetails      = $userdetails;
+        $this->accountType      = $accountType;
+        $this->bankdetails      = $bankdetails;
+        $this->rolemodel        = $rolemodel;
+        $this->teammodel        = $teammodel;
+        $this->user             = $user;
         $this->tasksheet        = $tasksheet;
 
     }
@@ -46,7 +46,6 @@ class TaskController extends Controller
     public function taskDetails($id)
     {
          $taskList = $this->tasksheet->where('id',$id)->with('taskToUser','taskToUserDetails.teamToUserDetails','taskToUser.roleToUser')->first();
-     //     dd($taskList);
          return view('admin/task/task-details',compact('taskList'));
     }
 
@@ -58,12 +57,10 @@ class TaskController extends Controller
 
      public function taskTeamList(Request $request)
      {
-          // dd($request->team_id);
-               //   $t=$request->team_id;
+        
         $teamList= $this->tasksheet->whereHas('taskToUser.userDetail', function ($query) use($request){
                     $query->where('team_id','=',$request->team_id);
                     })->with(['taskToUser','taskToUser.roleToUser','taskToUser.userDetail'])->get();
-     //    dd($teamList);
         return view('admin/task/task-team-list',compact('teamList'));
      }
 

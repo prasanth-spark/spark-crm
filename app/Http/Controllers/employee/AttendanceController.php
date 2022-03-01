@@ -36,6 +36,7 @@ class AttendanceController extends Controller
     {  
         $today_date = Carbon::now(); 
         $today_date = $today_date->format("d-m-Y");
+
         $date = date_create($request->start_date);
         $edate = date_create($request->end_date);
         $diff_date = date_diff($date,$edate);

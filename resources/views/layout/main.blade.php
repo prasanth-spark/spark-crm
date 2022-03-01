@@ -6,13 +6,17 @@
         @include('../layout/components/dark-mode-switcher')
 
         <!-- BEGIN: JS Assets-->
+        
+
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
         <script src="{{ mix('dist/js/app.js') }}"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
+
+       
     <script>  
        toastr.options = {
                     "closeButton": true,
@@ -41,7 +45,7 @@
                 toastr["error"](toastHTML);
                 @php Session::forget('error'); @endphp
                 @endif
-</script>
+</script> 
 
         
         <!-- END: JS Assets-->
