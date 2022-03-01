@@ -141,30 +141,6 @@
                             </select>
                         </div>
                         <div>
-                            <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                Account Holder Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters </span>
-                            </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="Account Holder Name" name='account_holder_name' value="{{$employeeEdit->account_holder_name}}" >
-                        </div>
-                        <div>
-                            <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                Account Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only </span>
-                            </label>
-                            <input id="regular-form-4" type="number" class="form-control" placeholder="Account Number" name='account_number' value="{{$employeeEdit->account_number}}" >
-                        </div>
-                        <div>
-                            <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                IFSC Code<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, IFSC code </span>
-                            </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="IFSC Code" name='ifsc_code' value="{{$employeeEdit->ifsc_code}}" >
-                        </div>
-                        <div>
-                            <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                Branch Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, branch name</span>
-                            </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="Branch Name" name='branch_name' value="{{$employeeEdit->branch_name}}" >
-                        </div>
-                        <div>
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Account Type</label>
 
                             <select placeholder="Account Type" type="text" class="tom-select w-full" id="regular-form-4" name='account_type' value="{{$employeeEdit->account_type}}" >
@@ -199,6 +175,30 @@
                             @error('team_name')
                                           <span style="color:red">{{$message}}</span>
                             @enderror
+                        </div>
+                        <div>
+                            <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                Account Holder Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters </span>
+                            </label>
+                            <input id="regular-form-4" type="text" class="form-control" placeholder="Account Holder Name" name='account_holder_name' value="{{$employeeEdit->account_holder_name}}" >
+                        </div>
+                        <div>
+                            <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                Account Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only </span>
+                            </label>
+                            <input id="regular-form-4" type="number" class="form-control" placeholder="Account Number" name='account_number' value="{{$employeeEdit->account_number}}" >
+                        </div>
+                        <div>
+                            <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                IFSC Code<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, IFSC code </span>
+                            </label>
+                            <input id="regular-form-4" type="text" class="form-control" placeholder="IFSC Code" name='ifsc_code' value="{{$employeeEdit->ifsc_code}}" >
+                        </div>
+                        <div>
+                            <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                Branch Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, branch name</span>
+                            </label>
+                            <input id="regular-form-4" type="text" class="form-control" placeholder="Branch Name" name='branch_name' value="{{$employeeEdit->branch_name}}" >
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary mt-5">Update</button>

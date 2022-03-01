@@ -29,6 +29,11 @@ use App\Models\Attendance;
             Route::post('login-employee', [LoginController::class, 'loginEmployee'])->name('employee-login');
             Route::get('forgot-password', [LoginController::class, 'forgotPasswordForm'])->name('forgot-view');
             Route::get('login-form',[LoginController::class, 'loginForm'])->name('user-login-view');
+            Route::post('forgot-form-verify', [LoginController::class, 'forgotFormVerify'])->name('forgot-form-verify');
+            Route::get('reset-password-view/{id}', [LoginController::class, 'resetPasswordView'])->name('reset-password-view');
+            Route::post('reset-password', [LoginController::class, 'resetPassword'])->name('reset-password');
+             
+
     });
   
 
@@ -43,6 +48,7 @@ use App\Models\Attendance;
             Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
             Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
             Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
+            Route::get('/task-pagination',[TaskController::class, 'taskPagination'])->name('task-pagination');
 
           // Attendance  
             Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');

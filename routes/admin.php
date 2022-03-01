@@ -42,6 +42,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/employee-edit/{id}', [EmployeeController::class, 'employeeEdit'])->name('employee-edit');
         Route::post('/employee-update', [EmployeeController::class, 'employeeUpdate'])->name('employee-update');
         Route::post('/employee-delete', [EmployeeController::class, 'employeeDelete'])->name('employee-delete');
+        Route::get('/new-register-list', [EmployeeController::class, 'newRegisterList'])->name('new-register-list');
+        Route::get('/approved/{id}', [EmployeeController::class, 'adminApproved'])->name('admin-approved');
+        Route::get('/rejected/{id}', [EmployeeController::class, 'adminRejected'])->name('admin-rejected');
+
+
+
 
         //Admin add Employee in Excel File
         Route::get('/file-upload', [EmployeeController::class, 'fileUpload'])->name('file-upload');
