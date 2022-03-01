@@ -86,7 +86,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-    $("#absent").click(function(){  onclick="()"
+    $("#absent").click(function(){
         $("#attendance").hide();
     	var status = $("#absent").val();
         $('#value').val(status);
