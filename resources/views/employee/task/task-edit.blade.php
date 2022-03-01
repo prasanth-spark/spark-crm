@@ -20,7 +20,7 @@
                             <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
                                 Date
                             </label>
-                         <input id="validation-form-1" type="date" class="form-control" placeholder="Date" name="date" value="{{$taskEdit->date}}" required>       
+                         <input id="validation-form-1" type="date" class="form-control" placeholder="Date" name="date" value="{{$taskEdit->date}}" disabled>       
                         </div>
                         @error('date')
                         <span style="color:red">{{$message}}</span>
@@ -29,7 +29,7 @@
                             <label for="regular-form-2" class="form-label w-full flex flex-col sm:flex-row">
                                 Project Name
                             </label>
-                            <input id="validation-form-2" type="text" class="form-control" placeholder=" Project Name" name='project_name' value="{{$taskEdit->project_name}}" required>
+                            <input id="validation-form-2" type="text" class="form-control" placeholder=" Project Name" name='project_name' value="{{$taskEdit->project_name}}" disabled>
                         </div>
                         @error('project_name')
                         <span style="color:red">{{$message}}</span>
@@ -38,7 +38,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Module
                             </label>
-                            <input id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module' value="{{$taskEdit->task_module}}" required>
+                            <textarea id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module' disabled>{{$taskEdit->task_module}}</textarea>
                         </div>
                         @error('task_module')
                         <span style="color:red">{{$message}}</span>
@@ -47,7 +47,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Estimated Hours
                             </label>
-                            <input id="regular-form-3" type="number" class="form-control" placeholder=" Estimated Hours" name='estimated_hours' value="{{$taskEdit->estimated_hours}}" required>
+                            <input id="regular-form-3" type="number" class="form-control" placeholder=" Estimated Hours" name='estimated_hours' value="{{$taskEdit->estimated_hours}}" disabled>
                         </div>
                         @error('estimated_hours')
                         <span style="color:red">{{$message}}</span>
@@ -56,7 +56,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Worked Hours
                             </label>
-                            <input id="regular-form-3" type="number" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskEdit->worked_hours}}" required>
+                            <input id="regular-form-3" type="number" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskEdit->worked_hours}}" disabled>
                         </div>
                         @error('worked_hours')
                         <span style="color:red">{{$message}}</span>
@@ -67,7 +67,7 @@
                             </label>
                         
                             <select placeholder=" Task Status" type="text" class="tom-select w-full" id="regular-form-4" name='task_status' >
-                                <option value="{{$taskEdit->id}}">@if($taskEdit->task_status == 1)pending @else completed @endif</option>
+                                <option value="{{$taskEdit->task_status}}">@if($taskEdit->task_status == 1)pending @else completed @endif</option>
                                 @foreach($tasks as $task)
                                 <option value="{{$task->id}}">{{$task->task_status}}</option>
                                 @endforeach

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\TaskStatus;
 
 
+
 class TaskController extends Controller
 {
 
@@ -26,8 +27,8 @@ class TaskController extends Controller
      */
     public function taskForm()
     {
-        $tasks = $this->taskStatus->get();
-        return view('employee/task/task-form',compact('tasks')); 
+       
+        return view('employee/task/task-form'); 
     }
 
    
@@ -58,11 +59,58 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function taskList(){
+       
+        return view('employee/task/task-list');
+    }
 
+
+    public function taskPagination(Request $request)
+    {
         $userId=Session::get('id');
-        $tasks=$this->taskSheet->where('user_id',$userId)->tobase()->get();
+        $tasks=$this->taskSheet->where('user_id',$userId);
+        $limit = $request->iDisplayLength;
+        $offset = $request->iDisplayStart;
+        $tasks = $tasks->when(($limit!='-1' && isset($offset)),
+            function($q) use($limit, $offset){
+                return $q->offset($offset)->limit($limit);
+            });
+        if($request->sSearch!='')
+        {
+            $keyword = $request->sSearch;
+            $tasks = $tasks->when($keyword!='',
+                function($q) use($keyword){
+                    return $q->where('date','like','%'.$keyword.'%')->orWhere('project_name','like','%'.$keyword.'%')->orWhere('task_module','like','%'.$keyword.'%');
+                });
+        }
+      
+        $data = $tasks->get();
+        $total_data = $tasks->count();
+        $column=array();
+        foreach ($data as $value){
 
-        return view('employee/task/task-list',compact('tasks'));
+            $col['id'] = $offset+1;
+            $col['date'] = ($value->date) ? $value->date : "";
+            $col['project_name'] = ($value->project_name) ? $value->project_name : "";
+            $col['task_module'] = ($value->task_module) ? $value->task_module : "";
+            $col['estimated_hours'] = ($value->estimated_hours) ? $value->estimated_hours :"";
+            $col['worked_hours'] = ($value->worked_hours) ? $value->worked_hours : "";
+            $col['task_status'] = ($value->task_status==1) ? 'pending' : 'completed';
+            $col['actions'] = '<a class="flex items-center mr-3" href="'.url('/').'/employee/task-details/'.$value->id.'">
+            <em data-feather="check-square" class="w-4 h-4 mr-1"></em> View
+            </a>
+            <a class="flex items-center mr-3" href="'.url('/').'/employee/task-edit/'.$value->id.'">
+            <em data-feather="check-square" class="w-4 h-4 mr-1"></em> Edit
+            </a>';
+
+            array_push($column, $col);
+            $offset++;
+        }
+        $data['sEcho']=$request->sEcho;
+        $data['aaData']=$column;
+        $data['iTotalRecords']=$total_data;
+        $data['iTotalDisplayRecords']=$total_data;
+
+         return json_encode($data);
     }
 
     /**
