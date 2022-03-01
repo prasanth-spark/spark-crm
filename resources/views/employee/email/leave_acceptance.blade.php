@@ -3,10 +3,7 @@
 <p>Your team employee {{$user->name}} had apply for leave. 
    so kindly check and permit his/her leave </p>
 
-
-   @php
-
-   @end   <p>{{$user->name}} have applied as he have {{$reason}}</p>
+   <p>{{$user->name}} have applied as he have {{$reason}}</p>
 
    <div class="2xl:flex mt-5 mb-3">
         <div class="flex items-center justify-center sm:justify-start">    

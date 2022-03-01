@@ -1,6 +1,6 @@
 @extends('../employee/layout/components/' . $layout)
 @section('subhead')
-    <title>Dashboard Employee-CRM</title>
+    <title>Leave Permission Form</title>
 @endsection
 
 @section('mobile-menu-modifier')
@@ -29,31 +29,55 @@
                       @csrf
                        <input type="hidden" name="id" id="user_id" value="{{$user['id']}}">
                         <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 leading-2 mt-4 font-normal">
-                                    <p>Why are you availing leave ..?<p>
-                         <textarea id="reason" class="form-control text-theme-34  mt-4 font-normal" name ="reason" required></textarea>                       
-                        </div>  
+                                    <p>Why are you availing leave .. <p>
+                         <textarea id="reason" title="" class="form-control text-theme-34  mt-4 font-normal" name ="reason" required></textarea>                       
+                        </div> 
+                        <div class="text-base 2xl:text-lg text-theme-34 mt-4">Make sure of your leave permission be valid</div> 
 
                         <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center  leading-2 mt-4 font-normal">
-                            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8" name="leave_type">Leave Type
-                                    <option> ...</option>
-                                    <option value="2" class="text-theme-34 dark:text-gray-500">Sick Leave</option>
-                                    <option value="3" class="text-theme-34 dark:text-gray-500">Personal Leave </option>
+                            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8"  id="leave_type"name="leave_type">Leave Type
+                                    <option> --</option>
+                                    <option value=1 name="leave_type"> Permission </option>
+                                    <option value="2" name="leave_type" class="text-theme-34 dark:text-gray-500">Sick Leave</option>
+                                    <option value="3" name="leave_type" class="text-theme-34 dark:text-gray-500">Personal Leave </option>
                             </select>
-                        </div>              
-                        <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 dark:text-gray-500 leading-3 mt-14 2xl:mt-24 font-normal">
-                            <p> Select date from and to you need a leave</p>
+                        </div>     
+                        <div id="leave_dates">        
+                        <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 dark:text-gray-500 leading-3 mt-4 2xl:mt-24 font-normal">
+                            <p> Selected date From and To you need a leave</p>
                         </div>
                         <div>   
                             <label  class="form-label text-theme-34 mt-2"  >From</label>
-                            <input type="text" name="start_date" id="start_date" title="Make sure of your Start date" class="form-control" value ="{{$userLd['start_date']}}" data-single-mode="true">@error('start_date')<span style="color:red">{{$message}}</span>@enderror                     
+                            <input type="text" name="start_date" id="start_date" class="form-control" value ="{{$userLd['start_date']}}" data-single-mode="true">
                             <label  class="form-label text-theme-34 mt-2">To</label>
-                              <input name="end_date" id="end_date" type="text" class="form-control" title="Make sure of your End date" value="{{$userLd['end_date']}}" data-single-mode="true">@error('end_date')<span style="color:red">{{$message}}</span>@enderror
+                              <input name="end_date" id="end_date" type="text" class="form-control"  value="{{$userLd['end_date']}}" data-single-mode="true">
                         </div>  
+                        </div>
+                        <div class="text-theme-34 mt-5"  name="permission_hours" id="permission_hours">
+                           <input  id="hours" type="text" class="form-control"  value="{{$userLd['permission_type_id']}}" data-single-mode="true"> 
+                        </div>
 
                         <button type="submit" id="submit" class="btn btn-warning w-32 mt-4">
                             <i data-feather="download" class="w-4 h-4 mr-2"></i> Submit
                         </button>   
                     </form>
-                    <div class="text-theme-34 mt-5">Update Correctly</div>
                 </div>
 @endsection
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+$("#leave_type").change(function(){
+    var status = $(this).val();
+        if(status == 1){
+            $("#permission_hours").show();
+            $("#leave_dates").hide();
+        }
+        else {
+            $("#leave_dates").show();
+            $("#permission_hours").hide();
+        }
+
+});
+});
+</script>

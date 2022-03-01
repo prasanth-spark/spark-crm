@@ -44,7 +44,7 @@ class AttendanceDetail implements ShouldQueue
         $reason = $leave->description;
 
         if($reason=='Permission'){    
-          $email = new PermissionMail($user);
+          $email = new PermissionMail($user,$leave);
           Mail::to($sendMailTo)->send($email);
         }
         else{

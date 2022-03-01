@@ -36,13 +36,6 @@ class LeaveMailSend implements ShouldQueue
         $user= $this->user;
         $userMail = $user->email;
         $status= $this->status;
-        if($status == 2){
-            $status = 'Accepted' ;
-        }
-        else 
-        {
-            $status = 'Rejected'; 
-        }
         $email = new LeaveStatusMail($user,$status);
         Mail::to($userMail)->send($email);
 

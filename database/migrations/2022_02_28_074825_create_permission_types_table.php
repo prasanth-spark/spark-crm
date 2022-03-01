@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToAttendanceTable extends Migration
+class CreatePermissionTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddColumnToAttendanceTable extends Migration
      */
     public function up()
     {
-        Schema::table('attendance', function (Blueprint $table) {
-         $table->string('date')->nullable()->after('attendance');
+        Schema::create('permission_types', function (Blueprint $table) {
+            $table->bigIncrements('id')->index();
+            $table->string('permission_hours');
+            $table->integer('status')->default('1');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddColumnToAttendanceTable extends Migration
      */
     public function down()
     {
-        Schema::table('attendance', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('permission_types');
     }
 }
