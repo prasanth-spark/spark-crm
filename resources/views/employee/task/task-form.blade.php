@@ -44,7 +44,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Module
                             </label>
-                            <input id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module' value="{{ old('task_module') }}">
+                            <textarea id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module'>{{ old('task_module') }}</textarea>
                         </div>
                         @error('task_module')
                         <span style="color:red">{{$message}}</span>
@@ -81,9 +81,9 @@
                             </label>
                             <select placeholder=" Task Status" type="text" class="tom-select w-full" id="regular-form-4" name='task_status' value="{{ old('task_status') }}" >
                                 <option value="1" selected="selected">Pending</option>
-                                @foreach($tasks as $task)
+                                {{-- @foreach($tasks as $task)
                                 <option value="{{$task->id}}">{{$task->task_status}}</option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
                         </div>
                         @error('task_status')

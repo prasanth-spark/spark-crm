@@ -28,7 +28,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Module
                             </label>
-                            <input id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module' value="{{$taskView->task_module}}" >
+                            <textarea id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module'>{{$taskView->task_module}}</textarea>
                         </div>
                         <div class="input-form mt-3">
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
@@ -46,7 +46,8 @@
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Status
                             </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="Task Status" name='task_status' value="{{$taskView->task_status}}" >
+                            <input id="regular-form-4" type="text" class="form-control" placeholder="Task Status" name='task_status' value="@if($taskView->task_status ==1) pending @else completed @endif" >
+                            
                         </div>
                         
                         <div>

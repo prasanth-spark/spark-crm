@@ -45,6 +45,7 @@ use App\Http\Controllers\employee\UserProfileController;
             Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
             Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
             Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
+            Route::get('/task-pagination',[TaskController::class, 'taskPagination'])->name('task-pagination');
 
           // Attendance  
             Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
