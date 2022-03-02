@@ -40,7 +40,7 @@
                     <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                         Sign Up
                     </h2>
-                  
+
                     <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
                     <form action="{{route('user-dashboard')}}" method="post">
                         @csrf
@@ -83,38 +83,38 @@
     <!-- BEGIN: JS Assets-->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
-        <script>  
-           toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": true,
-                        "progressBar": true,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }    
-                    @if(Session::has('success'))
-                    const toastHTML = '{{Session::get('success')}}';
-                    toastr["success"](toastHTML);
-                    @php Session::forget('success'); @endphp
-                    @endif
-                    @if(Session::has('error'))
-                    const toastHTML = '{{Session::get('error')}}';
-                    toastr["error"](toastHTML);
-                    @php Session::forget('error'); @endphp
-                    @endif
-    </script>
+    <script>  
+       toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }    
+                @if(Session::has('success'))
+                const toastHTML = '{{Session::get('success')}}';
+                toastr["success"](toastHTML);
+                @php Session::forget('success'); @endphp
+                @endif
+                @if(Session::has('error'))
+                const toastHTML = '{{Session::get('error')}}';
+                toastr["error"](toastHTML);
+                @php Session::forget('error'); @endphp
+                @endif
+</script>
     <!-- END: JS Assets-->
 </body>
 

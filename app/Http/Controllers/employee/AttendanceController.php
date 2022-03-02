@@ -203,9 +203,9 @@ class AttendanceController extends Controller
               $user= $this->user->find($userId);
               $userRole=$user->role_id; 
               $tlRole = $userRole-1;     
-              $userTeam=$user->team_id; 
+              $userTeam=$user->team_id;
               $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
-              $teamLead=$teamLeadTeam->user_id;  
+              $teamLead=$teamLeadTeam->user_id; 
               $teamLeadMail = User::find($teamLead);
               $teamLeadMail =$teamLeadMail->email;
           $job = new LeavePermissionDetail($teamLeadMail,$user,$reason);
