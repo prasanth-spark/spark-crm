@@ -49,6 +49,13 @@ class PermissionTypeSeeder extends Seeder
                 'status'=>1,
                 'created_at' =>now(),
                 'updated_at' =>now()           
+            ],
+            [ 
+                'id' => '6',
+                'permission_hours' => 'permission_exceeds',
+                'status'=>1,
+                'created_at' =>now(),
+                'updated_at' =>now()           
             ]
          ]); 
     }
