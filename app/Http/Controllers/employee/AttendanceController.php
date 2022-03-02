@@ -52,7 +52,7 @@ class AttendanceController extends Controller
                 Attendance::where('user_id',$regUserId)->update([
                     'attendance'=>$request->value,
                     'attendance_status'=> $request->value,
-                    'in_active_id'=>$in_active_id
+                    'in_active'=>$in_active_id
                  ]);
                  $in_active_id = 'Permission';
                  $leave = $this->leave_request->create([               
@@ -202,9 +202,9 @@ class AttendanceController extends Controller
               $user= $this->user->find($userId);
               $userRole=$user->role_id; 
               $tlRole = $userRole-1;     
-              $userTeam=$user->team_id; 
+              $userTeam=$user->team_id;
               $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
-              $teamLead=$teamLeadTeam->user_id;  
+              $teamLead=$teamLeadTeam->user_id; 
               $teamLeadMail = User::find($teamLead);
               $teamLeadMail =$teamLeadMail->email;
           $job = new LeavePermissionDetail($teamLeadMail,$user,$reason);

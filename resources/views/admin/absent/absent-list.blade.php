@@ -16,16 +16,14 @@
 @section('subcontent')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto"></h2>
-    <form action="{{route('attendance-teamlist')}}" class="flex w-3/12 mb-3 space-x-4" method="post">
-        @csrf
-        <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4" name='team_id'>
-            <option value selected="selected" disabled="disabled"></option>
+     <form action="" class="flex w-3/12 mb-3 space-x-4" method=""> 
+        <select placeholder="Team Name" type="text" class="tom-select w-full" onchange="teamList()" id="team_id">
+            <option value="Select a Team" selected disabled>Select a Team</option>
             @foreach($teamList as $t)
             <option value="{{$t->id}}"> {{$t->team}}</option>
             @endforeach
         </select>
-        <button type="submit" class="btn btn-primary mt-0">Submit</button>
-    </form>
+    </form> 
 
 </div>
 <!-- BEGIN: Data List -->
@@ -33,25 +31,45 @@
     <table id="employeelist" class="table table-report -mt-2">
         <thead>
             <tr>
-                <th class="whitespace-nowrap">DATE</th>
                 <th class="whitespace-nowrap">NAME</th>
                 <th class="whitespace-nowrap">TEAM</th>
                 <th class="whitespace-nowrap">ROLE</th>
-                <th class="whitespace-nowrap">ATTENDANCE STATUS</th>
+                <th class="whitespace-nowrap">LEAVE TYPE</th>
+                <th class="whitespace-nowrap">LEAVE STATUS</th>
+                <th class="whitespace-nowrap">FROM DATE</th>
+                <th class="whitespace-nowrap">END DATE</th>
+
+
             </tr>
         </thead>
-        <tbody>
-        @foreach($attendanceList as $attendance)
+      <tbody>
+        @foreach($absentList as $absent)
                 <tr>  
 
-                    <td>{{$attendance->date}}</td>
-                    <td>{{$attendance->attendanceToUser->name}}</td>
-                    <td>{{$attendance->attendanceToUserDetails->teamToUserDetails->team}}</td>
-                    <td>{{$attendance->attendanceToUser->roleToUser->role}}</td>
-                    <td>{{($attendance->attendance_status == 1) ? "present" : "absent";}}</td>
+                    <td>{{$absent->leaverequestUser->name}}</td>
+                    <td>{{$absent->leaveToUserDetails->teamToUserDetails->team}}</td>
+                    <td>{{$absent->leaverequestUser->roleToUser->role}}</td>
+                    <td>{{$absent->leaverequest->leave_type}}</td>
+                    <td>
+                            @switch($absent->leave_status)
+                                @case($absent->leave_status==1)
+                                pending
+                                @break
+
+                                @case($absent->leave_status==2)
+                                    approved
+                                @break
+
+                                @default
+                                    rejected
+                            @endswitch
+                    </td>
+                    <td>{{$absent->start_date}}</td>
+                    <td>{{$absent->end_date}}</td>
+
                 </tr>
             @endforeach
-        </tbody>
+        </tbody> 
     </table>
 </div>
 
@@ -69,7 +87,11 @@
             ]
         });
     });
+  function teamList() {
+  var myElement =document.getElementById('team_id') ; 
+  teamID = myElement.value;
+  window.location.href ='/admin/teamwise-absent-list/'+teamID;
+}
 </script>
-
 
 @endsection
