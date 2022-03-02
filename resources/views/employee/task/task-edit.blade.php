@@ -56,7 +56,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Worked Hours
                             </label>
-                            <input id="regular-form-3" type="number" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskEdit->worked_hours}}" disabled>
+                            <input id="regular-form-3" type="number" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskEdit->worked_hours}}">
                         </div>
                         @error('worked_hours')
                         <span style="color:red">{{$message}}</span>

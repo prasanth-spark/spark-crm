@@ -144,14 +144,9 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function taskUpdate(TaskRequest $request)
+    public function taskUpdate(Request $request)
     {
        $this->taskSheet->where('id',$request->id)->update([
-        'user_id' => $request->session()->get('id'),
-        'date' => $request->date,
-        'project_name' => $request->project_name,
-        'task_module' => $request->task_module,
-        'estimated_hours' => $request->estimated_hours,
         'worked_hours' => $request->worked_hours,
         'task_status' => $request->task_status
         ]);
