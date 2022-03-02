@@ -61,6 +61,14 @@ class SideMenu
                         ],
                         'title' => 'Absent List'
                     ],
+                    [
+                        'icon' => '',
+                        'route_name' => 'permission-list',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                        'title' => 'Permission List'
+                    ],
                 ]
             ],  
             'Employee Task' => [
