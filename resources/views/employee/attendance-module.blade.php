@@ -18,12 +18,12 @@
             <span class="show box bg-theme-25 text-white flex items-center">
                 <button class="btn border-transparent bg-theme-25 dark:bg-dark-1">Attendance Detail</button>
             </span>
-            <div class="text-white text-sm 2xl:text-base font-medium mt-4">
+            <div class="text-black text-sm 2xl:text-base font-medium mt-4">
                     Hi {{$user['name']}} ,
                     <span class="text-theme-34 dark:text-gray-500 font-normal">Welcome!</span>
             </div>
         </div>    <!-- Attendance card -->
-    <div class="intro-y col-span-12 lg:col-span-6 text-white text-sm p-4">
+    <div class="intro-y col-span-12 lg:col-span-6 text-black text-sm p-4">
         <!-- <div class="intro-y  p-4"> -->
             <label for="regular-form" class="form-label">Today's Attendance</label>
             <input id="regular-form-1" type="text" class="datepicker form-control  text-theme-35" data-single-mode="true">
@@ -50,15 +50,15 @@
         </select>
         <input type= hidden name="inactive_value" id ="inactive_value">
         <div id ="permission" name="permission" >
-            <label  class="form-label text-theme-34 mt-4" name="permission">1</label>
+            <label  class="form-label text-black text-theme-34 mt-4" name="permission">1</label>
             <input type ="radio" name="permission" value ="1">
-            <label  class="form-label text-theme-34 mt-4" name="permission">2</label>
+            <label  class="form-label text-black text-theme-34 mt-4" name="permission">2</label>
             <input type ="radio" name="permission" value="2">
-            <label  class="form-label text-theme-34 mt-4" name="permission">3</label>
+            <label  class="form-label  text-black text-theme-34 mt-4" name="permission">3</label>
             <input type ="radio" name="permission" value="3">
-            <label  class="form-label text-theme-34 mt-4" name="permission">4</label>
+            <label  class="form-label text-black text-theme-34 mt-4" name="permission">4</label>
             <input type ="radio" name="permission" value="4">
-            <label  class="form-label text-theme-34 mt-4" name="permission">Half a day</label>
+            <label  class="form-label text-black text-theme-34 mt-4" name="permission">Half a day</label>
             <input type ="radio" name="permission" value="5">    </input>
         </div>
         <div id="permission_hours" name=permissson_hours>
@@ -72,7 +72,11 @@
         <label  class="form-label text-theme-34 mt-2">To</label>
             <input type="date" name="end_date" id="end_date" class=" form-control" data-single-mode="true">@error('end_date')<span style="color:red">{{$message}}</span>@enderror    
             </div>
-        </div> 
+        </div>
+        <button class="btn btn-primary mt-4" >
+            <a href="{{route('attendance-show',[$user->id])}}">
+             View Attendance Report</a>
+        </button>  
     </div>   
     </div>                               
         <button class="btn btn-success mt-4" id="save_button" type="submit" >
@@ -122,11 +126,11 @@ $(document).ready(function(){
         $("#absent").show();
         $("#update_button").hide();
     }
-    else if(user == 3){
-        $( "#present" ).hide();
-        $( "#absent" ).hide();
+    else if(user == 0){
+        $( "#present" ).show();
+        $("#absent").prop("disabled",true);
         $('#attendance').val("You are registered as Absent");
-        $("#update_button").hide();
+        $("#update_button").show();
         $("#save_button").hide();
     }
     else if(user == 2){
