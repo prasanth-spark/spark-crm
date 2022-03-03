@@ -101,21 +101,13 @@
             <div class="dropdown-menu__content box dark:bg-dark-6">
                 <div class="p-4 border-b border-black border-opacity-5 dark:border-dark-3">
                     <div class="font-medium"></div>
-                    <div class="text-xs text-gray-600 mt-0.5 dark:text-gray-600"></div>
+                    <div class="text-xs text-gray-600 mt-0.5 dark:text-gray-600">admin</div>
                 </div>
                 <div class="p-2">
                     <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
-                        <em data-feather="user" class="w-4 h-4 mr-2"></em> Profile
-                    </a>
-                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
-                        <em data-feather="edit" class="w-4 h-4 mr-2"></em> Add Account
-                    </a>
-                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
                         <em data-feather="lock" class="w-4 h-4 mr-2"></em> Reset Password
                     </a>
-                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
-                        <em data-feather="help-circle" class="w-4 h-4 mr-2"></em> Help
-                    </a>
+                   
                 </div>
                 <div class="p-2 border-t border-black border-opacity-5 dark:border-dark-3">
                     <a href="{{ route('logout') }}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">

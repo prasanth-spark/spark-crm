@@ -5,7 +5,10 @@ use App\Http\Controllers\employee\LoginController;
 use App\Http\Controllers\employee\AttendanceController;
 use App\Http\Controllers\employee\TaskController;
 use App\Http\Controllers\employee\UserProfileController;
-use App\Models\Attendance;
+use App\Http\Controllers\employee\TeamTaskController;
+use App\Http\Controllers\employee\TeamAttendanceController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,5 +64,12 @@ use App\Models\Attendance;
             //User Profile
             Route::get('user-profile-form',[UserProfileController::class, 'userProfileForm'])->name('user-profile-form');
             Route::post('user-profile-add',[UserProfileController::class, 'userProfileAdd'])->name('user-profile-add');
+
+            //Team Task
+            Route::get('team-task',[TeamTaskController::class, 'teamTask'])->name('team-task');
+
+            //Team Attendance
+            Route::get('team-attentance',[TeamAttendanceController::class, 'teamAttendance'])->name('team-attendance');
+
         
         });
