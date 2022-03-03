@@ -43,7 +43,7 @@ class DailyTaskStatus extends Command
     public function handle()
     {
         $task = TaskSheet::where('status','1')->pluck('user_id')->toArray();
-        $users = User::where('status','!=',0)->pluck('id','name')->toArray();
+        $users = User::where('status',1)->pluck('id','name')->toArray();
         $taskNotUpdatedUsers = array_diff($users,$task);
         
         foreach($taskNotUpdatedUsers as $taskNotUpdatedUser){
