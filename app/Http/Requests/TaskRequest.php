@@ -28,7 +28,7 @@ class TaskRequest extends FormRequest
             'project_name' => 'required',
             'task_module' => 'required',
             'estimated_hours' => 'required|integer',
-            'worked_hours' => 'required|integer',
+            'worked_hours' => 'sometimes|required|integer',
             'task_status' => 'required' 
         ];
     }

@@ -45,7 +45,7 @@ class TaskController extends Controller
           'project_name' => $request->project_name,
           'task_module' => $request->task_module,
           'estimated_hours' => $request->estimated_hours,
-          'worked_hours' => $request->worked_hours,
+        //   'worked_hours' => $request->worked_hours,
           'task_status' => $request->task_status,
           'status' => '1'
         ]);
@@ -93,7 +93,7 @@ class TaskController extends Controller
             $col['project_name'] = ($value->project_name) ? $value->project_name : "";
             $col['task_module'] = ($value->task_module) ? $value->task_module : "";
             $col['estimated_hours'] = ($value->estimated_hours) ? $value->estimated_hours :"";
-            $col['worked_hours'] = ($value->worked_hours) ? $value->worked_hours : "";
+            $col['worked_hours'] = ($value->worked_hours) ? $value->worked_hours : "-";
             $col['task_status'] = ($value->task_status==1) ? 'pending' : 'completed';
             $col['actions'] = '<a class="flex items-center mr-3" href="'.url('/').'/employee/task-details/'.$value->id.'">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="eye" data-lucide="eye" class="lucide lucide-eye block mx-auto"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View
