@@ -30,7 +30,9 @@ class AddColumnInLeaveRequestsTable extends Migration
     public function down()
     {
         Schema::table('leave_requests', function (Blueprint $table) {
-            
+            $table->dropColumn('permission_type_id'); 
+            $table->dropColumn('permission_hours_from');
+            $table->dropColumn('permission_hours_to'); 
         });
     }
 }

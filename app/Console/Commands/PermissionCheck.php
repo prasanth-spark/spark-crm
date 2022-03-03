@@ -45,12 +45,12 @@ class PermissionCheck extends Command
         $time = date('H:i', strtotime($dateTime));  
         $leaveRequest= LeaveRequest::where('leave_type_id',1)->with('userAttendance')->get();
         //  dd($leaveRequest[0]['userAttendance']['email']);
-        foreach($leaveRequest as $permissionCheck){
-            
+        foreach($leaveRequest as $permissionCheck){   
             $userName=$permissionCheck->userAttendance->name;
             $userMail=$permissionCheck->userAttendance->email;
             $endHours = $permissionCheck->permission_hours_to;
-             if($endHours<$time){
+            $permissionStatus= $permissionCheck->permission_status;
+             if($endHours<$time || $permissionStatus==2){
                 Mail::to($userMail)->send(new PermissionRemainderMail($userName));
              }
         }
