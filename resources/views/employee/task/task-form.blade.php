@@ -61,20 +61,7 @@
                         <span style="color:red">{{$message}}</span>
                         @enderror
                      </div> 
-                    </div>    
-                   <div class="grid grid-cols-12 gap-6 mt-5">
-                      <div class="col-span-12 md:col-span-6">
-                        <div class="input-form mt-3">
-                            <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
-                                Worked Hours
-                            </label>
-                            <input id="regular-form-3" type="number" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{ old('worked_hours') }}">
-                        </div>
-                        @error('worked_hours')
-                        <span style="color:red">{{$message}}</span>
-                        @enderror
-                      </div> 
-                      <div class="col-span-12 md:col-span-6">
+                     <div class="col-span-12 md:col-span-6">
                         <div class="input-form mt-3">
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Status
@@ -89,7 +76,21 @@
                         @error('task_status')
                         <span style="color:red">{{$message}}</span>
                         @enderror
-                      </div> 
+                      </div>
+                    </div>    
+                   {{-- <div class="grid grid-cols-12 gap-6 mt-5">
+                      <div class="col-span-12 md:col-span-6">
+                        <div class="input-form mt-3">
+                            <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
+                                Worked Hours
+                            </label>
+                            <input id="regular-form-3" type="number" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{ old('worked_hours') }}">
+                        </div>
+                        @error('worked_hours')
+                        <span style="color:red">{{$message}}</span>
+                        @enderror
+                      </div>  --}}
+                       
                     </div>    
                    
                             <button type="submit" class="btn btn-primary mt-5">Add</button>
