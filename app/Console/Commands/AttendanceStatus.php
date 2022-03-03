@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\Attendance;
+use App\Models\LeaveRequest;
 use App\Mail\AttendanceRemainder;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
@@ -43,65 +44,72 @@ class AttendanceStatus extends Command
     {
         $date = Carbon::now();
         $date = $date->format("Y-m-d");
-        $user = User::where('role_id','!=',1)->pluck('id')->toArray();
-        $attendance = Attendance::pluck('user_id')->toArray();
-        $attendanceNotUpdatedUser = array_diff($user,$attendance);
-    
+        $userId = User::where('role_id','!=',1)->pluck('id')->toArray();
+        $attendance = Attendance::where('date',$date)->pluck('user_id')->toArray();
+        $attendanceNotUpdatedUser = array_diff($userId,$attendance);
+        $missedIds = [];
         foreach($attendanceNotUpdatedUser as $attendanceUpdatedUser){
-            $users= user::where('id',$attendanceUpdatedUser)->with('userLeaveRequest')->get();
-        foreach($users as $userValue){
-            $userMail= $userValue->email;
-            // dd($userMail);
-            if(isset($userValue->userLeaveRequest->user_id)){
-          $leaveDays = $userValue->userLeaveRequest->end_date;
-          if($leaveDays <= $date){
-            $attendance =   $this->attendance->create([
-                'user_id'=>$userValue->id,
+       
+        $user= User::where('users.id',$attendanceUpdatedUser)
+        ->join('leave_requests','leave_requests.user_id','=','users.id')
+        ->select('leave_requests.*','users.email')->first(); 
+            if(is_null($user)){
+                array_push($missedIds,$attendanceUpdatedUser);
+            }else{
+                $expire = $user->end_date; 
+                $today_time = strtotime($date);
+                $expire_time = strtotime($expire);
+                $userMail = $user->email;
+         if($user->leave_type_id!=1 && $user->leave_type_id=2 && $expire_time >= $today_time) {
+            Attendance::create([
+                'user_id'=>$user->user_id,
                 'attendance'=>0,
                 'date'=>$date,
                 'attendance_status'=>2,
                 'in_active'=>2,
                 'status'=> 1
-            ]);
-            $leave = $this->leave_request->create([               
-                'leave_type_id'=> $userValue->userLeaveRequest->leave_type_id,
-                'permission_type_id'=>null ,
-                'user_id' =>$userValue->id,
-                'description'=>'Leave',
-                'permission_status'=>null, 
-                'leave_status'=>0,
-                'permission_hours_from'=>null,
-                'permission_hours_to'=>null,   
-                'start_date'=>$userValue->userLeaveRequest->start_date,
-                'end_date'=>$userValue->userLeaveRequest->end_date,
-                'leave_counts'=>$userValue->userLeaveRequest->leave_counts,
-            ]);
-       } else{
-        
-                $attendance =   $this->attendance->create([
-                    'user_id'=>$userValue->id,
-                    'attendance'=>0,
-                    'date'=>$date,
-                    'attendance_status'=>2,
-                    'in_active'=>2,
-                    'status'=> 0
-                ]);
-        Mail::to($userMail)->send(new AttendanceRemainder($userValue));
-          }
-
-    }
-       else{
-        $attendance =   $this->attendance->create([
-            'user_id'=>$userValue->id,
-            'attendance'=>0,
-            'date'=>$date,
-            'attendance_status'=>2,
-            'in_active'=>2,
-            'status'=> 0
         ]);
-        Mail::to($userMail)->send(new AttendanceRemainder($userValue));
-          }
+          LeaveRequest::create([
+            'leave_type_id'=> $user->leave_type_id,
+            'permission_type_id'=>null ,
+            'user_id' =>$user->user_id,
+            'description'=>'Leave',
+            'permission_status'=>null, 
+            'leave_status'=>0,
+            'permission_hours_from'=>null,
+            'permission_hours_to'=>null,   
+            'start_date'=>$user->start_date,
+            'end_date'=>$user->end_date,
+            'leave_counts'=>$user->leave_counts,
+         ]);
         }
-      }
+        else{
+            Attendance::create([
+                'user_id'=>$user->id,
+                'attendance'=>0,
+                'date'=>$date,
+                'attendance_status'=>0,
+                'in_active'=>2,
+                'status'=> 0
+            ]);
+            Mail::to($userMail)->send(new AttendanceRemainder($user));
+        }
+            }
+    
+        }  
+// dd($missedIds);
+                foreach($missedIds as $absentese){
+                    $userValue = User::find($absentese);
+                    $userMail = $userValue->email;
+                    Attendance::create([
+                            'user_id'=>$userValue->id,
+                            'attendance'=>0,
+                            'date'=>$date,
+                            'attendance_status'=>2,
+                            'in_active'=>2,
+                            'status'=> 0
+                        ]);
+                Mail::to($userMail)->send(new AttendanceRemainder($userValue));
+            }
     }
 }
