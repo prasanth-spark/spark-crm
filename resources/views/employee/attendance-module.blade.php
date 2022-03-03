@@ -16,7 +16,7 @@
 <div class="intro-y grid grid-cols-12 gap-6 mt-5">
         <div class="col-span-12 ">
             <span class="show box bg-theme-25 text-white flex items-center">
-                <button class="btn border-transparent bg-theme-25 dark:bg-dark-1">
+                <button class="btn border-transparent bg-theme-25 dark:bg-dark-2">
                 <a href="{{route('attendance-show',[$user->id])}}"> View Attendance Report</a></button>
             </span>
             <div class="text-white text-sm 2xl:text-base font-medium mt-4">
@@ -93,6 +93,7 @@ $(document).ready(function(){
     	var status = $("#absent").val();
         $('#value').val(status);
     });
+    $("#date").hide();
      $("#present").click(function(){
         $("#absent").prop("disabled",true);
          if($("#present").is(':checked')){
@@ -103,17 +104,19 @@ $(document).ready(function(){
              $("#date").show();
          }
         $("#attendance").hide();
+        $("#date").hide();
     	var status = $("#present").val();
         $('#value').val(status);
     });
     $("#absent").click(function(){
-
+        $("#date").show();
         if($("#absent").is(':checked')){
             $("#present").removeAttr('checked');
             $("#present").prop("disabled",true);
         }
         else {
             $("#present").prop("disabled",false);
+            $("#date").hide();
         }
     });
     $("#attendance").show(); 

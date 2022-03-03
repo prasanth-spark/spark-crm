@@ -1,3 +1,3 @@
 <p>Hello {{$employee->name}}</p>
-<p>Today is {{ $employee->name }} Birthday. Please take time and wish a happy birthday!</p>
+<p> Wishing {{ $employee->name }} to have a great day today.Wishing you a Happy Birthday ! once again</p>
 
