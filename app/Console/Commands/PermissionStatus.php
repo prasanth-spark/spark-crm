@@ -50,7 +50,8 @@ class PermissionStatus extends Command
         LeaveRequest::where('user_id',$userId)
             ->update([
                 'leave_type_id'=>4,
-                'permission_type_id'=>6              
+                'permission_type_id'=>6,
+                'permission_status'=>3,           
             ]);
 
        } 

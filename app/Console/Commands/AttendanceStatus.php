@@ -42,23 +42,66 @@ class AttendanceStatus extends Command
     public function handle()
     {
         $date = Carbon::now();
-        $date = $date->format("d-m-Y");
+        $date = $date->format("Y-m-d");
         $user = User::where('role_id','!=',1)->pluck('id')->toArray();
         $attendance = Attendance::pluck('user_id')->toArray();
         $attendanceNotUpdatedUser = array_diff($user,$attendance);
     
         foreach($attendanceNotUpdatedUser as $attendanceUpdatedUser){
-            $userValue = User::find($attendanceUpdatedUser);
-            $userMail = $userValue->email;
-             Attendance::create([
+            $users= user::where('id',$attendanceUpdatedUser)->with('userLeaveRequest')->get();
+        foreach($users as $userValue){
+            $userMail= $userValue->email;
+            // dd($userMail);
+            if(isset($userValue->userLeaveRequest->user_id)){
+          $leaveDays = $userValue->userLeaveRequest->end_date;
+          if($leaveDays <= $date){
+            $attendance =   $this->attendance->create([
                 'user_id'=>$userValue->id,
                 'attendance'=>0,
                 'date'=>$date,
-                'attendance_status'=>0,
-                'in_active'=>null,
-                'status'=>0
+                'attendance_status'=>2,
+                'in_active'=>2,
+                'status'=> 1
             ]);
-                Mail::to($userMail)->send(new AttendanceRemainder($userValue));
+            $leave = $this->leave_request->create([               
+                'leave_type_id'=> $userValue->userLeaveRequest->leave_type_id,
+                'permission_type_id'=>null ,
+                'user_id' =>$userValue->id,
+                'description'=>'Leave',
+                'permission_status'=>null, 
+                'leave_status'=>0,
+                'permission_hours_from'=>null,
+                'permission_hours_to'=>null,   
+                'start_date'=>$userValue->userLeaveRequest->start_date,
+                'end_date'=>$userValue->userLeaveRequest->end_date,
+                'leave_counts'=>$userValue->userLeaveRequest->leave_counts,
+            ]);
+       } else{
+        
+                $attendance =   $this->attendance->create([
+                    'user_id'=>$userValue->id,
+                    'attendance'=>0,
+                    'date'=>$date,
+                    'attendance_status'=>2,
+                    'in_active'=>2,
+                    'status'=> 0
+                ]);
+        Mail::to($userMail)->send(new AttendanceRemainder($userValue));
+          }
+
+    }
+       else{
+        $attendance =   $this->attendance->create([
+            'user_id'=>$userValue->id,
+            'attendance'=>0,
+            'date'=>$date,
+            'attendance_status'=>2,
+            'in_active'=>2,
+            'status'=> 0
+        ]);
+        Mail::to($userMail)->send(new AttendanceRemainder($userValue));
+          }
         }
+      }
     }
 }

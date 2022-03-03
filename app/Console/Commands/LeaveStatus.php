@@ -40,7 +40,7 @@ class LeaveStatus extends Command
     public function handle()
     {
             $date = Carbon::now();
-            $date = $date->format("d-m-Y");
+            $date = $date->format("Y-m-d");
             $user = Attendance::where('status', 0)->get();
             foreach($user as $absentese){
                 // dd($absentese->user_id);

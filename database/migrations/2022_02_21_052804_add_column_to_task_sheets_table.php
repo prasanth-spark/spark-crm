@@ -26,7 +26,7 @@ class AddColumnToTaskSheetsTable extends Migration
     public function down()
     {
         Schema::table('task_sheets', function (Blueprint $table) {
-          
+            $table->dropColumn('task_status');
         });
     }
 }
