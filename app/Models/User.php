@@ -88,4 +88,7 @@ class User extends Authenticatable
 
         return $this->hasMany(TaskSheet::class, 'user_id', 'id');
     }
+    public function userLeaveRequest(){
+        return $this->hasMany(LeaveRequest::class, 'user_id', 'id');
+    }
 }

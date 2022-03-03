@@ -39,7 +39,8 @@ class AttendanceController extends Controller
         $date = date_create($request->start_date);
         $edate = date_create($request->end_date);
         $diff_date = date_diff($date,$edate);
-        $leaveDays = $diff_date->format("%a"); 
+        $leaveDay = $diff_date->format("%a"); 
+        $leaveDays = $leaveDay +1;
 
         $start_date = date('d-m-Y', strtotime($request->start_date));
         $end_date = date('d-m-Y', strtotime($request->end_date));   
@@ -71,13 +72,13 @@ class AttendanceController extends Controller
                     dispatch($job);
              }
              else if($in_active_id=='2')
-             {
-                $in_active_id = 'Leave';
+             { 
                 Attendance::where('user_id',$regUserId)->update([
                     'attendance'=>$request->value,
                     'attendance_status'=> $request->value,
-                    'in_active'=>$in_active_id
+                    'in_active'=>2
                  ]);
+                 $in_active_id = 'Leave';
                 $leave = $this->leave_request->create([               
                     'leave_type_id'=> 4,
                     'permission_type_id'=>null ,
@@ -218,7 +219,7 @@ class AttendanceController extends Controller
             LeaveRequest::where('user_id',$userId)
                 ->where('leave_status','=',1)
                 ->update(['leave_status'=> $status,
-                         ]);                              
+                         ]);                                        
       }
     else{
         LeaveRequest::where('user_id',$userId)
@@ -226,11 +227,22 @@ class AttendanceController extends Controller
                 ->update([
                     'leave_type_id'=> 4,
                     'leave_status'=> $status,
-                         ]);         
+                         ]);   
+            Attendance::where('user_id',$userId)->update([
+                        'attendance_status'=>0,
+          ]);       
     }
         $job = new LeaveMailSend($status,$user);
                 dispatch($job);
                 return redirect('/employee/employee_dashboard');
+    }
+
+    public function attendanceList($id){
+        $user = User::find($id);
+        // $attendance = Attendance::where('user_id',$user->id)->first();
+        // $leaveDetails = LeaveRequest::where('user_id',$user->id)->first();
+
+        return view('/employee/attendance-report',compact('user'));
     }
     
 }

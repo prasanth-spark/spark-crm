@@ -59,7 +59,7 @@ use App\Http\Controllers\employee\TeamAttendanceController;
             Route::get('leave-request/{id}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
             Route::post('leave-status',[AttendanceController::class, 'leaveStatus'])->name('leave-status');
             Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
-            Route::post('attendance-list',[AttendanceController::class, 'attendanceList'])->name('attendance-list');
+            Route::get('attendance-show/{id}',[AttendanceController::class, 'attendanceList'])->name('attendance-show');
 
             //User Profile
             Route::get('user-profile-form',[UserProfileController::class, 'userProfileForm'])->name('user-profile-form');

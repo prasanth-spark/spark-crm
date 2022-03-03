@@ -52,10 +52,12 @@ class AttendanceStatus extends Command
             $userMail = $userValue->email;
              Attendance::create([
                 'user_id'=>$userValue->id,
-                'attendance_status'=>'0',
-                'leave_status'=>'0',
+                'attendance'=>0,
                 'date'=>$date,
-                'status'=>'0']);
+                'attendance_status'=>0,
+                'in_active'=>null,
+                'status'=>0
+            ]);
                 Mail::to($userMail)->send(new AttendanceRemainder($userValue));
         }
     }

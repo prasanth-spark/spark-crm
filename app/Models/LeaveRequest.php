@@ -19,6 +19,11 @@ class LeaveRequest extends Model
   {
       return $this->belongsTo(PermissionType::class, 'permission_type_id', 'id');
   }
+
+  public function userAttendance(){
+    return $this->belongsTo(User::class, 'user_id', 'id');
+  }
+
   public function leaverequestUser()
   {
     return $this->belongsTo(User::class, 'user_id', 'id');
@@ -28,4 +33,5 @@ class LeaveRequest extends Model
          
     return $this->belongsTo(UserDetails::class,'user_id','user_id');
 }
+
 }

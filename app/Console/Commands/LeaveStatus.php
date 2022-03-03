@@ -41,21 +41,25 @@ class LeaveStatus extends Command
     {
             $date = Carbon::now();
             $date = $date->format("d-m-Y");
-            $user = Attendance::where('attendance_status','0')->where('leave_status','0')->where('status','0')->get();
+            $user = Attendance::where('status', 0)->get();
             foreach($user as $absentese){
                 // dd($absentese->user_id);
                  $leaveStatus = LeaveRequest::create([
                 'leave_type_id'=>4,
+                'permission_type_id'=>null ,
                 'user_id'=>$absentese->user_id,
-                'description'=>'absent',
-                'status'=>1,
+                'description'=>'Absent',
+                'leave_status'=>0,
+                'permission_hours_from'=>null,
+                'permission_hours_to'=>null, 
                 'start_date'=>$date,
-                'end_date'=>$date
+                'end_date'=>$date,
+                'leave_counts'=>1,
                 ]);
                 Attendance::where('user_id',$leaveStatus->user_id)
                 ->where('date','=',$leaveStatus->start_date)
                 ->update([    
-                    'attendance_status'=>2,           
+                    'attendance_status'=>0,           
                     'status'=>1,
                 ]);
             }    

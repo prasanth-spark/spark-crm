@@ -3,7 +3,7 @@
 @section('subhead')
     <title>Task List</title>
     {{-- <link rel="stylesheet" type="text/css" href="{{URL::asset('public/app-assets/vendors/css/tables/datatable/datatables.min.css')}}"> --}}
-    
+    <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"> 
    
 @endsection
 
@@ -38,9 +38,8 @@
        
         
         <!-- END: Data List -->
-        <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+       
+        @extends('../layout/script')  
 
         <script>
             $(document).ready(function() {
