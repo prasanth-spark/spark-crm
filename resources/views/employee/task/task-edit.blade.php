@@ -20,7 +20,7 @@
                             <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
                                 Date
                             </label>
-                         <input id="validation-form-1" type="date" class="form-control" placeholder="Date" name="date" value="{{$taskEdit->date}}" disabled>       
+                         <input id="validation-form-1" type="date" class="form-control" placeholder="Date" name="date" value="{{$taskEdit->date}}" readonly>       
                         </div>
                         @error('date')
                         <span style="color:red">{{$message}}</span>
@@ -29,7 +29,7 @@
                             <label for="regular-form-2" class="form-label w-full flex flex-col sm:flex-row">
                                 Project Name
                             </label>
-                            <input id="validation-form-2" type="text" class="form-control" placeholder=" Project Name" name='project_name' value="{{$taskEdit->project_name}}" disabled>
+                            <input id="validation-form-2" type="text" class="form-control" placeholder=" Project Name" name='project_name' value="{{$taskEdit->project_name}}" readonly>
                         </div>
                         @error('project_name')
                         <span style="color:red">{{$message}}</span>
@@ -38,7 +38,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Module
                             </label>
-                            <textarea id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module' disabled>{{$taskEdit->task_module}}</textarea>
+                            <textarea id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module' readonly>{{$taskEdit->task_module}}</textarea>
                         </div>
                         @error('task_module')
                         <span style="color:red">{{$message}}</span>
@@ -47,7 +47,7 @@
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Estimated Hours
                             </label>
-                            <input id="regular-form-3" type="number" class="form-control" placeholder=" Estimated Hours" name='estimated_hours' value="{{$taskEdit->estimated_hours}}" disabled>
+                            <input id="regular-form-3" type="number" class="form-control" placeholder=" Estimated Hours" name='estimated_hours' value="{{$taskEdit->estimated_hours}}" readonly>
                         </div>
                         @error('estimated_hours')
                         <span style="color:red">{{$message}}</span>
