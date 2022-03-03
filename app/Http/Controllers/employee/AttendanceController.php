@@ -158,7 +158,7 @@ class AttendanceController extends Controller
                 'user_id'=>$userId,
                 'attendance'=>$attendanceValue,
                 'date'=>$date,
-                'attendance_status'=>1,
+                'attendance_status'=>2,
                 'in_active'=>$request->select,
                 'status'=> 1
             ]);
@@ -231,7 +231,7 @@ class AttendanceController extends Controller
                          ]); 
             LeaveRequest::where('user_id',$userId)
                 ->where('leave_status',1)->where('leave_type_id','!=',1)
-                ->update(['permission_status'=> $status,
+                ->update(['leave_status'=> $status,
                         ]);
            Attendance::where('user_id',$userId)->update([
                     'attendance_status'=>3,
