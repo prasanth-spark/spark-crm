@@ -7,6 +7,6 @@
     <title>Approved Mail</title>
 </head>
 <body>
-    <p>please update your profile</p>
+    <p>Please update your profile</p>
 </body>
 </html>
