@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
 
         //Permission List
         Route::get('/permission-list', [AttendanceController::class, 'permissionList'])->name('permission-list');
-        Route::get('/teamwise-permission-list', [AttendanceController::class, 'teamWisePermissionList'])->name('teamwise-permission-list');
+        Route::post('/teamwise-permission-list', [AttendanceController::class, 'teamWisePermissionList'])->name('teamwise-permission-list');
         
 
 
