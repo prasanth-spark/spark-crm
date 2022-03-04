@@ -49,6 +49,7 @@ class LeaveStatus extends Command
                 'permission_type_id'=>null ,
                 'user_id'=>$absentese->user_id,
                 'description'=>'Absent',
+                'permission_status'=>null,
                 'leave_status'=>0,
                 'permission_hours_from'=>null,
                 'permission_hours_to'=>null, 
