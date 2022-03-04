@@ -45,7 +45,6 @@ class TaskController extends Controller
           'project_name' => $request->project_name,
           'task_module' => $request->task_module,
           'estimated_hours' => $request->estimated_hours,
-        //   'worked_hours' => $request->worked_hours,
           'task_status' => $request->task_status,
           'status' => '1'
         ]);

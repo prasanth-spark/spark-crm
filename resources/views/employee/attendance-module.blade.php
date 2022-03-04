@@ -158,7 +158,7 @@ $(document).ready(function(){
     else{
         $( "#present" ).prop("disabled",false);
         $("#absent").show();
-        $("#attendance").val("Your Leave Permission Rejected");
+        $("#attendance").val("Your Leave Permission Rejected and marked as Absent");
         $("#update_button").show();
         $("#save_button").hide();
     }
