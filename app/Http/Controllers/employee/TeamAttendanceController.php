@@ -46,7 +46,6 @@ class TeamAttendanceController extends Controller
         $teamAttendance=$this->attendance->whereHas('attendanceToUserDetails', function ($query) use ($teamId) {
             $query->where('team_id',$teamId)->where('role_id',4);
         })->with('attendanceToUser','attendanceToUserDetails')->get(); 
-        // dd($teamAttendance);
         return view('employee/teamattendance/team-attendance', compact('teamAttendance'));
     }
 }

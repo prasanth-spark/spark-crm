@@ -21,7 +21,7 @@
                                     <label for="regular-form-2" class="form-label w-full flex flex-col sm:flex-row">
                                         Father Name<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters</span>
                                     </label>
-                                    <input id="validation-form-2" type="text" class="form-control" value="{{(isset($userdetails->father_name) ? $userdetails->father_name : '') }}" placeholder="Father Name" name='father_name'>
+                                    <input id="validation-form-2" type="text" class="form-control" value="{{(isset($userdetails->father_name) ? $userdetails->father_name : '') }}" placeholder="Father Name" name='father_name' required>
                                     @error('father_name')
                                     <span style="color:red">{{$message}}</span>              
                                     @enderror
@@ -32,7 +32,7 @@
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                         Mother Name<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters</span>
                                     </label>
-                                    <input id="regular-form-3" type="text" class="form-control"  value="{{(isset($userdetails->mother_name) ? $userdetails->mother_name : '') }}" placeholder="Mother Name" name='mother_name'>
+                                    <input id="regular-form-3" type="text" class="form-control"  value="{{(isset($userdetails->mother_name) ? $userdetails->mother_name : '') }}" placeholder="Mother Name" name='mother_name' required>
                                     @error('mother_name')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -45,7 +45,7 @@
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                         Phone Number<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only & maximum 10 characters</span>
                                     </label>
-                                    <input id="regular-form-3" type="number" min="0" class="form-control" value="{{(isset($userdetails->father_name) ? $userdetails->phone_number : '') }}" placeholder="Phone Number" name='phone_number'>
+                                    <input id="regular-form-3" type="number" min="0" class="form-control" value="{{(isset($userdetails->father_name) ? $userdetails->phone_number : '') }}" placeholder="Phone Number" name='phone_number' required>
                                     @error('phone_number')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -56,7 +56,7 @@
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                         Emergency Contact Number<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only & maximum 10 characters</span>
                                     </label>
-                                    <input id="regular-form-3" type="number" class="form-control" value="{{(isset($userdetails->emergency_contact_number) ? $userdetails->emergency_contact_number : '') }}" placeholder="Emergency Contact Number" name='emergency_contact_number'>
+                                    <input id="regular-form-3" type="number" class="form-control" value="{{(isset($userdetails->emergency_contact_number) ? $userdetails->emergency_contact_number : '') }}" placeholder="Emergency Contact Number" name='emergency_contact_number' required>
                                     @error('emergency_contact_number')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -69,7 +69,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Official Email<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, email address format</span>
                                     </label>
-                                    <input id="regular-form-4" type="email" class="form-control"  value="{{(isset($userdetails->official_email) ? $userdetails->official_email : '') }}"placeholder="Official Email" name='official_email'>
+                                    <input id="regular-form-4" type="email" class="form-control"  value="{{(isset($userdetails->official_email) ? $userdetails->official_email : '') }}"placeholder="Official Email" name='official_email' required>
                                     @error('official_email')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -80,7 +80,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Joined Date<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
                                     </label>
-                                    <input id="regular-form-4" type="date" class="form-control" value="{{(isset($userdetails->joined_date) ? $userdetails->joined_date : '') }}" placeholder="Joined Date" name='joined_date'>
+                                    <input id="regular-form-4" type="date" class="form-control" value="{{(isset($userdetails->joined_date) ? $userdetails->joined_date : '') }}" placeholder="Joined Date" name='joined_date' required>
                                     @error('joined_date')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -93,7 +93,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Home Address<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 10 characters</span>
                                     </label>
-                                    <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->home_address) ? $userdetails->home_address : '') }}" placeholder="Home Address" name='home_address'>
+                                    <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->home_address) ? $userdetails->home_address : '') }}" placeholder="Home Address" name='home_address' required>
                                     @error('home_address')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -104,7 +104,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Data of Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
                                     </label>
-                                    <input id="regular-form-4" type="date" class="form-control"  value="{{(isset($userdetails->date_of_birth) ? $userdetails->date_of_birth : '') }}"placeholder="Date of Birth" name='date_of_birth'>
+                                    <input id="regular-form-4" type="date" class="form-control"  value="{{(isset($userdetails->date_of_birth) ? $userdetails->date_of_birth : '') }}"placeholder="Date of Birth" name='date_of_birth' required>
                                     @error('date_of_birth')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -117,7 +117,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Blood Group<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, blood group</span>
                                     </label>
-                                    <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->blood_group) ? $userdetails->blood_group : '') }}" placeholder="Blood Group" name='blood_group'>
+                                    <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->blood_group) ? $userdetails->blood_group : '') }}" placeholder="Blood Group" name='blood_group' required>
                                     @error('blood_group')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -138,7 +138,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Aadhar Number<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only & maximum 16 characters</span>
                                     </label>
-                                    <input id="regular-form-4" type="number" class="form-control"  value="{{(isset($userdetails->aadhar_number) ? $userdetails->aadhar_number : '') }}" placeholder=" Aadhar Number" name='aadhar_number'>
+                                    <input id="regular-form-4" type="number" class="form-control"  value="{{(isset($userdetails->aadhar_number) ? $userdetails->aadhar_number : '') }}" placeholder=" Aadhar Number" name='aadhar_number' required>
                                 </div>
                                 @error('aadhar_number')
                                 <span style="color:red">{{$message}}</span>
@@ -188,7 +188,7 @@
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team<span style="color:red">*</span></label>
 
-                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4"  name='team_name'>
+                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4"  name='team_name' required> 
                                         <option value="{{(isset($userdetails->teamToUserDetails->id) ? $userdetails->teamToUserDetails->id : '') }}">{{(isset($userdetails->teamToUserDetails->team) ? $userdetails->teamToUserDetails->team : '') }}</option>
                                         @foreach($team as $t)
                                         <option value="{{$t->id}}">{{$t->team}}</option>
@@ -231,42 +231,4 @@
                 </div>
             </div>
         </div>
-        <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-
-        <script>
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": true,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-            @if(Session::has('success'))
-            const toastHTML = '{{Session::get('
-            success ')}}';
-            toastr["success"](toastHTML);
-            @php Session::forget('success');
-            @endphp
-            @endif
-            @if(Session::has('error'))
-            const toastHTML = '{{Session::get('
-            error ')}}';
-            toastr["error"](toastHTML);
-            @php Session::forget('error');
-            @endphp
-            @endif
-        </script> -->
-
         @endsection
