@@ -17,7 +17,7 @@
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto"></h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0 mb-3">
-        <button class="btn btn-primary shadow-md mr-2"><a href="{{route('file-upload')}}">File-Upload</a></button>
+       {{-- <button class="btn btn-primary shadow-md mr-2"><a href="{{route('file-upload')}}">File-Upload</a></button> --}}
         <button class="btn btn-primary shadow-md mr-2"><a href="{{route('employee-form')}}">Add New Employee</a></button>
         <button class="btn btn-primary shadow-md mr-2"><a href="{{route('new-register-list')}}">New Register List</a></button>
     </div>

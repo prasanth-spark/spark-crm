@@ -75,13 +75,34 @@ class EmployeeSideMenu
                     ],
                     'Team Attendance' => [
                         'icon' => 'home',
-                        'route_name' => 'team-attendance',
                         'title' => 'Team Attendance',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
+                        'sub_menu' => [
+                            'Team Attendance' => [
+                                'icon' => '',
+                                'route_name' => 'attendance',
+                                'params' => [
+                                    'layout' => 'side-menu',
+                                ],
+                                'title' => 'Team Attendance'
+                            ],
+                            'Team Attendance List' => [
+                                'icon' => '',
+                                'route_name' => 'team-absent',
+                                'params' => [
+                                    'layout' => 'side-menu',
+                                ],
+                                'title' => 'Team Absent'
+                            ],
+                            'Team Permission List' => [
+                                'icon' => '',
+                                'route_name' => 'team-permission',
+                                'params' => [
+                                    'layout' => 'side-menu',
+                                ],
+                                'title' => 'Team Permission'
+                            ]
+                        ]
                     ],
-                    
                 ];
     }else{
         return [
