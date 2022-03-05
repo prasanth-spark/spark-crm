@@ -24,10 +24,12 @@
     <table id="employeelist" class="table table-report -mt-2">
         <thead>
             <tr>
+                <th class="whitespace-nowrap">DATE</th>
                 <th class="whitespace-nowrap">NAME</th>
                 <th class="whitespace-nowrap">ROLE</th>
                 <th class="whitespace-nowrap">LEAVE TYPE</th>
                 <th class="whitespace-nowrap">PERMISSION HOURS FROM</th>
+                <th class="whitespace-nowrap">PERMISSION STATUS</th>
                 <th class="whitespace-nowrap">PERMISSION HOURS TO</th>
                 <th class="whitespace-nowrap">PERMISSION HOURS </th>
             </tr>
@@ -36,9 +38,28 @@
                     @foreach($teamWisePermissionList as $permission)
                                 <tr>  
 
+                                   <td>{{$permission->created_at->todatestring()}}</td> 
                                     <td>{{$permission->leaverequestUser->name}}</td>
                                     <td>{{$permission->leaverequestUser->roleToUser->role}}</td>
                                     <td>{{$permission->leaverequest->leave_type}}</td>
+                                    <td>
+                                            @switch($permission->permission_status)
+                                                @case($permission->permission_status==0)
+                                                permission received        
+                                                @break
+
+                                                @case($permission->permission_status==1)
+                                                    permission accepted
+                                                @break
+
+                                                @case($permission->permission_status==2)
+                                                    permission rejected
+                                                @break
+
+                                                @default
+                                                    permission denied
+                                            @endswitch
+                                    </td>
                                     <td>{{$permission->permission_hours_from}}</td>
                                     <td>{{$permission->permission_hours_to}}</td>
                                     <td>{{$permission->permissionType->permission_hours}}</td>

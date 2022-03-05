@@ -1,7 +1,7 @@
-@extends('../admin/layout/components/' . $layout)
+@extends('../employee/layout/components/' . $layout)
+
 
 @section('subhead')
-<title>Employee List</title>
 <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
@@ -16,23 +16,13 @@
 @section('subcontent')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto"></h2>
-    <form action="{{route('teamwise-permission-list')}}" class="flex w-3/12 mb-3 space-x-4" method="post">
-        @csrf
-        <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4" name='team_id'>
-            <option value selected="selected" disabled="disabled"></option>
-            @foreach($teamList as $t)
-            <option value="{{$t->id}}"> {{$t->team}}</option>
-            @endforeach
-        </select>
-        <button type="submit" class="btn btn-primary mt-0">Submit</button>
-    </form>
-
 </div>
 <!-- BEGIN: Data List -->
 <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-    <table id="employeelist" class="table table-report -mt-2">
+<table id="employeelist" class="table table-report -mt-2">
         <thead>
             <tr>
+
                 <th class="whitespace-nowrap">DATE</th>
                 <th class="whitespace-nowrap">NAME</th>
                 <th class="whitespace-nowrap">TEAM</th>
@@ -48,10 +38,9 @@
             </tr>
         </thead>
     <tbody>
-        @foreach($permissionList as $permission)
+        @foreach($teamPermissionList as $permission)
                 <tr>  
-
-                    <td>{{$permission->created_at->todatestring()}}</td> 
+                    <td>{{$permission->created_at->todatestring()}}</td>
                     <td>{{$permission->leaverequestUser->name}}</td>
                     <td>{{$permission->leaveToUserDetails->teamToUserDetails->team}}</td>
                     <td>{{$permission->leaverequestUser->roleToUser->role}}</td>
@@ -77,9 +66,8 @@
                     <td>{{$permission->permission_hours_from}}</td>
                     <td>{{$permission->permission_hours_to}}</td>
                     <td>{{$permission->permissionType->permission_hours}}</td>
-
                 </tr>
-            @endforeach
+        @endforeach
         </tbody> 
     </table>
 </div>

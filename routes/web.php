@@ -69,7 +69,13 @@ use App\Http\Controllers\employee\TeamAttendanceController;
             Route::get('team-task',[TeamTaskController::class, 'teamTask'])->name('team-task');
 
             //Team Attendance
-            Route::get('team-attentance',[TeamAttendanceController::class, 'teamAttendance'])->name('team-attendance');
+            Route::get('team-attentance',[TeamAttendanceController::class, 'teamAttendanceList'])->name('attendance');
+
+            //Team Absent
+            Route::get('team-absent',[TeamAttendanceController::class, 'teamAbsentList'])->name('team-absent');
+
+            //Team Permission
+            Route::get('team-permission',[TeamAttendanceController::class, 'teamPermissionlist'])->name('team-permission');
 
         
         });

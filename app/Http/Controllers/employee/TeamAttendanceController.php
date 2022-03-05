@@ -38,7 +38,7 @@ class TeamAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function teamAttendance()
+    public function teamAttendanceList()
     {
         $teamAttendance=$this->userdetails->where('user_id',Session::get('id'))->first();
         $teamId = $teamAttendance->team_id;
@@ -47,5 +47,37 @@ class TeamAttendanceController extends Controller
             $query->where('team_id',$teamId)->where('role_id',4);
         })->with('attendanceToUser','attendanceToUserDetails')->get(); 
         return view('employee/teamattendance/team-attendance', compact('teamAttendance'));
+    }
+
+      /**
+     * Show specified Team Attendance view.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function teamAbsentList()
+    {
+        $teamLead=$this->userdetails->where('user_id',Session::get('id'))->first();
+        $teamId = $teamLead->team_id;
+
+        $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->whereHas('leaveToUserDetails', function ($query) use ($teamId) {
+            $query->where('team_id',$teamId)->where('role_id',4);
+        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails')->get();
+        return view('employee/teamattendance/team-absent', compact('teamabsentList'));
+    }
+
+      /**
+     * Show specified Team Attendance view.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function teamPermissionlist()
+    {
+        $teamLead=$this->userdetails->where('user_id',Session::get('id'))->first();
+        $teamId = $teamLead->team_id;
+
+        $teamPermissionList = $this->leaverequest->where('leave_type_id', '=', 1)->whereHas('leaveToUserDetails', function ($query) use ($teamId) {
+            $query->where('team_id',$teamId)->where('role_id',4);
+        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails')->get();
+        return view('employee/teamattendance/team-permission', compact('teamPermissionList'));
     }
 }
