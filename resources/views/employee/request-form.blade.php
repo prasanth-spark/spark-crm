@@ -35,15 +35,15 @@
                         <div class="text-base 2xl:text-lg text-theme-34 mt-4">Make sure of your leave permission be valid</div> 
 
                         <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center  leading-2 mt-4 font-normal">
-                            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8"  id="leave_type"name="leave_type">Leave Type
+                            <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2"  id="leave_type"name="leave_type">Leave Type
                                     <option> --</option>
                                     <option value=1 name="leave_type"> Permission </option>
-                                    <option value="2" name="leave_type" class="text-theme-34 dark:text-gray-500">Sick Leave</option>
-                                    <option value="3" name="leave_type" class="text-theme-34 dark:text-gray-500">Personal Leave </option>
+                                    <option value="2" name="leave_type">Sick Leave</option>
+                                    <option value="3" name="leave_type">Personal Leave </option>
                             </select>
                         </div>     
                         <div id="leave_dates">        
-                        <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 dark:text-gray-500 leading-3 mt-4 2xl:mt-24 font-normal">
+                        <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-theme-34 dark: mt-4  font-normal">
                             <p> Selected date From and To you need a leave</p>
                         </div>
                         <div>   
