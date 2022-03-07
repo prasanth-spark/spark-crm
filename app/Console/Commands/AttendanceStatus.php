@@ -45,18 +45,22 @@ class AttendanceStatus extends Command
         $date = Carbon::now();
         $date = $date->format("Y-m-d");
         $userId = User::where('role_id','!=',1)->pluck('id')->toArray();
+  
         $attendance = Attendance::where('date',$date)->pluck('user_id')->toArray();
+    
         $attendanceNotUpdatedUser = array_diff($userId,$attendance);
+
         $missedIds = [];
         foreach($attendanceNotUpdatedUser as $attendanceUpdatedUser){
-       
+     
         $user= User::where('users.id',$attendanceUpdatedUser)
         ->join('leave_requests','leave_requests.user_id','=','users.id')
-        ->select('leave_requests.*','users.email')->first(); 
+        ->select('leave_requests.*','users.email')->first();
+        // dd($user); 
             if(is_null($user)){
                 array_push($missedIds,$attendanceUpdatedUser);
             }else{
-                $expire = $user->end_date; 
+                $expire = $user->end_date;    
                 $today_time = strtotime($date);
                 $expire_time = strtotime($expire);
                 $userMail = $user->email;
@@ -84,8 +88,9 @@ class AttendanceStatus extends Command
          ]);
         }
         else{
+            
             Attendance::create([
-                'user_id'=>$user->id,
+                'user_id'=>$user->user_id,
                 'attendance'=>0,
                 'date'=>$date,
                 'attendance_status'=>0,

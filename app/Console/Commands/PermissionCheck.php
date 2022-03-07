@@ -41,10 +41,11 @@ class PermissionCheck extends Command
      */
     public function handle()
     {
-        $dateTime = Carbon::now()->format('Y-m-d H:i:s');
-        $time = date('H:i', strtotime($dateTime));  
-        $leaveRequest= LeaveRequest::where('leave_type_id',1)->with('userAttendance')->get();
-        //  dd($leaveRequest[0]['userAttendance']['email']);
+        $date = Carbon::now();
+        $date = $date->format("Y-m-d");
+        $time = Carbon::now()->format('Y-m-d H:i:s');
+        $time = date('H:i', strtotime($time));
+        $leaveRequest= LeaveRequest::where(['leave_type_id' =>1,'start_date' => $date])->with('userAttendance')->get();
         foreach($leaveRequest as $permissionCheck){   
             $userName=$permissionCheck->userAttendance->name;
             $userMail=$permissionCheck->userAttendance->email;
