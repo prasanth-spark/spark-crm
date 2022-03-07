@@ -46,7 +46,6 @@ class TaskController extends Controller
           'task_module' => $request->task_module,
           'estimated_hours' => $request->estimated_hours,
           'task_status' => $request->task_status,
-          'status' => '1'
         ]);
 
         return redirect('/employee/task-list');
