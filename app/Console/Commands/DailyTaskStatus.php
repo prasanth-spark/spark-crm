@@ -6,6 +6,7 @@ use App\Mail\TaskRemainderMail;
 use App\Models\Attendance;
 use App\Models\TaskSheet;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -42,7 +43,10 @@ class DailyTaskStatus extends Command
      */
     public function handle()
     {
-        $task = TaskSheet::where('status','1')->pluck('user_id')->toArray();
+        $date = Carbon::now();
+        $date =$date->format('Y-m-d');
+        $task = TaskSheet::where('date',$date)->pluck('user_id')->toArray();
+       
         $users = User::where('status',1)->pluck('id','name')->toArray();
         $taskNotUpdatedUsers = array_diff($users,$task);
         
