@@ -164,7 +164,7 @@ class EmployeeController extends Controller
 
     public function employeeUpdate(EmployeeUpdateValidationRequest $request)
     {
-        // try{
+        // try{ 
             $oldUser = $this->user->getSingleUser($request->id);
             $this->user->where('id', $request->id)->update([
                 'name' => $request->name,
@@ -280,59 +280,59 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function fileUpload()
-    {
-        return view('admin/employee/file-upload');
-    }
+    // public function fileUpload()
+    // {
+    //     return view('admin/employee/file-upload');
+    // }
 
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function employeeListExport()
-    {
-        return (new FastExcel(UserDetails::all()))->download('file.xlsx');
-    }
+    // public function employeeListExport()
+    // {
+    //     return (new FastExcel(UserDetails::all()))->download('file.xlsx');
+    // }
 
     /**
      * @return \Illuminate\Support\Collection
      */
-    public function employeeListImport(Request $request)
-    {
-        if ($request->file) {
-            $fileType = $request->file->getClientOriginalExtension();
-            $fileName = time() . '.' . $fileType;
-            $request->file->move(public_path('uploads'), $fileName);
-            $fileData = public_path('uploads/') . $fileName;
+    // public function employeeListImport(Request $request)
+    // {
+    //     if ($request->file) {
+    //         $fileType = $request->file->getClientOriginalExtension();
+    //         $fileName = time() . '.' . $fileType;
+    //         $request->file->move(public_path('uploads'), $fileName);
+    //         $fileData = public_path('uploads/') . $fileName;
 
-            (new FastExcel)->import($fileData, function ($reader) {
-                $list = array(
-                    'id' => $reader['id'],
-                    'name' => $reader['name'],
-                    'father_name' => $reader['father_name'],
-                    'mother_name' => $reader['mother_name'],
-                    'phone_number' => $reader['phone_number'],
-                    'emergency_contact_number' => $reader['emergency_contact_number'],
-                    'email' => $reader['email'],
-                    'official_email' => $reader['official_email'],
-                    'joined_date' => $reader['joined_date'],
-                    'home_address' => $reader['home_address'],
-                    'date_of_birth' => $reader['date_of_birth'],
-                    'blood_group' => $reader['blood_group'],
-                    'pan_number' => $reader['pan_number'],
-                    'aadhar_number' => $reader['aadhar_number'],
-                    'account_holder_name' => $reader['account_holder_name'],
-                    'account_number' => $reader['account_number'],
-                    'ifsc_code' => $reader['ifsc_code'],
-                    'branch_name' => $reader['branch_name'],
-                    'account_type_id' => $reader['account_type_id'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                );
-                UserDetails::insert($list);
-                return back();
-            });
-        } else {
-            return back();
-        }
-    }
+    //         (new FastExcel)->import($fileData, function ($reader) {
+    //             $list = array(
+    //                 'id' => $reader['id'],
+    //                 'name' => $reader['name'],
+    //                 'father_name' => $reader['father_name'],
+    //                 'mother_name' => $reader['mother_name'],
+    //                 'phone_number' => $reader['phone_number'],
+    //                 'emergency_contact_number' => $reader['emergency_contact_number'],
+    //                 'email' => $reader['email'],
+    //                 'official_email' => $reader['official_email'],
+    //                 'joined_date' => $reader['joined_date'],
+    //                 'home_address' => $reader['home_address'],
+    //                 'date_of_birth' => $reader['date_of_birth'],
+    //                 'blood_group' => $reader['blood_group'],
+    //                 'pan_number' => $reader['pan_number'],
+    //                 'aadhar_number' => $reader['aadhar_number'],
+    //                 'account_holder_name' => $reader['account_holder_name'],
+    //                 'account_number' => $reader['account_number'],
+    //                 'ifsc_code' => $reader['ifsc_code'],
+    //                 'branch_name' => $reader['branch_name'],
+    //                 'account_type_id' => $reader['account_type_id'],
+    //                 'created_at' => now(),
+    //                 'updated_at' => now(),
+    //             );
+    //             UserDetails::insert($list);
+    //             return back();
+    //         });
+    //     } else {
+    //         return back();
+    //     }
+    // }
 }
