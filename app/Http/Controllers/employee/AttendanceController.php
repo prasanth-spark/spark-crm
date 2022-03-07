@@ -28,13 +28,12 @@ class AttendanceController extends Controller
         $userId= $request->session()->get('id');
         $user=$this->user->find($userId);
         $date = Carbon::now();
-          $date = $date->format("Y-m-d");
+        $date = $date->format("Y-m-d");
         $attendance= $this->attendance->where(['user_id' => $userId ,'date' => $date])->first(); 
         return view('/employee/attendance-module',compact('user','attendance'));
     }
     public function attendanceStatus(Request $request)
     {  
-        // dd($request->all());
         $today_date = Carbon::now(); 
         $today_date = $today_date->format("Y-m-d");
         $date = date_create($request->start_date);
@@ -48,7 +47,6 @@ class AttendanceController extends Controller
          
 
         if($request->attendance_registered_user == 1){
-            dd($request->all());
             $regUserId = $request->registered_user_id;
             $in_active_id = $request->select;
             $user = user::where('id',$regUserId )->first();
@@ -128,7 +126,7 @@ class AttendanceController extends Controller
           $date = $date->format("Y-m-d");
         $attendanceValue = $request->value;
         if($attendanceValue == 0 && $leaveRequest=='Leave'){
-                $attendance =   $this->attendance->create([
+              $this->attendance->create([
                     'user_id'=>$userId,
                     'attendance'=>$attendanceValue,
                     'date'=>$date,
@@ -154,7 +152,7 @@ class AttendanceController extends Controller
                 
         }
         else if($attendanceValue == 0 && $leaveRequest=='Permission'){
-            $attendance =   $this->attendance->create([
+             $this->attendance->create([
                 'user_id'=>$userId,
                 'attendance'=>$attendanceValue,
                 'date'=>$date,
@@ -180,7 +178,7 @@ class AttendanceController extends Controller
                 dispatch($job);
         }
         else{
-            $attendance =   $this->attendance->create([
+            $this->attendance->create([
                 'user_id'=>$userId,
                 'attendance'=>$attendanceValue,
                 'date'=>$date,
@@ -196,7 +194,9 @@ class AttendanceController extends Controller
     public function leaveRequest($id){
         $user= $this->user->find($id);
         $userId = $user->id;
-        $userLd = $this->leave_request->where('user_id',$userId)->first();
+        $date=Carbon::now();
+        $date = $date->format("Y-m-d");
+        $userLd = $this->leave_request->where(['user_id' => $userId ,'start_date' => $date])->first();
         return view('/employee/request-form',compact('user','userLd'));
     }
     public function leaveStatus(Request $request)
@@ -238,7 +238,6 @@ class AttendanceController extends Controller
               ]);
       }
     else{
-        $userMail = $user->email;
         LeaveRequest::where('user_id',$userId)
                 ->where('leave_status',1)->where('leave_type_id',1)
                 ->update([
@@ -262,7 +261,7 @@ class AttendanceController extends Controller
     public function attendanceList($id){
         $user = User::find($id);
         $date = Carbon::now();
-          $date = $date->format("Y-m-d");
+        $date = $date->format("Y-m-d");
         $attendance= $this->attendance->where(['user_id' => $user->id ,'date' => $date])->first();
         $leaveDetails = LeaveRequest::where('user_id',$user->id)->get();
 
