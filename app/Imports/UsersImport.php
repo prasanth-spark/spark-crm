@@ -2,20 +2,16 @@
 
 namespace App\Imports;
 
-use App\Models\Employee;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 
-class UsersImport implements ToModel
+class UsersImport implements ToCollection
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
+    * @param Collection $collection
     */
-    public function model(array $row)
+    public function collection(Collection $collection)
     {
-        return new Employee([
-            //
-        ]);
+        //
     }
 }

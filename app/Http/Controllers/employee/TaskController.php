@@ -72,6 +72,7 @@ class TaskController extends Controller
             function($q) use($limit, $offset){
                 return $q->offset($offset)->limit($limit);
             });
+            
         if($request->sSearch!='')
         {
             $keyword = $request->sSearch;

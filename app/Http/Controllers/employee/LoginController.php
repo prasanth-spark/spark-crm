@@ -180,7 +180,6 @@ class LoginController extends Controller
      */
     public function resetPassword(ForgotPasswordRequest $request)
     {
-        // dd($request->all());
             $this->user->where('id',$request->id)->update([
                 'password' => Hash::make($request->password)
             ]);

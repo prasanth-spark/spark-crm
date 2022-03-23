@@ -1,36 +1,55 @@
 @extends('../admin/layout/components/' . $layout)
 
 @section('subhead')
-<title>Employee List</title>
-<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
-<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
-<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-<link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
+<title>Absent List</title>
+
+<link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('subcontent')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto"></h2>
-     <form action="" class="flex w-3/12 mb-3 space-x-4" method=""> 
-        <select placeholder="Team Name" type="text" class="tom-select w-full" onchange="teamList()" id="team_id">
-            <option value="Select a Team" selected disabled>Select a Team</option>
-            @foreach($teamList as $t)
-            <option value="{{$t->id}}"> {{$t->team}}</option>
-            @endforeach
-        </select>
-    </form> 
+    <form>
+        <div class="grid grid-cols-12 gap-6 mt-4">
+            <div class="col-span-12 md:col-span-4">
+                <div>
+                    <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
+                        From Date
+                    </label>
+                    <input id="from" type="date" class="form-control" placeholder="From Date" name="from_date" required>
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-4">
+                <div>
+                    <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
+                        To Date
+                    </label>
+                    <input id="to" type="date" class="form-control" placeholder="To Date" name="to_date" required>
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-4">
+                <div>
+                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team</label>
 
+                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="team_name">
+                        <option value="Select a Team" selected disabled>Select a Team</option>
+                        @foreach($teamList as $t)
+                        <option value="{{$t->id}}"> {{$t->team}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary mt-5" onclick="absentFilter()">Filter</button>
+        </div>
 </div>
 <!-- BEGIN: Data List -->
 <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
     <table id="employeelist" class="table table-report -mt-2">
         <thead>
             <tr>
+                <th class="whitespace-nowrap">SI.No</th>
                 <th class="whitespace-nowrap">NAME</th>
                 <th class="whitespace-nowrap">TEAM</th>
                 <th class="whitespace-nowrap">ROLE</th>
@@ -42,56 +61,94 @@
 
             </tr>
         </thead>
-      <tbody>
-        @foreach($absentList as $absent)
-                <tr>  
-
-                    <td>{{$absent->leaverequestUser->name}}</td>
-                    <td>{{$absent->leaveToUserDetails->teamToUserDetails->team}}</td>
-                    <td>{{$absent->leaverequestUser->roleToUser->role}}</td>
-                    <td>{{$absent->leaverequest->leave_type}}</td>
-                    <td>
-                            @switch($absent->leave_status)
-                                @case($absent->leave_status==1)
-                                pending
-                                @break
-
-                                @case($absent->leave_status==2)
-                                    approved
-                                @break
-
-                                @default
-                                    rejected
-                            @endswitch
-                    </td>
-                    <td>{{$absent->start_date}}</td>
-                    <td>{{$absent->end_date}}</td>
-
-                </tr>
-            @endforeach
-        </tbody> 
     </table>
 </div>
 
 
 <!-- END: Data List -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#employeelist').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5'
-            ]
-        });
+
+        absentFilter();
+
     });
-  function teamList() {
-  var myElement =document.getElementById('team_id') ; 
-  teamID = myElement.value;
-  window.location.href ='/admin/teamwise-absent-list/'+teamID;
-}
+
+    function absentFilter() {
+        var fromdate = $('#from').val();
+        var todate = $('#to').val();
+        var teamName = $('#team_name').val();
+
+        $("#employeelist").dataTable().fnDestroy();
+        var table = $('#employeelist').DataTable({
+            dom: "lBfrtip",
+            buttons: [{
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'A3',
+
+                    customize: function(doc) {
+                        doc.defaultStyle.fontSize = 7.2;
+                        doc.styles.tableHeader.fontSize = 10;
+                    }
+
+                },
+                'excel', 'csv', 'print', 'copy',
+            ],
+            paging: true,
+            //pageLength: 10,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "lengthChange": true,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "{{route('absent-list-pagination')}}",
+            "bScrollInfinite": true,
+            "fnServerParams": function(aoData) {
+                aoData.push({
+                    "name": "from_date",
+                    "value": fromdate
+                }, {
+                    "name": "to_date",
+                    "value": todate
+                }, {
+                    "name": "team_name",
+                    "value": teamName
+                });
+            },
+
+            columns: [{
+                    data: "id"
+                },
+                {
+                    data: "name"
+                },
+                {
+                    data: "team"
+                },
+                {
+                    data: "role"
+                },
+                {
+                    data: "leave_type"
+                },
+                {
+                    data: "leave_status"
+                },
+                {
+                    data: "start_date"
+                },
+                {
+                    data: "end_date"
+                },
+
+
+            ],
+        });
+    }
 </script>
+
 
 @endsection
