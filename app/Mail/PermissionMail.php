@@ -10,16 +10,19 @@ use Illuminate\Queue\SerializesModels;
 class PermissionMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $teamLeadName,$user,$reason,$leaveDetail;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user,$leave)
+    public function __construct($teamLeadName,$user,$reason,$leaveDetail)
     {
-        $this->user =$user;
-        $this->leave =$leave;
+        $this->teamLeadName = $teamLeadName;
+        $this->user=$user;
+        $this->reason=$reason;
+        $this->leaveDetail=$leaveDetail;        
     }
 
     /**
@@ -29,9 +32,12 @@ class PermissionMail extends Mailable
      */
     public function build()
     {
-        $user = $this->user;
-        $leave=$this->leave;
-        $permissionId = $leave->permission_type_id;
-        return $this->view('employee/email/permission_form',compact('user','permissionId'));
+        $teamLeadName = $this->teamLeadName;
+        $user=$this->user;
+        $teamLead = $this->user->where('name',$teamLeadName)->first();
+        $reason=$this->reason;
+        $leaveDetail=$this->leaveDetail;
+        return $this->subject('Requesting Permission')
+            ->view('employee/email/permission_form',compact('teamLeadName','teamLead','user','reason','leaveDetail'));
     }
 }

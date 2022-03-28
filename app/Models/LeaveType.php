@@ -13,6 +13,6 @@ class LeaveType extends Model
 
     public function leaveType()
     {
-        return $this->hasOne(LeaveRequest::class, 'leave_type_id', 'id');
+        return $this->hasOne(LeaveRequest::class,'leave_type_id','id');
     }
 }

@@ -10,16 +10,18 @@ use Illuminate\Queue\SerializesModels;
 class LeaveAcceptanceMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $reason,$user;
+    public $leave_status,$user,$leaveType;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user,$reason)
+    public function __construct($leave_status,$user,$leaveType)
     {
-        $this->user=$user;
-        $this->reason=$reason;
+        $this->leave_status = $leave_status;
+        $this->user = $user;
+        $this->leaveType=$leaveType;
+        
     }
 
     /**
@@ -29,10 +31,9 @@ class LeaveAcceptanceMail extends Mailable
      */
     public function build()
     {
-        $user=$this->user;
-        $reason=$this->reason;
-
-        return $this->subject('Requesting Leave')
-            ->view('employee/email/leave_acceptance',compact('user','reason'));
-    }
+            $user = $this->user;
+            $leaveType=$this->leaveType;
+            return $this->subject('Leave Accepted')
+            ->view('employee/email/leave_accepted',compact('user','leaveType'));
+    } 
 }

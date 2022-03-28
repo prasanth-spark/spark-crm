@@ -56,8 +56,10 @@ use App\Http\Controllers\employee\TeamAttendanceController;
           // Attendance  
             Route::get('attendance-module',[AttendanceController::class, 'attendanceModule'])->name('attendance-module');
             Route::post('attendance-status',[AttendanceController::class,'attendanceStatus'])->name('attendance-status');
-            Route::get('leave-request/{id}',[AttendanceController::class, 'leaveRequest'])->name('leave-request');
+            Route::get('leave-response/{tlid}/{uid}/{lt}',[AttendanceController::class, 'leaveResponse'])->name('leave-response');
             Route::post('leave-status',[AttendanceController::class, 'leaveStatus'])->name('leave-status');
+            Route::get('permission-response/{tlid}/{uid}/{hourdiff}',[AttendanceController::class, 'permissionResponse'])->name('permission-response');
+            Route::post('permission-status',[AttendanceController::class, 'permissionStatus'])->name('permission-status');
             Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
             Route::get('attendance-show/{id}',[AttendanceController::class, 'attendanceList'])->name('attendance-show');
 
