@@ -76,5 +76,5 @@ Route::middleware('auth')->group(function () {
         //Task List
         Route::get('/task-list', [TaskController::class, 'taskList'])->name('employee-task-list');
         Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
-        Route::post('/team/task-list', [TaskController::class, 'taskTeamList'])->name('task-teamlist');
+        Route::get('/task-list-pagination', [TaskController::class, 'taskListPagination'])->name('task-list-pagination');
 });

@@ -47,8 +47,12 @@ class AttendanceController extends Controller
     public function attendanceListPagination(Request $request)
     {
 
-        $fromdate   =   $request->from_date;
-        $todate     =   $request->to_date;
+        $fromdate = str_replace('/', '-', $request->from_date);
+        $fromdateFormatChange = date("Y-m-d", strtotime($fromdate));
+
+        $todate = str_replace('/', '-', $request->to_date);
+        $todateFormatChange = date("Y-m-d", strtotime($todate));
+
         $team       =   $request->team_name;
         $attendanceList = $this->attendance->with('attendanceToUser', 'attendanceToUser.roleToUser', 'attendanceToUserDetails.teamToUserDetails');
         $limit = $request->iDisplayLength;
@@ -75,12 +79,12 @@ class AttendanceController extends Controller
             }
         );
 
-        if ($fromdate && $todate && $team) {
-            $attendanceList = $attendanceList->whereBetween('date', [$fromdate, $todate])->whereHas('attendanceToUserDetails', function ($query) use ($team) {
+        if ($team) {
+            $attendanceList = $attendanceList->whereHas('attendanceToUserDetails', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
-        } elseif ($team) {
-            $attendanceList = $attendanceList->whereHas('attendanceToUserDetails', function ($query) use ($team) {
+        } elseif ($fromdateFormatChange && $todateFormatChange && $team) {
+            $attendanceList = $attendanceList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('attendanceToUserDetails', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         }
@@ -127,8 +131,11 @@ class AttendanceController extends Controller
      */
     public function absentListPagination(Request $request)
     {
-        $fromdate   =   $request->from_date;
-        $todate     =   $request->to_date;
+        $fromdate = str_replace('/', '-', $request->from_date);
+        $fromdateFormatChange = date("Y-m-d", strtotime($fromdate));
+
+        $todate = str_replace('/', '-', $request->to_date);
+        $todateFormatChange = date("Y-m-d", strtotime($todate));
         $team       =   $request->team_name;
         $absentList = $this->leaverequest->where('leave_type_id', '!=', 1)->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails');
         $limit = $request->iDisplayLength;
@@ -155,9 +162,9 @@ class AttendanceController extends Controller
             }
         );
 
-        if ($fromdate && $todate) {
-            $absentList = $absentList->where('start_date', '<=', $fromdate)
-                ->where('end_date', '>=', $todate)->whereHas('leaveToUserDetails', function ($query) use ($team) {
+        if ($fromdateFormatChange && $todateFormatChange && $team) {
+            $absentList = $absentList->where('start_date', '<=', $fromdateFormatChange)
+                ->where('end_date', '>=', $todateFormatChange)->whereHas('leaveToUserDetails', function ($query) use ($team) {
                     $query->where('team_id', '=', $team);
                 });
         } elseif ($team) {
@@ -222,10 +229,13 @@ class AttendanceController extends Controller
      */
     public function permissionListPagination(Request $request)
     {
-        $fromdate   =   $request->from_date;
-        $todate     =   $request->to_date;
+        $fromdate = str_replace('/', '-', $request->from_date);
+        $fromdateFormatChange = date("Y-m-d", strtotime($fromdate));
+
+        $todate = str_replace('/', '-', $request->to_date);
+        $todateFormatChange = date("Y-m-d", strtotime($todate));
         $team       =   $request->team_name;
-        $permissionList = $this->leaverequest->where('leave_type_id',  1)->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails','permissionType');
+        $permissionList = $this->leaverequest->where('leave_type_id',  1)->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails', 'permissionType');
         $limit = $request->iDisplayLength;
         $offset = $request->iDisplayStart;
 
@@ -250,12 +260,12 @@ class AttendanceController extends Controller
             }
         );
 
-        if ($fromdate && $todate && $team) {
-            $permissionList = $permissionList->whereBetween('created_at',[$fromdate,$todate])->whereHas('leaveToUserDetails', function ($query) use ($team) {
-                    $query->where('team_id', '=', $team);
-                });
-        } elseif ($team) {
+        if ($team) {
             $permissionList = $permissionList->whereHas('leaveToUserDetails', function ($query) use ($team) {
+                $query->where('team_id', '=', $team);
+            });
+        } elseif ($fromdateFormatChange && $todateFormatChange && $team) {
+            $permissionList = $permissionList->whereBetween('created_at', [$fromdateFormatChange, $todateFormatChange])->whereHas('leaveToUserDetails', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         }
@@ -303,5 +313,4 @@ class AttendanceController extends Controller
 
         return json_encode($List);
     }
-
 }

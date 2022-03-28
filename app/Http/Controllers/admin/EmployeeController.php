@@ -110,7 +110,7 @@ class EmployeeController extends Controller
     {
         try {
 
-            $employeeList = $this->user->where('status', 1)->with('userDetail','userDetail.teamToUserDetails','userDetail.roleToUserDetails')->get();
+            $employeeList = $this->user->where('status', 1)->with('userDetail', 'userDetail.teamToUserDetails', 'userDetail.roleToUserDetails')->get();
             return view('admin/employee/employee-list', compact('employeeList'));
         } catch (\Throwable $exception) {
             Log::info($exception->getMessage());
@@ -284,7 +284,7 @@ class EmployeeController extends Controller
      */
     public function employeeListExport()
     {
-        $userDetails = $this->user->where('role_id', '!=', 1)->with('userDetail', 'teamToUser', 'roleToUser')->get();
+        $userDetails = $this->user->where('role_id', '!=', 1)->with('userDetail', 'teamToUser', 'roleToUser')->first();
         $a = array();
         foreach ($userDetails as $user) {
             $array = [
@@ -353,27 +353,47 @@ class EmployeeController extends Controller
     public function importProcess(Request $request)
     {
         $data = CsvData::find($request->csv_data_file_id);
-        $csv_data = json_decode($data->csv_data, true);
+        $csv_all_data = json_decode($data->csv_data, true);
+        unset($csv_all_data[0]);
         $config = config('app.db_fields');
-        foreach ($csv_data as $key => $row) {
-            dd($config,$row);
-            $a = array_combine($config, $row);
-            print_r($a);
-            $user = new User();
-            foreach ($config as $key => $field) {
-                $ab = $request->fields[$key];
-                    if ($ab == 'password') {
-                        $hashPassword = Hash::make($a[$field]);
-                        $user->$ab = $hashPassword;
-                    } else {
-                        $user->$ab = $a[$field];
-                    }
+        foreach ($csv_all_data as $key => $row) {
+            $csv = array_combine(array_slice($config, 0, 6),  array_slice($row, 0, 6));
+            $request1 = array_slice($request->fields, 0, 6);
+            $userCredentials = new User();
+            foreach (array_slice($config, 0, 6) as $key => $field) {
+                $ab = $request1[$key];
+                if ($ab == 'password') {
+                    $hashPassword = Hash::make($csv[$field]);
+                    $userCredentials->$ab = $hashPassword;
+                } else {
+                    $userCredentials->$ab = $csv[$field];
+                }
             }
 
-            $user->save();
+            $userCredentials->save();
+            dispatch(new VerfyUserEmailJob($userCredentials));
+
+            $csv1 = array_combine(array_slice($config, 6, 24),  array_slice($row, 6, 24));
+            $request2 = array_slice($request->fields, 6, 24);
+            $UserDetails = new UserDetails();
+            foreach (array_slice($config, 6, 24) as $key => $field) {
+                $ab = $request2[$key];
+                if ($ab == 'user_id') {
+                    $user_id = $userCredentials->id;
+                    $UserDetails->$ab = $user_id;
+                } elseif ($ab == 'role_id') {
+                    $role_id = $userCredentials->role_id;
+                    $UserDetails->$ab = $role_id;
+                } elseif ($ab == 'team_id') {
+                    $team_id = $userCredentials->team_id;
+                    $UserDetails->$ab = $team_id;
+                } else {
+                    $UserDetails->$ab = $csv1[$field];
+                }
+            }
+
+            $UserDetails->save();
         }
-        $config = config('app.user_details');
-        dd($config);
         return redirect()->route('file-upload');
     }
 }

@@ -17,7 +17,7 @@
                     <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
                         From Date
                     </label>
-                    <input id="from" type="date" class="form-control" placeholder="From Date" name="from_date" required>
+                    <input id="from" class="form-control" type="tel" maxlength="10" placeholder="dd/mm/yyyy" oninput="this.value = DDMMYYYY(this.value, event)" name="from_date" required>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-4">
@@ -25,7 +25,7 @@
                     <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
                         To Date
                     </label>
-                    <input id="to" type="date" class="form-control" placeholder="To Date" name="to_date" required>
+                    <input id="to" type="tel" class="form-control" maxlength="10" placeholder="dd/mm/yyyy" oninput="this.value = DDMMYYYY(this.value, event)" name="to_date" required>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-4">
@@ -36,7 +36,7 @@
                         <option value selected="selected" disabled="disabled"></option>
                         @foreach($teamList as $t)
                         <option value="{{$t->id}}">{{$t->team}}</option>
-                        @endforeach
+                    @endforeach
                     </select>
                 </div>
             </div>
@@ -76,8 +76,8 @@
     function attendanceFilter() {
         var fromdate = $('#from').val();
         var todate = $('#to').val();
-        var team=$('#team').val();
-        
+        var team = $('#team').val();
+
         $("#employeelist").dataTable().fnDestroy();
         var table = $('#employeelist').DataTable({
             dom: "lBfrtip",
@@ -111,9 +111,9 @@
                 }, {
                     "name": "to_date",
                     "value": todate
-                },{
-                    "name":"team_name",
-                    "value":team
+                }, {
+                    "name": "team_name",
+                    "value": team
                 });
             },
 
@@ -138,6 +138,19 @@
 
             ],
         });
+    }
+
+    function DDMMYYYY(value, event) {
+        let newValue = value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+
+        const dayOrMonth = (index) => index % 2 === 1 && index < 4;
+
+        // on delete key.  
+        if (!event.data) {
+            return value;
+        }
+
+        return newValue.split('').map((v, i) => dayOrMonth(i) ? v + '/' : v).join('');;
     }
 </script>
 

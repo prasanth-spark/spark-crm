@@ -239,11 +239,9 @@ return [
         'name',
         'email',
         'status',
-        'role_id',
         'password',
+        'role_id',
         'team_id',
-    ],
-    'user_details' => [
         'user_id',
         'employee_id',
         'father_name',
@@ -263,5 +261,8 @@ return [
         'ifsc_code',
         'branch_name',
         'account_type_id',
-    ]
+        'role_id',
+        'team_id',
+    ],
+
 ];
