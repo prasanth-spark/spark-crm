@@ -12,170 +12,136 @@
 @endsection
 
 @section('subcontent')
-
 <div class="intro-y grid grid-cols-12 gap-6 mt-5">
         <div class="col-span-12 ">
             <span class="show box bg-theme-25 text-white flex items-center">
-                <button class="btn border-transparent bg-theme-25 dark:bg-dark-2">
-                <a href="{{route('attendance-show',[$user->id])}}"> View Attendance Report</a></button>
+                <button class="btn border-transparent bg-theme-25 light:bg-light-2"> View Attendance Report</button>
             </span>
             <div class="text-white text-sm 2xl:text-base font-medium mt-4">
                     Hi {{$user['name']}} ,
-                    <span class="text-theme-34 dark:text-gray-500 font-normal">Welcome!</span>
+                    <span class="text-theme-34 text-white font-normal">Welcome!</span>
+                    <button class="btn btn-sm btn-secondary w-24 mr-1 mb-2" style="margin-left:75%;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="calendar" data-lucide="calendar" class="lucide lucide-calendar block mx-auto"><rect x="3" y="4" width="18" height="15" rx="2" ry="2"></rect><line x1="16" y1="2" x2="15" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <a href="{{route('attendance-show',[$user->id])}}"> Monthly Report</a>
+                    </button>
             </div>
-        </div>    <!-- Attendance card -->
-    <div class="intro-y col-span-12 lg:col-span-6 text-white text-sm p-4">
-        <!-- <div class="intro-y  p-4"> -->
-            <label for="regular-form" class="form-label">Today's Attendance</label>
-            <input id="regular-form-1" type="text" class="datepicker form-control  text-theme-35" data-single-mode="true">
-            <form action="{{route('attendance-status')}}" method="post">    
-             @csrf   
-            <input type="checkbox" id="present" class=" w-24 mt-4" value="1" >Active</input>
-            <input type="checkbox" id="absent" class=" w-24 mt-4" value="0">Inactive</input>
-            <input type="text"  id="attendance" class=" form-control text-theme-25 mt-2 mb-4" data-single-mode="true">
-            <input type="hidden" id="value" name="value" value="">
-            @isset($attendance)
-            <input type="hidden" id="user" name="attendance_status" value="{{$attendance->attendance_status}}">
-            <input type="hidden"  name="attendance_registered_user" value="{{$attendance->status}}">
-            <input type="hidden"  name="registered_user_id" value="{{$attendance->user_id}}">
-             @endisset
-
-        <!-- </div> -->
+        </div> 
+             <!-- Attendance card -->
+    <div class="intro-y col-span-12 lg:col-span-6 text-white text-sm">
+      <label for="regular-form" class="form-label">Today's Attendance</label>
+        <input id="regular-form" type="text" class="datepicker form-control col-span-2 text-theme-35" data-single-mode="true">
+    <form action="{{route('attendance-status')}}" method="post">    
+       @csrf
+       <div class="mt-5">
+            <div class="flex flex-col sm:flex-row mr-2 mt- 5">
+               <div class="form-check mr-5 mb-5">
+                  <input id="active" class="form-check-input" type="checkbox"  value="1">
+                  <label class="form-check-label text-white" for="active">Active</label>
+                </div>
+                <div class="form-check mr-5 mb-5">
+                    <input id="inactive" class="form-check-input" type="checkbox" value="0">
+                    <label class="form-check-label text-white" for="inactive">Inactive</label>
+                </div>
+            </div>
+            <div class="cols-12 gap-4 mt-6">
+                    <input type="text" id="attendancestatus" class="form-control text-theme-25 mt-2 mb-4"  style="width:480px;"data-single-mode="true"> 
+                    <input type="hidden" id="value" name="value" value="">
+            </div> 
+        </div>
+    
     </div>
     <div class="intro-y col-span-12 lg:col-span-6  p-4">
-        <div class="intro-y" id="date"> 
-        <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8" name="select" id="select">Leave Request
-            <option> ...</option>
-            <option value="1">Permission</option>
-            <option value="2">Leave </option>
-        </select>
-        <input type= hidden name="inactive_value" id ="inactive_value">
-        <div id ="permission" name="permission" >
-            <label  class="form-label text-black text-theme-34 mt-4" name="permission">1</label>
-            <input type ="radio" name="permission" value ="1">
-            <label  class="form-label text-black text-theme-34 mt-4" name="permission">2</label>
-            <input type ="radio" name="permission" value="2">
-            <label  class="form-label  text-black text-theme-34 mt-4" name="permission">3</label>
-            <input type ="radio" name="permission" value="3">
-            <label  class="form-label text-black text-theme-34 mt-4" name="permission">4</label>
-            <input type ="radio" name="permission" value="4">
-            <label  class="form-label text-black text-theme-34 mt-4" name="permission">Half a day</label>
-            <input type ="radio" name="permission" value="5">    </input>
-        </div>
-        <div id="permission_hours" name=permissson_hours>
-            <label  class="form-label text-theme-34 mt-2">Permission-Hours</label> 
-            <input type="time" name="permission_hours_from" id="permission_hours_from">
-            <input type="time" name="permission_hours_to" id="permission_hours_to">
-        </div>
-            <div id ="leave" name = "leave">
-        <label  class="form-label text-theme-34 mt-2">From</label>
-            <input type="date" name="start_date" id="start_date" class=" form-control" data-single-mode="true" >@error('start_date')<span style="color:red">{{$message}}</span>@enderror
-        <label  class="form-label text-theme-34 mt-2">To</label>
-            <input type="date" name="end_date" id="end_date" class=" form-control" data-single-mode="true">@error('end_date')<span style="color:red">{{$message}}</span>@enderror    
+    <div id="inactive_side">    
+        <div class="intro-y mt-3">
+        <div  id="inactive_type" name="inactive_type">
+            <div class="flex flex-col sm:flex-row mt-2">
+               <div class="form-check mr-5">
+                   <input id="permission" class="form-check-input" type="radio" name="inactive_type" value="1">
+                   <label class="form-check-label text-white" for="permission">Permission</label>
+                </div>
+                <div class="form-check mr-4 mt-2 sm:mt-0">
+                   <input id="leave" class="form-check-input" type="radio" name="inactive_type" value="2">
+                   <label class="form-check-label text-white" for="leave">Leave</label>
+                </div>
             </div>
         </div>
-        
+        </div>
+        <div class="cols-12 gap-4 mt-6" id="permission_hours">
+            <label class="text-white">Permission Hours From :</label>
+            <input type="time" class="col-span-3" name="permission_hours_from" min="09:00" max="19:00">@error('permission_hours_from')<span style="color:red">{{$message}}</span>@enderror
+            <label class="text-white">To :</label>
+            <input type="time" class="col-span-3" name="permission_hours_to" min="09:00" max="19:00">@error('permission_hours_to')<span style="color:red">{{$message}}</span>@enderror
+        </div>
+        <div class="cols-12 gap-4 mt-6" id="leave_days">
+            <label class="text-white">Leave Days From :</label>
+            <input type="date" class="col-span-4" name="leave_days_from">@error('start_date')<span style="color:red">{{$message}}</span>@enderror
+            <label class="text-white">To :</label>
+            <input type="date" class="col-span-4" name="leave_days_to">@error('end_date')<span style="color:red">{{$message}}</span>@enderror
+        </div>
+        <div class="text-base 2xl:text-lg justify-center sm:justify-start flex items-center text-white mt-4 font-normal" id="leave_reason">
+            <p>Why and When.. <p> 
+            <textarea id="reason" title="reason for leave" class=" text-black mt-4 font-normal" name ="reason"  style="height:82px; width:400px"></textarea>                       
+        </div> 
+        <div class="flex flex-col sm:flex-row items-center">
+            <select class="form-select form-select-lg sm:mt-2 sm:mr-2" id="leave_type" name="leave_type" aria-label=".form-select-lg">
+                <option name="leave_type"value=null > </option> 
+                <option name="leave_type" value="3">Medical Causes</option>
+                <option name="leave_type" value="4">Celebration Leave</option>
+                <option name="leave_type"value="5">Death Causes</option>
+            </select>
+        </div>
     </div>   
-    </div>                               
-        <button class="btn btn-success mt-4" id="save_button" type="submit" >
-             Submit
-        </button> 
-        <button class="btn btn-warning mt-4" id="update_button" type="submit"> 
-             Update  
-        </button>
+    </div>
+
+            <button class="btn btn-success mt-4" id="save_button" type="submit">Submit</button>   
+            <button class="btn btn-warning mt-4" id="update_button" type="submit">Update </button>
+            
+    </form> 
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-    $("#absent").click(function(){
-        $("#attendance").hide();
-    	var status = $("#absent").val();
-        $('#value').val(status);
-    });
-    $("#date").hide();
-     $("#present").click(function(){
-        $("#absent").prop("disabled",true);
-         if($("#present").is(':checked')){
-            $("#absent").removeAttr('checked');
-             $("#date").hide();
+   $(document).ready(function(){
+    $("#attendancestatus").hide();
+    // $("#inactive_side").hide();
+       $("#active").click(function(){
+         $("#inactive").prop("disabled",true);
+         if($("#active").is(':checked')){
+            $("#inactive").removeAttr('checked');
+             $("#inactive_side").hide();
          }else{
-            $("#absent").prop("disabled",false);
-             $("#date").show();
+            $("#inactive").prop("disabled",false);
+             $("#inactive_side").show();
          }
-        $("#attendance").hide();
-        $("#date").hide();
-    	var status = $("#present").val();
-        $('#value').val(status);
-    });
-    $("#absent").click(function(){
-        $("#date").show();
-        if($("#absent").is(':checked')){
-            $("#present").removeAttr('checked');
-            $("#present").prop("disabled",true);
-        }
-        else {
-            $("#present").prop("disabled",false);
-            $("#date").hide();
-        }
-    });
-    $("#attendance").show(); 
-    var user = $("#user").attr("value");    
-    if(user== null){
-        $("#attendance").hide();
-        $("#present").show();
-        $("#absent").show();
-        $("#update_button").hide();
-    }
-    else if(user == 0){
-        $( "#present" ).show();
-        $("#absent").prop("disabled",true);
-        $('#attendance').val("You are registered as Absent");
-        $("#update_button").show();
-        $("#save_button").hide();
-    }
-    else if(user == 1){
-        $("#present").prop("disabled",true);
-        $( "#absent" ).show();
-        $('#attendance').val("You are registered as Present");
-        $("#update_button").show();
-        $("#save_button").hide();
-    }
-    else if(user == 2){
-        $("#absent").prop("disabled",true);
-        $("#present").show();
-        $("#attendance").val("Your Leave Permission taken to your team lead");
-        $("#update_button").show();
-         $("#save_button").hide();
-    }
-    else if(user == 3){
-        $( "#present" ).prop("disabled",false);
-        $("#absent").show();
-        $("#attendance").val("Your Leave Permission Accepted");
-        $("#update_button").show();
-        $("#save_button").hide();
-    }
-    else{
-        $( "#present" ).prop("disabled",false);
-        $("#absent").show();
-        $("#attendance").val("Your Leave Permission Rejected and marked as Absent");
-        $("#update_button").show();
-        $("#save_button").hide();
-    }
-    $("#select").change(function(){
-    var status = $(this).val();
-     $('#inactive_value').val(status);
-        if(status == 2){
-            $("#permission").hide();
-            $("#permission_hours").hide();
-            $("#leave").show();
-        }else{
-            $("#leave").hide();
-            $("#permission_hours").show();
-            $("#permission").show();
-        }
-});
-});
+        var activeValue = $("#active").val();
+        $("#value").val(activeValue);
+       });
+       $("#inactive").click(function(){
+           $("#active").prop("disabled",true);
+           $("#inactive_side").show();
+           if($("#inactive").is(':checked')){
+            $("#active").removeAttr('checked');
+             $("#inactive_side").show();
+         }else{
+            $("#active").prop("disabled",false);
+             $("#inactive_side").hide();
+         }
+           var inactiveValue = $("#inactive").val();
+           $("#value").val(inactiveValue);
+       });
+       $("#permission").click(function(){
+           $("#permission_hours").show();
+           $("#leave_days").hide();
+           $("#leave_type").hide();
+       });
+       $("#leave").click(function(){
+           $("#permission_hours").hide();
+           $("#leave_days").show();
+           $("#leave_type").show();
+       });
+       
+
+   });
 </script>
 
 @endsection

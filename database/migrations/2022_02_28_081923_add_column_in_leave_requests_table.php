@@ -19,6 +19,7 @@ class AddColumnInLeaveRequestsTable extends Migration
             $table->char('permission_hours_from', 250)->nullable()->after('leave_status');
             $table->char('permission_hours_to', 250)->nullable()->after('permission_hours_from');
             $table->integer('leave_counts')->nullable()->after('end_date');
+            $table->integer('respond_status')->default(0)->comment('0->respond not filled,1->respond filled')->after('leave_counts');
         });
     }
 
@@ -33,6 +34,7 @@ class AddColumnInLeaveRequestsTable extends Migration
             $table->dropColumn('permission_type_id'); 
             $table->dropColumn('permission_hours_from');
             $table->dropColumn('permission_hours_to'); 
+            $table->dropColumn('respond_status'); 
         });
     }
 }

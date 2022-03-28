@@ -8,22 +8,25 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Mail\LeaveStatusMail;
+use App\Mail\LeaveAcceptanceMail;
+use App\Mail\LeaveRejectedMail;
 use Illuminate\Support\Facades\Mail;
 
 class LeaveMailSend implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $status,$user;
+    public $leave_status,$user,$reason,$leaveType;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($status,$user)
+    public function __construct($leave_status,$user,$reason,$leaveType)
     {
-        $this->status = $status; 
+        $this->leave_status = $leave_status; 
         $this->user = $user;
+        $this->reason=$reason; 
+        $this->leaveType=$leaveType;
         
     }
 
@@ -34,11 +37,20 @@ class LeaveMailSend implements ShouldQueue
      */
     public function handle()
     {
-        $status= $this->status;
+        $leave_status= $this->leave_status;
         $user= $this->user;
+        $reason = $this->reason;
         $userMail = $user->email;
-        $email = new LeaveStatusMail($status,$user);
-        Mail::to($userMail)->send($email);
-
+        $leaveType=$this->leaveType;
+        // dd($leaveType);
+        if($leave_status == 2){
+            // dd($leaveType);
+            $email = new LeaveAcceptanceMail($leave_status,$user,$leaveType);
+            Mail::to($userMail)->send($email);
+        }
+        else{
+            $email = new LeaveRejectedMail($leave_status,$user,$reason);
+            Mail::to($userMail)->send($email);
+        }
     }
 }

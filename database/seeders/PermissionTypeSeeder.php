@@ -45,14 +45,7 @@ class PermissionTypeSeeder extends Seeder
             ],
             [ 
                 'id' => '5',
-                'permission_hours' => 'half a day',
-                'status'=>1,
-                'created_at' =>now(),
-                'updated_at' =>now()           
-            ],
-            [ 
-                'id' => '6',
-                'permission_hours' => 'permission_exceeds',
+                'permission_hours' => 'permission time overed',
                 'status'=>1,
                 'created_at' =>now(),
                 'updated_at' =>now()           

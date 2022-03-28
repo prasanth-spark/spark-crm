@@ -24,9 +24,6 @@
             <span class="show box bg-theme-25 text-white flex items-center">
                 <button class="btn border-transparent bg-theme-25 dark:bg-dark-1">Hi {{$user['name']}} ,</button>
             </span>
-            <span class="text-white text-sm 2xl:text-base font-medium mt-5">
-            Welcome!
-            </span>
             <div class="intro-y col-span-12 lg:col-span-6 text-white text-sm p-4">
                 <label  class="form-label">Today's Attendance</label>
                 @isset($attendance)
