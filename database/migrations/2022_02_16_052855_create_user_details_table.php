@@ -17,12 +17,12 @@ class CreateUserDetailsTable extends Migration
             $table->uuid('id');
             $table->uuid('user_id')->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->increments('employee_id')->unique();
+            $table->increments('employee_id');
             $table->string('father_name',50);
             $table->string('mother_name',50);
             $table->string('phone_number',20)->index('phone_number');
             $table->string('emergency_contact_number',20);
-            $table->string('official_email')->unique();
+            $table->string('official_email');
             $table->date('joined_date');
             $table->text('home_address');
             $table->date('date_of_birth');

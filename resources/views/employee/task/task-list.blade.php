@@ -20,7 +20,7 @@
             <table id="tasklist" class="table table-report -mt-2">
                 <thead>
                     <tr>
-                         <th scope="col">SI.No</th>
+                        <th scope="col">SI.No</th>
                         <th class="whitespace-nowrap">DATE</th>
                         <th class="whitespace-nowrap">PROJECT NAME</th>
                         <th class="whitespace-nowrap">TASK MODULE</th>
@@ -30,9 +30,6 @@
                         <th class="text-center whitespace-nowrap">ACTIONS</th>
                     </tr>
                 </thead>
-                <tbody>
-           
-                </tbody>
             </table>
         </div>
        

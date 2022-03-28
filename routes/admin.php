@@ -28,7 +28,7 @@ Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('d
 
 Route::middleware('loggedin')->group(function () {
         Route::get('login', [AuthController::class, 'loginView'])->name('login-view');
-        Route::post('login-admin',[AuthController::class, 'login'])->name('login');
+        Route::post('login-admin', [AuthController::class, 'login'])->name('login');
 });
 Route::middleware('auth')->group(function () {
         Route::get('logout', [AuthController::class, 'logout'])->name('logout');
@@ -52,34 +52,29 @@ Route::middleware('auth')->group(function () {
         //Admin add Employee in Excel File
         Route::get('/file-upload', [EmployeeController::class, 'fileUpload'])->name('file-upload');
         Route::post('/employee-list-import', [EmployeeController::class, 'employeeListImport'])->name('employee-list-import');
+        Route::post('/employee-list-import-process', [EmployeeController::class, 'importProcess'])->name('import-process');
+
         Route::get('/employee-list-export', [EmployeeController::class, 'employeeListExport'])->name('employee-list-export');
 
         //Attendance List
         Route::get('/attendance-list', [AttendanceController::class, 'attendanceList'])->name('attendance-list');
-        Route::post('/attendance/team-list',[AttendanceController::class, 'attendanceTeamList'])->name('attendance-teamlist');
+        Route::get('/attendance-list-pagination', [AttendanceController::class, 'attendanceListPagination'])->name('attendance-list-pagination');
+
 
         //Absent List
         Route::get('/absent-list', [AttendanceController::class, 'absentList'])->name('absent-list');
-        Route::get('/teamwise-absent-list/{id}', [AttendanceController::class, 'teamWiseabsentList'])->name('teamwise-absent-list');
+        Route::get('/absent-list-pagination', [AttendanceController::class, 'absentListPagination'])->name('absent-list-pagination');
 
 
 
         //Permission List
         Route::get('/permission-list', [AttendanceController::class, 'permissionList'])->name('permission-list');
-        Route::post('/teamwise-permission-list', [AttendanceController::class, 'teamWisePermissionList'])->name('teamwise-permission-list');
-        
+        Route::get('/permission-list-pagination', [AttendanceController::class, 'permissionListPagination'])->name('permission-list-pagination');
+
 
 
         //Task List
         Route::get('/task-list', [TaskController::class, 'taskList'])->name('employee-task-list');
         Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
-        Route::post('/team/task-list', [TaskController::class, 'taskTeamList'])->name('task-teamlist');
-
-
-
-
-
-    });
-
-
-
+        Route::get('/task-list-pagination', [TaskController::class, 'taskListPagination'])->name('task-list-pagination');
+});
