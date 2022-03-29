@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
+use  App\Exports\UsersExport;
 
 use App\Imports\UsersImport;
 
@@ -284,39 +285,40 @@ class EmployeeController extends Controller
      */
     public function employeeListExport()
     {
-        $userDetails = $this->user->where('role_id', '!=', 1)->with('userDetail', 'teamToUser', 'roleToUser')->first();
-        $a = array();
-        foreach ($userDetails as $user) {
-            $array = [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'team' => ($user->teamToUser) ? $user->teamToUser->team : "",
-                'role' => $user->roleToUser->role,
-                'employee_id' => ($user->userDetail) ? $user->userDetail->employee_id : "",
-                'father_name' => ($user->userDetail) ? $user->userDetail->father_name : "",
-                'mother_name' => ($user->userDetail) ? $user->userDetail->mother_name : "",
-                'phone_number' => ($user->userDetail) ? $user->userDetail->phone_number : "",
-                'emergency_contact_number' => ($user->userDetail) ? $user->userDetail->emergency_contact_number : "",
-                'official_email' => ($user->userDetail) ? $user->userDetail->official_email : "",
-                'joined_date' => ($user->userDetail) ? $user->userDetail->joined_date : "",
-                'home_address' => ($user->userDetail) ? $user->userDetail->home_address : "",
-                'date_of_birth' => ($user->userDetail) ? $user->userDetail->date_of_birth : "",
-                'blood_group' => ($user->userDetail) ? $user->userDetail->blood_group : "",
-                'pan_number' => ($user->userDetail) ? $user->userDetail->pan_number : "",
-                'aadhar_number' => ($user->userDetail) ? $user->userDetail->aadhar_number : "",
-                'bank_id' => ($user->userDetail) ? $user->userDetail->bank_id : "",
-                'account_holder_name' => ($user->userDetail) ? $user->userDetail->account_holder_name : "",
-                'account_number' => ($user->userDetail) ? $user->userDetail->employee_id : "",
-                'ifsc_code' => ($user->userDetail) ? $user->userDetail->ifsc_code : "",
-                'branch_name' => ($user->userDetail) ? $user->userDetail->branch_name : "",
-                'account_type_id' => ($user->userDetail) ? $user->userDetail->account_type_id : "",
+        return Excel::download(new UsersExport(), 'SampleExport.xlsx');
+
+        // $userDetails = $this->user->where('role_id', '!=', 1)->with('userDetail', 'teamToUser', 'roleToUser')->first();
+        // $a = array();
+        // foreach ($userDetails as $user) {
+        //     $array = [
+        //         'name' => $user->name,
+        //         'email' => $user->email,
+        //         'team' => ($user->teamToUser) ? $user->teamToUser->team : "",
+        //         'role' => $user->roleToUser->role,
+        //         'employee_id' => ($user->userDetail) ? $user->userDetail->employee_id : "",
+        //         'father_name' => ($user->userDetail) ? $user->userDetail->father_name : "",
+        //         'mother_name' => ($user->userDetail) ? $user->userDetail->mother_name : "",
+        //         'phone_number' => ($user->userDetail) ? $user->userDetail->phone_number : "",
+        //         'emergency_contact_number' => ($user->userDetail) ? $user->userDetail->emergency_contact_number : "",
+        //         'official_email' => ($user->userDetail) ? $user->userDetail->official_email : "",
+        //         'joined_date' => ($user->userDetail) ? $user->userDetail->joined_date : "",
+        //         'home_address' => ($user->userDetail) ? $user->userDetail->home_address : "",
+        //         'date_of_birth' => ($user->userDetail) ? $user->userDetail->date_of_birth : "",
+        //         'blood_group' => ($user->userDetail) ? $user->userDetail->blood_group : "",
+        //         'pan_number' => ($user->userDetail) ? $user->userDetail->pan_number : "",
+        //         'aadhar_number' => ($user->userDetail) ? $user->userDetail->aadhar_number : "",
+        //         'bank_id' => ($user->userDetail) ? $user->userDetail->bank_id : "",
+        //         'account_holder_name' => ($user->userDetail) ? $user->userDetail->account_holder_name : "",
+        //         'account_number' => ($user->userDetail) ? $user->userDetail->employee_id : "",
+        //         'ifsc_code' => ($user->userDetail) ? $user->userDetail->ifsc_code : "",
+        //         'branch_name' => ($user->userDetail) ? $user->userDetail->branch_name : "",
+        //         'account_type_id' => ($user->userDetail) ? $user->userDetail->account_type_id : "",
 
 
-            ];
-            $a[] = $array;
-        }
-        return (new FastExcel($a))->download('file.csv');
+        //     ];
+        //     $a[] = $array;
+        // }
+        // return (new FastExcel($a))->download('file.csv');
     }
 
     /**

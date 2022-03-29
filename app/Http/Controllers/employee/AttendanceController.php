@@ -122,7 +122,7 @@ class AttendanceController extends Controller
                     'start_date'=>$start_date,
                     'end_date'=>$end_date,
                     'leave_counts'=>$leaveDays,
-                    'response_status'=>1,
+                    'respond_status'=>1,
                 ]);
                 $job = new LeaveDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                 dispatch($job);
@@ -144,7 +144,7 @@ class AttendanceController extends Controller
                 'start_date'=>$start_date,
                 'end_date'=>$end_date,
                 'leave_counts'=>$leaveDays,
-                'response_status'=>0,
+                'respond_status'=>0,
             ]);
             $job = new LeaveDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
               dispatch($job);
@@ -172,7 +172,7 @@ class AttendanceController extends Controller
                     'start_date'=>$today_date,
                     'end_date'=>$today_date,
                     'leave_counts'=>null,
-                    'response_status'=>1,
+                    'respond_status'=>1,
                 ]);
                 $job = new PermissionDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                       dispatch($job);
@@ -193,7 +193,7 @@ class AttendanceController extends Controller
                 'start_date'=>$today_date,
                 'end_date'=>$today_date,
                 'leave_counts'=>null,
-                'response_status'=>0,
+                'respond_status'=>0,
             ]);
             $job = new PermissionDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                   dispatch($job);
@@ -233,7 +233,7 @@ class AttendanceController extends Controller
             ]);
             LeaveRequest::where('user_id',$user->id)->update([
                 'leave_status'=>2,
-                'response_status'=>1,
+                'respond_status'=>1,
             ]);
             $job = new LeaveMailSend($leave_status,$user,$reason,$leaveType);
                 dispatch($job);
@@ -244,7 +244,7 @@ class AttendanceController extends Controller
             ]);
             LeaveRequest::where('user_id',$user->id)->update([
                 'leave_status'=>3,
-                'response_status'=>1,
+                'respond_status'=>1,
             ]);
             $job = new LeaveMailSend($leave_status,$user,$reason,$leaveType);
             dispatch($job);
@@ -273,7 +273,7 @@ class AttendanceController extends Controller
             ]);
             LeaveRequest::where('user_id',$user->id)->update([
                 'permission_status'=>1,
-                'response_status'=>1
+                'respond_status'=>1
             ]);
           }
           else{
@@ -282,7 +282,7 @@ class AttendanceController extends Controller
             ]);
             LeaveRequest::where('user_id',$user->id)->update([
                 'permission_status'=>2,
-                'response_status'=>1
+                'respond_status'=>1
             ]);
           }
           $job = new PermissionResponse($permission_status,$user,$reason);
@@ -398,14 +398,14 @@ class AttendanceController extends Controller
 //                 dispatch($job);
 //                 return redirect('/employee/employee_dashboard');
 //     }
-//     public function attendanceList($id){
-//         $user = User::find($id);
-//         $date = Carbon::now();
-//         $date = $date->format("Y-m-d");
-//         $attendance= $this->attendance->where(['user_id' => $user->id ,'date' => $date])->first();
-//         $leaveDetails = LeaveRequest::where('user_id',$user->id)->get();
-//         return view('/employee/attendance-report',compact('user','attendance','leaveDetails'));
-// }
+    public function attendanceList($id){
+        $user = User::find($id);
+        $date = Carbon::now();
+        $date = $date->format("Y-m-d");
+        $attendance= $this->attendance->where(['user_id' => $user->id ,'date' => $date])->first();
+        $leaveDetails = LeaveRequest::where('user_id',$user->id)->get();
+        return view('/employee/attendance-report',compact('user','attendance','leaveDetails'));
+}
     
 }
 

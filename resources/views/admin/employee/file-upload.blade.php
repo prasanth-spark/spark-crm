@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">Upload CSV </button>
-                                 <a class="btn btn-warning" href="/admin/employee-list-export">Export Employee Data</a>
+                                 <a class="btn btn-warning" href="/admin/employee-list-export">Sample Export File</a>
                                 </div>
                             </div>
                         </form>
