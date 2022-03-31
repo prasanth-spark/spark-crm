@@ -5,7 +5,7 @@
 
 
    @if($leaveDetail->permission_type_id != 1 && $leaveDetail->reponse_status != 1 )
-   <a href="http://localhost:8000/employee/permission-response/{{$teamLead->id}}/{{$user->id}}/{{$leaveDetail->permission_type_id}}">select</a>
+   <a href="{{config('app.url')}}/employee/permission-response/{{$teamLead->id}}/{{$user->id}}/{{$leaveDetail->permission_type_id}}">select</a>
 @else
 </p> Note : Response Done </p>
 
