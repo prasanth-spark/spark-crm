@@ -6,5 +6,5 @@
    <p>{{$user->name}} have applied as he have {{$reason}} from {{$start_date}} to {{$end_date}}</p>
 
 @if($leaveType !=5)
-  <a href="http://localhost:8000/employee/leave-response/{{$teamLead->id}}/{{$user->id}}/{{$leaveType}}">select</a>
+  <a href="{{config('app.url')}}/employee/leave-response/{{$teamLead->id}}/{{$user->id}}/{{$leaveType}}">select</a>
 @endif
