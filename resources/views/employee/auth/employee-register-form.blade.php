@@ -57,14 +57,14 @@
                             @error('password')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                            <div class="input-form mt-3">
+                            <div class="input-form  mt-4" style="background: transparent;">
 
-                                <select placeholder="Account Type" type="text" class="tom-select w-full intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" id="regular-form-4" name='role'>
-                                    <option value selected="selected" disabled="disabled">Select Role</option>
+                                 <select placeholder="Account Type" type="text" class="tom-select w-full border border-solid border-gray-300 rounded-lg py-3 px-4" id="regular-form-4" name='role'>
+                                    <option value="Select Role" selected disabled>Select Role</option>
                                     @foreach($role as $c)
                                     <option value="{{$c->id}}">{{$c->role}}</option>
                                     @endforeach
-                                </select>
+                                </select>                             
                                 @error('role')
                                 <span style="color:red">{{$message}}</span>
                                 @enderror
@@ -72,7 +72,7 @@
                         </div>
                         <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                             <button type="submit" class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Register</button>
-                            <button class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top"><a href="{{ route('user-login-view')}}">Sign In</a></button>
+                            <a href="{{ route('user-login-view')}}" class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top">Sign In</a>
                         </div>
                     </form>
                 </div>

@@ -50,18 +50,18 @@ class EmployeeSideMenu
                             ]
                         ]
                     ],
-                    'Task' => [
-                        'icon' => 'home',
-                        'route_name' => 'task-list',
-                        'title' => 'Task',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
                     'Attendance' => [
                         'icon' => 'home',
                         'route_name' => 'attendance-module',
                         'title' => 'Attendance',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                    'Task' => [
+                        'icon' => 'home',
+                        'route_name' => 'task-list',
+                        'title' => 'Task',
                         'params' => [
                             'layout' => 'side-menu',
                         ],
@@ -178,14 +178,6 @@ class EmployeeSideMenu
                             ]
                         ]
                     ],
-                    'Task' => [
-                        'icon' => 'home',
-                        'route_name' => 'task-list',
-                        'title' => 'Task',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
                     'Attendance' => [
                         'icon' => 'home',
                         'route_name' => 'attendance-module',
@@ -194,7 +186,14 @@ class EmployeeSideMenu
                             'layout' => 'side-menu',
                         ],
                     ],
-
+                    'Task' => [
+                        'icon' => 'home',
+                        'route_name' => 'task-list',
+                        'title' => 'Task',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
                 ];
             }
         } else {
