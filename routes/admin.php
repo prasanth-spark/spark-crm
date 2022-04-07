@@ -33,6 +33,8 @@ Route::middleware('loggedin')->group(function () {
 Route::middleware('auth')->group(function () {
         Route::get('logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/dashboard', [PageController::class, 'dashboardOverview1'])->name('dashboard-overview-1');
+        Route::get('admin-reset-form',[AuthController::class, 'adminResetForm'])->name('admin-reset-password');
+        Route::post('admin-change-password',[AuthController::class, 'adminChangePassword'])->name('admin-change-password');
 
         //Admin add Employee
         Route::get('/employee-form', [EmployeeController::class, 'employeeForm'])->name('employee-form');

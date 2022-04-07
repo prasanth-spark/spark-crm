@@ -41,6 +41,7 @@ use App\Http\Controllers\employee\TeamAttendanceController;
   
 
     Route::middleware('employee_auth')->group(function() {
+
             Route::get('/employee_dashboard',[LoginController::class, 'employeeDashboard'])->name('employee-dashboard');
             Route::get('logout-employee', [LoginController::class, 'logout'])->name('employee-logout');
 
@@ -66,6 +67,10 @@ use App\Http\Controllers\employee\TeamAttendanceController;
             //User Profile
             Route::get('user-profile-form',[UserProfileController::class, 'userProfileForm'])->name('user-profile-form');
             Route::post('user-profile-add',[UserProfileController::class, 'userProfileAdd'])->name('user-profile-add');
+            Route::get('user-reset-form',[UserProfileController::class, 'userResetForm'])->name('user-reset-password');
+            Route::post('user-change-password',[UserProfileController::class, 'userChangePassword'])->name('user-change-password');
+
+
 
             //Team Task
             Route::get('team-task',[TeamTaskController::class, 'teamTask'])->name('team-task');

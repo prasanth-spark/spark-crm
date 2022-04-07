@@ -104,7 +104,7 @@
                     <div class="text-xs text-gray-600 mt-0.5 dark:text-gray-600">admin</div>
                 </div>
                 <div class="p-2">
-                    <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
+                    <a href="{{route('admin-reset-password')}}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">
                         <em data-feather="lock" class="w-4 h-4 mr-2"></em> Reset Password
                     </a>
                    

@@ -11,6 +11,12 @@ use App\Models\RoleModel;
 use App\Models\TeamModel;
 use Illuminate\Support\Facades\Session;
 use App\Http\Request\UserProfileRequest;
+use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+
+
+
 
 
 class UserProfileController extends Controller
@@ -117,4 +123,36 @@ class UserProfileController extends Controller
         return redirect('/employee/employee_dashboard')->with('success', 'Profile Added Successfully');
         }  
     }
+
+    /**
+     * Reset Password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function userResetForm()
+    {
+        return view('employee/user-profile/user-reset-form');
+    }
+
+
+     /**
+     * update password
+     * @param ResetPasswordRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function userChangePassword(Request $request)
+    {
+      
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+   
+        User::find(Session::get('id'))->update(['password'=> Hash::make($request->new_password)]);
+        return redirect('/employee/employee_dashboard')->with('success', 'Password Change Successfully');
+
+    }
+
 }

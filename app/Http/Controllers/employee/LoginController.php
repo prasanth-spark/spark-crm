@@ -27,6 +27,17 @@ class LoginController extends Controller
     }
 
     /**
+     * Show specified view.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function userDashboardOverview()
+    {
+        return view('employee/user-dashboard-overview');
+    }
+ 
+    /**
      * Show RegisterForm view.
      *
      * @return \Illuminate\Http\Response
@@ -173,7 +184,7 @@ class LoginController extends Controller
         return view('employee/auth/reset-password',compact('id'));
     }
 
-      /**
+     /**
      * Update Password .
      *
      * @return \Illuminate\Http\Response
@@ -185,7 +196,7 @@ class LoginController extends Controller
             ]);
             return redirect('/employee/login-form')->with('success', 'Password changed successfully');
        
-
     }
+            
 
 }

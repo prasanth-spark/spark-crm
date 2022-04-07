@@ -125,10 +125,17 @@
                             </div>
                             <div class="col-span-12 md:col-span-6">
                                 <div>
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                        Pan Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, pan number</span>
-                                    </label>
-                                    <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->pan_number) ? $userdetails->pan_number : '') }}" placeholder="Pan Number" name='pan_number'>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team<span style="color:red">*</span></label>
+
+                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4"  name='team_name' required> 
+                                        <option value="{{(isset($userdetails->teamToUserDetails->id) ? $userdetails->teamToUserDetails->id : '') }}">{{(isset($userdetails->teamToUserDetails->team) ? $userdetails->teamToUserDetails->team : '') }}</option>
+                                        @foreach($team as $t)
+                                        <option value="{{$t->id}}">{{$t->team}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('team_name')
+                                    <span style="color:red">{{$message}}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -146,6 +153,17 @@
                             </div>
                             <div class="col-span-12 md:col-span-6">
                                 <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                        Pan Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, pan number</span>
+                                    </label>
+                                    <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->pan_number) ? $userdetails->pan_number : '') }}" placeholder="Pan Number" name='pan_number'>
+                                </div>
+                            </div>
+            
+                        </div>
+                        <div class="grid grid-cols-12 gap-6 mt-5">
+                        <div class="col-span-12 md:col-span-6">
+                                <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Bank Name</label>
 
                                     <select placeholder="Bank Name" type="text" class="tom-select w-full" id="regular-form-4" value="{{(isset($userdetails->bank_name) ? $userdetails->bank_name : '') }}" name='bank_name'>
@@ -156,8 +174,6 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
@@ -166,7 +182,9 @@
                                     <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->account_holder_name) ? $userdetails->account_holder_name : '') }}" placeholder="Account Holder Name" name='account_holder_name'>
                                 </div>
                             </div>
-                            <div class="col-span-12 md:col-span-6">
+                        </div>
+                        <div class="grid grid-cols-12 gap-6 mt-5">
+                        <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Account Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only </span>
@@ -174,29 +192,12 @@
                                     <input id="regular-form-4" type="number" class="form-control" value="{{(isset($userdetails->account_number) ? $userdetails->account_number : '') }}" placeholder="Account Number" name='account_number'>
                                 </div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         IFSC Code<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, IFSC code </span>
                                     </label>
                                     <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->ifsc_code) ? $userdetails->ifsc_code : '') }}" placeholder="IFSC Code" name='ifsc_code'>
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-6">
-                                <div>
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team<span style="color:red">*</span></label>
-
-                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4"  name='team_name' required> 
-                                        <option value="{{(isset($userdetails->teamToUserDetails->id) ? $userdetails->teamToUserDetails->id : '') }}">{{(isset($userdetails->teamToUserDetails->team) ? $userdetails->teamToUserDetails->team : '') }}</option>
-                                        @foreach($team as $t)
-                                        <option value="{{$t->id}}">{{$t->team}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('team_name')
-                                    <span style="color:red">{{$message}}</span>
-                                    @enderror
                                 </div>
                             </div>
                         </div>
