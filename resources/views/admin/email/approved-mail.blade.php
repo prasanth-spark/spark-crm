@@ -8,5 +8,7 @@
 </head>
 <body>
     <p>Please update your profile</p>
+    <button class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top"><a href="{{config('app.url')}}/admin/login-form-mail/{{$approved->id}}">Sign In</a></button>
+
 </body>
 </html>
