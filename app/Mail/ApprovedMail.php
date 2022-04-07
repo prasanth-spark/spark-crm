@@ -30,7 +30,7 @@ class ApprovedMail extends Mailable
     public function build()
     {
         return $this->subject('Admin Approved')
-            ->view('admin//email/approved-mail');
+            ->view('admin/email/approved-mail');
     
     }
 }

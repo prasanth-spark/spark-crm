@@ -28,7 +28,6 @@ use App\Http\Controllers\employee\TeamAttendanceController;
             Route::get('register-form',[LoginController::class, 'registerForm'])->name('register-view');
             Route::get('user-register/{id}',[LoginController::class, 'registerEmployee'])->name('user-register');
             Route::post('user-dashboard',[LoginController::class, 'userDashboard'])->name('user-dashboard');
-            Route::get('login-form-mail/{id}', [LoginController::class, 'loginFormMail'])->name('login-view-mail');
             Route::post('login-employee', [LoginController::class, 'loginEmployee'])->name('employee-login');
             Route::get('forgot-password', [LoginController::class, 'forgotPasswordForm'])->name('forgot-view');
             Route::get('login-form',[LoginController::class, 'loginForm'])->name('user-login-view');
