@@ -23,45 +23,24 @@ class EmployeeSideMenu
                     'dashboard' => [
                         'icon' => 'home',
                         'title' => 'Dashboard',
-                        'sub_menu' => [
-                            'dashboard-overview-1' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 1'
-                            ],
-                            'dashboard-overview-2' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 2'
-                            ],
-                            'dashboard-overview-3' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 3'
-                            ]
-                        ]
-                    ],
-                    'Task' => [
-                        'icon' => 'home',
-                        'route_name' => 'task-list',
-                        'title' => 'Task',
+                        'route_name' => 'employee-dashboard',
                         'params' => [
                             'layout' => 'side-menu',
                         ],
+
                     ],
                     'Attendance' => [
                         'icon' => 'home',
                         'route_name' => 'attendance-module',
                         'title' => 'Attendance',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                    'Task' => [
+                        'icon' => 'home',
+                        'route_name' => 'task-list',
+                        'title' => 'Task',
                         'params' => [
                             'layout' => 'side-menu',
                         ],
@@ -110,32 +89,11 @@ class EmployeeSideMenu
                     'dashboard' => [
                         'icon' => 'home',
                         'title' => 'Dashboard',
-                        'sub_menu' => [
-                            'dashboard-overview-1' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 1'
-                            ],
-                            'dashboard-overview-2' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 2'
-                            ],
-                            'dashboard-overview-3' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 3'
-                            ]
-                        ]
+                        'route_name' => 'employee-dashboard',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+
                     ],
                     'Attendance' => [
                         'icon' => 'home',
@@ -151,40 +109,11 @@ class EmployeeSideMenu
                     'dashboard' => [
                         'icon' => 'home',
                         'title' => 'Dashboard',
-                        'sub_menu' => [
-                            'dashboard-overview-1' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 1'
-                            ],
-                            'dashboard-overview-2' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 2'
-                            ],
-                            'dashboard-overview-3' => [
-                                'icon' => '',
-                                'route_name' => 'dashboard-overview-1',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Overview 3'
-                            ]
-                        ]
-                    ],
-                    'Task' => [
-                        'icon' => 'home',
-                        'route_name' => 'task-list',
-                        'title' => 'Task',
+                        'route_name' => 'employee-dashboard',
                         'params' => [
                             'layout' => 'side-menu',
                         ],
+
                     ],
                     'Attendance' => [
                         'icon' => 'home',
@@ -194,7 +123,14 @@ class EmployeeSideMenu
                             'layout' => 'side-menu',
                         ],
                     ],
-
+                    'Task' => [
+                        'icon' => 'home',
+                        'route_name' => 'task-list',
+                        'title' => 'Task',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
                 ];
             }
         } else {
@@ -202,32 +138,10 @@ class EmployeeSideMenu
                 'dashboard' => [
                     'icon' => 'home',
                     'title' => 'Dashboard',
-                    'sub_menu' => [
-                        'dashboard-overview-1' => [
-                            'icon' => '',
-                            'route_name' => 'dashboard-overview-1',
-                            'params' => [
-                                'layout' => 'side-menu',
-                            ],
-                            'title' => 'Overview 1'
-                        ],
-                        'dashboard-overview-2' => [
-                            'icon' => '',
-                            'route_name' => 'dashboard-overview-1',
-                            'params' => [
-                                'layout' => 'side-menu',
-                            ],
-                            'title' => 'Overview 2'
-                        ],
-                        'dashboard-overview-3' => [
-                            'icon' => '',
-                            'route_name' => 'dashboard-overview-1',
-                            'params' => [
-                                'layout' => 'side-menu',
-                            ],
-                            'title' => 'Overview 3'
-                        ]
-                    ]
+                    'route_name' => 'employee-dashboard',
+                    'params' => [
+                        'layout' => 'side-menu',
+                    ],
                 ],
 
             ];

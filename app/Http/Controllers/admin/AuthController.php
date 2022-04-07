@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use App\Rules\AdminMatchOldPassword;
+
+
 
 
 
@@ -43,7 +47,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function login(LoginRequest $request)
-    {
+    {       
         try{
             $admin = $this->user->where('email', $request->email)->where('role_id',1)->first();
             if ($admin && Hash::check($request->password, $admin->password)) {
@@ -66,6 +70,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
+                                                                                                                                                        
         try{
             Session::flush();
             return redirect('/admin/login');
@@ -73,5 +78,35 @@ class AuthController extends Controller
         }catch (\Throwable $exception) {
             Log::info($exception->getMessage());
             }
+    }
+
+     /**
+     * Reset Password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function adminResetForm()
+    {   
+        return view('admin/reset-password/admin-reset-form');
+    }
+
+
+     /**
+     * update password
+     * @param ResetPasswordRequest $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function adminChangePassword(Request $request)
+    {      
+        $request->validate([
+            'current_password' => ['required', new AdminMatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+   
+        User::find(Session::get('id'))->update(['password'=> Hash::make($request->new_password)]);
+        return redirect('/admin/login');
+
     }
 }

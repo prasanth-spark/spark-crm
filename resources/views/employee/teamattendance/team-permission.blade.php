@@ -28,10 +28,10 @@
                 <th class="whitespace-nowrap">TEAM</th>
                 <th class="whitespace-nowrap">ROLE</th>
                 <th class="whitespace-nowrap">LEAVE TYPE</th>
-                <th class="whitespace-nowrap">PERMISSION STATUS</th>
-                <th class="whitespace-nowrap">PERMISSION HOURS FROM</th>
-                <th class="whitespace-nowrap">PERMISSION HOURS TO</th>
-                <th class="whitespace-nowrap">PERMISSION HOURS </th>
+                <th class="whitespace-nowrap">STATUS</th>
+                <th class="whitespace-nowrap">HOURS FROM</th>
+                <th class="whitespace-nowrap">HOURS TO</th>
+                <th class="whitespace-nowrap">HOURS </th>
 
 
 
