@@ -21,7 +21,7 @@ trait UuidModel {
      */
     public static function bootUuidModel() {
         static::creating(function ($model) {
-            $model->attributes[$model->getKeyName()] = Uuid::uuid4();
+            $model->attributes[$model->getKeyName()] = Uuid::uuid4()->toString();
         });
     }
 

@@ -9,15 +9,11 @@ use App\Models\AccountType;
 use App\Models\BankDetails;
 use App\Models\RoleModel;
 use App\Models\TeamModel;
-use Illuminate\Support\Facades\Session;
 use App\Http\Request\UserProfileRequest;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-
-
-
-
+use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
@@ -29,6 +25,10 @@ class UserProfileController extends Controller
         $this->bankdetails = $bankdetails;
         $this->rolemodel   = $rolemodel;
         $this->teammodel   = $teammodel;
+
+
+        $this->middleware(['role:Employee|Team Leader|Project Manager']);
+
     }
 
     /**
@@ -38,7 +38,7 @@ class UserProfileController extends Controller
      */
     public function userProfileForm()
     {
-        $userId = Session::get('id');
+        $userId = Auth::user()->id;
         $userdetails = $this->userdetails->where('user_id', $userId)->with('bankNameToEmployee', 'accountTypeToEmployee', 'teamToUserDetails')->first();
         if (isset($userdetails)) {
             $bankName = $this->bankdetails->get();
@@ -62,7 +62,7 @@ class UserProfileController extends Controller
      */
     public function userProfileAdd(UserProfileRequest $request)
     {
-        $userID = Session::get('id');
+        $userID = Auth::user()->id;
         $user = $this->user->where('id', $userID)->first();
         $this->user->where('id',$user->id)->update([
             'team_id'=>$request->team_name,
@@ -150,7 +150,7 @@ class UserProfileController extends Controller
             'new_confirm_password' => ['same:new_password'],
         ]);
    
-        User::find(Session::get('id'))->update(['password'=> Hash::make($request->new_password)]);
+        User::find(Auth::user()->id)->update(['password'=> Hash::make($request->new_password)]);
         return redirect('/employee/employee_dashboard')->with('success', 'Password Change Successfully');
 
     }

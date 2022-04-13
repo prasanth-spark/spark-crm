@@ -177,7 +177,7 @@
                                     <select placeholder="Role" type="text" class="tom-select w-full" id="regular-form-4" name='role' required>
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($role as $r)
-                                        <option value="{{$r->id}}">{{$r->role}}</option>
+                                        <option value="{{$r->id}}">{{$r->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('role')

@@ -106,7 +106,7 @@ class TaskController extends Controller
                     $col['id'] = $offset + 1;
                     $col['date'] = $task->date;
                     $col['name'] = $value->name;
-                    $col['role'] = $value->roleToUser->role;
+                    $col['role'] = $value->roleToUser->name;
                     $col['team'] = $value->userDetail->teamToUserDetails->team;
                     $col['project_name'] = $task->project_name;
                     $col['leave_status'] = ($task->task_status == 1) ? "pending" : "completed";

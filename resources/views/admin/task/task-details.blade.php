@@ -40,7 +40,7 @@
                                 <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                     Role
                                 </label>
-                                <input id="regular-form-3" type="text" class="form-control" value="{{$taskList->taskToUser->roleToUser->role}}">
+                                <input id="regular-form-3" type="text" class="form-control" value="{{$taskList->taskToUser->roleToUser->name}}">
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-6">

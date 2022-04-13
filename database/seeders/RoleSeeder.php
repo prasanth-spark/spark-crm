@@ -7,6 +7,25 @@ use App\Models\RoleModel;
 
 class RoleSeeder extends Seeder
 {
+
+/**
+     * @var array[]
+     */
+    protected $roles = [
+        [
+            'name' => 'Admin'
+        ],
+        [
+            'name' => 'Project Manager'
+        ],
+        [
+            'name' => 'Team Leader'
+        ],
+        [
+            'name' => 'Employee'
+        ],
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -14,37 +33,14 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        RoleModel::insert([
-            [ 
-                'id' => '1',
-                'role' => 'Admin',
-                'status' => '1',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            
-            [
-                'id' => '2',
-                'role' => 'Project Manager',
-                'status' => '1',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'id' => '3',
-                'role' => 'Team Leader',
-                'status' => '1',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'id' => '4',
-                'role' => 'Employee',
-                'status' => '1',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            
-        ]);
+        foreach ($this->roles as $role) {
+            RoleModel::firstOrCreate(
+                [
+                    'name' => $role['name'],
+                    'guard_name' => 'web'
+                ]
+            );
+        }
     }
+  
 }

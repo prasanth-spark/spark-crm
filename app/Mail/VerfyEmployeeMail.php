@@ -30,6 +30,6 @@ class VerfyEmployeeMail extends Mailable
     public function build()
     {
         return $this->subject('User verification')
-            ->view('admin//email/verificationmail');
+            ->view('admin/email/verificationmail');
     }
 }

@@ -15,8 +15,7 @@ class EmployeeSideMenu
      */
     public static function menu()
     {
-        $user = UserDetails::where('user_id', Session::get('id'))->first();
-
+        $user = !empty(auth()->user()) ? auth()->user()->userDetail : null;
         if ($user) {
             if ($user->role_id == 3) {
                 return [

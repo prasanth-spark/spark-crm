@@ -40,29 +40,28 @@
                     <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
                         Sign Up
                     </h2>
-
                     <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
                     <form action="{{route('user-dashboard')}}" method="post">
                         @csrf
                         <div class="intro-x mt-8">
-                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Name" name="name">
+                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Name" name="name" required>
                             @error('name')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Email" name="email">
+                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Email" name="email" required>
                             @error('email')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" name="password">
+                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" name="password" required>
                             @error('password')
                             <span style="color:red">{{$message}}</span>
                             @enderror
                             <div class="input-form  mt-4" style="background: transparent;">
 
-                                 <select placeholder="Account Type" type="text" class="tom-select w-full border border-solid border-gray-300 rounded-lg py-3 px-4" id="regular-form-4" name='role'>
+                                 <select placeholder="Account Type" type="text" class="tom-select w-full border border-solid border-gray-300 rounded-lg py-3 px-4" id="regular-form-4" name='role' required>
                                     <option value="Select Role" selected disabled>Select Role</option>
                                     @foreach($role as $c)
-                                    <option value="{{$c->id}}">{{$c->role}}</option>
+                                    <option value="{{$c->id}}">{{$c->name}}</option>
                                     @endforeach
                                 </select>                             
                                 @error('role')

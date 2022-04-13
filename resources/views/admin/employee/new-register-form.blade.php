@@ -34,7 +34,7 @@
             @foreach($newRegisterList as $list)
             <tr>
                 <td>{{$list->name}}</td>
-                <td>{{isset($list->roleToUser->role) ? $list->roleToUser->role:''}}</td>
+                <td>{{isset($list->roleToUser->name) ? $list->roleToUser->name:''}}</td>
                 <td class="table-report__action w-56">
                     <div class="flex justify-center items-center space-x-6">
                         <a class="flex items-center text-theme-20" href="{{url('/')}}/admin/approved/{{$list->id}}">

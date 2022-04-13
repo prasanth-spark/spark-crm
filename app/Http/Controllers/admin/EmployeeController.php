@@ -73,6 +73,8 @@ class EmployeeController extends Controller
             ]);
             dispatch(new VerfyUserEmailJob($userCredentials));
 
+            $userCredentials->assignRole([$request->role]);
+
             $this->userdetails->create([
                 'user_id' => $userCredentials->id,
                 'father_name' => $request->father_name,
@@ -272,7 +274,6 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function loginFormMail($id)
-
     {
         $this->user->where('id', $id)->update([
             'email_verified_at' => now()

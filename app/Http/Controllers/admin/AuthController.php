@@ -70,7 +70,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-                                                                                                                                                        
+                                                                                                                                                      
         try{
             Session::flush();
             return redirect('/admin/login');

@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Models\TaskSheet;
-use Illuminate\Support\Facades\Session;
 use App\Models\TaskStatus;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -18,6 +16,9 @@ class TaskController extends Controller
     {
         $this->taskSheet = $taskSheet;
         $this->taskStatus = $taskStatus;
+
+        $this->middleware(['role:Employee|Team Leader']);
+
     }
 
     /**
@@ -40,7 +41,7 @@ class TaskController extends Controller
      */
     public function taskAdd(TaskRequest $request){
         $this->taskSheet->create([
-          'user_id' => $request->session()->get('id'),
+          'user_id' => Auth::user()->id,
           'date' => $request->date,
           'project_name' => $request->project_name,
           'task_module' => $request->task_module,
@@ -64,7 +65,7 @@ class TaskController extends Controller
 
     public function taskPagination(Request $request)
     {
-        $userId=Session::get('id');
+        $userId=Auth::user()->id;
         $tasks=$this->taskSheet->where('user_id',$userId);
         $limit = $request->iDisplayLength;
         $offset = $request->iDisplayStart;
