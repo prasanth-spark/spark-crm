@@ -16,6 +16,8 @@ use App\Models\Permission;
 use App\Models\RoleModel;
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+
 
 class AttendanceController extends Controller
 { 
@@ -401,8 +403,9 @@ class AttendanceController extends Controller
 //                 dispatch($job);
 //                 return redirect('/employee/employee_dashboard');
 //     }
-    public function attendanceList($id){
-        $user = User::find($id);
+    public function attendanceList(User $user){
+        $attendances = $this->attendance->where('user_id',$user->id)->first();
+        $this->authorize('view', $attendances);
         $date = Carbon::now();
         $date = $date->format("Y-m-d");
         $attendance= $this->attendance->where(['user_id' => $user->id ,'date' => $date])->first();

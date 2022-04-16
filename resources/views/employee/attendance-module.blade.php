@@ -22,7 +22,7 @@
                     <span class="text-theme-34 text-white font-normal">Welcome!</span>
                     <button class="btn btn-sm btn-secondary w-24 mr-1 mb-2" style="margin-left:75%;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="calendar" data-lucide="calendar" class="lucide lucide-calendar block mx-auto"><rect x="3" y="4" width="18" height="15" rx="2" ry="2"></rect><line x1="16" y1="2" x2="15" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                    <a href="{{route('attendance-show',[$user->id])}}"> Monthly Report</a>
+                    <a href="{{route('attendance-show',[$user->id])}}">Monthly Report</a>
                     </button>
             </div>
         </div> 

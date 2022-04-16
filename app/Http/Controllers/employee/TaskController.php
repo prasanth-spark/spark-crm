@@ -119,9 +119,9 @@ class TaskController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function taskDetails($id)
+    public function taskDetails(TaskSheet $taskView)
     {
-        $taskView=$this->taskSheet->find($id);
+        $this->authorize('view', $taskView);
         return view('employee/task/task-view',compact('taskView'));
     }
 
@@ -131,9 +131,9 @@ class TaskController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function taskEdit($id)
-    {
-        $taskEdit=$this->taskSheet->find($id);
+    public function taskEdit(TaskSheet $taskEdit)
+    { 
+        $this->authorize('update', $taskEdit);
         $tasks = $this->taskStatus->get();
         return view('employee/task/task-edit',compact('taskEdit','tasks'));
     }
