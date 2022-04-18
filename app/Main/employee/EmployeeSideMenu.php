@@ -94,10 +94,10 @@ class EmployeeSideMenu
                         ],
 
                     ],
-                    'Attendance' => [
+                    'Add Project' => [
                         'icon' => 'home',
-                        'route_name' => 'attendance-module',
-                        'title' => 'Attendance',
+                        'route_name' => 'project-list',
+                        'title' => 'Add Project',
                         'params' => [
                             'layout' => 'side-menu',
                         ],

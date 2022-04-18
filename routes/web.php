@@ -7,6 +7,8 @@ use App\Http\Controllers\employee\TaskController;
 use App\Http\Controllers\employee\UserProfileController;
 use App\Http\Controllers\employee\TeamTaskController;
 use App\Http\Controllers\employee\TeamAttendanceController;
+use App\Http\Controllers\employee\ProjectAssignController;
+
 
 
 
@@ -64,6 +66,7 @@ use App\Http\Controllers\employee\TeamAttendanceController;
             Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
             Route::get('attendance-show/{user}',[AttendanceController::class, 'attendanceList'])->name('attendance-show');
 
+
             //User Profile
             Route::get('user-profile-form',[UserProfileController::class, 'userProfileForm'])->name('user-profile-form');
             Route::post('user-profile-add',[UserProfileController::class, 'userProfileAdd'])->name('user-profile-add');
@@ -83,6 +86,13 @@ use App\Http\Controllers\employee\TeamAttendanceController;
 
             //Team Permission
             Route::get('team-permission',[TeamAttendanceController::class, 'teamPermissionlist'])->name('team-permission');
+
+            //Add project
+            Route::get('project-list',[ProjectAssignController::class,'ProjectList'])->name('project-list');
+            Route::get('project-form',[ProjectAssignController::class, 'ProjectForm'])->name('project-assign-form');
+            Route::post('add-project-form',[ProjectAssignController::class, 'addProject'])->name('add-project-form');
+
+
 
         
         });

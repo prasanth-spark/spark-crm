@@ -41,6 +41,7 @@ class AttendanceController extends Controller
     }
     public function attendanceStatus(Request $request)
     {  
+
         if($request->value == 0){
             $request->validate([
                 'reason' => 'required',
@@ -95,7 +96,7 @@ class AttendanceController extends Controller
         $userId= auth()->user()->id;     
         $user = User::find($userId);
         $userRole=$user->role_id; 
-        $tlRole = $userRole-1;   
+        $tlRole = $userRole-1;  
         $userTeam=$user->team_id;
         $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
         $teamLead=$teamLeadTeam->user_id; 
