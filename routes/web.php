@@ -91,6 +91,10 @@ use App\Http\Controllers\employee\ProjectAssignController;
             Route::get('project-list',[ProjectAssignController::class,'ProjectList'])->name('project-list');
             Route::get('project-form',[ProjectAssignController::class, 'ProjectForm'])->name('project-assign-form');
             Route::post('add-project-form',[ProjectAssignController::class, 'addProject'])->name('add-project-form');
+            Route::get('edit-project/{project}',[ProjectAssignController::class, 'editProject'])->name('edit-project');
+            Route::post('update-project/{project}',[ProjectAssignController::class, 'updateProject'])->name('update-project');
+            Route::get('delete-project/{project}',[ProjectAssignController::class, 'deleteProject'])->name('delete-project');
+    
 
 
 

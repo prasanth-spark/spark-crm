@@ -92,4 +92,10 @@ class User extends Authenticatable
     public function userLeaveRequest(){
         return $this->hasMany(LeaveRequest::class, 'user_id', 'id');
     }
+
+    public function projects(){
+
+        return $this->belongsToMany(Project::class, 'project_user');
+    }
+    
 }

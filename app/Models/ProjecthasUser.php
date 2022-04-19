@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Helper\UuidModel;
 
 
-class Projecthas extends Model
+class ProjecthasUser extends Model
 {
     use UuidModel;
-    protected $table = 'project_has';
+    protected $table = 'project_user';
     protected $guarded = [];
 }
