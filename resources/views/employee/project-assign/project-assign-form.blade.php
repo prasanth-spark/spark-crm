@@ -32,7 +32,7 @@
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                         Description<span style="color:red">*</span>
                                     </label>
-                                    <input id="regular-form-3" type="text" class="form-control"   placeholder="Description" name='description' required>
+                                    <input id="regular-form-3" type="text" class="form-control"   placeholder="Description" name='description' required >
                                     @error('description')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -44,12 +44,15 @@
                            <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team</label>
 
-                                    <select placeholder="Team" type="text" class="tom-select w-full" id="selectBox" name='user_ids[]'multiple >
+                                    <select placeholder="Team" type="text" class="tom-select w-full" id="selectBox" name='user_ids[]'multiple required>
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($users as $user)
                                         <option value="{{$user->id}}">{{$user->name}}</option>
                                         @endforeach
                                     </select>
+                                    @error('user_ids')
+                                    <span style="color:red">{{$message}}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

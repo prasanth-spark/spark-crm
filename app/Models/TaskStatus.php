@@ -9,4 +9,10 @@ class TaskStatus extends Model
 {
     protected $table= 'task_status';
     protected $guarded = [];
+
+
+    public function userTask()
+    {
+        return $this->hasMany(User::class);
+    }
 }

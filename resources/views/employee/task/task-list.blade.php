@@ -56,11 +56,11 @@
                 columns: [
                     { data: "id"},
                     { data: "date" },
-                    { data: "project_name" },
+                    { data: "project_id" },
                     { data: "task_module" },
                     { data: "estimated_hours"},
                     { data: "worked_hours"},
-                    { data: "task_status"},
+                    { data: "status"},
                     { data: "actions" },
                 ],
             } );

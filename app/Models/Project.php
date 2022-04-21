@@ -13,8 +13,8 @@ class Project extends Model
     protected $guarded = [];
 
 
-    public function users(){
-        return $this->belongsToMany(User::class, 'project_user');   
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'project_user');
     }
-    
 }

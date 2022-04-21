@@ -108,7 +108,7 @@ class TaskController extends Controller
                     $col['name'] = $value->name;
                     $col['role'] = $value->roleToUser->name;
                     $col['team'] = $value->userDetail->teamToUserDetails->team;
-                    $col['project_name'] = $task->project_name;
+                    $col['project_name'] = $task->projects['title'];
                     $col['leave_status'] = ($task->task_status == 1) ? "pending" : "completed";
                     $col['action'] = ' <a class="flex items-center mr-3" href="' . url('/') . '/admin/task-details/' . $task->id . '">
                                <i data-feather="eye" class="w-4 h-4 mr-1"></i> view

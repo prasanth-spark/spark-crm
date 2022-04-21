@@ -62,7 +62,7 @@
                                 <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                     Project Name
                                 </label>
-                                <input id="regular-form-3" class="form-control" value="{{$taskList->project_name}}">
+                                <input id="regular-form-3" class="form-control" value="{{$taskList->projects['title']}}">
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-6">
