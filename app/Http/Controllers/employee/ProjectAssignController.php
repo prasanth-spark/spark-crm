@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\employee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProjectRequest;
+use App\Http\Requests\ProjectUpdateRequest;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,7 +31,7 @@ class ProjectAssignController extends Controller
      */
     public function ProjectForm()
     {
-        $users = User::all();
+        $users = User::whereNotIn('role_id', [1,2])->get();
         return view('employee/project-assign/project-assign-form', compact('users'));
     }
 
@@ -38,7 +40,7 @@ class ProjectAssignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addProject(Request $request)
+    public function addProject(ProjectRequest $request)
     {
         $project = new Project();
         $project->user_id = auth()->user()->id;
@@ -48,7 +50,7 @@ class ProjectAssignController extends Controller
 
         $project->users()->attach($request->user_ids);
 
-        return redirect()->route('project-assign-form')->with('success', 'Project Added Successfully');
+        return redirect()->route('project-list')->with('success', 'Project Added Successfully');
     }
 
     /**
@@ -59,8 +61,7 @@ class ProjectAssignController extends Controller
     public function editProject(Project $project)
     {
         $project = Project::with('users')->find($project->id);
-        // dd($project);
-        $users = User::all();
+        $users = User::whereNotIn('role_id', [1,2])->get();
         return view('employee/project-assign/project-edit-form', compact('project', 'users'));
     }
 
@@ -69,7 +70,7 @@ class ProjectAssignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function updateProject(Request $request, Project $project)
+    public function updateProject(ProjectUpdateRequest $request, Project $project)
     {
         $project->title = $request->title;
         $project->description = $request->description;
@@ -88,8 +89,8 @@ class ProjectAssignController extends Controller
      */
     public function deleteProject(Project $project)
     {
-        // dd($project);
-        $project->delete();
+         $project->users()->detach();
+         $project->delete();
         return redirect()->route('project-list')->with('success', 'Project Deleted Successfully');
     }
 }
