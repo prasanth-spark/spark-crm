@@ -64,26 +64,27 @@ class TaskController extends Controller
 
           $taskList = $this->tasksheet->with('taskToUser', 'taskToUserDetails.teamToUserDetails', 'taskToUser.roleToUser');
 
-          // dd($taskList);
           $limit = $request->iDisplayLength;
           $offset = $request->iDisplayStart;
 
 
-             if ($request->sSearch != '') {
-                 $keyword = $request->sSearch;
-                 $taskList->whereHas('taskToUser', function ($q) use ($keyword) {
-                     $q->where('name', 'like', '%' . $keyword . '%');
-                 });
-               //   $taskList->orwhereHas('leaverequestUser.roleToUser', function ($q) use ($keyword) {
-               //       $q->where('role', 'like', '%' . $keyword . '%')->where('leave_type_id', '!=', 1);
-               //   });
-               //   $taskList->orwhereHas('leaveToUserDetails.teamToUserDetails', function ($q) use ($keyword) {
-               //       return $q->where('team', 'like', '%' . $keyword . '%')->where('leave_type_id', '!=', 1);
-               //   });
-             }
+          if ($request->sSearch != '') {
+               $keyword = $request->sSearch;
+               $taskList->whereHas('taskToUser', function ($q) use ($keyword) {
+                    $q->where('name', 'like', '%' . $keyword . '%');
+               });
+               $taskList->orwhereHas('taskToUserDetails.teamToUserDetails', function ($q) use ($keyword) {
+                    $q->where('team', 'like', '%' . $keyword . '%');
+               });
+               $taskList->orwhereHas('taskToUser.roleToUser', function ($q) use ($keyword) {
+                    return $q->where('name', 'like', '%' . $keyword . '%');
+               });
+               $taskList->orwhereHas('projects', function ($q) use ($keyword) {
+                    return $q->where('title', 'like', '%' . $keyword . '%');
+               });
+          }
 
           $total_data = $taskList->count();
-          // dd($total_data);
           $taskList = $taskList->when(($limit != '-1' && isset($offset)),
                function ($q) use ($limit, $offset) {
                     return $q->offset($offset)->limit($limit);
@@ -94,7 +95,7 @@ class TaskController extends Controller
                $taskList = $taskList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('taskToUserDetails.teamToUserDetails', function ($query) use ($team) {
                     $query->where('team_id', '=', $team);
                });
-           } elseif ($team) {
+          } elseif ($team) {
                $taskList = $taskList->whereHas('taskToUserDetails.teamToUserDetails', function ($query) use ($team) {
                     $query->where('team_id', '=', $team);
                });
@@ -104,21 +105,20 @@ class TaskController extends Controller
           foreach ($List as $value) {
 
 
-                    $col['id'] = $offset + 1;
-                    $col['date'] = $value->date;
-                    $col['name'] = $value->taskToUser->name;
-                    $col['role'] = $value->taskToUser->roleToUser->name;
-                    $col['team'] = $value->taskToUserDetails->teamToUserDetails->team;
-                    $col['project_name'] = isset($value->projects['title'])?$value->projects['title']:'general';
-                    $col['leave_status'] = ($value->status == 1) ? "pending" : "completed";
-                    $col['action'] = ' <a class="flex items-center mr-3" href="' . url('/') . '/admin/task-details/' . $value->id . '">
+               $col['id'] = $offset + 1;
+               $col['date'] = $value->date;
+               $col['name'] = $value->taskToUser->name;
+               $col['role'] = $value->taskToUser->roleToUser->name;
+               $col['team'] = $value->taskToUserDetails->teamToUserDetails->team;
+               $col['project_name'] = isset($value->projects['title']) ? $value->projects['title'] : 'general';
+               $col['leave_status'] = ($value->status == 1) ? "pending" : "completed";
+               $col['action'] = ' <a class="flex items-center mr-3" href="' . url('/') . '/admin/task-details/' . $value->id . '">
                                <i data-feather="eye" class="w-4 h-4 mr-1"></i> view
                                </a>';
 
 
-                    array_push($column, $col);
-                    $offset++;
-               
+               array_push($column, $col);
+               $offset++;
           }
           $List['sEcho'] = $request->sEcho;
           $List['aaData'] = $column;
@@ -128,5 +128,4 @@ class TaskController extends Controller
 
           return json_encode($List);
      }
-
 }
