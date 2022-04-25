@@ -36,7 +36,7 @@
             <tr>
                 <td>{{$task->date}}</td>
                 <td>{{$task->taskToUser->name}}</td>
-                <td>{{$task->projects['title']}}</td>
+                <td>{{isset($task->projects['title']) ? $task->projects['title'] : "general"}}</td>
                 <td>{{$task->task_module}}</td>
                 <td>{{$task->estimated_hours}}</td>
                 <td>{{$task->worked_hours}}</td>
