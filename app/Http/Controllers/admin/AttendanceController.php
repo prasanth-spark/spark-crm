@@ -79,12 +79,13 @@ class AttendanceController extends Controller
             }
         );
 
-        if ($team) {
-            $attendanceList = $attendanceList->whereHas('attendanceToUserDetails', function ($query) use ($team) {
+       if ($fromdateFormatChange && $todateFormatChange && $team) {
+            $attendanceList = $attendanceList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('attendanceToUserDetails', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
-        } elseif ($fromdateFormatChange && $todateFormatChange && $team) {
-            $attendanceList = $attendanceList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('attendanceToUserDetails', function ($query) use ($team) {
+        }
+        elseif($team) {
+            $attendanceList = $attendanceList->whereHas('attendanceToUserDetails', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         }
@@ -96,7 +97,7 @@ class AttendanceController extends Controller
             $col['date'] = ($value->date) ? $value->date : "";
             $col['name'] = $value->attendanceToUser->name;
             $col['team'] = $value->attendanceToUserDetails->teamToUserDetails->team;
-            $col['role'] = $value->attendanceToUser->roleToUser->role;
+            $col['role'] = $value->attendanceToUser->roleToUser->name;
             $col['status'] = ($value->attendance_status == 1) ? "present" : "absent";
 
             array_push($column, $col);
@@ -192,7 +193,7 @@ class AttendanceController extends Controller
             $col['id'] = $offset + 1;
             $col['name'] = $value->leaverequestUser->name;
             $col['team'] = $value->leaveToUserDetails->teamToUserDetails->team;
-            $col['role'] = $value->leaverequestUser->roleToUser->role;
+            $col['role'] = $value->leaverequestUser->roleToUser->name;
             $col['leave_type'] = $value->leaverequest->leave_type;
             $col['leave_status'] = $leaveStatus;
             $col['start_date'] = $value->start_date;
@@ -293,7 +294,7 @@ class AttendanceController extends Controller
             $col['created_at']   =  $value->created_at->todatestring();
             $col['name'] = $value->leaverequestUser->name;
             $col['team'] = $value->leaveToUserDetails->teamToUserDetails->team;
-            $col['role'] = $value->leaverequestUser->roleToUser->role;
+            $col['role'] = $value->leaverequestUser->roleToUser->name;
             $col['leave_type'] = $value->leaverequest->leave_type;
             $col['permission_status'] = $leaveStatus;
             $col['permission_hours_from'] = $value->permission_hours_from;

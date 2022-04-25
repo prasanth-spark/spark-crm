@@ -5,14 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TaskStatus extends Model
+class Permission extends Model
 {
-    protected $table= 'task_status';
+    use HasFactory;
+    protected $table = 'permissions';
     protected $guarded = [];
-
-
-    public function userTask()
-    {
-        return $this->hasMany(User::class);
-    }
 }

@@ -201,9 +201,9 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Role<span style="color:red">*</span></label>
 
                                     <select placeholder="Role" type="text" class="tom-select w-full" id="regular-form-4" name='role'>
-                                        <option value="{{$employeeEdit->roleToUserDetails->id}}">{{$employeeEdit->roleToUserDetails->role}}</option>
+                                        <option value="{{$employeeEdit->roleToUserDetails->id}}">{{$employeeEdit->roleToUserDetails->name}}</option>
                                         @foreach($role as $r)
-                                        <option value="{{$r->id}}">{{$r->role}}</option>
+                                        <option value="{{$r->id}}">{{$r->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('role')

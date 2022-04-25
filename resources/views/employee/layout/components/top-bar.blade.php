@@ -100,7 +100,7 @@
         <div class="dropdown-menu w-56">
             <div class="dropdown-menu__content box dark:bg-dark-6">
                 <div class="p-4 border-b border-black border-opacity-5 dark:border-dark-3">
-                    <div class="font-medium">{{ Session::get('name') }}</div>
+                    <div class="font-medium">{{Auth::user()->name}}</div>
                 </div>
                 <div class="p-2">
                     <a href="{{route('user-profile-form')}}" class="flex items-center block p-2 transition duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-dark-3 rounded-md">

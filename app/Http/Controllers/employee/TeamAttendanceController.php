@@ -13,8 +13,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use App\Models\TaskSheet;
-
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class TeamAttendanceController extends Controller
 {
@@ -30,6 +29,9 @@ class TeamAttendanceController extends Controller
         $this->leaverequest  = $leaverequest;
         $this->tasksheet     = $tasksheet;
 
+
+        $this->middleware(['role:Team Leader']);
+
     }
 
     
@@ -40,7 +42,7 @@ class TeamAttendanceController extends Controller
      */
     public function teamAttendanceList()
     {
-        $teamAttendance=$this->userdetails->where('user_id',Session::get('id'))->first();
+        $teamAttendance=$this->userdetails->where('user_id',Auth::user()->id)->first();
         $teamId = $teamAttendance->team_id;
 
         $teamAttendance=$this->attendance->whereHas('attendanceToUserDetails', function ($query) use ($teamId) {
@@ -56,7 +58,7 @@ class TeamAttendanceController extends Controller
      */
     public function teamAbsentList()
     {
-        $teamLead=$this->userdetails->where('user_id',Session::get('id'))->first();
+        $teamLead=$this->userdetails->where('user_id',Auth::user()->id)->first();
         $teamId = $teamLead->team_id;
 
         $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->whereHas('leaveToUserDetails', function ($query) use ($teamId) {
@@ -72,7 +74,7 @@ class TeamAttendanceController extends Controller
      */
     public function teamPermissionlist()
     {
-        $teamLead=$this->userdetails->where('user_id',Session::get('id'))->first();
+        $teamLead=$this->userdetails->where('user_id',Auth::user()->id)->first();
         $teamId = $teamLead->team_id;
 
         $teamPermissionList = $this->leaverequest->where('leave_type_id', '=', 1)->whereHas('leaveToUserDetails', function ($query) use ($teamId) {

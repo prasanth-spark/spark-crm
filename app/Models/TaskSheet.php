@@ -7,15 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class TaskSheet extends Model
 {
-    protected $table='task_sheets';
+    protected $table = 'task_sheets';
     protected $guarded = [];
 
 
-    public function taskToUser(){
-        return $this->belongsTo(User::class,'user_id','id');
-   } 
+    public function taskToUser()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
-   public function taskToUserDetails(){
-    return $this->hasOne(UserDetails::class,'user_id','user_id');
-}
+    public function projects()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
+    }
+
+    public function taskToUserDetails()
+    {
+        return $this->hasOne(UserDetails::class, 'user_id', 'user_id');
+    }
 }

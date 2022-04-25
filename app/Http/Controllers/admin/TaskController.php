@@ -42,9 +42,9 @@ class TaskController extends Controller
       *
       * @return \Illuminate\Http\Response
       */
-     public function taskDetails($id)
+     public function taskDetails(TaskSheet $taskList)
      {
-          $taskList = $this->tasksheet->where('id', $id)->with('taskToUser', 'taskToUserDetails.teamToUserDetails', 'taskToUser.roleToUser')->first();
+          // $taskList = $this->tasksheet->where('id', $id)->with('taskToUser', 'taskToUserDetails.teamToUserDetails', 'taskToUser.roleToUser')->first();
           return view('admin/task/task-details', compact('taskList'));
      }
 
@@ -61,23 +61,28 @@ class TaskController extends Controller
           $todate = str_replace('/', '-', $request->to_date);
           $todateFormatChange = date("Y-m-d", strtotime($todate));
           $team       =   $request->team_name;
-          $taskList = $this->user->where('role_id', '!=', 1)->with('userDetail', 'userDetail.teamToUserDetails', 'roleToUser', 'userTask');
+
+          $taskList = $this->tasksheet->with('taskToUser', 'taskToUserDetails.teamToUserDetails', 'taskToUser.roleToUser');
+
           $limit = $request->iDisplayLength;
           $offset = $request->iDisplayStart;
 
 
-          //    if ($request->sSearch != '') {
-          //        $keyword = $request->sSearch;
-          //        $taskList->whereHas('leaverequestUser', function ($q) use ($keyword) {
-          //            $q->where('name', 'like', '%' . $keyword . '%')->where('leave_type_id', '!=', 1);
-          //        });
-          //        $taskList->orwhereHas('leaverequestUser.roleToUser', function ($q) use ($keyword) {
-          //            $q->where('role', 'like', '%' . $keyword . '%')->where('leave_type_id', '!=', 1);
-          //        });
-          //        $taskList->orwhereHas('leaveToUserDetails.teamToUserDetails', function ($q) use ($keyword) {
-          //            return $q->where('team', 'like', '%' . $keyword . '%')->where('leave_type_id', '!=', 1);
-          //        });
-          //    }
+          if ($request->sSearch != '') {
+               $keyword = $request->sSearch;
+               $taskList->whereHas('taskToUser', function ($q) use ($keyword) {
+                    $q->where('name', 'like', '%' . $keyword . '%');
+               });
+               $taskList->orwhereHas('taskToUserDetails.teamToUserDetails', function ($q) use ($keyword) {
+                    $q->where('team', 'like', '%' . $keyword . '%');
+               });
+               $taskList->orwhereHas('taskToUser.roleToUser', function ($q) use ($keyword) {
+                    return $q->where('name', 'like', '%' . $keyword . '%');
+               });
+               $taskList->orwhereHas('projects', function ($q) use ($keyword) {
+                    return $q->where('title', 'like', '%' . $keyword . '%');
+               });
+          }
 
           $total_data = $taskList->count();
           $taskList = $taskList->when(($limit != '-1' && isset($offset)),
@@ -86,38 +91,34 @@ class TaskController extends Controller
                }
           );
 
-          if ($fromdate && $todate && $team) {
-               $taskList = $taskList->whereHas('userTask', function ($query)  use ($fromdateFormatChange, $todateFormatChange) {
-                    $query->whereBetween('date', [$fromdateFormatChange, $todateFormatChange]);
-               })->whereHas('userDetail', function ($query) use ($team) {
+          if ($fromdateFormatChange && $todateFormatChange && $team) {
+               $taskList = $taskList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('taskToUserDetails.teamToUserDetails', function ($query) use ($team) {
                     $query->where('team_id', '=', $team);
                });
           } elseif ($team) {
-               $taskList = $taskList->whereHas('userDetail', function ($query) use ($team) {
+               $taskList = $taskList->whereHas('taskToUserDetails.teamToUserDetails', function ($query) use ($team) {
                     $query->where('team_id', '=', $team);
                });
           }
           $List = $taskList->get();
           $column = array();
           foreach ($List as $value) {
-               foreach ($value->userTask as $task) {
 
 
-                    $col['id'] = $offset + 1;
-                    $col['date'] = $task->date;
-                    $col['name'] = $value->name;
-                    $col['role'] = $value->roleToUser->role;
-                    $col['team'] = $value->userDetail->teamToUserDetails->team;
-                    $col['project_name'] = $task->project_name;
-                    $col['leave_status'] = ($task->task_status == 1) ? "pending" : "completed";
-                    $col['action'] = ' <a class="flex items-center mr-3" href="' . url('/') . '/admin/task-details/' . $task->id . '">
+               $col['id'] = $offset + 1;
+               $col['date'] = $value->date;
+               $col['name'] = $value->taskToUser->name;
+               $col['role'] = $value->taskToUser->roleToUser->name;
+               $col['team'] = $value->taskToUserDetails->teamToUserDetails->team;
+               $col['project_name'] = isset($value->projects['title']) ? $value->projects['title'] : 'general';
+               $col['leave_status'] = ($value->status == 1) ? "pending" : "completed";
+               $col['action'] = ' <a class="flex items-center mr-3" href="' . url('/') . '/admin/task-details/' . $value->id . '">
                                <i data-feather="eye" class="w-4 h-4 mr-1"></i> view
                                </a>';
 
 
-                    array_push($column, $col);
-                    $offset++;
-               }
+               array_push($column, $col);
+               $offset++;
           }
           $List['sEcho'] = $request->sEcho;
           $List['aaData'] = $column;
@@ -127,5 +128,4 @@ class TaskController extends Controller
 
           return json_encode($List);
      }
-
 }

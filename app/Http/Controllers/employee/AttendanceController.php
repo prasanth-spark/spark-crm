@@ -12,7 +12,11 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\LeaveRequest;
 use App\Models\Attendance;
+use App\Models\Permission;
+use App\Models\RoleModel;
 use Carbon\Carbon;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 
 class AttendanceController extends Controller
@@ -23,11 +27,13 @@ class AttendanceController extends Controller
         $this->userDetail= $userDetails;
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
+
+        $this->middleware(['role:Employee|Team Leader|Project Manager']);
     }
     public function attendanceModule(Request $request){
-        
-        $userId= $request->session()->get('id');
-        $user=$this->user->find($userId);
+        $userId= auth()->user()->id;
+        $user=$this->user->find($userId); 
+
         $date = Carbon::now();
         $date = $date->format("Y-m-d");
         $attendance= $this->attendance->where(['user_id' => $userId ,'date' => $date])->first(); 
@@ -35,7 +41,7 @@ class AttendanceController extends Controller
     }
     public function attendanceStatus(Request $request)
     {  
-        // dd($request->all());
+
         if($request->value == 0){
             $request->validate([
                 'reason' => 'required',
@@ -48,13 +54,14 @@ class AttendanceController extends Controller
 
             ]);
         }
-       if($request->inactive_type==2 && $request->value == 0){
-        $request->validate([
-            'start_date' => 'after:yesterday',
-            'end_date' => 'after_or_equal:start_date',
+       
+        if($request->inactive_type==2 && $request->value == 0){
+            $request->validate([
+                'start_date' => 'after:yesterday',
+                'end_date' => 'after_or_equal:start_date',
         ]);
     
-    }
+        }
        // permission hours
         $time1 = $request->permission_hours_to;  
         $time1 = strtotime($time1);
@@ -86,10 +93,10 @@ class AttendanceController extends Controller
                 $leaveRequest='Permission';
             }
         $reason = $request->reason;
-        $userId= $request->session()->get('id');     
+        $userId= auth()->user()->id;     
         $user = User::find($userId);
         $userRole=$user->role_id; 
-        $tlRole = $userRole-1;   
+        $tlRole = $userRole-1;  
         $userTeam=$user->team_id;
         $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
         $teamLead=$teamLeadTeam->user_id; 
@@ -263,7 +270,6 @@ class AttendanceController extends Controller
         }
         public function permissionStatus(Request $request)
         {
-            // dd($request->all());
             $reason = $request->rejected_reason;
             $user = User::find($request->user_id);
             $permission_status= $request->leave_response;
@@ -398,8 +404,9 @@ class AttendanceController extends Controller
 //                 dispatch($job);
 //                 return redirect('/employee/employee_dashboard');
 //     }
-    public function attendanceList($id){
-        $user = User::find($id);
+    public function attendanceList(User $user){
+        $attendances = $this->attendance->where('user_id',$user->id)->first();
+        $this->authorize('view', $attendances);
         $date = Carbon::now();
         $date = $date->format("Y-m-d");
         $attendance= $this->attendance->where(['user_id' => $user->id ,'date' => $date])->first();

@@ -18,10 +18,10 @@ class CreateTaskSheetsTable extends Migration
             $table->uuid('user_id');
             $table->date('date');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('project_name');
+            $table->string('project_id');
             $table->string('task_module');
             $table->integer('estimated_hours');
-            $table->integer('worked_hours');
+            $table->integer('worked_hours')->nullable();
             $table->string('status');
             $table->timestamps();
         });

@@ -16,42 +16,42 @@
                             <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
                                 Date
                             </label>
-                         <input id="validation-form-1" type="date" class="form-control" placeholder="Date" name="date" value="{{$taskView->date}}">       
+                         <input id="validation-form-1" type="date" class="form-control" placeholder="Date" name="date" value="{{$taskView->date}}" readonly>       
                         </div>
                          <div class="input-form mt-3">
                             <label for="regular-form-2" class="form-label w-full flex flex-col sm:flex-row">
                                 Project Name
                             </label>
-                            <input id="validation-form-2" type="text" class="form-control" placeholder="Project Name" name='project_name' value="{{$taskView->project_name}}" >
+                            <input id="validation-form-2" type="text" class="form-control" placeholder="Project Name" name='project_name' value="{{isset($taskView->projects['title']) ? $taskView->projects['title']:'general'}}" readonly>
                         </div>
                         <div class="input-form mt-3">
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Module
                             </label>
-                            <textarea id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module'>{{$taskView->task_module}}</textarea>
+                            <textarea id="regular-form-3" type="text" class="form-control" placeholder="Task Module" name='task_module' readonly>{{$taskView->task_module}}</textarea>
                         </div>
                         <div class="input-form mt-3">
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Estimated Hours
                             </label>
-                            <input id="regular-form-3" type="text" class="form-control" placeholder="Estimated Hours" name='estimated_hours' value="{{$taskView->estimated_hours}}">
+                            <input id="regular-form-3" type="text" class="form-control" placeholder="Estimated Hours" name='estimated_hours' value="{{$taskView->estimated_hours}}" readonly>
                         </div>
                         <div class="input-form mt-3">
                             <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                 Worked Hours
                             </label>
-                            <input id="regular-form-3" type="text" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskView->worked_hours}}" >
+                            <input id="regular-form-3" type="text" class="form-control" placeholder="Worked Hours" name='worked_hours' value="{{$taskView->worked_hours}}" readonly>
                         </div>
                         <div class="input-form mt-3">
                             <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                 Task Status
                             </label>
-                            <input id="regular-form-4" type="text" class="form-control" placeholder="Task Status" name='task_status' value="@if($taskView->task_status ==1) pending @else completed @endif" >
+                            <input id="regular-form-4" type="text" class="form-control" placeholder="Task Status" name='task_status' value="@if($taskView->task_status ==1) pending @else completed @endif" readonly>
                             
                         </div>
                         
                         <div>
-                            <button class="btn btn-primary mt-5"><a href="/employee/task-list">Back</a></button>
+                            <a href="/employee/task-list" class="btn btn-primary mt-5">Back</a>
                         </div>
                     </div>
     <!-- END: Validation Form -->

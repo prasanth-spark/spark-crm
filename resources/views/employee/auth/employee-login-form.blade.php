@@ -44,11 +44,11 @@
                     <form action="{{route('employee-login')}}" method="post">
                         @csrf
                         <div class="intro-x mt-8">
-                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Email" name="email">
+                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Email" name="email" required>
                             @error('email')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" name="password">
+                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" name="password" required>
                             @error('password')
                             <span style="color:red">{{$message}}</span>
                             @enderror

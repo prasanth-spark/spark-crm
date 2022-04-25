@@ -7,6 +7,8 @@ use App\Http\Controllers\employee\TaskController;
 use App\Http\Controllers\employee\UserProfileController;
 use App\Http\Controllers\employee\TeamTaskController;
 use App\Http\Controllers\employee\TeamAttendanceController;
+use App\Http\Controllers\employee\ProjectAssignController;
+
 
 
 
@@ -48,8 +50,9 @@ use App\Http\Controllers\employee\TeamAttendanceController;
             Route::get('/task-form', [TaskController::class, 'taskForm'])->name('task-form');
             Route::post('/task-add', [TaskController::class, 'taskAdd'])->name('task-add');
             Route::get('/task-list',[TaskController::class,'taskList'])->name('task-list');
-            Route::get('/task-details/{id}', [TaskController::class, 'taskDetails'])->name('task-details');
-            Route::get('/task-edit/{id}', [TaskController::class, 'taskEdit'])->name('task-edit');
+            Route::get('/task-details/{taskView}', [TaskController::class, 'taskDetails'])->name('task-details');
+        //  Route::get('/task-edit/{taskEdit}', [TaskController::class, 'taskEdit'])->name('task-edit')->middleware('can:update,taskEdit');
+            Route::get('/task-edit/{taskEdit}', [TaskController::class, 'taskEdit'])->name('task-edit');
             Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
             Route::get('/task-pagination',[TaskController::class, 'taskPagination'])->name('task-pagination');
 
@@ -61,7 +64,8 @@ use App\Http\Controllers\employee\TeamAttendanceController;
             Route::get('permission-response/{tlid}/{uid}/{hourdiff}',[AttendanceController::class, 'permissionResponse'])->name('permission-response');
             Route::post('permission-status',[AttendanceController::class, 'permissionStatus'])->name('permission-status');
             Route::get('leave-accepted/{id}/{status}',[AttendanceController::class, 'leaveAccepted'])->name('leave-accepted');
-            Route::get('attendance-show/{id}',[AttendanceController::class, 'attendanceList'])->name('attendance-show');
+            Route::get('attendance-show/{user}',[AttendanceController::class, 'attendanceList'])->name('attendance-show');
+
 
             //User Profile
             Route::get('user-profile-form',[UserProfileController::class, 'userProfileForm'])->name('user-profile-form');
@@ -82,6 +86,17 @@ use App\Http\Controllers\employee\TeamAttendanceController;
 
             //Team Permission
             Route::get('team-permission',[TeamAttendanceController::class, 'teamPermissionlist'])->name('team-permission');
+
+            //Add project
+            Route::get('project-list',[ProjectAssignController::class,'ProjectList'])->name('project-list');
+            Route::get('project-form',[ProjectAssignController::class, 'ProjectForm'])->name('project-assign-form');
+            Route::post('add-project-form',[ProjectAssignController::class, 'addProject'])->name('add-project-form');
+            Route::get('edit-project/{project}',[ProjectAssignController::class, 'editProject'])->name('edit-project');
+            Route::post('update-project/{project}',[ProjectAssignController::class, 'updateProject'])->name('update-project');
+            Route::Post('delete-project/{project}',[ProjectAssignController::class, 'deleteProject'])->name('delete-project');
+    
+
+
 
         
         });

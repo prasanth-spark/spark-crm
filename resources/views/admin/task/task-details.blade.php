@@ -19,7 +19,7 @@
                                 <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
                                     Date
                                 </label>
-                                <input id="validation-form-1" type="text" class="form-control" value="{{$taskList->date}}">
+                                <input id="validation-form-1" type="text" class="form-control" value="{{$taskList->date}}" readonly>
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-6">
@@ -28,7 +28,7 @@
                                 <label for="regular-form-2" class="form-label w-full flex flex-col sm:flex-row">
                                     Name
                                 </label>
-                                <input id="validation-form-2" type="text" class="form-control" value="{{$taskList->taskToUser->name}}">
+                                <input id="validation-form-2" type="text" class="form-control" value="{{$taskList->taskToUser->name}}" readonly>
                             </div>
                         </div>
 
@@ -40,7 +40,7 @@
                                 <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                     Role
                                 </label>
-                                <input id="regular-form-3" type="text" class="form-control" value="{{$taskList->taskToUser->roleToUser->role}}">
+                                <input id="regular-form-3" type="text" class="form-control" value="{{$taskList->taskToUser->roleToUser->name}}" readonly>
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-6">
@@ -49,7 +49,7 @@
                                 <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                     Team
                                 </label>
-                                <input id="regular-form-3" class="form-control" value="{{$taskList->taskToUserDetails->teamToUserDetails->team}}">
+                                <input id="regular-form-3" class="form-control" value="{{$taskList->taskToUserDetails->teamToUserDetails->team}}" readonly>
                             </div>
                         </div>
 
@@ -62,7 +62,7 @@
                                 <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                     Project Name
                                 </label>
-                                <input id="regular-form-3" class="form-control" value="{{$taskList->project_name}}">
+                                <input id="regular-form-3" class="form-control" value="{{isset($taskList->projects['title']) ? $taskList->projects['title']:'general'}}" readonly>
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-6">
@@ -71,7 +71,7 @@
                                 <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                     Task Status
                                 </label>
-                                <input id="regular-form-4" type="email" class="form-control" value="{{($taskList->task_status == 1) ? 'pending' : 'completed';}}">
+                                <input id="regular-form-4" type="email" class="form-control" value="{{($taskList->status == 1) ? 'pending' : 'completed';}}" readonly>
                             </div>
                         </div>
 
@@ -84,7 +84,7 @@
                                 <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                     Task Module
                                 </label>
-                                <input id="regular-form-4" type="email" class="form-control" value="{{$taskList->task_module}}">
+                                <input id="regular-form-4" type="email" class="form-control" value="{{$taskList->task_module}}" readonly>
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-6">
@@ -93,7 +93,7 @@
                                 <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                     Estimated Hours
                                 </label>
-                                <input id="regular-form-4" class="form-control" value="{{$taskList->estimated_hours}}">
+                                <input id="regular-form-4" class="form-control" value="{{$taskList->estimated_hours}}" readonly>
                             </div>
                         </div>
 
@@ -102,10 +102,10 @@
                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                             Worked Hours
                         </label>
-                        <input id="regular-form-4" type="text" class="form-control" value="{{$taskList->worked_hours}}">
+                        <input id="regular-form-4" type="text" class="form-control" value="{{$taskList->worked_hours}}" readonly>
                     </div>
                     <div>
-                        <button class="btn btn-primary mt-5"><a href="/admin/task-list">Back</a></button>
+                        <a href="/admin/task-list" class="btn btn-primary mt-5">Back</a>
                     </div>
                 </div>
                 <!-- END: Validation Form -->

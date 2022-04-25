@@ -13,10 +13,10 @@ use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use App\Models\TaskSheet;
 
-use Illuminate\Support\Facades\Session;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeamTaskController extends Controller
 {
@@ -32,6 +32,9 @@ class TeamTaskController extends Controller
         $this->leaverequest  = $leaverequest;
         $this->tasksheet     = $tasksheet;
 
+        $this->middleware(['role:Team Leader']);
+
+
     }
 
      /**
@@ -41,7 +44,7 @@ class TeamTaskController extends Controller
      */
     public function teamTask()
     {
-        $teamTask=$this->userdetails->where('user_id',Session::get('id'))->first();
+        $teamTask=$this->userdetails->where('user_id',Auth::user()->id)->first();
         $teamId = $teamTask->team_id;
 
         $taskSheet=$this->tasksheet->whereHas('taskToUserDetails', function ($query) use ($teamId) {

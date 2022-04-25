@@ -30,7 +30,7 @@
                 <th class="whitespace-nowrap">EMPLOYEE-CODE</th>
                 <th class="whitespace-nowrap">NAME</th>
                 <th class="text-center whitespace-nowrap">PHONE</th>
-                <th class="whitespace-nowrap">ROLE</th>
+                <th class="whitespace-nowrap">ROLE NAME</th>
                 <th class="text-center whitespace-nowrap">TEAM</th>
                 <th class="text-center whitespace-nowrap">ACTIONS</th>
             </tr>
@@ -41,7 +41,7 @@
                 <td>{{isset($list->userDetail->employee_id) ? $list->userDetail->employee_id:''}}</td>
                 <td>{{$list->name}}</td>
                 <td>{{isset($list->userDetail->phone_number) ? $list->userDetail->phone_number:''}}</td>
-                <td>{{isset($list->userDetail->roleToUserDetails->role) ? $list->userDetail->roleToUserDetails->role:''}}</td>
+                <td>{{isset($list->userDetail->roleToUserDetails->name) ? $list->userDetail->roleToUserDetails->name:''}}</td>
                 <td>{{isset($list->userDetail->teamToUserDetails->team) ? $list->userDetail->teamToUserDetails->team:''}}</td>
                 <td class="table-report__action w-56">
                     <div class="flex justify-center items-center">

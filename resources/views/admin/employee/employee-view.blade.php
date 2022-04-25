@@ -198,7 +198,7 @@
                                 <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
                                     Role
                                 </label>
-                                <input id="regular-form-3" class="form-control" value="{{$employeeView->roleToUserDetails ? $employeeView->roleToUserDetails->role : '' }}" readonly>
+                                <input id="regular-form-3" class="form-control" value="{{$employeeView->roleToUserDetails ? $employeeView->roleToUserDetails->name : '' }}" readonly>
                             </div>
                         </div>
                     </div>

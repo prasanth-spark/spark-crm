@@ -4,15 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Helper\UuidModel;
 
-class TaskStatus extends Model
+
+class ProjecthasUser extends Model
 {
-    protected $table= 'task_status';
+    use UuidModel;
+    protected $table = 'project_user';
     protected $guarded = [];
-
-
-    public function userTask()
-    {
-        return $this->hasMany(User::class);
-    }
 }

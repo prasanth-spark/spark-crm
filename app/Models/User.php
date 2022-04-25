@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Helper\UuidModel;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -91,4 +92,10 @@ class User extends Authenticatable
     public function userLeaveRequest(){
         return $this->hasMany(LeaveRequest::class, 'user_id', 'id');
     }
+
+    public function projects(){
+
+        return $this->belongsToMany(Project::class, 'project_user');
+    }
+    
 }
