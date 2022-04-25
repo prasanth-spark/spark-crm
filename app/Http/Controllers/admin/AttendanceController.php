@@ -79,12 +79,13 @@ class AttendanceController extends Controller
             }
         );
 
-        if ($team) {
-            $attendanceList = $attendanceList->whereHas('attendanceToUserDetails', function ($query) use ($team) {
+       if ($fromdateFormatChange && $todateFormatChange && $team) {
+            $attendanceList = $attendanceList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('attendanceToUserDetails', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
-        } elseif ($fromdateFormatChange && $todateFormatChange && $team) {
-            $attendanceList = $attendanceList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('attendanceToUserDetails', function ($query) use ($team) {
+        }
+        elseif($team) {
+            $attendanceList = $attendanceList->whereHas('attendanceToUserDetails', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         }
