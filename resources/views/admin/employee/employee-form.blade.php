@@ -274,7 +274,7 @@
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary mt-5">Add</button>
-                            <button class="btn btn-primary mt-5"><a href="/admin/employee-list">Back</a></button>
+                            <a href="/admin/employee-list" class="btn btn-primary mt-5">Back</a>
                         </div>
                     </form>
                 </div>

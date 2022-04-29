@@ -69,7 +69,7 @@ class EmployeeController extends Controller
                 'status' => '1',
                 'password' => Hash::make($request->password),
                 'role_id' => $request->role,
-
+                'team_id' => $request->team_name,
             ]);
             dispatch(new VerfyUserEmailJob($userCredentials));
 
