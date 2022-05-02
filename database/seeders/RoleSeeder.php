@@ -24,6 +24,15 @@ class RoleSeeder extends Seeder
         [
             'name' => 'Employee'
         ],
+        [
+            'name' => 'Tech Architect'
+        ],
+        [
+            'name' => 'Project Architect'
+        ],
+        [
+            'name' => 'Other'
+        ],
     ];
 
     /**

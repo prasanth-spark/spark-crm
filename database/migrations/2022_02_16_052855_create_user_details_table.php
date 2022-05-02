@@ -17,7 +17,7 @@ class CreateUserDetailsTable extends Migration
             $table->uuid('id');
             $table->uuid('user_id')->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->increments('employee_id');
+            $table->string('employee_id');
             $table->string('father_name',50);
             $table->string('mother_name',50);
             $table->string('phone_number',20)->index('phone_number');
@@ -26,7 +26,9 @@ class CreateUserDetailsTable extends Migration
             $table->date('joined_date');
             $table->text('home_address');
             $table->date('date_of_birth');
+            $table->date('certificate_date_of_birth');
             $table->string('blood_group',5);
+            $table->string('designation',50)->nullable();
             $table->string('pan_number',50)->nullable();
             $table->string('aadhar_number',20)->nullable();
             $table->uuid('bank_id')->nullable()->index();

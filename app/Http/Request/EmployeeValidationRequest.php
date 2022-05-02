@@ -35,6 +35,7 @@ class EmployeeValidationRequest extends FormRequest
             'joined_date' => 'required|date|date_format:Y-m-d',
             'home_address' => 'required','regex:/([- ,\/0-9a-zA-Z]+)/',
             'date_of_birth' => 'required|date|date_format:Y-m-d',
+            'certificate_date_of_birth' => 'required|date|date_format:Y-m-d',
             'blood_group' =>'required','regex:(A|B|AB|O)[+-]/',
             'aadhar_number' => 'required|numeric|min:12',
             'role'=>'required',

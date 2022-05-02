@@ -24,9 +24,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 use  App\Exports\UsersExport;
 use App\Imports\UsersImport;
+use App\Helper\ImageUpload;
+
 
 class EmployeeController extends Controller
 {
+   use ImageUpload;
     public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
     {
         $this->userdetails = $userdetails;
@@ -62,8 +65,12 @@ class EmployeeController extends Controller
      */
     public function employeeAdd(EmployeeValidationRequest $request)
     {
-        try {
+        // try {
+            if ($request->hasFile('photos')) {
+                $photos = $this->commonImageUpload($request->photos, 'photos');
+            }
             $userCredentials = $this->user->create([
+                'photo' => $photos,
                 'name' => $request->name,
                 'email' => $request->email,
                 'status' => '1',
@@ -74,9 +81,11 @@ class EmployeeController extends Controller
             dispatch(new VerfyUserEmailJob($userCredentials));
 
             $userCredentials->assignRole([$request->role]);
+            $count=User::count();
 
             $this->userdetails->create([
                 'user_id' => $userCredentials->id,
+                'employee_id' => 'SOT-'.($count),
                 'father_name' => $request->father_name,
                 'mother_name' => $request->mother_name,
                 'phone_number' => $request->phone_number,
@@ -85,6 +94,7 @@ class EmployeeController extends Controller
                 'joined_date' => $request->joined_date,
                 'home_address' => $request->home_address,
                 'date_of_birth' => $request->date_of_birth,
+                'certificate_date_of_birth' => $request->certificate_date_of_birth,
                 'blood_group' => $request->blood_group,
                 'pan_number' => $request->pan_number,
                 'aadhar_number' => $request->aadhar_number,
@@ -98,9 +108,9 @@ class EmployeeController extends Controller
                 'team_id' => $request->team_name,
             ]);
             return redirect('/admin/employee-list');
-        } catch (\Throwable $exception) {
-            Log::info($exception->getMessage());
-        }
+        // } catch (\Throwable $exception) {
+        //     Log::info($exception->getMessage());
+        // }
     }
 
     /**
