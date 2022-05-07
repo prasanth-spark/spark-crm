@@ -95,6 +95,7 @@ class EmployeeController extends Controller
                 'home_address' => $request->home_address,
                 'date_of_birth' => $request->date_of_birth,
                 'certificate_date_of_birth' => $request->certificate_date_of_birth,
+                'designation' => $request->desigination,
                 'blood_group' => $request->blood_group,
                 'pan_number' => $request->pan_number,
                 'aadhar_number' => $request->aadhar_number,
@@ -205,6 +206,8 @@ class EmployeeController extends Controller
             'account_type_id' => $request->account_type,
             'role_id' => $request->role,
             'team_id' => $request->team_name,
+            'designation' => $request->desigination,
+
         ]);
         return redirect('/admin/employee-list');
 

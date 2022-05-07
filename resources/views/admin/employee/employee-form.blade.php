@@ -203,10 +203,10 @@
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Role<span style="color:red">*</span></label>
 
-                                    <select placeholder="Role" type="text" class="tom-select w-full" id="regular-form-4" name='role' required>
+                                    <select placeholder="Role" type="text" class="tom-select w-full" id="role_name" name='role' required>
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($role as $r)
-                                        <option value="{{$r->id}}">{{$r->name}}</option>
+                                        <option  value="{{$r->id}}">{{$r->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('role')
@@ -215,6 +215,18 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="grid grid-cols-12 gap-12 mt-5">
+                           <div class="col-span-12 md:col-span-12">
+                                <div id="desigination">
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                         Desigination<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters </span>
+                                    </label>
+                                    <input  type="text" class="form-control" placeholder="Desigination" name='desigination'>
+                                </div>
+                            </div>      
+                        </div>
+
                         <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
@@ -309,8 +321,25 @@
                 </div>
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script>
+
+                $(document).ready(function(){
+
+                    $("#desigination").hide();
+
+                    $('#role_name').on('change', function() {
+                    if ( this.value == '4')
+                    {
+                        $("#desigination").show();
+                    }
+                    else
+                    {
+                        $("#desigination").hide();
+                    }
+                    });
+                });
 
         </script>
         @endsection
