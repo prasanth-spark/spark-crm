@@ -12,6 +12,7 @@
         <!-- BEGIN: CSS Assets-->
         <link rel="stylesheet" href="/dist/css/app.css" />
         <!-- END: CSS Assets-->
+       
     </head>
     <!-- END: Head -->
     <body class="login">
@@ -38,18 +39,18 @@
                             Sign In
                         </h2>
                         <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
-                    <form action="{{route('login')}}" method="post">
+                    <form action="{{route('login')}}" method="post" id="myForm">
                         @csrf
                         <div class="intro-x mt-8">
-                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Email" name="email">
+                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" id="Email" placeholder="Email" name="email" onchange="myFunction1()">
                             @error('email')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" name="password">
+                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" id="Password" placeholder="Password" name="password"onchange="myFunction2()">
                             @error('password')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                           
+
                         </div>
                         <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                             <button type="submit" class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Login</button>
@@ -62,6 +63,33 @@
         </div>
         <!-- BEGIN: JS Assets-->
         <script src="dist/js/app.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+        function myFunction1() {
+        $("#Email").css("border-color",'unset');
+        }function myFunction2() {
+        $("#Password").css("border-color",'unset');
+        }
+        $(document).ready(function() {
+        $("#myForm").submit(function(e)
+        {
+            var Email = $("#Email").val();
+            var Password = $("#Password").val();
+            if(Email == null || Email == ""){
+                $("#Email").css("border-color",'red');
+                e.preventDefault();
+             }else{
+                $("#Email").css("border-color",'unset');
+             } 
+            if(Password == null || Password == ""){
+                $("#Password").css("border-color",'red');
+                e.preventDefault();
+             }else{
+                $("#Password").css("border-color",'unset');
+             } 
+            });
+            });
+        </script>
         <!-- END: JS Assets-->
     </body>
 </html>
