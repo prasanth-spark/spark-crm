@@ -41,6 +41,8 @@ class EmployeeValidationRequest extends FormRequest
             'role'=>'required',
             'team_name'=>'required',
             'password' => 'required|min:8|',
+            "desigination" => "required_if:role,==,4"
+
         ];
     }
 }

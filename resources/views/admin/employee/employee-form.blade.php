@@ -19,7 +19,7 @@
                                     <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
                                         Photo
                                     </label>
-                                    <input id="validation-form-1" type="file" class="form-control" placeholder="Photos" name="photos" required>
+                                    <input id="validation-form-1" type="file" class="form-control" placeholder="Photos" name="photos">
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-6">
@@ -224,6 +224,9 @@
                                     </label>
                                     <input  type="text" class="form-control" placeholder="Desigination" name='desigination'>
                                 </div>
+                                @error('desigination')
+                                    <span style="color:red">{{$message}}</span>
+                                @enderror
                             </div>      
                         </div>
 
