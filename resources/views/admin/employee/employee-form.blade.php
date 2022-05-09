@@ -11,9 +11,17 @@
             <div class="p-5">
                 <div class="preview">
                     <!-- BEGIN: Validation Form -->
-                    <form  action="{{route('employee-add')}}" method="post">
+                    <form action="{{route('employee-add')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="grid grid-cols-12 gap-6 mt-5">
+                            <div class="col-span-12 md:col-span-6">
+                                <div>
+                                    <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
+                                        Photo
+                                    </label>
+                                    <input id="validation-form-1" type="file" class="form-control" placeholder="Photos" name="photos">
+                                </div>
+                            </div>
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
@@ -21,10 +29,13 @@
                                     </label>
                                     <input id="validation-form-1" type="text" class="form-control" placeholder="Name" name="name" required>
                                     @error('name')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-2" class="form-label w-full flex flex-col sm:flex-row">
@@ -32,12 +43,10 @@
                                     </label>
                                     <input id="validation-form-2" type="text" class="form-control" placeholder="Father Name" name='father_name' required>
                                     @error('father_name')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
@@ -45,10 +54,13 @@
                                     </label>
                                     <input id="regular-form-3" type="text" class="form-control" placeholder="Mother Name" name='mother_name' required>
                                     @error('mother_name')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
@@ -56,12 +68,10 @@
                                     </label>
                                     <input id="regular-form-3" type="number" class="form-control" placeholder="Phone Number" name='phone_number' required>
                                     @error('phone_number')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row">
@@ -69,10 +79,13 @@
                                     </label>
                                     <input id="regular-form-3" type="number" class="form-control" placeholder="Emergency Contact Number" name='emergency_contact_number' required>
                                     @error('emergency_contact_number')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
@@ -80,12 +93,10 @@
                                     </label>
                                     <input id="regular-form-4" type="email" class="form-control" placeholder="Email" name='email' required>
                                     @error('email')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
@@ -93,7 +104,49 @@
                                     </label>
                                     <input id="regular-form-4" type="email" class="form-control" placeholder="Official Email" name='official_email' required>
                                     @error('official_email')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 gap-6 mt-5">
+                        <div class="col-span-12 md:col-span-6">
+                                <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                        Date of Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
+                                    </label>
+                                    <input id="regular-form-4" type="date" class="form-control" placeholder="Date of Birth" name='date_of_birth' required>
+                                    @error('date_of_birth')
+                                    <span style="color:red">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-span-12 md:col-span-6">
+                            <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                    Certificate Date Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
+                                    </label>
+                                    <input id="regular-form-4" type="date" class="form-control" placeholder="Certificate Date of Birth" name='certificate_date_of_birth' required>
+                                    @error('certificate_date_of_birth')
+                                    <span style="color:red">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="grid grid-cols-12 gap-6 mt-5">
+                            <div class="col-span-12 md:col-span-6">
+                                <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                        Home Address<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 10 characters</span>
+                                    </label>
+                                    <input id="regular-form-4" type="text" class="form-control" placeholder="Home Address" name='home_address' required>
+                                    @error('home_address')
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -104,31 +157,7 @@
                                     </label>
                                     <input id="regular-form-4" type="date" class="form-control" placeholder="Joined Date" name='joined_date' required>
                                     @error('joined_date')
-                                          <span style="color:red">{{$message}}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
-                            <div class="col-span-12 md:col-span-6">
-                                <div>
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                        Home Address<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 10 characters</span>
-                                    </label>
-                                    <input id="regular-form-4" type="text" class="form-control" placeholder="Home Address" name='home_address' required>
-                                    @error('home_address')
-                                          <span style="color:red">{{$message}}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-6">
-                                <div>
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                        Data of Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
-                                    </label>
-                                    <input id="regular-form-4" type="date" class="form-control" placeholder="Date of Birth" name='date_of_birth' required >
-                                    @error('date_of_birth')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -141,7 +170,7 @@
                                     </label>
                                     <input id="regular-form-4" type="text" class="form-control" placeholder="Blood Group" name='blood_group' required>
                                     @error('blood_group')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -150,7 +179,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Pan Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, pan number</span>
                                     </label>
-                                    <input id="regular-form-4" type="text" class="form-control" placeholder="Pan Number" name='pan_number' >
+                                    <input id="regular-form-4" type="text" class="form-control" placeholder="Pan Number" name='pan_number'>
                                 </div>
                             </div>
                         </div>
@@ -159,14 +188,14 @@
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team<span style="color:red">*</span></label>
 
-                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4" name='team_name' >
+                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4" name='team_name'>
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($team as $t)
                                         <option value="{{$t->id}}">{{$t->team}}</option>
                                         @endforeach
                                     </select>
                                     @error('team_name')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -174,18 +203,33 @@
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Role<span style="color:red">*</span></label>
 
-                                    <select placeholder="Role" type="text" class="tom-select w-full" id="regular-form-4" name='role' required>
+                                    <select placeholder="Role" type="text" class="tom-select w-full" id="role_name" name='role' required>
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($role as $r)
-                                        <option value="{{$r->id}}">{{$r->name}}</option>
+                                        <option  value="{{$r->id}}">{{$r->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('role')
-                                          <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
                         </div>
+
+                        <div class="grid grid-cols-12 gap-12 mt-5">
+                           <div class="col-span-12 md:col-span-12">
+                                <div id="desigination">
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                         Desigination<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters </span>
+                                    </label>
+                                    <input  type="text" class="form-control" placeholder="Desigination" name='desigination'>
+                                </div>
+                                @error('desigination')
+                                    <span style="color:red">{{$message}}</span>
+                                @enderror
+                            </div>      
+                        </div>
+
                         <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
@@ -195,14 +239,14 @@
                                     <input id="regular-form-4" type="number" class="form-control" placeholder=" Aadhar Number" name='aadhar_number' required>
                                 </div>
                                 @error('aadhar_number')
-                                          <span style="color:red">{{$message}}</span>
+                                <span style="color:red">{{$message}}</span>
                                 @enderror
                             </div>
                             <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Bank Name</label>
 
-                                    <select placeholder="Bank Name" type="text" class="tom-select w-full" id="regular-form-4" name='bank_name' >
+                                    <select placeholder="Bank Name" type="text" class="tom-select w-full" id="regular-form-4" name='bank_name'>
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($bankName as $c)
                                         <option value="{{$c->id}}">{{$c->bank_name}}</option>
@@ -217,7 +261,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Account Holder Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters </span>
                                     </label>
-                                    <input id="regular-form-4" type="text" class="form-control" placeholder="Account Holder Name" name='account_holder_name' >
+                                    <input id="regular-form-4" type="text" class="form-control" placeholder="Account Holder Name" name='account_holder_name'>
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-6">
@@ -225,7 +269,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Account Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only </span>
                                     </label>
-                                    <input id="regular-form-4" type="number" class="form-control" placeholder="Account Number" name='account_number' >
+                                    <input id="regular-form-4" type="number" class="form-control" placeholder="Account Number" name='account_number'>
                                 </div>
                             </div>
                         </div>
@@ -235,28 +279,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         IFSC Code<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, IFSC code </span>
                                     </label>
-                                    <input id="regular-form-4" type="text" class="form-control" placeholder="IFSC Code" name='ifsc_code' >
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-6">
-                                <div>
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                        Branch Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, branch name</span>
-                                    </label>
-                                    <input id="regular-form-4" type="text" class="form-control" placeholder="Branch Name" name='branch_name' >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
-                            <div class="col-span-12 md:col-span-6">
-                                <div >
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                        password<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, Password</span>
-                                    </label>
-                                    <input id="regular-form-4" type="password" class="form-control" placeholder="Password" name='password' >
-                                    @error('password')
-                                          <span style="color:red">{{$message}}</span>
-                                    @enderror
+                                    <input id="regular-form-4" type="text" class="form-control" placeholder="IFSC Code" name='ifsc_code'>
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-6">
@@ -272,16 +295,54 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="grid grid-cols-12 gap-6 mt-5">
+                            <div class="col-span-12 md:col-span-6">
+                                <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                        Branch Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, branch name</span>
+                                    </label>
+                                    <input id="regular-form-4" type="text" class="form-control" placeholder="Branch Name" name='branch_name'>
+                                </div>
+                            </div>
+                            <div class="col-span-12 md:col-span-6">
+                                <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                        Password<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, Password</span>
+                                    </label>
+                                    <input id="regular-form-4" type="password" class="form-control" placeholder="Password" name='password'>
+                                    @error('password')
+                                    <span style="color:red">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                         <div>
                             <button type="submit" class="btn btn-primary mt-5">Add</button>
-                            <button class="btn btn-primary mt-5"><a href="/admin/employee-list">Back</a></button>
+                            <a href="/admin/employee-list" class="btn btn-primary mt-5">Back</a>
                         </div>
                     </form>
                 </div>
-</div>
-</div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
+        <script>
 
-</script>
-@endsection
+                $(document).ready(function(){
+
+                    $("#desigination").hide();
+
+                    $('#role_name').on('change', function() {
+                    if ( this.value == '4')
+                    {
+                        $("#desigination").show();
+                    }
+                    else
+                    {
+                        $("#desigination").hide();
+                    }
+                    });
+                });
+
+        </script>
+        @endsection

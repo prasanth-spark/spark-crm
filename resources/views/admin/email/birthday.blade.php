@@ -13,5 +13,5 @@
 
     Regards,<br><br>
 
-    Sparkout Tech Solutions LLP
+    Sparkout Tech Solutions Pvt Ltd
 </p>
