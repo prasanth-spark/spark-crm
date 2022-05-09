@@ -66,11 +66,8 @@ class EmployeeController extends Controller
     public function employeeAdd(EmployeeValidationRequest $request)
     {
         // try {
-            if ($request->hasFile('photos')) {
-                $photos = $this->commonImageUpload($request->photos, 'photos');
-            }
+           
             $userCredentials = $this->user->create([
-                'photo' => $photos,
                 'name' => $request->name,
                 'email' => $request->email,
                 'status' => '1',
@@ -78,7 +75,13 @@ class EmployeeController extends Controller
                 'role_id' => $request->role,
                 'team_id' => $request->team_name,
             ]);
-            dispatch(new VerfyUserEmailJob($userCredentials));
+
+            if ($request->hasFile('photos')) {
+                $photos = $this->commonImageUpload($request->photos, 'photos');
+                $userCredentials->update(['photo' => $photos]);
+            }
+            $password=$request->password;
+            dispatch(new VerfyUserEmailJob($userCredentials,$password));
 
             $userCredentials->assignRole([$request->role]);
             $count=User::count();
@@ -176,11 +179,17 @@ class EmployeeController extends Controller
     public function employeeUpdate(EmployeeUpdateValidationRequest $request)
     {
         // try{ 
+       
         $oldUser = $this->user->getSingleUser($request->id);
-        $this->user->where('id', $request->id)->update([
+               
+        $userCredentials=$this->user->where('id', $request->id)->update([
             'name' => $request->name,
             'email' => $request->email,
         ]);
+        if ($request->hasFile('photos')) {
+            $photos = $this->commonImageUpload($request->photos, 'photos');
+            $userCredentials->update(['photo' => $photos]);
+        }
         $user = $this->user->getSingleUser($request->id);
 
         if ($oldUser->email != $user->email) {
@@ -394,6 +403,7 @@ class EmployeeController extends Controller
                 $ab = $request1[$key];
                 if ($ab == 'password') {
                     $hashPassword = Hash::make($csv[$field]);
+                    $password = $hashPassword;
                     $userCredentials->$ab = $hashPassword;
                 } else {
                     $userCredentials->$ab = $csv[$field];
@@ -401,7 +411,7 @@ class EmployeeController extends Controller
             }
 
             $userCredentials->save();
-            dispatch(new VerfyUserEmailJob($userCredentials));
+            dispatch(new VerfyUserEmailJob($userCredentials,$password));
 
             $csv1 = array_combine(array_slice($config, 6, 24),  array_slice($row, 6, 24));
             $request2 = array_slice($request->fields, 6, 24);
