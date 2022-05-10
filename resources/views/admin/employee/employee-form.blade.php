@@ -253,7 +253,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelPassword">
                                         Password<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, Password</span>
                                     </label>
-                                    <input id="Password" type="password" class="form-control" placeholder="Password" name='Password' onchange="myFunction13()">
+                                    <input id="Password" type="password" class="form-control" placeholder="Password" name='password' onchange="myFunction13()">
                                     @error('password')
                                           <span style="color:red">{{$message}}</span>
                                     @enderror

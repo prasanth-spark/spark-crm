@@ -23,7 +23,6 @@ class UserSeeder extends Seeder
                 'email' => 'admin@sparkouttech.com', 
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345'), // password
-                'auth_token'=>'0',
                 'status'=>'0',
                 'role_id'=>'1',
                 'remember_token' => Str::random(10),

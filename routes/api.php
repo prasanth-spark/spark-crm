@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\admin\AuthController;
+use App\Http\Controllers\api\employee\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,7 @@ use App\Http\Controllers\api\admin\AuthController;
 Route::group(['namespace'=>'api'], function(){
 
 // Route::middleware('loggedin')->group(function () {
-    Route::post('/login-admin', [AuthController::class, 'login'])->name('login');
+    Route::post('/login-employee', [LoginController::class, 'loginEmployee'])->name('login');
     // Route::get('login-form-mail/{id}', [EmployeeController::class, 'loginFormMail'])->name('login-view-mail');
 // });
 
@@ -25,3 +25,4 @@ Route::group(['namespace'=>'api'], function(){
 
 
 });
+
