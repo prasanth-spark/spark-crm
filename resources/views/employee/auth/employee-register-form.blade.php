@@ -41,24 +41,24 @@
                         Sign Up
                     </h2>
                     <div class="intro-x mt-2 text-gray-500 dark:text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
-                    <form action="{{route('user-dashboard')}}" method="post">
+                    <form action="{{route('user-dashboard')}}" method="post" id="myForm">
                         @csrf
                         <div class="intro-x mt-8">
-                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Name" name="name" required>
+                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" id="Name"placeholder="Name" name="name" onchange="myFunction1()">
                             @error('name')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Email" name="email" required>
+                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4"id="Email" placeholder="Email" name="email" onchange="myFunction2()">
                             @error('email')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" name="password" required>
+                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" id="Password" placeholder="Password" name="password" onchange="myFunction3()">
                             @error('password')
                             <span style="color:red">{{$message}}</span>
                             @enderror
                             <div class="input-form  mt-4" style="background: transparent;">
 
-                                 <select placeholder="Account Type" type="text" class="tom-select w-full border border-solid border-gray-300 rounded-lg py-3 px-4" id="regular-form-4" name='role' required>
+                                 <select placeholder="Account Type" type="text" class="tom-select w-full border border-solid border-gray-300 rounded-lg py-3 px-4" id="Role" name='role' onchange="myFunction4()">
                                     <option value="Select Role" selected disabled>Select Role</option>
                                     @foreach($role as $c)
                                     <option value="{{$c->id}}">{{$c->name}}</option>
@@ -81,11 +81,17 @@
     </div>
     <!-- BEGIN: JS Assets-->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>  
+     function myFunction1() {
+    $("#Name").css("border-color",'unset');
+    }function myFunction2() {
+    $("#Email").css("border-color",'unset');
+    }function myFunction3() {
+    $("#Password").css("border-color",'unset');
+    }function myFunction4() {
+    $("#Role").css("border-color",'unset');
+    }
        toastr.options = {
                     "closeButton": true,
                     "debug": false,
@@ -102,7 +108,7 @@
                     "hideEasing": "linear",
                     "showMethod": "fadeIn",
                     "hideMethod": "fadeOut"
-                }    
+                };   
                 @if(Session::has('success'))
                 const toastHTML = '{{Session::get('success')}}';
                 toastr["success"](toastHTML);
@@ -113,6 +119,50 @@
                 toastr["error"](toastHTML);
                 @php Session::forget('error'); @endphp
                 @endif
+                $("#myForm").submit(function(e)
+                {
+                    var Name = $("#Name").val();
+                    var Email = $("#Email").val();
+                    var Password = $("#Password").val();
+                    var Role = $("#Role").val();
+             if(Name == null || Name == "")
+             {
+             $("#Name").css("border-color",'red');
+             e.preventDefault();
+             }
+             else
+             {
+             $("#Name").css("border-color",'unset');
+             }       
+            if(Email == null || Email == "")
+             {
+             $("#Email").css("border-color",'red');
+             e.preventDefault();
+             }
+             else
+             {
+             $("#Email").css("border-color",'unset');
+             } 
+            if(Password == null || Password == "")
+             {
+             $("#Password").css("border-color",'red');
+             e.preventDefault();
+             }
+             else
+             {
+             $("#Password").css("border-color",'unset');
+             } 
+             if(Role == null || Role == "")
+             {
+             $("#Role").css("border-color",'red');
+             e.preventDefault();
+             }
+             else
+             {
+             $("#Role").css("border-color",'unset');
+             } 
+            });
+
 </script>
     <!-- END: JS Assets-->
 </body>

@@ -41,14 +41,14 @@
                         Sign In
                     </h2>
                     <div class="intro-x mt-2 text-gray-500 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
-                    <form action="{{route('employee-login')}}" method="post">
+                    <form action="{{route('employee-login')}}" method="post" id="myForm">
                         @csrf
                         <div class="intro-x mt-8">
-                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Email" name="email" required>
+                            <input type="text" class="intro-x login__input form-control py-3 px-4 border-gray-300 block" placeholder="Email" name="email" id="Email"onchange="myFunction1()">
                             @error('email')
                             <span style="color:red">{{$message}}</span>
                             @enderror
-                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" name="password" required>
+                            <input type="password" class="intro-x login__input form-control py-3 px-4 border-gray-300 block mt-4" placeholder="Password" name="password" id="Password" onchange="myFunction2()">
                             @error('password')
                             <span style="color:red">{{$message}}</span>
                             @enderror
@@ -68,7 +68,40 @@
     </div>
     <!-- BEGIN: JS Assets-->
     <!-- END: JS Assets-->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+    function myFunction1() {
+    $("#Email").css("border-color",'unset');
+    }function myFunction2() {
+    $("#Password").css("border-color",'unset');
+    }
+    $("#myForm").submit(function(e)
+                {
+                    var Email = $("#Email").val();
+                    var Password = $("#Password").val();    
+                    if(Email == null || Email == "")
+                    {
+                    $("#Email").css("border-color",'red');
+                    e.preventDefault();
+                    }
+                    else
+                    {
+                    $("#Email").css("border-color",'unset');
+                    } 
+                    if(Password == null || Password == "")
+                    {
+                    $("#Password").css("border-color",'red');
+                    e.preventDefault();
+                    }
+                    else
+                    {
+                    $("#Password").css("border-color",'unset');
+                    } 
+                    });
 
+</script>
+    </script>
+   
 </body>
 
 </html>
