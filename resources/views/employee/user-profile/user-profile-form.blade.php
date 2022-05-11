@@ -250,7 +250,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Language Skills</label>
 
                                     <select placeholder="Language Skill" type="text" class="tom-select w-full" id="selectBox" name='language' required>
-                                        <option value selected="selected" disabled="disabled"></option>
+                                        <option value selected="selected" disabled="disabled">Language Skill</option>
                                         @foreach($language as $skill)
                                         <option value="{{$skill->id}}">{{$skill->language}}</option>
                                         @endforeach
@@ -259,23 +259,24 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6">
-                                <div>
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Level
-                                    </label>
-                                    <div>
-                                    <input id="regular-form-4" type="radio"  name='branch_name' value="1">
-                                    <label class="form-check-label text-black" >Beginer</label>
+</p>
+                                <div class="flex items-center space-x-4">
+                                    
+                                    <div class="flex items-center">
+                                        <input id="regular-form-4" type="radio"  name='branch_name' value="1">
+                                        <label class="form-check-label text-black" >Beginer</label>
                                     </div>
 
-                                    <div>
-                                    <input id="regular-form-4" type="radio"  name='branch_name' value="2">
-                                    <label class="form-check-label text-black" >Intermediate</label>
+                                    <div class="flex items-center">
+                                        <input id="regular-form-4" type="radio"  name='branch_name' value="2">
+                                        <label class="form-check-label text-black" >Intermediate</label>
                                     </div>
 
-                                    <div>
-                                    <input id="regular-form-4" type="radio"  name='branch_name' value="3">
-                                    <label class="form-check-label text-black">Advanced</label>
+                                    <div class="flex items-center">
+                                        <input id="regular-form-4" type="radio"  name='branch_name' value="3">
+                                        <label class="form-check-label text-black">Advanced</label>
                                     </div>
                                 </div>
                             </div>

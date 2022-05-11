@@ -182,13 +182,13 @@ class EmployeeController extends Controller
        
         $oldUser = $this->user->getSingleUser($request->id);
                
-        $userCredentials=$this->user->where('id', $request->id)->update([
+        $this->user->where('id', $request->id)->update([
             'name' => $request->name,
             'email' => $request->email,
         ]);
         if ($request->hasFile('photos')) {
             $photos = $this->commonImageUpload($request->photos, 'photos');
-            $userCredentials->update(['photo' => $photos]);
+            $this->user->where('id', $request->id)->update(['photo' => $photos]);
         }
         $user = $this->user->getSingleUser($request->id);
 
