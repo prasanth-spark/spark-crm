@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserDetails;
 use App\Models\RoleModel;
 use App\Http\Request\RegisterRequest;
 use App\Http\Request\LoginRequest;
@@ -19,10 +20,12 @@ use Spatie\Permission\Models\Role;
 
 class LoginController extends Controller
 {
-    public function __construct(User $user, RoleModel $rolemodel)
+    public function __construct(User $user, RoleModel $rolemodel ,UserDetails $userdetails)
     {
         $this->user = $user;
         $this->rolemodel = $rolemodel;
+        $this->userdetails = $userdetails;
+
     }
     public function loginEmployee(Request $request)
     {
@@ -31,7 +34,9 @@ class LoginController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 
                 $token = $user->createToken('MyApp')->accessToken;
-                return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$token]);
+                $users = User::where('email',$request->email)->with('userDetail')->first();
+                $data = [$token,$users];
+                return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$data]);
 
             } else {
                 $response = ["message" => "Password mismatch"];
