@@ -98,7 +98,6 @@ class EmployeeController extends Controller
                 'team_id' => $request->team_name,
             ]);
             return redirect('/admin/employee-list');
-            $token = $userCredentials->createToken('MyApp')->accessToken;
 
         } catch (\Throwable $exception) {
             Log::info($exception->getMessage());
