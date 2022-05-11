@@ -22,7 +22,7 @@ class User extends Authenticatable
      */
     use UuidModel;
     protected $fillable = [
-        'name', 'email', 'status','password', 'role_id', 'team_id',
+        'name', 'email', 'status','password', 'role_id', 'team_id','photo',
     ];
 
     /**

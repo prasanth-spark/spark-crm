@@ -31,16 +31,20 @@ class AttendanceController extends Controller
         $this->middleware(['role:Employee|Team Leader|Project Manager']);
     }
     public function attendanceModule(Request $request){
+        // dd($request->all());  
         $userId= auth()->user()->id;
         $user=$this->user->find($userId); 
 
         $date = Carbon::now();
+        $todayDate=$date->format("d-m-Y");
         $date = $date->format("Y-m-d");
         $attendance= $this->attendance->where(['user_id' => $userId ,'date' => $date])->first(); 
-        return view('/employee/attendance-module',compact('user','attendance'));
+        return view('/employee/attendance-module',compact('user','attendance','todayDate'));
     }
     public function attendanceStatus(Request $request)
     {  
+
+        // dd($request->all());
 
         if($request->value == 0){
             $request->validate([
@@ -69,6 +73,7 @@ class AttendanceController extends Controller
         $time2 = strtotime($time2);
         $diff = ($time1-$time2)/3600;
         $hourdiff = (int)(round($diff));
+
 
 
         // Leave days

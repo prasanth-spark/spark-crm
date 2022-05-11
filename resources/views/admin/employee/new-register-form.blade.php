@@ -38,10 +38,10 @@
                 <td class="table-report__action w-56">
                     <div class="flex justify-center items-center space-x-6">
                         <a class="flex items-center text-theme-20" href="{{url('/')}}/admin/approved/{{$list->id}}">
-                            <i data-feather="edit" class="w-4 h-4 mr-1"></i> Approved
+                            <i data-feather="edit" class="w-4 h-4 mr-1"></i> Approve
                         </a>
                         <a class="flex items-center text-theme-21" href="{{url('/')}}/admin/rejected/{{$list->id}}">
-                            <i data-feather="edit" class="w-4 h-4 mr-1"></i> Rejected
+                            <i data-feather="edit" class="w-4 h-4 mr-1"></i> Reject
                         </a>
   
                     </div>
