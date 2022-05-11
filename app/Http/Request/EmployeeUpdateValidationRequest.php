@@ -38,6 +38,8 @@ class EmployeeUpdateValidationRequest extends FormRequest
             'aadhar_number' => 'required|numeric|min:12',
             'role'=>'required',
             'team_name'=>'required',
+            "desigination" => "required_if:role,==,4"
+
         ];
     }
 }

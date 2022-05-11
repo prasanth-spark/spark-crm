@@ -27,7 +27,7 @@
     <table id="employeelist" class="table table-report -mt-2">
         <thead>
             <tr>
-                <th class="whitespace-nowrap">EMPLOYEE-CODE</th>
+                <th class="whitespace-nowrap">EMPLOYEE-ID</th>
                 <th class="whitespace-nowrap">NAME</th>
                 <th class="text-center whitespace-nowrap">PHONE</th>
                 <th class="whitespace-nowrap">ROLE NAME</th>

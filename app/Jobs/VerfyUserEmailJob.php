@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\Mail;
 class VerfyUserEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $userCredentials;
+    protected $userCredentials,$password;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($userCredentials)
+    public function __construct($userCredentials,$password)
     {
         $this->userCredentials = $userCredentials;
+        $this->password = $password;
     }
 
     /**
@@ -34,6 +35,7 @@ class VerfyUserEmailJob implements ShouldQueue
     public function handle()
     {
         $user = $this->userCredentials;
-        Mail::to($user->email)->send(new  VerfyEmployeeMail($user));
+        $password = $this->password;
+        Mail::to($user->email)->send(new  VerfyEmployeeMail($user,$password));
     }
 }
