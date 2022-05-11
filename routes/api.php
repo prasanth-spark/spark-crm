@@ -18,10 +18,9 @@ Route::group(['namespace'=>'api'], function(){
 
 // Route::middleware('loggedin')->group(function () {
     Route::post('/login-employee', [LoginController::class, 'loginEmployee'])->name('login');
-    // Route::get('login-form-mail/{id}', [EmployeeController::class, 'loginFormMail'])->name('login-view-mail');
 // });
 
-// Route::get('/logout',[AuthController::class,'logout']);
+Route::post('/logout',[LoginController::class,'logout']);
 
 
 });
