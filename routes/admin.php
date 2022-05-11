@@ -7,10 +7,7 @@ use App\Http\Controllers\admin\DarkModeController;
 use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\admin\AttendanceController;
 use App\Http\Controllers\admin\TaskController;
-
-
-
-
+use App\Http\Controllers\admin\LanguageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,4 +79,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/task-list', [TaskController::class, 'taskList'])->name('employee-task-list');
         Route::get('/task-details/{taskList}', [TaskController::class, 'taskDetails'])->name('task-details');
         Route::get('/task-list-pagination', [TaskController::class, 'taskListPagination'])->name('task-list-pagination');
+
+        //Language List
+        Route::get('/language-list', [LanguageController::class, 'languageList'])->name('language-list');
+        Route::get('/language-add', [LanguageController::class, 'addLanguageForm'])->name('add-language');
+        Route::post('/language-add-process', [LanguageController::class, 'addLanguageProcess'])->name('add-language-process');
+        Route::get('/language-edit/{id}', [LanguageController::class, 'editLanguage'])->name('language-edit');
+        Route::post('/language-update', [LanguageController::class, 'updateLanguage'])->name('language-update');
+        Route::post('/language-delete', [LanguageController::class, 'deleteLanguage'])->name('language-delete');
+
+
+
 });

@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TaskStatusSeeder::class);
         $this->call(PermissionTypeSeeder::class);
         $this->call(PermissionSeeder::class);
+        $this->call(LanguageSeed::class);
+
 
     }
 }

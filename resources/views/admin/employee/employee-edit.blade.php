@@ -234,7 +234,7 @@
                                         <input type="text" class="form-control" placeholder="Desigination" name='desigination' id="employee_desigination" value="{{$employeeEdit->designation}}">
                                     </div>
                                     @error('desigination')
-                                        <span style="color:red">{{$message}}</span>
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -263,6 +263,9 @@
                                     </div>
                                 </div>
                             </div>
+
+            
+
                             <div class="grid grid-cols-12 gap-6 mt-5">
                                 <div class="col-span-12 md:col-span-6">
 
