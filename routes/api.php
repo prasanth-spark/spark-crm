@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\employee\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['namespace'=>'api'], function(){
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('loggedin')->group(function () {
+    Route::post('/login-employee', [LoginController::class, 'loginEmployee'])->name('login');
+    // Route::get('login-form-mail/{id}', [EmployeeController::class, 'loginFormMail'])->name('login-view-mail');
+// });
+
+// Route::get('/logout',[AuthController::class,'logout']);
+
+
 });
+

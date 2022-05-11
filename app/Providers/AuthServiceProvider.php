@@ -4,8 +4,10 @@ namespace App\Providers;
 use App\Models\TaskSheet;
 use App\Policies\TaskPolicy;
 use App\Models\Attendance;
+use App\Models\User;
 use App\Policies\AttendancePolicy;
-
+use App\Policies\ModelPolicy;
+use Laravel\Passport\Passport;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,6 +21,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         TaskSheet::class => TaskPolicy::class,
         Attendance::class => AttendancePolicy::class,
+        // User::class => ModelPolicy::class,
+
     ];
 
     /**
@@ -30,6 +34,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        if (! $this->app->routesAreCached()) {
+            Passport::routes();
+            // Passport::loadKeysFrom(__DIR__.'/../secrets/oauth');
+
+        }
+
     }
 }

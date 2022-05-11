@@ -112,6 +112,7 @@ class EmployeeController extends Controller
                 'team_id' => $request->team_name,
             ]);
             return redirect('/admin/employee-list');
+
         // } catch (\Throwable $exception) {
         //     Log::info($exception->getMessage());
         // }

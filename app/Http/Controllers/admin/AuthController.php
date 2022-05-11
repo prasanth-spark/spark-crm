@@ -12,9 +12,6 @@ use Illuminate\Http\Request;
 use App\Rules\AdminMatchOldPassword;
 
 
-
-
-
 class AuthController extends Controller
 {
 
