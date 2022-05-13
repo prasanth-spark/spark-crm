@@ -3,6 +3,11 @@
 @section('subhead')
 <title>User Profile</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<style>
+    .w-50 {
+        width: 50%;
+    }
+    </style>
 @endsection
 
 @section('subcontent')
@@ -246,48 +251,49 @@
                         @csrf
                         <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
-                                <div>
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Language Skills</label>
+                                <div id="tab_logic">
+                                    <!-- <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" >Language Skills</p><a class="btn btn-success add-more">+ Add More</a>
 
-                                    <select placeholder="Language Skill" type="text" class="tom-select w-full" id="selectBox" name='language' required>
+                                    <select placeholder="Language Skill" type="text" class="tom-select w-full" id="laguage_skill" name='language' multiselect required>
                                         <option value selected="selected" disabled="disabled">Language Skill</option>
                                         @foreach($language as $skill)
                                         <option value="{{$skill->id}}">{{$skill->language}}</option>
                                         @endforeach
-                                    </select>
+                                    </select> -->
+                                <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" >Language Skills</p>
+                                @foreach($language as $skill)
+                                <div class="flex gap-4">
+                                    <div class="w-50">
+                                        <input type="checkbox" id="{{$skill->id}}" name="language-{{$skill->id}}" value="{{$skill->language}}">
+                                        <label for="language-{{$skill->id}}"> {{$skill->language}}</label>
+                                    </div>
+                                    <div class="w-50">
+                                        
+                                        <div class="level-{{$skill->id}}" id ="append"></div>
+                               
+                                    </div>
+                                </div>
+                                    @endforeach
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-6">
-                                <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                        Level
-</p>
-                                <div class="flex items-center space-x-4">
-                                    
-                                    <div class="flex items-center">
-                                        <input id="regular-form-4" type="radio"  name='branch_name' value="1">
-                                        <label class="form-check-label text-black" >Beginer</label>
-                                    </div>
 
-                                    <div class="flex items-center">
-                                        <input id="regular-form-4" type="radio"  name='branch_name' value="2">
-                                        <label class="form-check-label text-black" >Intermediate</label>
-                                    </div>
-
-                                    <div class="flex items-center">
-                                        <input id="regular-form-4" type="radio"  name='branch_name' value="3">
-                                        <label class="form-check-label text-black">Advanced</label>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                        <div class="grid grid-cols-12 gap-6 mt-5">
+                        <div class="col-span-12 md:col-span-6">
+                                <div id="tab_logic">
+                                <div class="col-span-12 md:col-span-6 more-feilds">
+                                <div class="remove-button"></div>
 
-                      
+                                
+                                </div>
+                                </div>
+                            </div>
+                        </div>                      
                         <div>
                             <button type="submit" class="btn btn-primary mt-5">Add</button>
                             <a href="/employee/employee_dashboard" class="btn btn-primary mt-5">Back</a>
                         </div>
-               
                     </form>
                 </div>
             </div>
@@ -298,8 +304,7 @@
 
 @endsection
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- <script src="dist/js/userprofilevalidate.js"></script> -->
-            <script>
+<script>
     function myFunction() {
     $("#Father_name").css("border-color",'unset');
     }function myFunction1() {
@@ -442,6 +447,22 @@ $("#myForm").submit(function(e)
     {
       $("#Aadhar_number").css("border-color",'unset');
     }    
+});
+});
+
+
+$(document).ready(function() {
+
+
+    $(":checkbox").on("click", function(){
+    if($(this).is(":checked")) {
+        var id = $(this).attr('id');
+        var level = '<div class="col-span-12 md:col-span-6" id="remove'+id+'"><p for="regular-form-'+id+'" class="form-label w-full flex flex-col sm:flex-row">Level</p> <div class="flex items-center space-x-4"><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="branch_name-'+id+'" value="1"><label class="form-check-label text-black" >Beginer</label></div><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="branch_name-'+id+'" value="2"><label class="form-check-label text-black" >Intermediate</label></div><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="branch_name-'+id+'" value="3"><label class="form-check-label text-black">Advanced</label></div></div></div>';
+          $(".level-"+id).append(level);
+    } else {
+        alert("Please select the checkbox");
+        $("#remove"+id).remove();
+    }
 });
 });
 
