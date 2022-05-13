@@ -37,8 +37,8 @@ class LoginController extends Controller
                 DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
                 $token = $user->createToken('MyApp')->accessToken;
                 $users = User::where('email',$request->email)->with('userDetail')->first();
-                $data = [$token,$users];
-                return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$data]);
+                $array = array($users,$token);
+                return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$array]);
 
             } else {
                 $response = ["message" => "Password mismatch"];
