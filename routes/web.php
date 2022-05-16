@@ -72,6 +72,8 @@ use App\Http\Controllers\employee\ProjectAssignController;
             Route::post('user-profile-add',[UserProfileController::class, 'userProfileAdd'])->name('user-profile-add');
             Route::get('user-reset-form',[UserProfileController::class, 'userResetForm'])->name('user-reset-password');
             Route::post('user-change-password',[UserProfileController::class, 'userChangePassword'])->name('user-change-password');
+            Route::post('user-language-add',[UserProfileController::class, 'languageSkillAdd'])->name('user-language-add');
+
 
 
 

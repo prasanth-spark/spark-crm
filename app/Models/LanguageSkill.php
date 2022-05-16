@@ -9,5 +9,7 @@ class LanguageSkill extends Model
 {
     use HasFactory;
 
+    protected $table = 'language_skills';
+
     protected $guarded = [];
 }

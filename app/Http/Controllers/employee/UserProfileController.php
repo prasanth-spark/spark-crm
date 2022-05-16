@@ -10,6 +10,7 @@ use App\Models\BankDetails;
 use App\Models\RoleModel;
 use App\Models\TeamModel;
 use App\Http\Request\UserProfileRequest;
+use App\Models\LanguageLevel;
 use App\Models\LanguageSkill;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
@@ -154,6 +155,29 @@ class UserProfileController extends Controller
    
         User::find(Auth::user()->id)->update(['password'=> Hash::make($request->new_password)]);
         return redirect('/employee/employee_dashboard')->with('success', 'Password Change Successfully');
+
+    }
+
+
+    /**
+     * Language Skill Add.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function languageSkillAdd(Request $request)
+    {
+ 
+        $languageLevels = array_combine($request->language,$request->language_level);
+        foreach($languageLevels as $language =>$languageLevel){
+        LanguageLevel::create([
+                'user_id' => Auth::user()->id,
+                'language_name' => $language,
+                'language_level' => $languageLevel,
+            ]);
+        }
+        return redirect('/employee/employee_dashboard')->with('success', 'Language Skill Added Successfully');
+        
 
     }
 

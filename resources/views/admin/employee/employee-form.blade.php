@@ -120,6 +120,7 @@
                                         Date of Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
                                     </label>
                                     <input id="Date_of_birth" type="date" class="form-control" placeholder="Date of Birth" name='date_of_birth' onchange="dateOfbirth()">
+
                                     @error('date_of_birth')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -159,6 +160,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Joined Date<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
                                     </label>
+
                                     <input id="Joined_date" type="date" class="form-control" placeholder="Joined Date" name='joined_date' onchange="joinedDate()">
                                     @error('joined_date')
                                     <span style="color:red">{{$message}}</span>
