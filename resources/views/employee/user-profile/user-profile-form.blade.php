@@ -247,7 +247,7 @@
             <div class="p-5">
                 <div class="preview">
                     <!-- BEGIN: Validation Form -->
-                    <form action="{{route('user-profile-add')}}" method="post">
+                    <form action="{{route('user-language-add')}}" method="post">
                         @csrf
                         <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
@@ -260,11 +260,11 @@
                                         <option value="{{$skill->id}}">{{$skill->language}}</option>
                                         @endforeach
                                     </select> -->
-                                <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" >Language Skills</p>
+                                <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row"  name="Language Skills">Language Skills</p>
                                 @foreach($language as $skill)
                                 <div class="flex gap-4">
                                     <div class="w-50">
-                                        <input type="checkbox" id="{{$skill->id}}" name="language-{{$skill->id}}" value="{{$skill->language}}">
+                                        <input type="checkbox" id="{{$skill->id}}" name="language[]" value="{{$skill->language}}">
                                         <label for="language-{{$skill->id}}"> {{$skill->language}}</label>
                                     </div>
                                     <div class="w-50">
@@ -457,10 +457,9 @@ $(document).ready(function() {
     $(":checkbox").on("click", function(){
     if($(this).is(":checked")) {
         var id = $(this).attr('id');
-        var level = '<div class="col-span-12 md:col-span-6" id="remove'+id+'"><p for="regular-form-'+id+'" class="form-label w-full flex flex-col sm:flex-row">Level</p> <div class="flex items-center space-x-4"><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="branch_name-'+id+'" value="1"><label class="form-check-label text-black" >Beginer</label></div><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="branch_name-'+id+'" value="2"><label class="form-check-label text-black" >Intermediate</label></div><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="branch_name-'+id+'" value="3"><label class="form-check-label text-black">Advanced</label></div></div></div>';
+        var level = '<div class="col-span-12 md:col-span-6" id="remove'+id+'"><p for="regular-form-'+id+'" class="form-label w-full flex flex-col sm:flex-row">Level</p> <div class="flex items-center space-x-4"><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="language_level[]-'+id+'" value="1" required><label class="form-check-label text-black" >Beginer</label></div><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="language_level[]-'+id+'" value="2" required><label class="form-check-label text-black" >Intermediate</label></div><div class="flex items-center"><input id="regular-form-'+id+'" type="radio"  name="language_level[]-'+id+'" value="3" required><label class="form-check-label text-black">Advanced</label></div></div></div>';
           $(".level-"+id).append(level);
     } else {
-        alert("Please select the checkbox");
         $("#remove"+id).remove();
     }
 });

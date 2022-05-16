@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LanguageLevel extends Model
 {
     use HasFactory;
+    protected $table = 'language_levels';
     protected $guarded = [];
 
 }
