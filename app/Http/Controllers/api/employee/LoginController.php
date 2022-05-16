@@ -16,6 +16,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use DB;
 
 
 class LoginController extends Controller
@@ -30,13 +31,14 @@ class LoginController extends Controller
     public function loginEmployee(Request $request)
     {
         $user = User::where('email', $request->email)->first();
+        // dd($user->id);
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
-                
+                DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
                 $token = $user->createToken('MyApp')->accessToken;
                 $users = User::where('email',$request->email)->with('userDetail')->first();
-                $data = [$token,$users];
-                return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$data]);
+                $array = array($users,$token);
+                return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$array]);
 
             } else {
                 $response = ["message" => "Password mismatch"];
@@ -46,6 +48,10 @@ class LoginController extends Controller
             $response = ["message" =>'User does not exist'];
             return response($response, 422);
         }
+    }
+    public function logout() 
+    {
+
     }
 
 }
