@@ -85,6 +85,14 @@ class SideMenu
                     ],
                 ]
             ],   
+            'Language' => [
+                'icon' => 'home',
+                'route_name' => 'language-list',
+                'title' => 'Language',
+                'params' => [
+                    'layout' => 'side-menu',
+                ],
+            ],
         ];
     }
 }

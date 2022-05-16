@@ -26,7 +26,6 @@ use  App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use App\Helper\ImageUpload;
 
-
 class EmployeeController extends Controller
 {
    use ImageUpload;
@@ -217,6 +216,7 @@ class EmployeeController extends Controller
             'role_id' => $request->role,
             'team_id' => $request->team_name,
             'designation' => $request->desigination,
+
 
         ]);
         return redirect('/admin/employee-list');

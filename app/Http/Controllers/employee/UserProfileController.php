@@ -10,6 +10,7 @@ use App\Models\BankDetails;
 use App\Models\RoleModel;
 use App\Models\TeamModel;
 use App\Http\Request\UserProfileRequest;
+use App\Models\LanguageSkill;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -44,8 +45,9 @@ class UserProfileController extends Controller
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
             $team = $this->teammodel->get();
+            $language = LanguageSkill::all();
 
-            return view('employee/user-profile/user-profile-form', compact('bankName', 'accountType', 'team', 'userdetails'));
+            return view('employee/user-profile/user-profile-form', compact('bankName', 'accountType', 'team', 'userdetails','language'));
         } else {
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();

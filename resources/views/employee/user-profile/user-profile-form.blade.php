@@ -23,7 +23,7 @@
                                     </label>
                                     <input id="Father_name" type="text" class="form-control" value="{{(isset($userdetails->father_name) ? $userdetails->father_name : '') }}" placeholder="Father Name" name='father_name'onchange="myFunction()">
                                     @error('father_name')
-                                    <span style="color:red">{{$message}}</span>              
+                                    <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -139,6 +139,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
@@ -159,15 +160,15 @@
                                     <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->pan_number) ? $userdetails->pan_number : '') }}" placeholder="Pan Number" name='pan_number'>
                                 </div>
                             </div>
-            
+
                         </div>
                         <div class="grid grid-cols-12 gap-6 mt-5">
-                        <div class="col-span-12 md:col-span-6">
+                            <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Bank Name</label>
 
                                     <select placeholder="Bank Name" type="text" class="tom-select w-full" id="regular-form-4" value="{{(isset($userdetails->bank_name) ? $userdetails->bank_name : '') }}" name='bank_name'>
-                                        <option value="{{(isset($userdetails->bankNameToEmployee->id) ? $userdetails->bankNameToEmployee->id : '') }}" >{{(isset($userdetails->bankNameToEmployee->bank_name) ? $userdetails->bankNameToEmployee->bank_name : '') }}</option>
+                                        <option value="{{(isset($userdetails->bankNameToEmployee->id) ? $userdetails->bankNameToEmployee->id : '') }}">{{(isset($userdetails->bankNameToEmployee->bank_name) ? $userdetails->bankNameToEmployee->bank_name : '') }}</option>
                                         @foreach($bankName as $c)
                                         <option value="{{$c->id}}">{{$c->bank_name}}</option>
                                         @endforeach
@@ -184,7 +185,7 @@
                             </div>
                         </div>
                         <div class="grid grid-cols-12 gap-6 mt-5">
-                        <div class="col-span-12 md:col-span-6">
+                            <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Account Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only </span>
@@ -209,7 +210,7 @@
                                     <select placeholder="Account Type" type="text" class="tom-select w-full" id="regular-form-4" value="{{(isset($userdetails->account_type) ? $userdetails->account_type : '') }}" name='account_type'>
                                         <option value="{{(isset($userdetails->accountTypeToEmployee->id) ? $userdetails->accountTypeToEmployee->id : '') }}">"{{(isset($userdetails->accountTypeToEmployee->account_type) ? $userdetails->accountTypeToEmployee->account_type : '') }}"</option>
                                         @foreach($accountType as $c)
-                                        <option value="{{$c->id}}" >{{$c->account_type}}</option>
+                                        <option value="{{$c->id}}">{{$c->account_type}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -219,19 +220,82 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Branch Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, branch name</span>
                                     </label>
-                                    <input id="regular-form-4" type="text" class="form-control"  value="{{(isset($userdetails->branch_name) ? $userdetails->branch_name : '') }}" placeholder="Branch Name" name='branch_name'>
+                                    <input id="regular-form-4" type="text" class="form-control" value="{{(isset($userdetails->branch_name) ? $userdetails->branch_name : '') }}" placeholder="Branch Name" name='branch_name'>
                                 </div>
                             </div>
 
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary mt-5">Add</button>
-                            <button class="btn btn-primary mt-5"><a href="/employee/employee_dashboard">Back</a></button>
+                            <a href="/employee/employee_dashboard" class="btn btn-primary mt-5">Back</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+
+<div class="grid grid-cols-12 gap-6 mt-5">
+    <div class="intro-y col-span-12 lg:col-span-12">
+        <div class="intro-y box">
+            <!-- BEGIN: Form Validation -->
+            <div class="p-5">
+                <div class="preview">
+                    <!-- BEGIN: Validation Form -->
+                    <form action="{{route('user-profile-add')}}" method="post">
+                        @csrf
+                        <div class="grid grid-cols-12 gap-6 mt-5">
+                            <div class="col-span-12 md:col-span-6">
+                                <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Language Skills</label>
+
+                                    <select placeholder="Language Skill" type="text" class="tom-select w-full" id="selectBox" name='language' required>
+                                        <option value selected="selected" disabled="disabled"></option>
+                                        @foreach($language as $skill)
+                                        <option value="{{$skill->id}}">{{$skill->language}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 md:col-span-6">
+                                <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                        Level
+                                    </label>
+                                    <div>
+                                    <input id="regular-form-4" type="radio"  name='branch_name' value="1">
+                                    <label class="form-check-label text-black" >Beginer</label>
+                                    </div>
+
+                                    <div>
+                                    <input id="regular-form-4" type="radio"  name='branch_name' value="2">
+                                    <label class="form-check-label text-black" >Intermediate</label>
+                                    </div>
+
+                                    <div>
+                                    <input id="regular-form-4" type="radio"  name='branch_name' value="3">
+                                    <label class="form-check-label text-black">Advanced</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                      
+                        <div>
+                            <button type="submit" class="btn btn-primary mt-5">Add</button>
+                            <a href="/employee/employee_dashboard" class="btn btn-primary mt-5">Back</a>
+                        </div>
+               
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@endsection
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- <script src="dist/js/userprofilevalidate.js"></script> -->
             <script>
@@ -381,4 +445,4 @@ $("#myForm").submit(function(e)
 });
 
         </script>
-        @endsection
+
