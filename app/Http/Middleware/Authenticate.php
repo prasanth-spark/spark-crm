@@ -18,7 +18,7 @@ class Authenticate
         if(!empty(Session::get('id'))){
             return $next($request);
         }
-        return redirect('admin/login');
+         return redirect('admin/login');
      
     }
 }

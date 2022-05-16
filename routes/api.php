@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\employee\LoginController;
+use App\Http\Controllers\api\employee\AttendanceController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +18,17 @@ use App\Http\Controllers\api\employee\LoginController;
 */
 Route::group(['namespace'=>'api'], function(){
 
-// Route::middleware('loggedin')->group(function () {
     Route::post('/login-employee', [LoginController::class, 'loginEmployee'])->name('login');
-// });
-
-Route::post('/logout',[LoginController::class,'logout']);
 
 
+    Route::post('/logout',[LoginController::class,'logout']);
+
+     
+    // Route::group(['middleware'=>'auth:api'],function () {
+
+        Route::post('attendance-status',[AttendanceController::class,'attendanceStatus']);
+
+    // });
 });
+ 
 

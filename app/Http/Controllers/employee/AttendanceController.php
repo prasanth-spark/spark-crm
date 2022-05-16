@@ -31,7 +31,6 @@ class AttendanceController extends Controller
         $this->middleware(['role:Employee|Team Leader|Project Manager']);
     }
     public function attendanceModule(Request $request){
-        // dd($request->all());  
         $userId= auth()->user()->id;
         $user=$this->user->find($userId); 
 
@@ -43,9 +42,6 @@ class AttendanceController extends Controller
     }
     public function attendanceStatus(Request $request)
     {  
-
-        // dd($request->all());
-
         if($request->value == 0){
             $request->validate([
                 'reason' => 'required',
@@ -224,6 +220,7 @@ class AttendanceController extends Controller
             ]);
         }
         return redirect('/employee/attendance-module'); 
+
      }    
 
     public function leaveResponse($tlid,$uid,$lt){
