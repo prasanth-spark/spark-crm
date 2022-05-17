@@ -31,6 +31,7 @@ class AttendanceController extends Controller
         $this->middleware(['role:Employee|Team Leader|Project Manager']);
     }
     public function attendanceModule(Request $request){
+
         $userId= auth()->user()->id;
         $user=$this->user->find($userId); 
 
@@ -42,12 +43,12 @@ class AttendanceController extends Controller
     }
     public function attendanceStatus(Request $request)
     {  
-        if($request->value == 0){
+        if($request->status == 0){
             $request->validate([
                 'reason' => 'required',
             ]);
         }
-        if($request->inactive_type==1 && $request->value == 0){
+        if($request->inactive_type==1 && $request->status == 0){
             $request->validate([
                 'permission_hours_from' => 'required|date_format:H:i',
                 'permission_hours_to' => 'required|date_format:H:i|after:permission_hours_from',
@@ -55,7 +56,7 @@ class AttendanceController extends Controller
             ]);
         }
        
-        if($request->inactive_type==2 && $request->value == 0){
+        if($request->inactive_type==2 && $request->status == 0){
             $request->validate([
                 'start_date' => 'after:yesterday',
                 'end_date' => 'after_or_equal:start_date',
@@ -104,7 +105,7 @@ class AttendanceController extends Controller
         $teamLeadDetail = User::find($teamLead);
         $teamLeadMail =$teamLeadDetail->email;
         $teamLeadName = $teamLeadDetail->name;
-        $attendanceValue = $request->value;
+        $attendanceValue = $request->status;
         $date = Carbon::now();
         $date = $date->format("Y-m-d");
 
@@ -209,7 +210,6 @@ class AttendanceController extends Controller
            }
         }
         else{
-          
             $this->attendance->create([
                 'user_id'=>$userId,
                 'attendance'=>1,
