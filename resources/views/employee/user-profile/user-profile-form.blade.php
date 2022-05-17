@@ -2,7 +2,6 @@
 
 @section('subhead')
 <title>User Profile</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
 
 @section('subcontent')
@@ -246,16 +245,18 @@
                                 @csrf
                                 <div class="grid grid-cols-12 gap-6 mt-5">
                                     <div class="col-span-12 md:col-span-6">
-                                        <div id="tab_logic">
-                                            <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Language Skills</p><a class="btn btn-success add-more">+ Add More</a>
+                                        <div id="tab_logic" class="flex justify-between">
+                                            <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Language Skills</p>
+                                            <a class="btn btn-success w-40 mb-4 add-more">+ Add More</a>
 
-                                            <select placeholder="Language Skill" type="text" class="tom-select w-full" id="laguage_skill" name='language[]' required>
-                                                <option value selected="selected" disabled="disabled">Language Skill</option>
-                                                @foreach($language as $skill)
-                                                <option value="{{$skill->id}}">{{$skill->language}}</option>
-                                                @endforeach
-                                            </select>
+
                                         </div>
+                                        <select placeholder="Language Skill" type="text" class="tom-select w-full" id="laguage_skill" name='language[]' required>
+                                            <option value selected="selected" disabled="disabled">Language Skill</option>
+                                            @foreach($language as $skill)
+                                            <option value="{{$skill->id}}">{{$skill->language}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
 
@@ -283,34 +284,20 @@
                                     </div>
                                 </div>
 
-                            <div class="grid grid-cols-12 gap-6 mt-5">
-                                       <div class="col-span-12 md:col-span-6">
-                                            <div class="more-field">
-                                                
-                                            </div> 
-                                       </div>
+                                <div class="grid grid-cols-12 gap-6 mt-5">
+                                    <div class="col-span-12 md:col-span-6">
+                                        <div class="more-field">
 
-                                       <div class="col-span-12 md:col-span-6">
-                                            <div class="flex items-center space-x-4">  
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-12 md:col-span-6">
+                                        <div class="flex items-center space-x-4">
                                             <div class="levela">
-                                            </div> 
                                             </div>
                                         </div>
-                            </div>
-
-                            {{-- <table id="demo">
-                                <tr ></tr>
-                                <tr ></tr>
-                            </table> --}}
-
-
-                                      
-
-                                
-
-
-                               
-
+                                    </div>
+                                </div>
 
                                 <div>
                                     <button type="submit" class="btn btn-primary mt-5">Add</button>
@@ -325,30 +312,21 @@
     </div>
 
     @endsection
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{URL::asset('dist/js/jquery.min.js')}}"></script>
+
+
     <script>
         $(document).ready(function() {
-             var id = 0;
+            var id = 0;
             $(".add-more").click(function() {
                 id++;
-                 var language = '<div id="tab_logic"><p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" >Language Skills</p><select placeholder="Language Skill" type="text" class="tom-select w-full" id="laguage_skill" name="language[]" required><option value selected="selected" disabled="disabled"></option><?php foreach ($language as $skill) { ?><option value="{{$skill->id}}">{{$skill->language}}</option><?php } ?></select></div></div>';
-                 var languageLevel='<div class="flex items-center space-x-4 level"><input id="regular-form-4" type="radio" name="language_level['+id+']" value="1"><label class="form-check-label text-black">Beginer</label><input id="regular-form-4" type="radio" name="language_level['+id+']" value="2"><label class="form-check-label text-black">Intermediate</label><input id="regular-form-4" type="radio" name="language_level['+id+']" value="3"><label class="form-check-label text-black">Advanced</label></div></div>';
+                var language = '<div id="tab_logic"><p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" >Language Skills</p><select placeholder="Language Skill" type="text" class="tom-select w-full" id="laguage_skill" name="language[]" required><option value selected="selected" disabled="disabled"></option><?php foreach ($language as $skill) { ?><option value="{{$skill->id}}">{{$skill->language}}</option><?php } ?></select></div></div>';
+                var languageLevel = '<div class="flex items-center space-x-4 level"><input id="regular-form-4" type="radio" name="language_level[' + id + ']" value="1"><label class="form-check-label text-black">Beginer</label><input id="regular-form-4" type="radio" name="language_level[' + id + ']" value="2"><label class="form-check-label text-black">Intermediate</label><input id="regular-form-4" type="radio" name="language_level[' + id + ']" value="3"><label class="form-check-label text-black">Advanced</label></div></div>';
 
- 
                 $(".more-field").append(language);
                 $(".levela").append(languageLevel);
 
-                // $('.').append(html);
-                // $('.levela').append(langLevel);
-
-
-
-
             });
-
-          
-
-
             $("body").on("click", ".remove", function() {
                 $(this).parents("#tab_logic").remove();
             });

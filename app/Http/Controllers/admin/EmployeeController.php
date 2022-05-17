@@ -204,6 +204,7 @@ class EmployeeController extends Controller
             'joined_date' => $request->joined_date,
             'home_address' => $request->home_address,
             'date_of_birth' => $request->date_of_birth,
+            'certificate_date_of_birth' => $request->certificate_date_of_birth,
             'blood_group' => $request->blood_group,
             'pan_number' => $request->pan_number,
             'aadhar_number' => $request->aadhar_number,

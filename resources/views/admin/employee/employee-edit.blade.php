@@ -17,14 +17,14 @@
                         @csrf
                         <div class="pb-6">
                             <div class="flex flex-1 px-5 items-center justify-center lg:justify-start">
-                                <div class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
-                                    <img alt="Tinker Tailwind HTML Admin Template" class="rounded-full" src="{{url('/')}}/uploads/employee-profile/{{$employeeEdit->user->photo}}">
-                                </div>
+                                    <div class="w-20 h-20 image-fit">
+                                                <img  class="rounded-full" src="{{url('/')}}/uploads/employee-profile/{{$employeeEdit->user->photo}}">
+                                            </div>
                                 <div>
-                                    <label for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row">
+                                    <p for="regular-form-1" class="form-label w-full flex flex-col sm:flex-row" style="margin-left: 19px">
                                         Photo
-                                    </label>
-                                    <input id="validation-form-1" type="file" class="form-control" placeholder="Photos" name="photos" value="{{$employeeEdit->user->photo}}">
+                                    </p>
+                                    <input id="validation-form-1" type="file" class="form-control" placeholder="Photos" name="photos" value="{{$employeeEdit->user->photo}}" style="margin-left: 19px;">
                                 </div>
                             </div>
 
@@ -129,6 +129,30 @@
                                 <div class="col-span-12 md:col-span-6">
                                     <div>
                                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                            Data of Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
+                                        </label>
+                                        <input id="regular-form-4" type="date" class="form-control" placeholder="Data of Birth" name='date_of_birth' value="{{$employeeEdit->date_of_birth}}">
+                                        @error('date_of_birth')
+                                        <span style="color:red">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-span-12 md:col-span-6">
+                                    <div>
+                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                        Certificate Date of Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
+                                        </label>
+                                        <input id="regular-form-4" type="date" class="form-control" placeholder=" Certificate Date of Birth" name='certificate_date_of_birth' value="{{$employeeEdit->certificate_date_of_birth}}">
+                                        @error('certificate_date_of_birth')
+                                        <span style="color:red">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-12 gap-6 mt-5">
+                                <div class="col-span-12 md:col-span-6">
+                                    <div>
+                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                             Home Address<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 10 characters</span>
                                         </label>
                                         <input id="regular-form-4" type="text" class="form-control" placeholder="Home Address" name='home_address' value="{{$employeeEdit->home_address}}">
@@ -140,19 +164,6 @@
                                 <div class="col-span-12 md:col-span-6">
                                     <div>
                                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                            Data of Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
-                                        </label>
-                                        <input id="regular-form-4" type="date" class="form-control" placeholder="Data of Birth" name='date_of_birth' value="{{$employeeEdit->date_of_birth}}">
-                                        @error('date_of_birth')
-                                        <span style="color:red">{{$message}}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-12 gap-6 mt-5">
-                                <div class="col-span-12 md:col-span-6">
-                                    <div>
-                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                             Blood Group<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, blood group</span>
                                         </label>
                                         <input id="regular-form-4" type="text" class="form-control" placeholder="Blood Group" name='blood_group' value="{{$employeeEdit->blood_group}}">
@@ -161,14 +172,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-span-12 md:col-span-6">
-                                    <div>
-                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                            Pan Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, pan number</span>
-                                        </label>
-                                        <input id="regular-form-4" type="text" class="form-control" placeholder="Pan Number" name='pan_number' value="{{$employeeEdit->pan_number}}">
-                                    </div>
-                                </div>
+
                             </div>
 
                             <div class="grid grid-cols-12 gap-6 mt-5">
@@ -185,30 +189,15 @@
                                 </div>
                                 <div class="col-span-12 md:col-span-6">
                                     <div>
-                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Bank Name</label>
-
-                                        <select placeholder="Bank Name" type="text" class="tom-select w-full" id="regular-form-4" name='bank_name'>
-                                            <option value="{{$employeeEdit->bankNameToEmployee ? $employeeEdit->bankNameToEmployee->id : '' }}">{{$employeeEdit->bankNameToEmployee ? $employeeEdit->bankNameToEmployee->bank_name : '' }}</option>
-                                            @foreach($bankName as $c)
-                                            <option value="{{$c->id}}">{{$c->bank_name}}</option>
-                                            @endforeach
-                                        </select>
+                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                            Pan Number<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, pan number</span>
+                                        </label>
+                                        <input id="regular-form-4" type="text" class="form-control" placeholder="Pan Number" name='pan_number' value="{{$employeeEdit->pan_number}}">
                                     </div>
                                 </div>
+
                             </div>
                             <div class="grid grid-cols-12 gap-6 mt-5">
-                                <div class="col-span-12 md:col-span-6">
-                                    <div>
-                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Account Type</label>
-
-                                        <select placeholder="Account Type" type="text" class="tom-select w-full" id="regular-form-4" name='account_type' value="{{$employeeEdit->account_type}}">
-                                            <option value="{{$employeeEdit->accountTypeToEmployee ? $employeeEdit->accountTypeToEmployee->id : '' }}">{{$employeeEdit->accountTypeToEmployee ? $employeeEdit->accountTypeToEmployee->account_type:''}}</option>
-                                            @foreach($accountType as $c)
-                                            <option value="{{$c->id}}">{{$c->account_type}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="col-span-12 md:col-span-6">
                                     <div>
                                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Role<span style="color:red">*</span></label>
@@ -224,6 +213,22 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-span-12 md:col-span-6">
+                                    <div>
+                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team<span style="color:red">*</span></label>
+
+                                        <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4" name='team_name'>
+                                            <option value="{{$employeeEdit->teamToUserDetails->id}}">{{$employeeEdit->teamToUserDetails->team}}</option>
+                                            @foreach($team as $t)
+                                            <option value="{{$t->id}}">{{$t->team}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('team_name')
+                                        <span style="color:red">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="grid grid-cols-12 gap-12 mt-5">
                                 <div class="col-span-12 md:col-span-12">
@@ -241,19 +246,33 @@
                             <div class="grid grid-cols-12 gap-6 mt-5">
                                 <div class="col-span-12 md:col-span-6">
                                     <div>
-                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team<span style="color:red">*</span></label>
+                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Bank Name</label>
 
-                                        <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4" name='team_name'>
-                                            <option value="{{$employeeEdit->teamToUserDetails->id}}">{{$employeeEdit->teamToUserDetails->team}}</option>
-                                            @foreach($team as $t)
-                                            <option value="{{$t->id}}">{{$t->team}}</option>
+                                        <select placeholder="Bank Name" type="text" class="tom-select w-full" id="regular-form-4" name='bank_name'>
+                                            <option value="{{$employeeEdit->bankNameToEmployee ? $employeeEdit->bankNameToEmployee->id : '' }}">{{$employeeEdit->bankNameToEmployee ? $employeeEdit->bankNameToEmployee->bank_name : '' }}</option>
+                                            @foreach($bankName as $c)
+                                            <option value="{{$c->id}}">{{$c->bank_name}}</option>
                                             @endforeach
                                         </select>
-                                        @error('team_name')
-                                        <span style="color:red">{{$message}}</span>
-                                        @enderror
                                     </div>
                                 </div>
+                                <div class="col-span-12 md:col-span-6">
+                                    <div>
+                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Account Type</label>
+
+                                        <select placeholder="Account Type" type="text" class="tom-select w-full" id="regular-form-4" name='account_type' value="{{$employeeEdit->account_type}}">
+                                            <option value="{{$employeeEdit->accountTypeToEmployee ? $employeeEdit->accountTypeToEmployee->id : '' }}">{{$employeeEdit->accountTypeToEmployee ? $employeeEdit->accountTypeToEmployee->account_type:''}}</option>
+                                            @foreach($accountType as $c)
+                                            <option value="{{$c->id}}">{{$c->account_type}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+
+                            <div class="grid grid-cols-12 gap-6 mt-5">
                                 <div class="col-span-12 md:col-span-6">
                                     <div>
                                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
@@ -262,11 +281,6 @@
                                         <input id="regular-form-4" type="text" class="form-control" placeholder="Account Holder Name" name='account_holder_name' value="{{$employeeEdit->account_holder_name}}">
                                     </div>
                                 </div>
-                            </div>
-
-            
-
-                            <div class="grid grid-cols-12 gap-6 mt-5">
                                 <div class="col-span-12 md:col-span-6">
 
                                     <div>
@@ -276,22 +290,27 @@
                                         <input id="regular-form-4" type="number" class="form-control" placeholder="Account Number" name='account_number' value="{{$employeeEdit->account_number}}">
                                     </div>
                                 </div>
-                                <div class="col-span-12 md:col-span-6">
-                                    <div>
-                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
-                                            IFSC Code<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, IFSC code </span>
-                                        </label>
-                                        <input id="regular-form-4" type="text" class="form-control" placeholder="IFSC Code" name='ifsc_code' value="{{$employeeEdit->ifsc_code}}">
-                                    </div>
-                                </div>
                             </div>
-
+                            <div class="grid grid-cols-12 gap-6 mt-5">
+                            <div class="col-span-12 md:col-span-6">
                             <div>
                                 <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                     Branch Name<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, branch name</span>
                                 </label>
                                 <input id="regular-form-4" type="text" class="form-control" placeholder="Branch Name" name='branch_name' value="{{$employeeEdit->branch_name}}">
                             </div>
+                            </div>
+
+                            <div class="col-span-12 md:col-span-6">
+                                    <div>
+                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                            IFSC Code<span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, IFSC code </span>
+                                        </label>
+                                        <input id="regular-form-4" type="text" class="form-control" placeholder="IFSC Code" name='ifsc_code' value="{{$employeeEdit->ifsc_code}}">
+                                    </div>
+                             </div>
+                            </div>
+
                             <div>
                                 <button type="submit" class="btn btn-primary mt-5">Update</button>
                                 <a href="/admin/employee-list" class="btn btn-primary mt-5">Back</a>
@@ -306,7 +325,7 @@
 </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 <script>
     $(document).ready(function() {
