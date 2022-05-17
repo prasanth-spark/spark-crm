@@ -44,9 +44,7 @@ content--dashboard
                         <label class="form-check-label text-white" for="inactive">Inactive</label>
                     </div>
                 </div>
-                <div class="cols-12 gap-4 mt-6">
-                    <input type="hidden" id="value" name="value" value="">
-                </div>
+               
             </div>
 
     </div>
