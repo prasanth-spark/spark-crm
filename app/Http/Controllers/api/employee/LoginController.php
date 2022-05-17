@@ -31,14 +31,16 @@ class LoginController extends Controller
     public function loginEmployee(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        // dd($user->id);
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
                 $token = $user->createToken('MyApp')->accessToken;
                 $users = User::where('email',$request->email)->with('userDetail')->first();
-                $array = array($users,$token);
-                return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$array]);
+                $data = array();
+                $data['token'] = $token;
+                $data['users'] = $users;
+
+                return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$data]);
 
             } else {
                 $response = ["message" => "Password mismatch"];
