@@ -29,5 +29,11 @@ class AttendanceController extends Controller
 
         //$this->middleware(['role:Employee|Team Leader|Project Manager']);
     }
+        public function attendanceStatus(Request $request)
+        {  
+
+        }    
+
+
      
 }
