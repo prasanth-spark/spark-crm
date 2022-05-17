@@ -130,7 +130,9 @@ class AttendanceController extends Controller
                     return response()->json(['status'=>true,'message'=>'Your Leave Permission send to TeamLead']);
 
                 }else{
-                $leaveDetail= $this->leave_request->create([               
+                    if($request->leave_days_from !=null && $request->leave_days_to != null)
+                    {
+                    $leaveDetail= $this->leave_request->create([               
                     'leave_type_id'=> $request->leave_type,
                     'permission_type_id'=>null ,
                     'user_id' =>$userId,
@@ -146,8 +148,11 @@ class AttendanceController extends Controller
                 ]);
                 $job = new LeaveDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                   dispatch($job);
-                  return response()->json(['status'=>true,'message'=>'Leave Permission Successfull to TeamLead.Pls wait for Approvel']);
+                  return response()->json(['status'=>true,'message'=>'Leave Permission Request send to Your TeamLead.Pls wait for Approvel']);
+              }else{
+                return response()->json(['status'=>true,'message'=>'Pls enter Valid date']);
               }
+            }
             }
             else if($attendanceValue == 0 && $leaveRequest=='Permission'){
                 $this->attendance->create([
@@ -178,7 +183,7 @@ class AttendanceController extends Controller
                      $permission_status= 2;
                      $job = new PermissionResponse($permission_status,$user,$reason);
                     dispatch($job);
-                    return response()->json(['status'=>true,'message'=>'Your Permission Send to TeamLead']);
+                    return response()->json(['status'=>true,'message'=>'Your Permission Request Send to Your TeamLead']);
 
                 }else{
                 $leaveDetail= $this->leave_request->create([               
@@ -197,7 +202,7 @@ class AttendanceController extends Controller
                 ]);
                 $job = new PermissionDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                       dispatch($job);
-                      return response()->json(['status'=>true,'message'=>'Your Permission Send to TeamLead']);
+                      return response()->json(['status'=>true,'message'=>'Your Permission Request Send to TeamLead']);
                }
             }
             else{
