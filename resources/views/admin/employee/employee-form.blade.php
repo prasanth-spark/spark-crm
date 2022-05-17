@@ -29,7 +29,7 @@
 
                                         Name<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters</span>
                                     </label>
-                                    <input id="Name" type="text" class="form-control" placeholder="Name" name="name" onchange="myFunctionname()">
+                                    <input id="Name" type="text" class="form-control" placeholder="Name" name="name" onchange="name()">
                                     @error('name')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -43,7 +43,7 @@
                                     <label for="regular-form-2" class="form-label w-full flex flex-col sm:flex-row" id="LabelFather_name">
                                         Father Name<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters</span>
                                     </label>
-                                    <input id="Father_name" type="text" class="form-control" placeholder="Father Name" name="father_name" onchange="myFunction()">
+                                    <input id="Father_name" type="text" class="form-control" placeholder="Father Name" name="father_name" onchange="fatherName()">
                                     @error('father_name')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -54,7 +54,7 @@
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row" id="LabelMother_name">
                                         Mother Name<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters</span>
                                     </label>
-                                    <input id="Mother_name" type="text" class="form-control" placeholder="Mother Name" name='mother_name' onchange="myFunction1()">
+                                    <input id="Mother_name" type="text" class="form-control" placeholder="Mother Name" name='mother_name' onchange="motherName()">
                                     @error('mother_name')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -68,7 +68,7 @@
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row" id="LabelPhone_number">
                                         Phone Number<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only & maximum 10 characters</span>
                                     </label>
-                                    <input id="Phone_number" type="number" class="form-control" placeholder="Phone Number" name='phone_number' onchange="myFunction2()">
+                                    <input id="Phone_number" type="number" class="form-control" placeholder="Phone Number" name='phone_number' onchange="phoneNumber()">
                                     @error('phone_number')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -79,7 +79,7 @@
                                     <label for="regular-form-3" class="form-label w-full flex flex-col sm:flex-row" id="LabelEmergency_contact_number">
                                         Emergency Contact Number<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only & maximum 10 characters</span>
                                     </label>
-                                    <input id="Emergency_contact_number" type="number" class="form-control" placeholder="Emergency Contact Number" name='emergency_contact_number' onchange="myFunction3()">
+                                    <input id="Emergency_contact_number" type="number" class="form-control" placeholder="Emergency Contact Number" name='emergency_contact_number' onchange="emergencyContactnumber()">
                                     @error('emergency_contact_number')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -93,7 +93,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelEmail">
                                         Email <span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, email address format</span>
                                     </label>
-                                    <input id="Email" type="email" class="form-control" placeholder="Email" name='email' onchange="myFunction11()">
+                                    <input id="Email" type="email" class="form-control" placeholder="Email" name='email' onchange="email()">
                                     @error('email')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -104,7 +104,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelOfficial_email">
                                         Official Email<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, email address format</span>
                                     </label>
-                                    <input id="Official_email" type="email" class="form-control" placeholder="Official Email" name='official_email' onchange="myFunction4()">
+                                    <input id="Official_email" type="email" class="form-control" placeholder="Official Email" name='official_email' onchange="officialEmail()">
                                     @error('official_email')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -119,7 +119,8 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Date of Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
                                     </label>
-                                    <input id="Date_of_birth" type="date" class="form-control" placeholder="Date of Birth" name='date_of_birth' onchange="myFunction7()">
+                                    <input id="Date_of_birth" type="date" class="form-control" placeholder="Date of Birth" name='date_of_birth' onchange="dateOfbirth()">
+
                                     @error('date_of_birth')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -130,7 +131,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Certificate Date Birth<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
                                     </label>
-                                    <input id="regular-form-4" type="date" class="form-control" placeholder="Certificate Date of Birth" name='certificate_date_of_birth'>
+                                    <input id="Certificate_Date_of_Birth" type="date" class="form-control" placeholder="Certificate Date of Birth" name='certificate_date_of_birth'onchange="certificateDateofbirth()">
                                     @error('certificate_date_of_birth')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -147,7 +148,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelHome_address">
                                         Home_Address<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required</span>
                                     </label>
-                                    <input id="Home_address" type="text" class="form-control" placeholder="Home Address" name="home_address" onchange="myFunction6()">
+                                    <input id="Home_address" type="text" class="form-control" placeholder="Home Address" name="home_address" onchange="homeAddress()">
                                     @error('home_address')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -159,7 +160,8 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
                                         Joined Date<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, date format</span>
                                     </label>
-                                    <input id="Joined_date" type="date" class="form-control" placeholder="Joined Date" name='joined_date' onchange="myFunction5()">
+
+                                    <input id="Joined_date" type="date" class="form-control" placeholder="Joined Date" name='joined_date' onchange="joinedDate()">
                                     @error('joined_date')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -172,7 +174,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelBlood_group">
                                         Blood Group<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, blood group</span>
                                     </label>
-                                    <input id="Blood_group" type="text" class="form-control" placeholder="Blood Group" name='blood_group' onchange="myFunction8()">
+                                    <input id="Blood_group" type="text" class="form-control" placeholder="Blood Group" name='blood_group' onchange="bloodGroup()">
                                     @error('blood_group')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -193,7 +195,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelTeam">Team<span style="color:red">*</span></label>
 
 
-                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="Team" name='team_name' onchange="myFunction10()">
+                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="Team" name='team_name' onchange="team()">
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($team as $t)
                                         <option value="{{$t->id}}">{{$t->team}}</option>
@@ -208,7 +210,7 @@
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelRole">Role<span style="color:red">*</span></label>
 
-                                    <select placeholder="Role" type="text" class="tom-select w-full" id="Role" name='role' onchange="myFunction12()">
+                                    <select placeholder="Role" type="text" class="tom-select w-full" id="Role" name='role' onchange="role()">
 
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($role as $r)
@@ -242,7 +244,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelAadhar_number">
                                         Aadhar Number<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, integer only & maximum 12 characters</span>
                                     </label>
-                                    <input id="Aadhar_number" type="number" class="form-control" placeholder=" Aadhar Number" name='aadhar_number' onchange="myFunction9()">
+                                    <input id="Aadhar_number" type="number" class="form-control" placeholder=" Aadhar Number" name='aadhar_number' onchange="aadharNumber()">
                                 </div>
                                 @error('aadhar_number')
                                 <span style="color:red">{{$message}}</span>
@@ -292,7 +294,7 @@
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Account Type</label>
 
-                                    <select placeholder="Account Type" type="text" class="tom-select w-full" id="regular-form-4" name='account_type' required>
+                                    <select placeholder="Account Type" type="text" class="tom-select w-full" id="regular-form-4" name='account_type' >
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($accountType as $c)
                                         <option value="{{$c->id}}">{{$c->account_type}}</option>
@@ -316,7 +318,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelPassword">
                                         Password<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, Password</span>
                                     </label>
-                                    <input id="Password" type="password" class="form-control" placeholder="Password" name='password' onchange="myFunction13()">
+                                    <input id="Password" type="password" class="form-control" placeholder="Password" name='password' onchange="password()">
                                     @error('password')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -353,51 +355,55 @@
         </script>
 
         <script>
-            function myFunctionname() {
+            function name() {
                 $("#Name").css("border-color", 'unset');
             }
 
-            function myFunction() {
+            function fatherName() {
                 $("#Father_name").css("border-color", 'unset');
             }
 
-            function myFunction1() {
+            function motherName() {
                 $("#Mother_name").css("border-color", 'unset');
             }
 
-            function myFunction2() {
+            function phoneNumber() {
                 $("#Phone_number").css("border-color", 'unset');
             }
 
-            function myFunction3() {
+            function emergencyContactnumber() {
                 $("#Emergency_contact_number").css("border-color", 'unset');
             }
 
-            function myFunction4() {
+            function officialEmail() {
                 $("#Official_email").css("border-color", 'unset');
             }
 
-            function myFunction5() {
+            function joinedDate() {
                 $("#Joined_date").css("border-color", 'unset');
             }
 
-            function myFunction6() {
+            function homeAddress() {
                 $("#Home_address").css("border-color", 'unset');
             }
+            
+            function certificateDateofbirth() {
+                $("#Certificate_Date_of_birth").css("border-color", 'unset');
+            }
 
-            function myFunction7() {
+            function dateOfbirth() {
                 $("#Date_of_birth").css("border-color", 'unset');
             }
 
-            function myFunction8() {
+            function bloodGroup() {
                 $("#Blood_group").css("border-color", 'unset');
             }
 
-            function myFunction9() {
+            function aadharNumber() {
                 $("#Aadhar_number").css("border-color", 'unset');
             }
 
-            function myFunction10() {
+            function team() {
                 $("#LabelTeam").css({
                     'font-family': 'unset',
                     'color': 'unset',
@@ -405,11 +411,11 @@
                 });
             }
 
-            function myFunction11() {
+            function email() {
                 $("#Email").css("border-color", 'unset');
             }
 
-            function myFunction12() {
+            function role() {
                 $("#LabelRole").css({
                     'font-family': 'unset',
                     'color': 'unset',
@@ -417,7 +423,7 @@
                 });
             }
 
-            function myFunction13() {
+            function password() {
                 $("#Password").css("border-color", 'unset');
             }
 
@@ -432,6 +438,7 @@
                     var Official_email = $("#Official_email").val();
                     var Joined_date = $("#Joined_date").val();
                     var Home_address = $("#Home_address").val();
+                    var Certificate_Date_of_birth = $("#Certificate_Date_of_Birth").val();
                     var Date_of_birth = $("#Date_of_birth").val();
                     var Blood_group = $("#Blood_group").val();
                     var Team = $("#Team").val();
@@ -493,7 +500,12 @@
                     } else {
                         $("#Home_address").css("border-color", 'unset');
                     }
-
+                    if (Certificate_Date_of_birth == null || Certificate_Date_of_birth == "") {
+                        $("#Certificate_Date_of_Birth").css("border-color", 'red');
+                        e.preventDefault();
+                    } else {
+                        $("#Certificate_Date_of_Birth").css("border-color", 'unset');
+                    }
                     if (Date_of_birth == null || Date_of_birth == "") {
                         $("#Date_of_birth").css("border-color", 'red');
                         e.preventDefault();
