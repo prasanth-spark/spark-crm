@@ -56,7 +56,6 @@ class LeaveStatus extends Command
                 'start_date'=>$date,
                 'end_date'=>$date,
                 'leave_counts'=>1,
-                'respond_status'=> 1
                 ]);
                 Attendance::where('user_id',$leaveStatus->user_id)
                 ->where('date','=',$leaveStatus->start_date)
