@@ -155,6 +155,8 @@ class AttendanceController extends Controller
         }  
         }
         else if($attendanceValue == 0 && $leaveRequest=='Permission'){
+                if($hourdiff !=0)
+                {
                 $this->attendance->create([
                 'user_id'=>$userId,
                 'attendance'=>$attendanceValue,
@@ -201,8 +203,13 @@ class AttendanceController extends Controller
             ]);
             $job = new PermissionDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                   dispatch($job);
-                  return response()->json(['status'=>true,'message'=>'Your Permission Request Send to Your TeamLead']);
+                  return response()->json(['status'=>true,'message'=>'Your Permission Request Send to Your TeamLead.Pls Wait for Approval']);
            }
+        }
+        else{
+            return response()->json(['status'=>true,'message'=>'Your Permission Request Should be above Half an Hour']);
+  
+        }
         }
         else{
             $this->attendance->create([
@@ -215,7 +222,6 @@ class AttendanceController extends Controller
             ]);
             return response()->json(['status'=>true,'message'=>'User Active Successfull']);
         }
-
      }    
 
      
