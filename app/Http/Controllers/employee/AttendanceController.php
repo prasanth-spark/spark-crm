@@ -160,6 +160,7 @@ class AttendanceController extends Controller
           }
         }
         else if($attendanceValue == 0 && $leaveRequest=='Permission'){
+            dd($request->all());
                 $this->attendance->create([
                 'user_id'=>$userId,
                 'attendance'=>$attendanceValue,

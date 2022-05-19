@@ -113,7 +113,6 @@ class AttendanceStatus extends Command
                             'attendance_status'=>2,
                             'in_active'=>2,
                             'status'=> 0,
-                            'respond_status'=> 1
                         ]);
                 Mail::to($userMail)->send(new AttendanceRemainder($userValue));
             }
