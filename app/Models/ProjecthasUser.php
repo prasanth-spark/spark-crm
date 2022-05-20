@@ -12,4 +12,5 @@ class ProjecthasUser extends Model
     use UuidModel;
     protected $table = 'project_user';
     protected $guarded = [];
+
 }
