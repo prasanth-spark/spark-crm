@@ -205,10 +205,8 @@ class AttendanceController extends Controller
                   dispatch($job);
                   return response()->json(['status'=>true,'message'=>'Your Permission Request Send to Your TeamLead.Pls Wait for Approval']);
            }
-        }
-        else{
+        }else{
             return response()->json(['status'=>true,'message'=>'Your Permission Request Should be above Half an Hour']);
-  
         }
         }
         else{

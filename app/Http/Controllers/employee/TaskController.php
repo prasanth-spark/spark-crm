@@ -33,6 +33,7 @@ class TaskController extends Controller
         $user = User::find(Auth::user()->id);
 
         $projectName = $user->projects;
+        dd($projectName);
 
         return view('employee/task/task-form', compact('projectName'));
     }

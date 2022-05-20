@@ -264,7 +264,6 @@ class AttendanceController extends Controller
         // permission response
 
         public function permissionResponse($tlid,$uid,$hourdiff){
-
             $teamLead= $this->user->find($tlid);
             $user= User::find($uid);
             $hoursdiff =$hourdiff;
