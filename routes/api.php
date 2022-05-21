@@ -31,7 +31,8 @@ Route::group(['namespace'=>'api'], function(){
         //Task 
         Route::post('/task-add',[TaskController::class, 'taskAdd']);
         Route::post('/task-Details',[TaskController::class, 'taskDetails']);
-        Route::post('/task-Drop-Details',[TaskController::class, 'taskDropdetails']);
+        Route::post('/assigned-Project',[TaskController::class, 'assignedProject']);
+        Route::post('/task-update',[TaskController::class, 'taskUpdate']);
 
 
 

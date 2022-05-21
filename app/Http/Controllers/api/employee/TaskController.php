@@ -21,11 +21,16 @@ class TaskController extends Controller
         $this->taskStatus = $taskStatus;
         $this->project    = $project;
     }
-    public function taskDropdetails(Request $request)
+    public function assignedProject(Request $request)
     {
         $user = User::find($request->user_id);
         $projectName = $user->projects->pluck('title');
-        return response()->json(['status'=>true,'message'=>'User Project Details for Drop Down','projectName'=>$projectName]);
+        $projectId = $user->projects->pluck('id');
+        $data = array();
+        $data['projectId'] = $projectId;
+        $data['projectName'] = $projectName;
+
+        return response()->json(['status'=>true,'message'=>'User Project Details for Drop Down','project_details'=>$data]);
     }
     public function taskAdd(Request $request)
     {
@@ -46,7 +51,19 @@ class TaskController extends Controller
         $data = $tasks->get();
         return response()->json(['status'=>true,'message'=>'User Project Details','data'=>$data]);
     }
-   
+    public function taskUpdate(Request $request)
+    {
+        $this->taskSheet->where('id', $request->id)->where('user_id',$request->user_id)->update([
+            'date' => $request->date,
+            'project_id' => $request->project_id,
+            'task_module' => $request->task_module,
+            'estimated_hours' => $request->estimated_hours,
+            'worked_hours' => $request->worked_hours,
+            'status' => $request->task_status
+        ]);
+        return response()->json(['status'=>true,'message'=>'User Project Details Updated']);
+    }
+
 
 
 }
