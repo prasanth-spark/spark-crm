@@ -21,127 +21,114 @@
                 <div class="preview">
                     <!-- BEGIN: Validation Form -->
                     <div class="grid grid-cols-12 gap-4 mt-5">
-                        <div class="col-span-12">
+
+                        <div class="col-span-12 md:col-span-5">
+                            <div class="mr-auto flex items-center  gap-5  my-4">
+                                <p class="font-medium w-4/12 w-4/12">Name:</p>
+                                <div class="text-slate-500 w-8/12 w-8/12 mt-1">{{$employeeView->user->name}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Father Name:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->father_name}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Mother Name:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->mother_name}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Phone Number:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->phone_number}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Emergency Contact Number:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->emergency_contact_number}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Email:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->user->email}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Official Email:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->official_email}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Joined Date:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->joined_date}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Home Address:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->home_address}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12"> Date of Birth:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->date_of_birth}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12"> Certificate Date of Birth:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->certificate_date_of_birth}}</div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-5">
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12"> Blood Group:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->blood_group}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Pan Number:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->pan_number}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Aadhar Number:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->aadhar_number}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Role:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->roleToUserDetails->name}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Team:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->teamToUserDetails->team}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Desigination:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->designation}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Bank Name:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->bankNameToEmployee ? $employeeView->bankNameToEmployee->bank_name : '' }}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Account Type:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->accountTypeToEmployee ? $employeeView->accountTypeToEmployee->account_type : '' }}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Account Holder Name:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->account_holder_name}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Account Number:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->account_number}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">IFSC Code:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->ifsc_code}}</div>
+                            </div>
+                            <div class="mr-auto flex items-center gap-5 my-4">
+                                <p class="font-medium w-4/12">Branch Name:</p>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->branch_name}}</div>
+                            </div>
+
+                        </div>
+                        <div class="col-span-2">
                             <div class="flex-1 flex flex-col sm:flex-row items-center pr-5 lg:border-r border-slate-200/60 dark:border-darkmode-400">
-                                        <div class="sm:mr-5">
-                                            <div class="w-20 h-20 image-fit">
-                                                <img  class="rounded-full" src="{{url('/')}}/uploads/employee-profile/{{$employeeView->user->photo}}">
-                                            </div>
-                                        </div>
-                                        <div class="mr-auto text-center sm:text-left mt-3 sm:mt-0">
-                                            <a href="" class="font-medium text-lg">{{$employeeView->user->name}}</a>
-                                        </div>
+                                <div class="sm:mr-5">
+                                    <div class="w-20 h-20 image-fit">
+                                        <img class="rounded-full" src="{{url('/')}}/uploads/employee-profile/{{$employeeView->user->photo}}">
                                     </div>
-                        </div>
-                        <div class="col-span-12 md:col-span-6">
-                           
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium">Name</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->user->name}}</div>
                                 </div>
-                                <div class="mr-auto my-6" >
-                                    <p class="font-medium">Father Name</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->father_name}}</div>
-                                </div>
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium">Mother Name</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->mother_name}}</div>
-                                </div>
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium">Phone Number</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->phone_number}}</div>
-                                </div>
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium">Emergency Contact Number</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->emergency_contact_number}}</div>
-                                </div>
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium">Email</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->user->email}}</div>
-                                </div>
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium">Official Email</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->official_email}}</div>
-                                </div>
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium">Joined Date</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->joined_date}}</div>
-                                </div>
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium">Home Address</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->home_address}}</div>
-                                </div>
-                                <div class="mr-auto my-6">
-                                    <p class="font-medium"> Date of Birth:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->date_of_birth}}</div>
-                                 </div>
-                                 <div class="mr-auto my-6">
-                                    <p class="font-medium"> Certificate Date of Birth:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->certificate_date_of_birth}}</div>
-                                 </div>
-                        </div>
-                        <div class="col-span-12 md:col-span-6">
-                            
-
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium"> Blood Group:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->blood_group}}</div>
                             </div>
-
-
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Pan Number:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->pan_number}}</div>
-                            </div>
-
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Aadhar Number:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->aadhar_number}}</div>
-                            </div>
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Role:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->roleToUserDetails->name}}</div>
-                            </div>
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Team:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->teamToUserDetails->team}}</div>
-                            </div>
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Desigination:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->designation}}</div>
-                            </div>
-
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Bank Name:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->bankNameToEmployee ? $employeeView->bankNameToEmployee->bank_name : '' }}</div>
-                            </div>
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Account Type:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->accountTypeToEmployee ? $employeeView->accountTypeToEmployee->account_type : '' }}</div>
-                            </div>
-                            
-                           
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Account Holder Name:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->account_holder_name}}</div>
-                            </div>
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Account Number:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->account_number}}</div>
-                            </div>
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">IFSC Code:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->ifsc_code}}</div>
-                            </div>
-                            <div class="mr-auto my-6">
-                                    <p class="font-medium">Branch Name:</p>
-                                    <div class="text-slate-500 mt-1">{{$employeeView->branch_name}}</div>
-                            </div>
-                     
                         </div>
                     </div>
-
-
 
                     <div>
                         <a href="/admin/employee-list" class="btn btn-primary mt-5">Back</a>

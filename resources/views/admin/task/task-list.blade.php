@@ -3,7 +3,6 @@
 @section('subhead')
 <title>Task List</title>
 <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-
 @endsection
 
 @section('subcontent')

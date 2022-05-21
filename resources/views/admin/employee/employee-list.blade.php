@@ -2,15 +2,6 @@
 
 @section('subhead')
 <title>Employee List</title>
-<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
-<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
-<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-<link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
 @endsection
 
 @section('subcontent')
@@ -19,7 +10,7 @@
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0 mb-3">
         <button class="btn btn-primary shadow-md mr-2"><a href="{{route('file-upload')}}">File-Upload</a></button> 
         <button class="btn btn-primary shadow-md mr-2"><a href="{{route('employee-form')}}">Add New Employee</a></button>
-        <button class="btn btn-primary shadow-md mr-2"><a href="{{route('new-register-list')}}">New Register List</a></button>
+      {{--  <button class="btn btn-primary shadow-md mr-2"><a href="{{route('new-register-list')}}">New Register List</a></button>--}}
     </div>
 </div>
 <!-- BEGIN: Data List -->
@@ -35,7 +26,7 @@
                 <th class="text-center whitespace-nowrap">ACTIONS</th>
             </tr>
         </thead>
-        <tbody>
+       {{-- <tbody>
             @foreach($employeeList as $list)
             <tr>
                 <td>{{isset($list->userDetail->employee_id) ? $list->userDetail->employee_id:''}}</td>
@@ -82,23 +73,45 @@
             </div>
             <!-- END: Delete Confirmation Modal -->
             @endforeach
-        </tbody>
+        </tbody> --}}
     </table>
 </div>
 
 <!-- END: Data List -->
 <script>
     $(document).ready(function() {
-        $('#employeelist').DataTable({
+        $("#employeelist").dataTable().fnDestroy();
+        var table = $('#employeelist').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copyHtml5',
                 'excelHtml5',
                 'csvHtml5',
                 'pdfHtml5'
-            ]
+            ],
+           
+            paging: true,
+            //pageLength: 10,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "lengthChange": true,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "{{route('employee-list-pagination')}}",
+            "bScrollInfinite": true,
+
+            columns: [
+                { data: 'employee_id'},
+                { data: 'name'},
+                { data: 'phone_number'},
+                { data: 'role_id'},
+                { data: 'team_id'},
+                { data: 'action'},
+            ],
         });
     });
+    
 </script>
 
 

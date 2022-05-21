@@ -2,9 +2,6 @@
 
 @section('subhead')
 <title>Employee List</title>
-
-<link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-
 @endsection
 
 @section('subcontent')
@@ -61,12 +58,6 @@
     </table>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-
-
-
-
 <script>
     $(document).ready(function() {
         attendanceFilter();
@@ -80,20 +71,14 @@
 
         $("#employeelist").dataTable().fnDestroy();
         var table = $('#employeelist').DataTable({
-            dom: "lBfrtip",
-            buttons: [{
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'A3',
-
-                    customize: function(doc) {
-                        doc.defaultStyle.fontSize = 7.2;
-                        doc.styles.tableHeader.fontSize = 10;
-                    }
-
-                },
-                'excel', 'csv', 'print', 'copy',
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
             ],
+           
             paging: true,
             //pageLength: 10,
             "searching": true,
