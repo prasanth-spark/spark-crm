@@ -61,7 +61,7 @@ class TaskController extends Controller
             'worked_hours' => $request->worked_hours,
             'status' => $request->task_status
         ]);
-        return response()->json(['status'=>true,'message'=>'User Project Details Updated']);
+        return response()->json(['status'=>true,'message'=>'User project Details Updated']);
     }
 
 
