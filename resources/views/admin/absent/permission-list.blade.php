@@ -2,8 +2,6 @@
 
 @section('subhead')
 <title>Permission List</title>
-<link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-
 @endsection
 
 @section('subcontent')
@@ -66,94 +64,8 @@
 
 
 <!-- END: Data List -->
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-<script>
-    $(document).ready(function() {
-
-        permissionFilter();
-
-    });
-
-    function permissionFilter() {
-        var fromdate = $('#from').val();
-        var todate = $('#to').val();
-        var teamName = $('#team_name').val();
-
-        $("#employeelist").dataTable().fnDestroy();
-        var table = $('#employeelist').DataTable({
-            dom: "lBfrtip",
-            buttons: [{
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'A3',
-
-                    customize: function(doc) {
-                        doc.defaultStyle.fontSize = 7.2;
-                        doc.styles.tableHeader.fontSize = 10;
-                    }
-
-                },
-                'excel', 'csv', 'print', 'copy',
-            ],
-            paging: true,
-            //pageLength: 10,
-            "searching": true,
-            "ordering": false,
-            "info": true,
-            "lengthChange": true,
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": "{{route('permission-list-pagination')}}",
-            "bScrollInfinite": true,
-            "fnServerParams": function(aoData) {
-                aoData.push({
-                    "name": "from_date",
-                    "value": fromdate
-                }, {
-                    "name": "to_date",
-                    "value": todate
-                }, {
-                    "name": "team_name",
-                    "value": teamName
-                });
-            },
-
-            columns: [{
-                    data: "id"
-                },
-                {
-                    data: "created_at"
-                },
-                {
-                    data: "name"
-                },
-                {
-                    data: "team"
-                },
-                {
-                    data: "role"
-                },
-                {
-                    data: "leave_type"
-                },
-                {
-                    data: "permission_status"
-                },
-                {
-                    data: "permission_hours_from"
-                },
-                {
-                    data: "permission_hours_to"
-                },
-                {
-                    data: "permission_hours"
-                },
-
-
-            ],
-        });
-    }
+<script type="text/javascript" src="{{URL::asset('dist/js/adminlistpagination/permission-list-pagination.js')}}">
+   
     function DDMMYYYY(value, event) {
         let newValue = value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
 

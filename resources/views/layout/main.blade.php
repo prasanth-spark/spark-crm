@@ -1,13 +1,14 @@
 @extends('../layout/base')
-<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
-<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
-<link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-<link href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{{URL::asset('dist/js/datatables/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('dist/js/datatables/dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('dist/js/datatables/dataTables.buttons.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('dist/js/datatables/jszip.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('dist/js/datatables/pdfmake.min.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('dist/js/datatables/vfs_fonts.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('dist/js/datatables/buttons.html5.min.js')}}"></script>
+<link href="{{ asset('dist/css/datatables/jquery.dataTables.min.css') }}" rel="stylesheet">
+<link href="{{ asset('dist/css/datatables/buttons.dataTables.min.css') }}" rel="stylesheet">
+
 
 @section('body')
     <body class="main">
