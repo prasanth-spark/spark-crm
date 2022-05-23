@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\employee\LoginController;
 use App\Http\Controllers\api\employee\AttendanceController;
 use App\Http\Controllers\api\employee\TaskController;
+use App\Http\Controllers\api\employee\ProjectAssignController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -34,7 +35,12 @@ Route::group(['namespace'=>'api'], function(){
         Route::post('/assigned-Project',[TaskController::class, 'assignedProject']);
         Route::post('/task-update',[TaskController::class, 'taskUpdate']);
 
-
+        //Project Manager Add Project Details
+        Route::get('/project-list',[ProjectAssignController::class, 'projectList']);
+        Route::get('/project-form',[ProjectAssignController::class, 'projectForm']);
+        Route::post('/project-add',[ProjectAssignController::class, 'projectAdd']);
+        Route::post('/project-update',[ProjectAssignController::class, 'projectUpdate']);
+        Route::post('/project-delete',[ProjectAssignController::class, 'projectDelete']);
 
 // });
 });
