@@ -21,6 +21,11 @@ class TaskController extends Controller
         $this->taskStatus = $taskStatus;
         $this->project    = $project;
     }
+
+    /*
+    Project Assign API
+    */
+
     public function assignedProject(Request $request)
     {
         $user = User::find($request->user_id);
@@ -32,6 +37,11 @@ class TaskController extends Controller
 
         return response()->json(['status'=>true,'message'=>'User Project Details for Drop Down','project_details'=>$data]);
     }
+
+    /*
+    Task Add API
+    */
+
     public function taskAdd(Request $request)
     {
         $this->taskSheet->create([
@@ -44,6 +54,11 @@ class TaskController extends Controller
         ]);
         return response()->json(['status'=>true,'message'=>'User Add Task Successfull']);
     }
+
+    /*
+    Task Details API
+    */
+
     public function taskDetails(Request $request)
     {
         $userId = $request->user_id;
@@ -51,6 +66,11 @@ class TaskController extends Controller
         $data = $tasks->get();
         return response()->json(['status'=>true,'message'=>'User Project Details','data'=>$data]);
     }
+
+    /*
+    Task Update API
+    */
+
     public function taskUpdate(Request $request)
     {
         $this->taskSheet->where('id', $request->id)->where('user_id',$request->user_id)->update([

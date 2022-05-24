@@ -28,6 +28,11 @@ class LoginController extends Controller
         $this->userdetails = $userdetails;
 
     }
+
+    /*
+     Employee Login API
+    */
+
     public function loginEmployee(Request $request)
     {
         $user = User::where('email', $request->email)->first();
@@ -50,10 +55,6 @@ class LoginController extends Controller
             $response = ["message" =>'User does not exist'];
             return response($response, 422);
         }
-    }
-    public function logout() 
-    {
-
     }
 
 }

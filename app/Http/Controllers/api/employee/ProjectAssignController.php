@@ -17,17 +17,30 @@ class ProjectAssignController extends Controller
         $this->project    = $project;
     }
 
+    /*
+     Project List API
+    */
+
     public function projectList()
     {
         $projects = Project::with('users')->get();
         return response()->json(['status'=>true,'message'=>'Project Details','data'=>$projects]);
     }
 
+    /*
+     Project List for Drop Down API
+    */
+
     public function projectForm()
     {
         $users = User::whereNotIn('role_id', [1,2])->get();
         return response()->json(['status'=>true,'message'=>'Team Members for Project','data'=>$users]);
     }
+
+    /*
+    Project Add API
+    */
+
     public function projectAdd(ProjectRequest $request)
     {
         $project = new Project();
@@ -38,6 +51,11 @@ class ProjectAssignController extends Controller
         $project->users()->attach(['user_id'=>$request->user_ids]);
         return response()->json(['status'=>true,'message'=>'Project Added Successfully']);
     }
+
+    /*
+    Project Update API
+    */
+
     public function projectUpdate(Request $request,Project $project)
     {
        $projectQuery = $this->project->where('id', $request->id);
@@ -50,6 +68,11 @@ class ProjectAssignController extends Controller
         
         return response()->json(['status'=>true,'message'=>'Project Update Successfully']);
     }
+
+    /*
+    Project Delete API
+    */
+
     public function projectDelete(Request $request,Project $project)
     {
         $projectQuery = $this->project->where('id', $request->id);
@@ -58,6 +81,5 @@ class ProjectAssignController extends Controller
         $project->delete();
         return response()->json(['status'=>true,'message'=>'Project Delete Successfully']);
     }
-
-
+    
 }
