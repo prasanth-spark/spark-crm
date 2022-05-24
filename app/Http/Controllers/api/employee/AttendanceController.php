@@ -27,8 +27,12 @@ class AttendanceController extends Controller
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
 
-        //$this->middleware(['role:Employee|Team Leader|Project Manager']);
     }
+
+    /*
+     Employee Attendance 
+    */
+
     public function attendanceStatus(Request $request)
     {  
         if($request->status == 0){
@@ -221,6 +225,5 @@ class AttendanceController extends Controller
             return response()->json(['status'=>true,'message'=>'User Active Successfull']);
         }
      }    
-
-     
+    
 }

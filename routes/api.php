@@ -6,6 +6,7 @@ use App\Http\Controllers\api\employee\LoginController;
 use App\Http\Controllers\api\employee\AttendanceController;
 use App\Http\Controllers\api\employee\TaskController;
 use App\Http\Controllers\api\employee\ProjectAssignController;
+use App\Http\Controllers\api\employee\TeamAttendanceController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -26,6 +27,7 @@ Route::group(['namespace'=>'api'], function(){
 
      
 // Route::group(['middleware'=>'auth:api'],function () {
+        
         //Attendance
         Route::post('attendance-status',[AttendanceController::class,'attendanceStatus']);
 
@@ -41,6 +43,15 @@ Route::group(['namespace'=>'api'], function(){
         Route::post('/project-add',[ProjectAssignController::class, 'projectAdd']);
         Route::post('/project-update',[ProjectAssignController::class, 'projectUpdate']);
         Route::post('/project-delete',[ProjectAssignController::class, 'projectDelete']);
+
+        //Team Attendance
+        Route::post('team-attendance',[TeamAttendanceController::class, 'teamAttendanceList']);
+
+        //Team Absent 
+        Route::post('team-absent',[TeamAttendanceController::class, 'teamAbsentlist']);
+
+        //Team Permission
+        Route::post('team-permission',[TeamAttendanceController::class, 'teamPermissionlist']);
 
 // });
 });
