@@ -7,6 +7,7 @@ use App\Http\Controllers\api\employee\AttendanceController;
 use App\Http\Controllers\api\employee\TaskController;
 use App\Http\Controllers\api\employee\ProjectAssignController;
 use App\Http\Controllers\api\employee\TeamAttendanceController;
+use App\Http\Controllers\api\employee\TeamTaskController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -38,7 +39,7 @@ Route::group(['namespace'=>'api'], function(){
         Route::post('/task-update',[TaskController::class, 'taskUpdate']);
 
         //Project Manager Add Project Details
-        Route::get('/project-list',[ProjectAssignController::class, 'projectList']);
+        Route::post('/project-list',[ProjectAssignController::class, 'projectList']);
         Route::get('/project-form',[ProjectAssignController::class, 'projectForm']);
         Route::post('/project-add',[ProjectAssignController::class, 'projectAdd']);
         Route::post('/project-update',[ProjectAssignController::class, 'projectUpdate']);
@@ -52,6 +53,9 @@ Route::group(['namespace'=>'api'], function(){
 
         //Team Permission
         Route::post('team-permission',[TeamAttendanceController::class, 'teamPermissionlist']);
+
+        //Team Task
+        Route::post('team-task',[TeamTaskController::class, 'teamTask']);
 
 // });
 });

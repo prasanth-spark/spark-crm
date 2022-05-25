@@ -159,6 +159,8 @@ class AttendanceController extends Controller
         }  
         }
         else if($attendanceValue == 0 && $leaveRequest=='Permission'){
+            if($start_date == $end_date)
+            {
                 if($hourdiff !=0)
                 {
                 $this->attendance->create([
@@ -179,8 +181,8 @@ class AttendanceController extends Controller
                     'leave_status'=>null,
                     'permission_hours_from'=>$request->permission_hours_from,
                     'permission_hours_to'=>$request->permission_hours_to,
-                    'start_date'=>$today_date,
-                    'end_date'=>$today_date,
+                    'start_date'=>$start_date,
+                    'end_date'=>$end_date,
                     'leave_counts'=>null,
                     'respond_status'=>1,
                 ]);
@@ -200,8 +202,8 @@ class AttendanceController extends Controller
                 'leave_status'=>null,
                 'permission_hours_from'=>$request->permission_hours_from,
                 'permission_hours_to'=>$request->permission_hours_to,
-                'start_date'=>$today_date,
-                'end_date'=>$today_date,
+                'start_date'=>$start_date,
+                'end_date'=>$end_date,
                 'leave_counts'=>null,
                 'respond_status'=>0,
             ]);
@@ -212,8 +214,10 @@ class AttendanceController extends Controller
         }else{
             return response()->json(['status'=>true,'message'=>'Your Permission Request Should be above Half an Hour']);
         }
-        }
-        else{
+    }else{
+        return response()->json(['status'=>true,'message'=>'Your Permission Request date is invalid']);
+    }
+        }else{
             $this->attendance->create([
                 'user_id'=>$userId,
                 'attendance'=>1,
