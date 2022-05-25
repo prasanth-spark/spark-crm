@@ -21,20 +21,30 @@ class ProjectAssignController extends Controller
      Project List API
     */
 
-    public function projectList()
+    public function projectList(Request $request)
     {
-        $projects = Project::with('users')->get();
-        return response()->json(['status'=>true,'message'=>'Project Details','data'=>$projects]);
+        $projectLists = Project::where('user_id',$request->user_id)->with('users')->get();
+        $data = [];
+        foreach($projectLists as $k => $projectList){
+            $projects = $projectList->users()->where('project_id', $projectList->id)->get();
+            foreach($projects as $key => $project){
+                $data[$k][$key]['name'] =$project->name;
+                $data[$k][$key]['title'] =$project->pivot->pivotParent->title;
+                $data[$k][$key]['description'] =$project->pivot->pivotParent->description;
+                
+            }
+        }
+        return response()->json(['status'=>true,'message'=>'Project Details','data'=>$data]);
     }
 
     /*
-     Project List for Drop Down API
+     Team Member List for Project Drop Down API
     */
 
     public function projectForm()
     {
         $users = User::whereNotIn('role_id', [1,2])->get();
-        return response()->json(['status'=>true,'message'=>'Team Members for Project','data'=>$users]);
+        return response()->json(['status'=>true,'message'=>'Team Members Drop Down for Project','data'=>$users]);
     }
 
     /*
