@@ -233,7 +233,7 @@ class AttendanceController extends Controller
             return response()->json(['status'=>true,'message'=>'User Active Successfull']);
         }
     }else{
-        return response()->json(['status'=>true,'message'=>'User Have Already Update Your Response']);
+        return response()->json(['status'=>true,'message'=>'you Have Already Update Your Response']);
          }
     }      
 }
