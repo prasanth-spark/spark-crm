@@ -35,6 +35,10 @@ class AttendanceController extends Controller
 
     public function attendanceStatus(Request $request)
     {  
+        $today_date = Carbon::now()->format("Y-m-d");
+        $id = Attendance::where('user_id',$request->user_id)->whereDate('created_at',$today_date)->first();        
+        if($id == null){
+       
         if($request->status == 0){
             $request->validate([
                 'reason' => 'required',
@@ -216,7 +220,7 @@ class AttendanceController extends Controller
         }
     }else{
         return response()->json(['status'=>true,'message'=>'Your Permission Request date is invalid']);
-    }
+         }
         }else{
             $this->attendance->create([
                 'user_id'=>$userId,
@@ -228,6 +232,8 @@ class AttendanceController extends Controller
             ]);
             return response()->json(['status'=>true,'message'=>'User Active Successfull']);
         }
-     }    
-    
+    }else{
+        return response()->json(['status'=>true,'message'=>'you Have Already Update Your Response']);
+         }
+    }      
 }
