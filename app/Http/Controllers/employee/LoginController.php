@@ -102,13 +102,13 @@ class LoginController extends Controller
     {
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => ['1', '3']])) {
-            if (Auth::user()->role_id != 1 && !empty(Auth::user()->email_verified_at)) {
+            // if (Auth::user()->role_id != 1 && !empty(Auth::user()->email_verified_at)) {
                 return redirect('/employee/employee_dashboard');
-            }
-             else {
-                Auth::logout();
-                return back();
-            }
+            // }
+            //  else {
+            //     Auth::logout();
+            //     return back();
+            // }
         }
         return back();
 
