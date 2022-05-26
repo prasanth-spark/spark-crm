@@ -35,10 +35,6 @@ class AttendanceController extends Controller
 
     public function attendanceStatus(Request $request)
     {  
-        $today_date = Carbon::now()->format("Y-m-d");
-        $id = Attendance::where('user_id',$request->user_id)->whereDate('created_at',$today_date)->first();        
-        if($id == null){
-       
         if($request->status == 0){
             $request->validate([
                 'reason' => 'required',
@@ -106,6 +102,10 @@ class AttendanceController extends Controller
         $date = $date->format("Y-m-d");
 
         if($attendanceValue == 0 && $leaveRequest=='Leave'){
+            $today_date = Carbon::now()->format("Y-m-d");
+            $id = LeaveRequest::where('user_id',$request->user_id)->whereDate('created_at',$today_date)->first();     
+            if($id == null){
+
             if(isset($request->leave_days_from) && isset($request->leave_days_to) && $request->leave_days_from >= $date && $request->leave_days_to >= $date){
             $this->attendance->create([
                 'user_id'=>$userId,
@@ -155,15 +155,23 @@ class AttendanceController extends Controller
             $job = new LeaveDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
               dispatch($job);
               return response()->json(['status'=>true,'message'=>'Leave Permission Request send to Your TeamLead.Pls wait for Approvel']);
-
           }
-        }  
-        else{
+        }else{
             return response()->json(['status'=>true,'message'=>'Please Enter Valid Date']); 
-        }  
+        } 
+    }
+    else{
+        return response()->json(['status'=>true,'message'=>'Today You Have Reach Your Limit For Leave Requset']);
+    } 
+
         }
+        
         else if($attendanceValue == 0 && $leaveRequest=='Permission'){
-            if($start_date == $end_date)
+            $today_date = Carbon::now()->format("Y-m-d");
+            $id = LeaveRequest::where('user_id',$request->user_id)->whereDate('created_at',$today_date)->first();     
+            if($id == null){
+
+            if(isset($request->leave_days_from) && isset($request->leave_days_to) && $request->leave_days_from >= $date && $request->leave_days_to >= $date && $start_date == $end_date)
             {
                 if($hourdiff !=0)
                 {
@@ -222,6 +230,14 @@ class AttendanceController extends Controller
         return response()->json(['status'=>true,'message'=>'Your Permission Request date is invalid']);
          }
         }else{
+            return response()->json(['status'=>true,'message'=>'Today You Have Reach Your Limit For Permission Requset']);
+        }
+
+        }else{
+            $today_date = Carbon::now()->format("Y-m-d");
+            $id = Attendance::where('user_id',$request->user_id)->whereDate('created_at',$today_date)->first();        
+            if($id == null){
+
             $this->attendance->create([
                 'user_id'=>$userId,
                 'attendance'=>1,
@@ -231,9 +247,10 @@ class AttendanceController extends Controller
                 'status'=> 1
             ]);
             return response()->json(['status'=>true,'message'=>'User Active Successfull']);
+        }else{
+            return response()->json(['status'=>true,'message'=>'You Have Already Update Your Attendance Status']);
+             }
         }
-    }else{
-        return response()->json(['status'=>true,'message'=>'you Have Already Update Your Response']);
-         }
+  
     }      
 }
