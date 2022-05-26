@@ -13,11 +13,12 @@ use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use App\Models\TaskSheet;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class TeamTaskController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet,Project $project)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;
@@ -28,8 +29,10 @@ class TeamTaskController extends Controller
         $this->attendance    = $attendance;
         $this->leaverequest  = $leaverequest;
         $this->tasksheet     = $tasksheet;
-    }
+        $this->project    = $project;
 
+    }
+    
     /*
     Team Members Task Details
     */
@@ -39,10 +42,11 @@ class TeamTaskController extends Controller
         $teamTask=$this->userdetails->where('user_id',$request->user_id)->first();
         $teamId = $teamTask->team_id;
 
-        $taskSheet=$this->tasksheet->whereHas('taskToUserDetails', function ($query) use ($teamId) {
+        $taskSheets=$this->tasksheet->whereHas('taskToUserDetails', function ($query) use ($teamId) {
             $query->where('team_id',$teamId)->where('role_id',4);
         })->with('taskToUser','taskToUserDetails')->get(); 
-        return response()->json(['status'=>true,'message'=>'Team Member Task Details','data'=>$taskSheet]);
+        dd($taskSheets[1]->projects['title']);
+        return response()->json(['status'=>true,'message'=>'Team Member Task Details','data'=>$taskSheets]);
     }
-    
+
 }
