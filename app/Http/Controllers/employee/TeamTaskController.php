@@ -50,7 +50,7 @@ class TeamTaskController extends Controller
         $taskSheet=$this->tasksheet->whereHas('taskToUserDetails', function ($query) use ($teamId) {
             $query->where('team_id',$teamId)->where('role_id',4);
         })->with('taskToUser','taskToUserDetails')->get(); 
-        dd($taskSheet[1]->projects);
+        // dd($taskSheet[1]->projects);
         return view('employee/teamtask/teamtask-list', compact('taskSheet'));
     }
 
