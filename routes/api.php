@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Auth;
 Route::group(['namespace'=>'api'], function(){
 
        //Login and Logout
-       Route::post('/login-employee', [LoginController::class, 'loginEmployee'])->name('login');
+       Route::post('/login-employee', [LoginController::class, 'loginEmployee']);
        Route::post('/logout',[LoginController::class,'logout']);
 
      
@@ -40,7 +40,7 @@ Route::group(['namespace'=>'api'], function(){
 
         //Project Manager Add Project Details
         Route::post('/project-list',[ProjectAssignController::class, 'projectList']);
-        Route::get('/project-form',[ProjectAssignController::class, 'projectForm']);
+        Route::get('/project-member',[ProjectAssignController::class, 'projectForm']);
         Route::post('/project-add',[ProjectAssignController::class, 'projectAdd']);
         Route::post('/project-update',[ProjectAssignController::class, 'projectUpdate']);
         Route::post('/project-delete',[ProjectAssignController::class, 'projectDelete']);
