@@ -138,10 +138,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
                         <div class="grid grid-cols-12 gap-6 mt-5">
                             <div class="col-span-12 md:col-span-6">
                                 <div>
@@ -338,7 +334,7 @@
                 </div>
             </div>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{{URL::asset('dist/js/jquery.min.js')}}"></script>
 
         <script>
             $(document).ready(function() {

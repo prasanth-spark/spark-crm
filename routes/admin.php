@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/new-register-list', [EmployeeController::class, 'newRegisterList'])->name('new-register-list');
         Route::get('/approved/{id}', [EmployeeController::class, 'adminApproved'])->name('admin-approved');
         Route::get('/rejected/{id}', [EmployeeController::class, 'adminRejected'])->name('admin-rejected');
+        Route::get('/employee-list-pagination', [EmployeeController::class, 'employeeListPagination'])->name('employee-list-pagination');
+
 
 
 
@@ -87,6 +89,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/language-edit/{id}', [LanguageController::class, 'editLanguage'])->name('language-edit');
         Route::post('/language-update', [LanguageController::class, 'updateLanguage'])->name('language-update');
         Route::post('/language-delete', [LanguageController::class, 'deleteLanguage'])->name('language-delete');
+        Route::get('/language-list-pagination', [LanguageController::class, 'languageListPagination'])->name('language-list-pagination');
+
 
 
 

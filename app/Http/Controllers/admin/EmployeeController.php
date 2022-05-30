@@ -25,10 +25,11 @@ use Maatwebsite\Excel\HeadingRowImport;
 use  App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use App\Helper\ImageUpload;
+use Illuminate\Support\Facades\Session;
 
 class EmployeeController extends Controller
 {
-   use ImageUpload;
+    use ImageUpload;
     public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
     {
         $this->userdetails = $userdetails;
@@ -65,52 +66,52 @@ class EmployeeController extends Controller
     public function employeeAdd(EmployeeValidationRequest $request)
     {
         // try {
-           
-            $userCredentials = $this->user->create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'status' => '1',
-                'password' => Hash::make($request->password),
-                'role_id' => $request->role,
-                'team_id' => $request->team_name,
-            ]);
 
-            if ($request->hasFile('photos')) {
-                $photos = $this->commonImageUpload($request->photos, 'photos');
-                $userCredentials->update(['photo' => $photos]);
-            }
-            $password=$request->password;
-            dispatch(new VerfyUserEmailJob($userCredentials,$password));
+        $userCredentials = $this->user->create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'status' => '1',
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role,
+            'team_id' => $request->team_name,
+        ]);
 
-            $userCredentials->assignRole([$request->role]);
-            $count=User::count();
+        if ($request->hasFile('photos')) {
+            $photos = $this->commonImageUpload($request->photos, 'photos');
+            $userCredentials->update(['photo' => $photos]);
+        }
+        $password = $request->password;
+        dispatch(new VerfyUserEmailJob($userCredentials, $password));
 
-            $this->userdetails->create([
-                'user_id' => $userCredentials->id,
-                'employee_id' => 'SOT-'.($count),
-                'father_name' => $request->father_name,
-                'mother_name' => $request->mother_name,
-                'phone_number' => $request->phone_number,
-                'emergency_contact_number' => $request->emergency_contact_number,
-                'official_email' => $request->official_email,
-                'joined_date' => $request->joined_date,
-                'home_address' => $request->home_address,
-                'date_of_birth' => $request->date_of_birth,
-                'certificate_date_of_birth' => $request->certificate_date_of_birth,
-                'designation' => $request->desigination,
-                'blood_group' => $request->blood_group,
-                'pan_number' => $request->pan_number,
-                'aadhar_number' => $request->aadhar_number,
-                'bank_id' => $request->bank_name,
-                'account_holder_name'    => $request->account_holder_name,
-                'account_number' => $request->account_number,
-                'ifsc_code' => $request->ifsc_code,
-                'branch_name' => $request->branch_name,
-                'account_type_id' => $request->account_type,
-                'role_id' => $userCredentials->role_id,
-                'team_id' => $request->team_name,
-            ]);
-            return redirect('/admin/employee-list');
+        $userCredentials->assignRole([$request->role]);
+        $count = User::count();
+
+        $this->userdetails->create([
+            'user_id' => $userCredentials->id,
+            'employee_id' => 'SOT-' . ($count),
+            'father_name' => $request->father_name,
+            'mother_name' => $request->mother_name,
+            'phone_number' => $request->phone_number,
+            'emergency_contact_number' => $request->emergency_contact_number,
+            'official_email' => $request->official_email,
+            'joined_date' => $request->joined_date,
+            'home_address' => $request->home_address,
+            'date_of_birth' => $request->date_of_birth,
+            'certificate_date_of_birth' => $request->certificate_date_of_birth,
+            'designation' => $request->desigination,
+            'blood_group' => $request->blood_group,
+            'pan_number' => $request->pan_number,
+            'aadhar_number' => $request->aadhar_number,
+            'bank_id' => $request->bank_name,
+            'account_holder_name'    => $request->account_holder_name,
+            'account_number' => $request->account_number,
+            'ifsc_code' => $request->ifsc_code,
+            'branch_name' => $request->branch_name,
+            'account_type_id' => $request->account_type,
+            'role_id' => $userCredentials->role_id,
+            'team_id' => $request->team_name,
+        ]);
+        return redirect('/admin/employee-list');
 
         // } catch (\Throwable $exception) {
         //     Log::info($exception->getMessage());
@@ -179,9 +180,9 @@ class EmployeeController extends Controller
     public function employeeUpdate(EmployeeUpdateValidationRequest $request)
     {
         // try{ 
-       
+
         $oldUser = $this->user->getSingleUser($request->id);
-               
+
         $this->user->where('id', $request->id)->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -204,6 +205,7 @@ class EmployeeController extends Controller
             'joined_date' => $request->joined_date,
             'home_address' => $request->home_address,
             'date_of_birth' => $request->date_of_birth,
+            'certificate_date_of_birth' => $request->certificate_date_of_birth,
             'blood_group' => $request->blood_group,
             'pan_number' => $request->pan_number,
             'aadhar_number' => $request->aadhar_number,
@@ -241,6 +243,101 @@ class EmployeeController extends Controller
         } catch (\Throwable $exception) {
             Log::info($exception->getMessage());
         }
+    }
+
+    /**
+     * Server side pagination in Employee list.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function employeeListPagination(Request $request)
+    {
+
+
+        $employeeList = $this->user->where('status', 1)->with('userDetail', 'userDetail.teamToUserDetails', 'userDetail.roleToUserDetails');
+        $limit = $request->iDisplayLength;
+        $offset = $request->iDisplayStart;
+
+
+        if ($request->sSearch != '') {
+            $keyword = $request->sSearch;
+            $employeeList->where('name', 'like', '%' . $keyword . '%');
+
+            $employeeList->orwhereHas('userDetail.teamToUserDetails', function ($q) use ($keyword) {
+                $q->where('team', 'like', '%' . $keyword . '%');
+            });
+            $employeeList->orwhereHas('userDetail.roleToUserDetails', function ($q) use ($keyword) {
+                return $q->where('name', 'like', '%' . $keyword . '%');
+            });
+        }       
+        $total_data = $employeeList->count();
+        $employeeList = $employeeList->when(($limit != '-1' && isset($offset)),
+            function ($q) use ($limit, $offset) {
+                return $q->offset($offset)->limit($limit);
+            }
+        );
+
+        $employeeLists = $employeeList->get();
+
+        $column = array();
+        $employeeListData = [];
+        foreach ($employeeLists as $employeeList) {
+
+
+            $col['id'] = $offset + 1;
+            $col['employee_id'] = isset($employeeList->userDetail->employee_id) ? $employeeList->userDetail->employee_id : '';
+            $col['name'] = $employeeList->name;
+            $col['phone_number'] = isset($employeeList->userDetail->phone_number) ? $employeeList->userDetail->phone_number : '';
+            $col['role_id'] = isset($employeeList->userDetail->roleToUserDetails->name) ? $employeeList->userDetail->roleToUserDetails->name : '';
+            $col['team_id'] = isset($employeeList->userDetail->teamToUserDetails->team) ? $employeeList->userDetail->teamToUserDetails->team : '';
+            $col['action'] = '<div class="flex justify-center items-center">
+                            <a class="flex items-center mr-3" href="' . url('/') . '/admin/employee-details/' . $employeeList->id . '">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye w-4 h-4 mr-1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>view
+                             </a>
+                             <a class="flex items-center mr-3" href="' . url('/') . '/admin/employee-edit/' . $employeeList->id . '">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit w-4 h-4 mr-1"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Edit
+                            </a>
+                            <a class="flex items-center text-theme-21" data-toggle="modal" data-target="#delete-confirmation-modal-' . $employeeList->id . '">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 w-4 h-4 mr-1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>Delete
+                            </a>
+                            </div>
+                            <div id="delete-confirmation-modal-' . $employeeList->id . '" class="modal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <form action="' . route('employee-delete') . '" method="post">
+                                <input type="hidden" name="_token" id="csrf-token" value="' . Session::token() . '"/>
+                                <input type="hidden" name="id" value="' . $employeeList->id . '">
+                                    <div class="modal-content">
+                                        <div class="modal-body p-0">
+                                            <div class="p-5 text-center">
+                                                <em data-feather="x-circle" class="w-16 h-16 text-theme-21 mx-auto mt-3"></em>
+                                                <div class="text-3xl mt-5">Are you sure?</div>
+                                                <div class="text-gray-600 mt-2">Do you really want to delete these records? <br>This process cannot be undone.</div>
+                                            </div>
+                                            <div class="px-5 pb-8 text-center">
+                                                <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Cancel</button>
+                                                <button type="submit" class="btn btn-danger w-24">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>';
+
+
+
+            array_push($column, $col);
+            $offset++;
+        }
+        
+        $employeeListData['sEcho'] = $request->sEcho;
+        $employeeListData['aaData'] = $column;
+        $employeeListData['iTotalRecords'] = $total_data;
+        $employeeListData['iTotalDisplayRecords'] = $total_data;
+
+
+        return json_encode($employeeListData);
     }
 
     /**
@@ -291,7 +388,7 @@ class EmployeeController extends Controller
     }
 
 
-        /**
+    /**
      * Show MailUsing view LoginForm.
      *
      * @return \Illuminate\Http\Response
@@ -412,7 +509,7 @@ class EmployeeController extends Controller
             }
 
             $userCredentials->save();
-            dispatch(new VerfyUserEmailJob($userCredentials,$password));
+            dispatch(new VerfyUserEmailJob($userCredentials, $password));
 
             $csv1 = array_combine(array_slice($config, 6, 24),  array_slice($row, 6, 24));
             $request2 = array_slice($request->fields, 6, 24);
