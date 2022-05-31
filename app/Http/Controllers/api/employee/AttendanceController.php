@@ -226,9 +226,9 @@ class AttendanceController extends Controller
         }else{
             return response()->json(['status'=>true,'message'=>'Your Permission Request Should be above Half an Hour']);
         }
-    }else{
+        }else{
         return response()->json(['status'=>true,'message'=>'Your Permission Request date is invalid']);
-         }
+        }
         }else{
             return response()->json(['status'=>true,'message'=>'Today You Have Reach Your Limit For Permission Requset']);
         }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\employee;
+namespace App\Http\Controllers\api\employee;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -10,7 +10,6 @@ use App\Models\BankDetails;
 use App\Models\RoleModel;
 use App\Models\TeamModel;
 use App\Http\Request\UserProfileRequest;
-use App\Models\LanguageLevel;
 use App\Models\LanguageSkill;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
+
     public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
     {
         $this->user        = $user;
@@ -27,45 +27,37 @@ class UserProfileController extends Controller
         $this->bankdetails = $bankdetails;
         $this->rolemodel   = $rolemodel;
         $this->teammodel   = $teammodel;
-
-
-        $this->middleware(['role:Employee|Team Leader|Project Manager']);
-
     }
 
-    /**
-     * Show User Profile Form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function userProfileForm()
+    public function userDetail(Request $request)
     {
-        $userId = Auth::user()->id;
+        $userId = $requset->user_id;
         $userdetails = $this->userdetails->where('user_id', $userId)->with('bankNameToEmployee', 'accountTypeToEmployee', 'teamToUserDetails')->first();
         if (isset($userdetails)) {
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
             $team = $this->teammodel->get();
             $language = LanguageSkill::all();
-
-            return view('employee/user-profile/user-profile-form', compact('bankName', 'accountType', 'team', 'userdetails','language'));
+            $data = array();
+            $data['bankName'] = $bankName;
+            $data['accountType'] = $accountType;
+            $data['team'] = $team;
+            $data['language'] = $language;   
+            return response()->json(['status'=>true,'message'=>'User Details','user_details'=>$data]);
         }else{
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
             $team = $this->teammodel->get();
-            return view('employee/user-profile/user-profile-form', compact('bankName', 'accountType', 'team'));
+            $data = array();
+            $data['bankName'] = $bankName;
+            $data['accountType'] = $accountType;
+            $data['team'] = $team;
+            return response()->json(['status'=>true,'message'=>'User Details','user_details'=>$data]);
         }
     }
-
-    /**
-     * Add Employee.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function userProfileAdd(UserProfileRequest $request)
     {
-        $userID = Auth::user()->id;
+        $userID = $request->user_id;
         $user = $this->user->where('id', $userID)->first();
         $this->user->where('id',$user->id)->update([
             'team_id'=>$request->team_name,
@@ -95,12 +87,9 @@ class UserProfileController extends Controller
                 'role_id' => $user->role_id,
                 'team_id' => $request->team_name,
                 'status'=>'1',
-
             ]);
-            return redirect('/employee/employee_dashboard')->with('success', 'Profile Updated Successfully');
-
-        }
-        else{
+            return response()->json(['status'=>true,'message'=>'User Profile updated successfully']);
+        }else{
         $this->userdetails->create([
             'user_id' => $user->id,
             'father_name' => $request->father_name,
@@ -123,62 +112,19 @@ class UserProfileController extends Controller
             'role_id' => $user->role_id,
             'team_id' => $request->team_name,
         ]);
-        return redirect('/employee/employee_dashboard')->with('success', 'Profile Added Successfully');
-        }  
+        return response()->json(['status'=>true,'message'=>'User Profile Created successfully']);
+       }  
     }
-
-    /**
-     * Reset Password.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function userResetForm()
-    {
-        return view('employee/user-profile/user-reset-form');
-    }
-
-
-     /**
-     * update password
-     * @param ResetPasswordRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
     public function userChangePassword(Request $request)
     {
-      
         $request->validate([
             'current_password' => ['required', new MatchOldPassword],
             'new_password' => ['required'],
             'new_confirm_password' => ['same:new_password'],
         ]);
-   
-        User::find(Auth::user()->id)->update(['password'=> Hash::make($request->new_password)]);
-        return redirect('/employee/employee_dashboard')->with('success', 'Password Change Successfully');
-
+        User::find($request->user_id)->update(['password'=> Hash::make($request->new_password)]);
+        return response()->json(['status'=>true,'message'=>'User New Passord Created successfully']);
     }
 
-
-    /**
-     * Language Skill Add.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function languageSkillAdd(Request $request)
-    {
- 
-        $languageLevels = array_combine($request->language,$request->language_level);
-        foreach($languageLevels as $language =>$languageLevel){
-        LanguageLevel::create([
-                'user_id' => Auth::user()->id,
-                'language_name' => $language,
-                'language_level' => $languageLevel,
-            ]);
-        }
-        return redirect('/employee/employee_dashboard')->with('success', 'Language Skill Added Successfully');
-        
-
-    }
 
 }

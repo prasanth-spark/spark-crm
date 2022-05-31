@@ -22,12 +22,12 @@ use Illuminate\Support\Facades\Auth;
 */
 Route::group(['namespace'=>'api'], function(){
 
-       //Login and Logout
+        //Login and Logout
+
        Route::post('/login-employee', [LoginController::class, 'loginEmployee']);
-       Route::post('/logout',[LoginController::class,'logout']);
 
      
-// Route::group(['middleware'=>'auth:api'],function () {
+        // Route::group(['middleware'=>'auth:api'],function () {
         
         //Attendance
         Route::post('attendance-status',[AttendanceController::class,'attendanceStatus']);
@@ -56,6 +56,12 @@ Route::group(['namespace'=>'api'], function(){
 
         //Team Task
         Route::post('team-task',[TeamTaskController::class, 'teamTask']);
+
+        // User Profile
+        Route::post('user-detail',[UserProfileController::class, 'userDetail']);
+        Route::post('user-detail-add',[UserProfileController::class, 'userProfileAdd']);
+        Route::post('user-password-change',[UserProfileController::class, 'userChangePassword']);
+
 
 // });
 });
