@@ -86,6 +86,21 @@ class EmployeeController extends Controller
         $userCredentials->assignRole([$request->role]);
         $count = User::count();
 
+        if($userCredentials->role_id==2){
+            $designation = "Project Manager";
+        }
+        if($userCredentials->role_id==3){
+            $designation = "Team Lead";
+        }
+        if($userCredentials->role_id==4){
+            $designation = $request->designation;
+        }
+        if($userCredentials->role_id==5){
+            $designation = "Tech Architect";
+        }
+        if($userCredentials->role_id==6){
+            $designation = "Project Architect";
+        }
         $this->userdetails->create([
             'user_id' => $userCredentials->id,
             'employee_id' => 'SOT-' . ($count),
@@ -98,12 +113,12 @@ class EmployeeController extends Controller
             'home_address' => $request->home_address,
             'date_of_birth' => $request->date_of_birth,
             'certificate_date_of_birth' => $request->certificate_date_of_birth,
-            'designation' => $request->desigination,
+            'designation' => $designation,
             'blood_group' => $request->blood_group,
             'pan_number' => $request->pan_number,
             'aadhar_number' => $request->aadhar_number,
             'bank_id' => $request->bank_name,
-            'account_holder_name'    => $request->account_holder_name,
+            'account_holder_name' => $request->account_holder_name,
             'account_number' => $request->account_number,
             'ifsc_code' => $request->ifsc_code,
             'branch_name' => $request->branch_name,
