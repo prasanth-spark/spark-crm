@@ -405,7 +405,8 @@ class AttendanceController extends Controller
 //                 dispatch($job);
 //                 return redirect('/employee/employee_dashboard');
 //     }
-    public function attendanceList(User $user){
+    public function attendanceList(User $user)
+    {
         $attendances = $this->attendance->where('user_id',$user->id)->first();
         $this->authorize('view', $attendances);
         $date = Carbon::now();
@@ -413,7 +414,7 @@ class AttendanceController extends Controller
         $attendance= $this->attendance->where(['user_id' => $user->id ,'date' => $date])->first();
         $leaveDetails = LeaveRequest::where('user_id',$user->id)->get();
         return view('/employee/attendance-report',compact('user','attendance','leaveDetails'));
-}
+    }
     
 }
 
