@@ -93,7 +93,7 @@ class EmployeeController extends Controller
             $designation = "Team Lead";
         }
         if($userCredentials->role_id==4){
-            $designation = $request->designation;
+            $designation = $request->desigination;
         }
         if($userCredentials->role_id==5){
             $designation = "Tech Architect";
