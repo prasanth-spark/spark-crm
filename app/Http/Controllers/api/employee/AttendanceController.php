@@ -136,6 +136,7 @@ class AttendanceController extends Controller
                 $leaveType =$request->leave_type;
                 $jobs = new LeaveMailSend($leave_status,$user,$reason,$leaveType);
                 dispatch($jobs);
+                
                 return response()->json(['status'=>true,'message'=>'Your Leave Permission send to TeamLead']);
             }else{
             $leaveDetail= $this->leave_request->create([               
@@ -159,11 +160,9 @@ class AttendanceController extends Controller
         }else{
             return response()->json(['status'=>true,'message'=>'Please Enter Valid Date']); 
         } 
-    }
-    else{
+       }else{
         return response()->json(['status'=>true,'message'=>'Today You Have Reach Your Limit For Leave Requset']);
-    } 
-
+          } 
         }
         
         else if($attendanceValue == 0 && $leaveRequest=='Permission'){
@@ -251,6 +250,6 @@ class AttendanceController extends Controller
             return response()->json(['status'=>true,'message'=>'You Have Already Update Your Attendance Status']);
              }
         }
-  
-    }      
+    }
+              
 }

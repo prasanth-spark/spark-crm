@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 */
 Route::group(['namespace'=>'api'], function(){
 
-        //Login and Logout
+       //Login and Logout
 
        Route::post('/login-employee', [LoginController::class, 'loginEmployee']);
 

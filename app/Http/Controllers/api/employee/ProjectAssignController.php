@@ -23,18 +23,9 @@ class ProjectAssignController extends Controller
 
     public function projectList(Request $request)
     {
-        $projectLists = Project::where('user_id',$request->user_id)->with('users')->get();
-        $data = [];
-        foreach($projectLists as $k => $projectList){
-            $projects = $projectList->users()->where('project_id', $projectList->id)->get();
-            foreach($projects as $key => $project){
-                $data[$k][$key]['name'] =$project->name;
-                $data[$k][$key]['title'] =$project->pivot->pivotParent->title;
-                $data[$k][$key]['description'] =$project->pivot->pivotParent->description;
-                
-            }
-        }
-        return response()->json(['status'=>true,'message'=>'Project Details','data'=>$data]);
+        $projectids = Project::where('user_id',$request->user_id)->pluck('id');
+        $projectLists = Project::where('user_id',$request->user_id)->whereIn('id',$projectids)->with('users')->get();
+        return response()->json(['status'=>true,'message'=>'Project Details','Project Details'=>$projectLists]);
     }
 
     /*
@@ -44,7 +35,7 @@ class ProjectAssignController extends Controller
     public function projectForm()
     {
         $users = User::whereNotIn('role_id', [1,2])->get();
-        return response()->json(['status'=>true,'message'=>'Team Members Drop Down for Project','data'=>$users]);
+        return response()->json(['status'=>true,'message'=>'Team Members Drop Down for Project','Team Members'=>$users]);
     }
 
     /*
@@ -58,7 +49,10 @@ class ProjectAssignController extends Controller
         $project->title = $request->title;
         $project->description = $request->description;
         $project->save();
-        $project->users()->attach(['user_id'=>$request->user_ids]);
+        foreach($request->user_ids as $user_ids)
+        {
+            $project->users()->attach($user_ids);
+        }
         return response()->json(['status'=>true,'message'=>'Project Added Successfully']);
     }
 
