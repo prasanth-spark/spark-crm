@@ -185,12 +185,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 gap-6 mt-5">
-                            <div class="col-span-12 md:col-span-6">
+                        <br>
+                        <div class="col-span-12 md:col-span-6">
                                 <div>
+                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelRole">Role<span style="color:red">*</span></label>
+                                    <select placeholder="Role" type="text" class="tom-select w-full" id="Role" name='role' onchange="role()">
+                                        <option value selected="selected" disabled="disabled"></option>
+                                        @foreach($role as $r)
+                                        <option value="{{$r->id}}">{{$r->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('role')
+                                    <span style="color:red">{{$message}}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                        <div class="grid grid-cols-12 gap-12 mt-5">
+                        <div class="col-span-12 md:col-span-12">
+                                <div id="team">
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelTeam">Team<span style="color:red">*</span></label>
-
-
                                     <select placeholder="Team Name" type="text" class="tom-select w-full" id="Team" name='team_name' onchange="team()">
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($team as $t)
@@ -198,22 +212,6 @@
                                         @endforeach
                                     </select>
                                     @error('team_name')
-                                    <span style="color:red">{{$message}}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-6">
-                                <div>
-                                    <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelRole">Role<span style="color:red">*</span></label>
-
-                                    <select placeholder="Role" type="text" class="tom-select w-full" id="Role" name='role' onchange="role()">
-
-                                        <option value selected="selected" disabled="disabled"></option>
-                                        @foreach($role as $r)
-                                        <option value="{{$r->id}}">{{$r->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('role')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
                                 </div>
@@ -340,10 +338,17 @@
             $(document).ready(function() {
 
                 $("#desigination").hide();
+                $("#team").hide();
                 $('#Role').on('change', function() {
-                    if (this.value == '4') {
+                    if (this.value == '4' || this.value == '3'){
                         $("#desigination").show();
-                    } else {
+                        $("#team").show();
+                        if(this.value == '3')
+                        {
+                            $("#desigination").hide();
+                        }
+                    }else{
+                        $("#team").hide();
                         $("#desigination").hide();
                     }
                 });
@@ -514,19 +519,22 @@
                     } else {
                         $("#Blood_group").css("border-color", 'unset');
                     }
-                    if (Team == null || Team == "") {
-                        $("#LabelTeam").css({
+                    if(Role == "4" || Role == "3") {
+                        if(Team == null || Team == "")
+                        {
+                            $("#LabelTeam").css({
                             'font-family': 'ArvoBold',
                             'color': 'red',
                             'font-size': '100%'
-                        });
-                        e.preventDefault();
-                    } else {
+                           });
+                         e.preventDefault();
+                        }else{
                         $("#LabelTeam").css({
                             'font-family': 'unset',
                             'color': 'unset',
                             'font-size': 'unset'
                         });
+                    }    
                     }
                     if (Role == null || Role == "") {
                         $("#LabelRole").css({

@@ -31,7 +31,7 @@ class ProjectAssignController extends Controller
      */
     public function ProjectForm()
     {
-        $users = User::whereNotIn('role_id', [1,2])->get();
+        $users = User::whereNotIn('role_id', [1,2,6,5,7,8])->get();
         return view('employee/project-assign/project-assign-form', compact('users'));
     }
 

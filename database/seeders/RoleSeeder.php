@@ -33,6 +33,10 @@ class RoleSeeder extends Seeder
         [
             'name' => 'Other'
         ],
+        [
+            'name' => 'Human Resource'
+        ],
+
     ];
 
     /**

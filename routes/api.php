@@ -62,6 +62,12 @@ Route::group(['namespace'=>'api'], function(){
         Route::post('user-detail-add',[UserProfileController::class, 'userProfileAdd']);
         Route::post('user-password-change',[UserProfileController::class, 'userChangePassword']);
 
+        //Team Lead Response
+        Route::post('leave-status',[AttendanceController::class, 'leaveStatus']);
+        Route::post('permission-status',[AttendanceController::class, 'permissionStatus']);
+        Route::post('leave-list',[AttendanceController::class, 'attendanceList']);
+
+
 
 // });
 });

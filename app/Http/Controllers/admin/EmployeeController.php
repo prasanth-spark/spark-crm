@@ -66,7 +66,6 @@ class EmployeeController extends Controller
     public function employeeAdd(EmployeeValidationRequest $request)
     {
         // try {
-
         $userCredentials = $this->user->create([
             'name' => $request->name,
             'email' => $request->email,
@@ -100,6 +99,9 @@ class EmployeeController extends Controller
         }
         if($userCredentials->role_id==6){
             $designation = "Project Architect";
+        }
+        if($userCredentials->role_id==8){
+            $designation = "Human Resource";
         }
         $this->userdetails->create([
             'user_id' => $userCredentials->id,
@@ -141,7 +143,6 @@ class EmployeeController extends Controller
     public function employeeList()
     {
         try {
-
             $employeeList = $this->user->where('status', 1)->with('userDetail', 'userDetail.teamToUserDetails', 'userDetail.roleToUserDetails')->get();
             return view('admin/employee/employee-list', compact('employeeList'));
         } catch (\Throwable $exception) {

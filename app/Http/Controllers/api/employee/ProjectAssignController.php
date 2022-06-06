@@ -34,7 +34,7 @@ class ProjectAssignController extends Controller
 
     public function projectForm()
     {
-        $users = User::whereNotIn('role_id', [1,2])->get();
+        $users = User::whereNotIn('role_id', [1,2,5,6,7,8])->get();
         return response()->json(['status'=>true,'message'=>'Team Members Drop Down for Project','Team Members'=>$users]);
     }
 
