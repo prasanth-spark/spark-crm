@@ -21,7 +21,7 @@ class CreateLeaveRequestsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('description')->nullable();
             $table->integer('permission_status')->nullable()->comment('0->permission_received,1->permission_accepted,2->permission_rejected,3->permission_denied');
-            $table->integer('leave_status')->nullable()->default('0')->comment('0->leave_received,1->pending,2->approved,3->rejected');  
+            $table->integer('leave_status')->nullable()->comment('0->leave_received,1->pending,2->approved,3->rejected');  
             $table->string('start_date');
             $table->string('end_date')->nullable();
             $table->timestamps();

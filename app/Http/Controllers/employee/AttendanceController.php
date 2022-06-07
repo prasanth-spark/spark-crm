@@ -28,13 +28,12 @@ class AttendanceController extends Controller
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
 
-        $this->middleware(['role:Employee|Team Leader|Project Manager']);
+        $this->middleware(['role:Employee|Team Leader|Project Manager|Tech Architect|Project Architect|Other']);
     }
     public function attendanceModule(Request $request){
 
         $userId= auth()->user()->id;
         $user=$this->user->find($userId); 
-
         $date = Carbon::now();
         $todayDate=$date->format("d-m-Y");
         $date = $date->format("Y-m-d");
@@ -98,17 +97,24 @@ class AttendanceController extends Controller
         $userId= auth()->user()->id;     
         $user = User::find($userId);
         $userRole=$user->role_id; 
-        $tlRole = $userRole-1;  
-        $userTeam=$user->team_id;
-        $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
-        $teamLead=$teamLeadTeam->user_id; 
-        $teamLeadDetail = User::find($teamLead);
-        $teamLeadMail =$teamLeadDetail->email;
-        $teamLeadName = $teamLeadDetail->name;
+    
+        //LEAVE PERMISSION FOR EMPLOYER ,TEAM LEAD AND OTHERS 
+    
+        if($userRole == 3||$userRole == 4||$userRole == 7){
+         if($userRole == 7){
+            $tlRole = 4;
+        }
+            $tlRole = $userRole-1;  
+            $userTeam=$user->team_id;
+            $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
+            $teamLead=$teamLeadTeam->user_id; 
+            $teamLeadDetail = User::find($teamLead);
+            $teamLeadMail =$teamLeadDetail->email;
+            $teamLeadName = $teamLeadDetail->name;
+
         $attendanceValue = $request->status;
         $date = Carbon::now();
         $date = $date->format("Y-m-d");
-
         if($attendanceValue == 0 && $leaveRequest=='Leave'){
             $this->attendance->create([
                 'user_id'=>$userId,
@@ -117,7 +123,10 @@ class AttendanceController extends Controller
                 'attendance_status'=>2,
                 'in_active'=>$request->inactive_type,
                 'status'=> 1
-            ]); 
+            ]);
+
+            //LEAVE WILL BE ACCEPTED WITHOUT SUPERIORS ACCEPTION IN CASE DEATH REASON 
+            
             if($request->leave_type==5){
                 $leaveDetail= $this->leave_request->create([               
                     'leave_type_id'=> $request->leave_type,
@@ -131,7 +140,6 @@ class AttendanceController extends Controller
                     'start_date'=>$start_date,
                     'end_date'=>$end_date,
                     'leave_counts'=>$leaveDays,
-                    'respond_status'=>1,
                 ]);
                 $job = new LeaveDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                 dispatch($job);
@@ -140,7 +148,11 @@ class AttendanceController extends Controller
                 $jobs = new LeaveMailSend($leave_status,$user,$reason,$leaveType);
                 dispatch($jobs);
 
-            }else{
+            }
+
+            //LEAVE NEED TO BE ACCEPTED  SUPERIORSACCEPTION NOT IN CASE DEATH REASON
+
+            else{
             $leaveDetail= $this->leave_request->create([               
                 'leave_type_id'=> $request->leave_type,
                 'permission_type_id'=>null ,
@@ -153,12 +165,14 @@ class AttendanceController extends Controller
                 'start_date'=>$start_date,
                 'end_date'=>$end_date,
                 'leave_counts'=>$leaveDays,
-                'respond_status'=>0,
             ]);
             $job = new LeaveDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
               dispatch($job);
           }
         }
+
+        //PERMISSION WILL BE ACCEPTED WITHOUT SUPERIORS ACCEPTION INCASE PERMISSION HOUR IS 1
+
         else if($attendanceValue == 0 && $leaveRequest=='Permission'){
                 $this->attendance->create([
                 'user_id'=>$userId,
@@ -180,8 +194,7 @@ class AttendanceController extends Controller
                     'permission_hours_to'=>$request->permission_hours_to,
                     'start_date'=>$today_date,
                     'end_date'=>$today_date,
-                    'leave_counts'=>null,
-                    'respond_status'=>1,
+                    'leave_counts'=>null,                   
                 ]);
                 $job = new PermissionDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                       dispatch($job);
@@ -189,7 +202,11 @@ class AttendanceController extends Controller
                  $job = new PermissionResponse($permission_status,$user,$reason);
                 dispatch($job);
 
-            }else{
+            }
+
+            //PERMISSION NEED TO BE ACCEPTED WITHOUT SUPERIORS ACCEPTION INCASE PERMISSION HOUR IS NOT 1
+
+            else{
             $leaveDetail= $this->leave_request->create([               
                 'leave_type_id'=> 1,
                 'permission_type_id'=>$hourdiff,
@@ -202,7 +219,6 @@ class AttendanceController extends Controller
                 'start_date'=>$today_date,
                 'end_date'=>$today_date,
                 'leave_counts'=>null,
-                'respond_status'=>0,
             ]);
             $job = new PermissionDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
                   dispatch($job);
@@ -218,6 +234,64 @@ class AttendanceController extends Controller
                 'in_active'=>null,
                 'status'=> 1
             ]);
+        }
+    }
+    
+        //LEAVE PERMISSION FOR PROJECT MANAGER AND ARCHITECT 
+
+
+    else{
+        $attendanceValue = $request->status;
+        $date = Carbon::now();
+        $date = $date->format("Y-m-d");
+        if($attendanceValue == 0 && $leaveRequest=='Permission'){
+            $this->attendance->create([
+            'user_id'=>$userId,
+            'attendance'=>$attendanceValue,
+            'date'=>$date,
+            'attendance_status'=>2,
+            'in_active'=>$request->inactive_type,
+            'status'=> 1
+        ]);
+            $leaveDetail= $this->leave_request->create([               
+                'leave_type_id'=> 1,
+                'permission_type_id'=>$hourdiff,
+                'user_id' =>$userId,
+                'description'=>$reason, 
+                'permission_status'=>2,
+                'leave_status'=>null,
+                'permission_hours_from'=>$request->permission_hours_from,
+                'permission_hours_to'=>$request->permission_hours_to,
+                'start_date'=>$today_date,
+                'end_date'=>$today_date,
+                'leave_counts'=>null,                   
+            ]);
+
+        }
+        if($attendanceValue == 0 && $leaveRequest=='Leave'){
+            $this->attendance->create([
+                'user_id'=>$userId,
+                'attendance'=>$attendanceValue,
+                'date'=>$date,
+                'attendance_status'=>2,
+                'in_active'=>$request->inactive_type,
+                'status'=> 1
+            ]); 
+                $leaveDetail= $this->leave_request->create([               
+                    'leave_type_id'=> $request->leave_type,
+                    'permission_type_id'=>null ,
+                    'user_id' =>$userId,
+                    'description'=>$reason,
+                    'permission_status'=>null, 
+                    'leave_status'=>2,
+                    'permission_hours_from'=>null,
+                    'permission_hours_to'=>null,   
+                    'start_date'=>$start_date,
+                    'end_date'=>$end_date,
+                    'leave_counts'=>$leaveDays,
+                ]);
+
+            }
         }
         return redirect('/employee/attendance-module'); 
 
@@ -242,7 +316,6 @@ class AttendanceController extends Controller
             ]);
             LeaveRequest::where('user_id',$user->id)->update([
                 'leave_status'=>2,
-                'respond_status'=>1,
             ]);
             $job = new LeaveMailSend($leave_status,$user,$reason,$leaveType);
                 dispatch($job);
@@ -253,7 +326,6 @@ class AttendanceController extends Controller
             ]);
             LeaveRequest::where('user_id',$user->id)->update([
                 'leave_status'=>3,
-                'respond_status'=>1,
             ]);
             $job = new LeaveMailSend($leave_status,$user,$reason,$leaveType);
             dispatch($job);
@@ -280,7 +352,6 @@ class AttendanceController extends Controller
             ]);
             LeaveRequest::where('user_id',$user->id)->update([
                 'permission_status'=>1,
-                'respond_status'=>1
             ]);
           }
           else{
@@ -289,7 +360,6 @@ class AttendanceController extends Controller
             ]);
             LeaveRequest::where('user_id',$user->id)->update([
                 'permission_status'=>2,
-                'respond_status'=>1
             ]);
           }
           $job = new PermissionResponse($permission_status,$user,$reason);

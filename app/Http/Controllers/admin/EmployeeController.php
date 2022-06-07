@@ -101,6 +101,9 @@ class EmployeeController extends Controller
         if($userCredentials->role_id==6){
             $designation = "Project Architect";
         }
+        if($userCredentials->role_id==7){
+            $designation = "Intern";
+        }
         $this->userdetails->create([
             'user_id' => $userCredentials->id,
             'employee_id' => 'SOT-' . ($count),

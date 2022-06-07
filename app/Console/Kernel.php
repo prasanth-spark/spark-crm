@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('permission:status')->weekdays()->hourly();
         $schedule->command('permission:check')->weekdays()->hourly();
         $schedule->command('attendance:status')->weekdays()->at('10:00');
-        $schedule->command('attendance:leave')->weekdays()->at('11:00');
+        $schedule->command('attendance:absent')->weekdays()->at('11:00');
         $schedule->command('Daily:TaskStatus')->weekdays()->at('11:10');
 
 
