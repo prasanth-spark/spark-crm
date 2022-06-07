@@ -3,8 +3,11 @@
 namespace App\Console\Commands;
 use App\Models\Attendance;
 use App\Models\LeaveRequest;
+use App\Models\User;
+use App\Mail\AbsentStatus;
 use Illuminate\Console\Command;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class LeaveStatus extends Command
 {
@@ -41,16 +44,17 @@ class LeaveStatus extends Command
     {
             $date = Carbon::now();
             $date = $date->format("Y-m-d");
-            $user = Attendance::where('status', 0)->get();
-            foreach($user as $absentese){
-                // dd($absentese->user_id);
+            $absenteses = Attendance::where('status', 0)->get();
+            foreach($absenteses as $absentese){
+                $user = User::find($absentese->user_id);
+                $userMail = $user->email;
                  $leaveStatus = LeaveRequest::create([
-                'leave_type_id'=>4,
+                'leave_type_id'=>6,
                 'permission_type_id'=>null ,
                 'user_id'=>$absentese->user_id,
                 'description'=>'Absent',
                 'permission_status'=>null,
-                'leave_status'=>0,
+                'leave_status'=>null,
                 'permission_hours_from'=>null,
                 'permission_hours_to'=>null, 
                 'start_date'=>$date,
@@ -63,7 +67,10 @@ class LeaveStatus extends Command
                     'attendance_status'=>0,           
                     'status'=>1,
                 ]);
+                Mail::to($userMail)->send(new AbsentStatus($user));
             }    
+        
+            
     }
              
 }

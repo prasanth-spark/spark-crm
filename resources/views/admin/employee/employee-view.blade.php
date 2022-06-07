@@ -53,7 +53,7 @@
                             </div>
                             <div class="mr-auto flex items-center gap-5 my-4">
                                 <p class="font-medium w-4/12">Joined Date:</p>
-                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->joined_date}}</div>
+                                <div class="text-slate-500 w-8/12 mt-1">{{date('d-m-Y', strtotime($employeeView->joined_date))}}</div>
                             </div>
                             <div class="mr-auto flex items-center gap-5 my-4">
                                 <p class="font-medium w-4/12">Home Address:</p>
@@ -61,11 +61,12 @@
                             </div>
                             <div class="mr-auto flex items-center gap-5 my-4">
                                 <p class="font-medium w-4/12"> Date of Birth:</p>
-                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->date_of_birth}}</div>
+                                
+                                <div class="text-slate-500 w-8/12 mt-1">{{date('d-m-Y', strtotime($employeeView->date_of_birth))}}</div>
                             </div>
                             <div class="mr-auto flex items-center gap-5 my-4">
                                 <p class="font-medium w-4/12"> Certificate Date of Birth:</p>
-                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->certificate_date_of_birth}}</div>
+                                <div class="text-slate-500 w-8/12 mt-1">{{date('d-m-Y', strtotime($employeeView->certificate_date_of_birth))}}</div>
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-5">
