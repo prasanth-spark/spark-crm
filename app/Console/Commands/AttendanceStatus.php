@@ -56,7 +56,6 @@ class AttendanceStatus extends Command
         $user= User::where('users.id',$attendanceUpdatedUser)
         ->join('leave_requests','leave_requests.user_id','=','users.id')
         ->select('leave_requests.*','users.email')->first();
-        // dd($user); 
             if(is_null($user)){
                 array_push($missedIds,$attendanceUpdatedUser);
             }else{
@@ -88,13 +87,12 @@ class AttendanceStatus extends Command
          ]);
         }
         else{
-            
             Attendance::create([
                 'user_id'=>$user->user_id,
                 'attendance'=>0,
                 'date'=>$date,
                 'attendance_status'=>0,
-                'in_active'=>2,
+                'in_active'=>0,
                 'status'=> 0
             ]);
             Mail::to($userMail)->send(new AttendanceRemainder($user));
@@ -102,7 +100,6 @@ class AttendanceStatus extends Command
             }
     
         }  
-// dd($missedIds);
                 foreach($missedIds as $absentese){
                     $userValue = User::find($absentese);
                     $userMail = $userValue->email;
@@ -110,8 +107,8 @@ class AttendanceStatus extends Command
                             'user_id'=>$userValue->id,
                             'attendance'=>0,
                             'date'=>$date,
-                            'attendance_status'=>2,
-                            'in_active'=>2,
+                            'attendance_status'=>0,
+                            'in_active'=>0,
                             'status'=> 0,
                         ]);
                 Mail::to($userMail)->send(new AttendanceRemainder($userValue));
