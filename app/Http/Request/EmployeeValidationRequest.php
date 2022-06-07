@@ -39,7 +39,7 @@ class EmployeeValidationRequest extends FormRequest
             'blood_group' =>'required','regex:(A|B|AB|O)[+-]/',
             'aadhar_number' => 'required|numeric|min:12',
             'role'=>'required',
-            'team_name'=>'required',
+            'team_name'=>'required_if:role,==,4,|required_if:role,==,3',
             'password' => 'required|min:8|',
             "desigination" => "required_if:role,==,4"
 

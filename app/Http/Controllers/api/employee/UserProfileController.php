@@ -115,6 +115,7 @@ class UserProfileController extends Controller
         return response()->json(['status'=>true,'message'=>'User Profile Created successfully']);
        }  
     }
+
     public function userChangePassword(Request $request)
     {
         $request->validate([
@@ -126,5 +127,5 @@ class UserProfileController extends Controller
         return response()->json(['status'=>true,'message'=>'User New Passord Created successfully']);
     }
 
-
+    
 }
