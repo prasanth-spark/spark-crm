@@ -102,6 +102,7 @@ class EmployeeController extends Controller
         }
         if($userCredentials->role_id==8){
             $designation = "Human Resource";
+        }
         if($userCredentials->role_id==7){
             $designation = "Intern";
         }
