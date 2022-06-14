@@ -31,7 +31,7 @@ class ProjectAssignController extends Controller
      */
     public function ProjectForm()
     {
-        $users = User::whereNotIn('role_id', [1,2,6,5,7,8])->get();
+        $users = User::whereNotIn('role_id', [1,2,3,4,5,6])->get();
         return view('employee/project-assign/project-assign-form', compact('users'));
     }
 
@@ -61,7 +61,7 @@ class ProjectAssignController extends Controller
     public function editProject(Project $project)
     {
         $project = Project::with('users')->find($project->id);
-        $users = User::whereNotIn('role_id', [1,2])->get();
+        $users = User::whereNotIn('role_id', [1,2,7,8])->get();
         return view('employee/project-assign/project-edit-form', compact('project', 'users'));
     }
 
