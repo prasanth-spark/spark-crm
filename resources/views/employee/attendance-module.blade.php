@@ -30,12 +30,13 @@ content--dashboard
     </div>
     <!-- Attendance card -->
     <div class="intro-y col-span-12 lg:col-span-6 text-white text-sm">
-        <label for="regular-form" class="form-label">Today's Attendance  -  {{$todayDate}}</label>
+        <label for="regular-form"  class="form-label">Today's Attendance  -  {{$todayDate}}</label>
         <form action="{{route('attendance-status')}}" method="post">
             @csrf
             <div class="mt-5">
                 <div class="flex flex-col sm:flex-row mr-2 mt- 5">
                     <div class="form-check mr-5 mb-5">
+                        <input type="hidden" name="date" value="{{$todayDate}}">
                         <input id="active" class="form-check-input" type="radio" value="1" name="status" >
                         <label class="form-check-label text-white" for="active">Active</label>
                     </div>
@@ -44,8 +45,9 @@ content--dashboard
                         <label class="form-check-label text-white" for="inactive">Inactive</label>
                     </div>
                 </div>
-               
-            </div>
+            </div>  
+  <input type="text" id="attendance_report" class=" text-black mt-4 font-normal"style="height:62px; width:350px"></input>
+          
 
     </div>
     <div class="intro-y col-span-12 lg:col-span-6  p-4">
@@ -89,18 +91,18 @@ content--dashboard
                     <option name="leave_type" value="5">Death Causes</option>
                 </select>
             </div>
-            <button class="btn btn-warning mt-4" id="update_button" type="submit">Update </button>
-            <input type ="hidden" name="id" id="attendance_values" value="{{isset($attendance->attendance) ? $attendance->attendance :''}}">
-
-
+            <button class="btn btn-danger mt-4" id="cancel_button" type="submit">Cancel</button> 
         </div>
     </div>
-@if(isset($attendance))
-<button class="btn btn-success mt-4" id="save_button" type="submit" disabled>Submit</button>
+    <input type ="hidden" id="attendance_update" value="{{isset($attendance->attendance_status) ? $attendance->attendance_status :'null'}}">
+    <input type ="hidden" id="attendance_values" value="{{isset($attendance->attendance) ? $attendance->attendance :''}}">
+    <input type ="hidden" name="type" id="type" value="{{isset($attendance->in_active) ? $attendance->in_active :''}}">
+@if(isset($attendance->status))
+<button class="btn btn-warning mt-4" id="update_button" type="submit">Update </button>
 @else
-<button class="btn btn-success mt-4" id="save_button" type="submit" >Submit</button>
+<button class="btn btn-success mt-4" id="save_button" type="submit">Submit</button>
 @endif
-
+<input type ="hidden" name="attendance_status" id="attendance_status" value="{{isset($attendance->status) ? $attendance->status :''}}">
     </form>
 </div>
 
@@ -108,26 +110,39 @@ content--dashboard
 <script>
     $(document).ready(function() {
         $("#attendancestatus").hide();
-        $("#save_button").hide();
+        $("#save_button").show();
         $("#update_button").hide();
+        $("#cancel_button").hide();
+        $("#attendance_report").hide();
 
-          // var a = $("#attendance_values").val();
-        // if (a==1){
-        //     $("#active").prop("disabled", true);
-        // }else{
-        //     alert(a);
-        //     $("#inactive").prop("disabled", true);
-
-        // }
-
- 
-
-
-        $("#active").click(function() {
-            // $("#inactive").prop("disabled", true);
+        var status = $("#attendance_status").val();
+        var attendance = $("#attendance_values").val();
+        var type = $("#type").val();
+        if(status == 1){
+            $("#update_button").show();
+            if(attendance == 0 && type == 1){
+                $("#inactive").prop("disabled", true);
+                $("#inactive_side").show();
+                $("#permission").prop("disabled", true);
+                // $("#cancel_button").show();
+            }
+            else if(attendance == 0 && type == 2){
+                $("#inactive").prop("disabled", true);
+                $("#inactive_side").show();
+                $("#leave").prop("disabled", true);
+                $("#permission_hours").hide();
+                // $("#cancel_button").show();
+            }
+            else{
+                $("#active").prop("disabled", true);
+            }
+        }else{
 
             $("#save_button").show();
+        }
 
+        $("#active").click(function() {
+            // $("#inactive").prop("disabled", true);   
             if ($("#active").is(':checked')) {
                 $("#inactive").removeAttr('checked');
                 $("#inactive_side").hide();
@@ -140,9 +155,6 @@ content--dashboard
         });
         $("#inactive").click(function() {
             // $("#active").prop("disabled", true);
-            $("#save_button").hide();
-            $("#update_button").show();
-
             $("#inactive_side").show();
             if ($("#inactive").is(':checked')) {
                 $("#active").removeAttr('checked');
@@ -158,29 +170,37 @@ content--dashboard
             $("#permission_hours").show();
             $("#leave_days").hide();
             $("#leave_type").hide();
-            $("#save_button").show();
-            $("#update_button").show();
-
        
         });
         $("#leave").click(function() {
             $("#permission_hours").hide();
             $("#leave_days").show();
             $("#leave_type").show();
-            $("#save_button").show();
-            $("#update_button").show();
+           
         });
-
-
-        $('#durationExample').timepicker({
-            'minTime': '2:00pm',
-            'maxTime': '11:30pm',
-            'showDuration': true
-        });
-
-
-        
-
+        var report = $("#attendance_update").val();
+        $("#attendance_report").hide();
+        if(report == 1){
+            $("#attendance_report").show();
+            $("#attendance_report").val("Your Attendance is registered as Present");
+        }
+        else  if(report == 2){
+            $("#attendance_report").show();
+            $("#attendance_report").val("Your Attendance is registered as Leave");
+        }
+        else  if(report == 3){
+            $("#attendance_report").show();
+            $("#attendance_report").val("Your Attendance is registered as Half day leave");
+        }
+        else  if(report == 4){
+            $("#attendance_report").show();
+            $("#attendance_report").val("Your Permission have been rejected.Kindly update the your attendance status.");
+        }
+        else if(report == 0){
+            $("#attendance_report").show();
+            $("#attendance_report").val("Your Attendance is registered as Absent");
+        }
+       
     });
 </script>
 

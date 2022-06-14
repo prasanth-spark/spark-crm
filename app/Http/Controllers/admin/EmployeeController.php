@@ -50,7 +50,7 @@ class EmployeeController extends Controller
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
             $role = $this->rolemodel->where('id', '!=', 1)->get();
-            $team = $this->teammodel->get();
+            $team = $this->teammodel->whereNotIn('id', ['1','9'])->get();
             return view('admin/employee/employee-form', compact('bankName', 'accountType', 'role', 'team'));
         } catch (\Throwable $exception) {
             Log::info($exception->getMessage());
@@ -86,26 +86,33 @@ class EmployeeController extends Controller
         $count = User::count();
 
         if($userCredentials->role_id==2){
-            $designation = "Project Manager";
+            $designation = "Human Resources";
+            $request->team_name="1";
         }
         if($userCredentials->role_id==3){
-            $designation = "Team Lead";
+            $designation = "Deployment Head";
+            $request->team_name="1";
         }
         if($userCredentials->role_id==4){
-            $designation = $request->desigination;
+            $designation = "Development Head";
+            $request->team_name="1";
         }
         if($userCredentials->role_id==5){
-            $designation = "Tech Architect";
+            $designation = "Project Manager";
+            $request->team_name="1";
         }
         if($userCredentials->role_id==6){
-            $designation = "Project Architect";
-        }
-        if($userCredentials->role_id==8){
-            $designation = "Human Resource";
+            $designation = "Team Head";
+     
         }
         if($userCredentials->role_id==7){
-            $designation = "Intern";
+            $designation = $request->designation;
         }
+        if($userCredentials->role_id==8){
+            $designation = "Internship";
+            $request->team_name="9";
+        }
+       
         $this->userdetails->create([
             'user_id' => $userCredentials->id,
             'employee_id' => 'SOT-' . ($count),
@@ -161,6 +168,7 @@ class EmployeeController extends Controller
      */
     public function employeeDetails($id)
     {
+        
         try {
             $employeeView = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
             return view('admin/employee/employee-view', compact('employeeView'));
@@ -177,6 +185,7 @@ class EmployeeController extends Controller
      */
     public function employeeEdit($id)
     {
+        
         try {
             $employeeEdit = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
             $bankName = $this->bankdetails->get();
@@ -205,6 +214,8 @@ class EmployeeController extends Controller
         $this->user->where('id', $request->id)->update([
             'name' => $request->name,
             'email' => $request->email,
+            'role_id' =>$request->role,
+            'team_id'=>$request->team_name,
         ]);
         if ($request->hasFile('photos')) {
             $photos = $this->commonImageUpload($request->photos, 'photos');

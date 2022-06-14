@@ -17,7 +17,7 @@ class EmployeeSideMenu
     {
         $user = !empty(auth()->user()) ? auth()->user()->userDetail : null;
         if ($user) {
-            if ($user->role_id == 3) {
+            if ($user->role_id == 6) {
                 return [
                     'dashboard' => [
                         'icon' => 'home',
@@ -29,7 +29,7 @@ class EmployeeSideMenu
 
                     ],
                     'Attendance' => [
-                        'icon' => 'home',
+                        'icon' => 'calendar',
                         'route_name' => 'attendance-module',
                         'title' => 'Attendance',
                         'params' => [
@@ -37,7 +37,7 @@ class EmployeeSideMenu
                         ],
                     ],
                     'Task' => [
-                        'icon' => 'home',
+                        'icon' => 'type',
                         'route_name' => 'task-list',
                         'title' => 'Task',
                         'params' => [
@@ -45,7 +45,7 @@ class EmployeeSideMenu
                         ],
                     ],
                     'Team Task' => [
-                        'icon' => 'home',
+                        'icon' => 'twitch',
                         'route_name' => 'team-task',
                         'title' => 'Team Task',
                         'params' => [
@@ -53,7 +53,7 @@ class EmployeeSideMenu
                         ],
                     ],
                     'Team Attendance' => [
-                        'icon' => 'home',
+                        'icon' => 'calendar',
                         'title' => 'Team Attendance',
                         'sub_menu' => [
                             'Team Attendance' => [
@@ -83,7 +83,7 @@ class EmployeeSideMenu
                         ]
                     ],
                 ];
-            } elseif ($user->role_id == 2) {
+            }elseif ($user->role_id == 5) {
                 return [
                     'dashboard' => [
                         'icon' => 'home',
@@ -95,7 +95,7 @@ class EmployeeSideMenu
 
                     ],
                     'Attendance' => [
-                        'icon' => 'home',
+                        'icon' => 'calendar',
                         'route_name' => 'attendance-module',
                         'title' => 'Attendance',
                         'params' => [
@@ -111,7 +111,7 @@ class EmployeeSideMenu
                         ],
                     ],
                 ];
-            } else {
+            } elseif ($user->role_id == 4) {
                 return [
                     'dashboard' => [
                         'icon' => 'home',
@@ -123,7 +123,131 @@ class EmployeeSideMenu
 
                     ],
                     'Attendance' => [
+                        'icon' => 'calendar',
+                        'route_name' => 'attendance-module',
+                        'title' => 'Attendance',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                    'Add Project' => [
+                        'icon' => 'user-plus',
+                        'route_name' => 'project-list',
+                        'title' => 'Add Project',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                    'Team Task' => [
+                        'icon' => 'twitch',
+                        'route_name' => 'team-task',
+                        'title' => 'Team Task',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                ];
+            } 
+             elseif ($user->role_id == 3) {
+                return [
+                    'dashboard' => [
                         'icon' => 'home',
+                        'title' => 'Dashboard',
+                        'route_name' => 'employee-dashboard',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+
+                    ],
+                    'Attendance' => [
+                        'icon' => 'calendar',
+                        'route_name' => 'attendance-module',
+                        'title' => 'Attendance',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                    'Add Project' => [
+                        'icon' => 'home',
+                        'route_name' => 'project-list',
+                        'title' => 'Add Project',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                    'Team Task' => [
+                        'icon' => 'twitch',
+                        'route_name' => 'team-task',
+                        'title' => 'Team Task',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                ];
+            } 
+            elseif($user->role_id == 2) {
+                return [
+                    'dashboard' => [
+                        'icon' => 'home',
+                        'title' => 'Dashboard',
+                        'route_name' => 'employee-dashboard',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],
+                    'Attendance' => [
+                        'icon' => 'calendar',
+                        'route_name' => 'attendance-module',
+                        'title' => 'Attendance',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                    ],  
+                    'Attendance List' => [
+                        'icon' => 'calendar',
+                        'title' => 'Employee Attendance',
+                        'sub_menu' => [
+                            'Employee Attendance' => [
+                                'icon' => '',
+                                'route_name' => 'attendance',
+                                'params' => [
+                                    'layout' => 'side-menu',
+                                ],
+                                'title' => 'Employees Present List'
+                            ],
+                            'Employee Attendance List' => [
+                                'icon' => '',
+                                'route_name' => 'team-absent',
+                                'params' => [
+                                    'layout' => 'side-menu',
+                                ],
+                                'title' => 'Employees Absent List'
+                            ],
+                            'Employee Permission List' => [
+                                'icon' => '',
+                                'route_name' => 'team-permission',
+                                'params' => [
+                                    'layout' => 'side-menu',
+                                ],
+                                'title' => 'Employees Permission List'
+                            ]
+                        ]
+                    ],
+                ];
+            }
+            else {
+                return [
+                    'dashboard' => [
+                        'icon' => 'home',
+                        'title' => 'Dashboard',
+                        'route_name' => 'employee-dashboard',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+
+                    ],
+                    'Attendance' => [
+                        'icon' => 'calendar',
                         'route_name' => 'attendance-module',
                         'title' => 'Attendance',
                         'params' => [
@@ -131,7 +255,7 @@ class EmployeeSideMenu
                         ],
                     ],
                     'Task' => [
-                        'icon' => 'home',
+                        'icon' => 'type',
                         'route_name' => 'task-list',
                         'title' => 'Task',
                         'params' => [
@@ -140,18 +264,6 @@ class EmployeeSideMenu
                     ],
                 ];
             }
-        } else {
-            return [
-                'dashboard' => [
-                    'icon' => 'home',
-                    'title' => 'Dashboard',
-                    'route_name' => 'employee-dashboard',
-                    'params' => [
-                        'layout' => 'side-menu',
-                    ],
-                ],
-
-            ];
-        }
+        } 
     }
 }

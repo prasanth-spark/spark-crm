@@ -16,6 +16,15 @@ class RoleSeeder extends Seeder
             'name' => 'Admin'
         ],
         [
+            'name' => 'Human Resource'
+        ],
+        [
+            'name' => 'Tech Architect'
+        ],
+        [
+            'name' => 'Project Architect'
+        ],
+        [
             'name' => 'Project Manager'
         ],
         [
@@ -25,17 +34,12 @@ class RoleSeeder extends Seeder
             'name' => 'Employee'
         ],
         [
-            'name' => 'Tech Architect'
-        ],
-        [
-            'name' => 'Project Architect'
-        ],
-        [
-            'name' => 'Other'
-        ],
-        [
             'name' => 'Human Resource'
         ],
+        [
+            'name' => 'Others'
+        ],
+      
 
     ];
 
