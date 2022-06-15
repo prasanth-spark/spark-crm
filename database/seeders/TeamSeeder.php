@@ -24,53 +24,74 @@ class TeamSeeder extends Seeder
             ],
             [ 
                 'id' => '2',
-                'team' => 'PHP',
+                'team' => 'DEVELOPMENT',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
                 'id' => '3',
-                'team' => 'JS',
+                'team' => 'DEPLOYMENT',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
                 'id' => '4',
-                'team' => 'IOS',
+                'team' => 'PROJECT MANAGER',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
                 'id' => '5',
-                'team' => 'TESTING',
+                'team' => 'PHP',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
                 'id' => '6',
-                'team' => 'ANDROID',
+                'team' => 'JS',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
-            ],[ 
+            ],
+            [ 
                 'id' => '7',
-                'team' => 'DevOps',
+                'team' => 'IOS',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
-            ],[ 
+            ],
+            [ 
                 'id' => '8',
-                'team' => 'MARKETING',
+                'team' => 'TESTING',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
                 'id' => '9',
+                'team' => 'ANDROID',
+                'status'=>'1',
+                'created_at' =>now(),
+                'updated_at' =>now()           
+            ],[ 
+                'id' => '10',
+                'team' => 'DevOps',
+                'status'=>'1',
+                'created_at' =>now(),
+                'updated_at' =>now()           
+            ],[ 
+                'id' => '11',
+                'team' => 'MARKETING',
+                'status'=>'1',
+                'created_at' =>now(),
+                'updated_at' =>now()           
+            ],
+            [ 
+                'id' => '12',
                 'team' => 'INTERNSHIP',
                 'status'=>'1',
                 'created_at' =>now(),
