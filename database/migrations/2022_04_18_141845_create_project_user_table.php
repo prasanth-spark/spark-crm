@@ -19,6 +19,8 @@ class CreateProjectUserTable extends Migration
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Project::class)->constrained();
             $table->timestamps();
+            $table->softDeletes();
+            
         });
     }
 

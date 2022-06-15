@@ -251,5 +251,29 @@ class AttendanceController extends Controller
              }
         }
     }
-              
+    public function permissionStatus(Request $request)
+    {
+        $reason = $request->rejected_reason;
+        $user = User::find($request->user_id);
+        $permission_status= $request->leave_response;
+         if($permission_status == 2){
+        Attendance::where('user_id',$user->id)->update([
+            'attendance_status'=>2
+        ]);
+        LeaveRequest::where('user_id',$user->id)->update([
+            'permission_status'=>1,
+        ]);
+        }else{
+        Attendance::where('user_id',$user->id)->update([
+            'attendance_status'=>4
+        ]);
+        LeaveRequest::where('user_id',$user->id)->update([
+            'permission_status'=>2,
+        ]);
+        }
+        $job = new PermissionResponse($permission_status,$user,$reason);
+        dispatch($job);
+        return response()->json(['status'=>true,'message'=>'Response For Permission Request send Successfull']);
+        }
+     
 }

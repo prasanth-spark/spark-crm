@@ -333,7 +333,7 @@ class AttendanceController extends Controller
         return redirect('/employee/employee_dashboard');
         }
 
-        // permission response
+        // permission response form
 
         public function permissionResponse($tlid,$uid,$hourdiff){
             $teamLead= $this->user->find($tlid);

@@ -61,7 +61,7 @@ class ProjectAssignController extends Controller
     public function editProject(Project $project)
     {
         $project = Project::with('users')->find($project->id);
-        $users = User::whereNotIn('role_id', [1,2])->get();
+        $users = User::whereNotIn('role_id', [1,2,6,5,7,8])->get();
         return view('employee/project-assign/project-edit-form', compact('project', 'users'));
     }
 
@@ -75,9 +75,7 @@ class ProjectAssignController extends Controller
         $project->title = $request->title;
         $project->description = $request->description;
         $project->save();
-
         $project->users()->sync($request->user_ids);
-
         return redirect()->route('project-list')->with('success', 'Project Updated Successfully');
     }
 

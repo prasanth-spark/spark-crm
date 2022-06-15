@@ -95,7 +95,7 @@ class TaskController extends Controller
         foreach ($data as $value) {
             $col['id'] = $offset + 1;
             $col['date'] = ($value->date) ? $value->date : "";
-            $col['project_id'] = isset($value->projects['title']) ? $value->projects['title'] : "general";
+            $col['project_id'] = isset($value->projects['title']) ? $value->projects['title'] : "General Project";
             $col['task_module'] = ($value->task_module) ? $value->task_module : "";
             $col['estimated_hours'] = ($value->estimated_hours) ? $value->estimated_hours : "";
             $col['worked_hours'] = ($value->worked_hours) ? $value->worked_hours : "-";

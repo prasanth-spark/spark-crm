@@ -44,7 +44,7 @@ class TeamTaskController extends Controller
 
         $taskSheets=$this->tasksheet->whereHas('taskToUserDetails', function ($query) use ($teamId) {
             $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('taskToUser','projects')->get(); 
+        })->with('taskToUser','projects')->latest()->get(); 
         return response()->json(['status'=>true,'message'=>'Team Member Task Details','data'=>$taskSheets]);
     }
 
