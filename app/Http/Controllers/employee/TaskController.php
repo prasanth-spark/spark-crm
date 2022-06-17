@@ -20,7 +20,7 @@ class TaskController extends Controller
         $this->taskStatus = $taskStatus;
         $this->project    = $project;
 
-        $this->middleware(['role:Employee|Team Leader']);
+        $this->middleware(['role:Employee|Team Leader|Others']);
     }
 
     /**

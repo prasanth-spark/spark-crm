@@ -28,7 +28,7 @@ class AttendanceController extends Controller
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
 
-        $this->middleware(['role:Employee|Team Leader|Project Manager|Tech Architect|Project Architect|Other']);
+        $this->middleware(['role:Employee|Team Leader|Project Manager|Tech Architect|Project Architect|Others|Human Resource']);
     }
     public function attendanceModule(Request $request){
 
@@ -37,7 +37,7 @@ class AttendanceController extends Controller
         $date = Carbon::now();
         $todayDate=$date->format("d-m-Y");
         $date = $date->format("Y-m-d");
-        $attendance= $this->attendance->where(['user_id' => $userId ,'date' => $date])->first(); 
+        $attendance= $this->attendance->where(['user_id' => $userId ,'date' => $date])->first();
         return view('/employee/attendance-module',compact('user','attendance','todayDate'));
     }
     public function attendanceStatus(Request $request)
@@ -97,18 +97,38 @@ class AttendanceController extends Controller
         $userId= auth()->user()->id;     
         $user = User::find($userId);
         $userRole=$user->role_id; 
-    
+
+        if($request->attendance_status == 1 && $request->status == 1){
+            
+            $update = $request->status;
+            $date = $request->date;
+            $date= date('Y-m-d', strtotime($date));
+            if($update == 1){
+                Attendance::where(['user_id'=> $userId,'attendance'=>0,'date'=>$date])->update([
+                    'attendance'=>1,
+                    'attendance_status'=> 1,
+                    'status'=>2
+                ]);
+            }
+        }
+else{
         //LEAVE PERMISSION FOR EMPLOYER ,TEAM LEAD AND OTHERS 
     
-        if($userRole == 3||$userRole == 4||$userRole == 7){
-         if($userRole == 7){
-            $tlRole = 4;
-        }
+        if($userRole == 6||$userRole == 7||$userRole == 8){
+         if($userRole == 8 || $userRole == 6){
+            $tlRole = 2;
+            $userTeam=1;
+            $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
+            $teamLead=$teamLeadTeam->user_id; 
+            $teamLeadDetail = User::find($teamLead);
+  
+        }else{
             $tlRole = $userRole-1;  
             $userTeam=$user->team_id;
             $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
             $teamLead=$teamLeadTeam->user_id; 
             $teamLeadDetail = User::find($teamLead);
+        }
             $teamLeadMail =$teamLeadDetail->email;
             $teamLeadName = $teamLeadDetail->name;
 
@@ -237,22 +257,34 @@ class AttendanceController extends Controller
         }
     }
     
-        //LEAVE PERMISSION FOR PROJECT MANAGER AND ARCHITECT 
-
-
+        //LEAVE PERMISSION FOR PROJECT MANAGER AND ARCHITECT  
     else{
         $attendanceValue = $request->status;
         $date = Carbon::now();
         $date = $date->format("Y-m-d");
+        $userId= auth()->user()->id;     
+        $user = User::find($userId);
+        $userRole=$user->role_id; 
+        if($userRole != 2){
+            $tlRole = 2;
+            $userTeam=1;
+        }
+        $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
+        $teamLead=$teamLeadTeam->user_id; 
+        $teamLeadDetail = User::find($teamLead);    
+        $teamLeadMail =$teamLeadDetail->email;
+        $teamLeadName = $teamLeadDetail->name;
+
+
         if($attendanceValue == 0 && $leaveRequest=='Permission'){
-            $this->attendance->create([
-            'user_id'=>$userId,
-            'attendance'=>$attendanceValue,
-            'date'=>$date,
-            'attendance_status'=>2,
-            'in_active'=>$request->inactive_type,
-            'status'=> 1
-        ]);
+                $this->attendance->create([
+                    'user_id'=>$userId,
+                    'attendance'=>$attendanceValue,
+                    'date'=>$date,
+                    'attendance_status'=>2,
+                    'in_active'=>$request->inactive_type,
+                    'status'=> 1
+                ]);   
             $leaveDetail= $this->leave_request->create([               
                 'leave_type_id'=> 1,
                 'permission_type_id'=>$hourdiff,
@@ -266,6 +298,10 @@ class AttendanceController extends Controller
                 'end_date'=>$today_date,
                 'leave_counts'=>null,                   
             ]);
+
+             $job = new PermissionDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
+            dispatch($job);
+
 
         }
         if($attendanceValue == 0 && $leaveRequest=='Leave'){
@@ -290,12 +326,27 @@ class AttendanceController extends Controller
                     'end_date'=>$end_date,
                     'leave_counts'=>$leaveDays,
                 ]);
-
+                $job = new LeaveDetail($teamLeadMail,$teamLeadName,$user,$reason,$leaveDetail);
+                dispatch($job); 
             }
+            else{
+                $this->attendance->create([
+                    'user_id'=>$userId,
+                    'attendance'=>1,
+                    'date'=>$date,
+                    'attendance_status'=>1,
+                    'in_active'=>null,
+                    'status'=> 1
+                ]);
+            }
+
         }
+}
         return redirect('/employee/attendance-module'); 
 
      }    
+
+                // Leave Response
 
     public function leaveResponse($tlid,$uid,$lt){
         $teamLead= $this->user->find($tlid);
@@ -305,12 +356,12 @@ class AttendanceController extends Controller
         return view('/employee/leave_response_form',compact('user','teamLead','lt'));
     }
     public function leaveStatus(Request $request)
-        {
-            $leaveType = $request->leave_type;
-            $reason = $request->rejected_reason;
-            $user = User::find($request->user_id);
-            $leave_status= $request->leave_response;
-             if($leave_status == 2){
+    {
+        $leaveType = $request->leave_type;
+        $reason = $request->rejected_reason;
+        $user = User::find($request->user_id);
+        $leave_status= $request->leave_response;
+        if($leave_status == 2){
             Attendance::where('user_id',$user->id)->update([
                 'attendance_status'=>3
             ]);
@@ -319,8 +370,8 @@ class AttendanceController extends Controller
             ]);
             $job = new LeaveMailSend($leave_status,$user,$reason,$leaveType);
                 dispatch($job);
-          }
-          else{
+        }
+        else{
             Attendance::where('user_id',$user->id)->update([
                 'attendance_status'=>4
             ]);
@@ -329,19 +380,20 @@ class AttendanceController extends Controller
             ]);
             $job = new LeaveMailSend($leave_status,$user,$reason,$leaveType);
             dispatch($job);
-          }
-        return redirect('/employee/employee_dashboard');
         }
+        return redirect('/employee/employee_dashboard');
+    }
 
-        // permission response form
+        // Permission response
 
-        public function permissionResponse($tlid,$uid,$hourdiff){
+    public function permissionResponse($tlid,$uid,$hourdiff){
             $teamLead= $this->user->find($tlid);
             $user= User::find($uid);
             $hoursdiff =$hourdiff;
             return view('/employee/permission_response_form',compact('user','teamLead','hoursdiff'));
-        }
-        public function permissionStatus(Request $request)
+    }
+
+    public function permissionStatus(Request $request)
         {
             $reason = $request->rejected_reason;
             $user = User::find($request->user_id);
@@ -365,116 +417,8 @@ class AttendanceController extends Controller
           $job = new PermissionResponse($permission_status,$user,$reason);
                 dispatch($job);
         return redirect('/employee/employee_dashboard');
-        }
+    }
 
-
-    //  public function leaveAccepted($id,$status){ 
-    //       $user = User::find($id);
-    //       $userId = $user->id;
-    //       if($status==3){
-    //         LeaveRequest::where('user_id',$userId)
-    //           ->where('leave_status',1)
-    //           ->update([
-    //                     'leave_status'=> $status,
-    //                     'mail_status'=>2,
-    //                      ]);
-    //         Attendance::where('user_id',$userId)->update([
-    //                     'attendance_status'=>4,
-    //                 ]);        
-    //     }
-    //     else{
-    //         LeaveRequest::where('user_id',$userId)
-    //         ->where('leave_status',1)
-    //         ->update([
-    //                   'leave_status'=> $status,
-    //                   'mail_status'=>2,
-    //                    ]);
-    //       Attendance::where('user_id',$userId)->update([
-    //                   'attendance_status'=>3,
-    //               ]);  
-    //     }   
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-// public function leaveRequest($id){
-//     $user= $this->user->find($id);
-//     $userId = $user->id;
-//     $date=Carbon::now();
-//     $date = $date->format("Y-m-d");
-//     $userLd = $this->leave_request->where(['user_id' => $userId ,'start_date' => $date])->first();
-//     return view('/employee/request-form',compact('user','userLd'));
-// }
-//     public function leaveStatus(Request $request)
-//     {
-//           $reason = $request->reason;
-//           $userId= $request->id;
-//           LeaveRequest::where('user_id',$userId)->where('leave_status',0)
-//                         ->update([               
-//                             'leave_type_id'=> $request->leave_type,
-//                             'leave_status'=>1,
-//              ]);   
-           
-//               $user= $this->user->find($userId);
-//               $userRole=$user->role_id; 
-//               $tlRole = $userRole-1;     
-//               $userTeam=$user->team_id;
-//               $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
-//               $teamLead=$teamLeadTeam->user_id; 
-//               $teamLeadMail = User::find($teamLead);
-//               $teamLeadMail =$teamLeadMail->email;
-//           $job = new LeavePermissionDetail($teamLeadMail,$user,$reason);
-//                     dispatch($job);
-//                     return redirect('/employee/attendance-module');
-//     }
-//     public function leaveAccepted($id,$status){ 
-//         $user = User::find($id);
-//         $userId = $user->id;
-//       if($status==2){
-//             LeaveRequest::where('user_id',$userId)
-//                 ->where('leave_status',1)->where('leave_type_id',1)
-//                 ->update(['// public function leaveRequest($id){
-//     $user= $this->user->find($id);
-//     $userId = $user->id;
-//     $date=Carbon::now();
-//     $date = $date->format("Y-m-d");
-//     $userLd = $this->leave_request->where(['user_id' => $userId ,'start_date' => $date])->first();
-//     return view('/employee/request-form',compact('user','userLd'));
-// }   permission_status'=> 1,
-//                          ]);           
-//            Attendance::where('user_id',$userId)->update([
-//                     'attendance_status'=>3,
-//               ]);
-//       }
-//     else{
-//         LeaveRequest::where('user_id',$userId)
-//                 ->where('leave_status',1)->where('leave_type_id',1)
-//                 ->update([
-//                     'permission_status'=> 2,
-//                          ]);               
-//         LeaveRequest::where('user_id',$userId)->where('leave_type_id','!=',1)
-//                 ->where('leave_status','=',1)
-//                 ->update([
-//                     'leave_type_id'=> 4,
-//                     'leave_status'=> $status,
-//                          ]);   
-//             Attendance::where('user_id',$userId)->update([
-//                         'attendance_status'=>4,
-//           ]);       
-//     }
-//         $job = new LeaveMailSend($status,$user);
-//                 dispatch($job);
-//                 return redirect('/employee/employee_dashboard');
-//     }
     public function attendanceList(User $user)
     {
         $attendances = $this->attendance->where('user_id',$user->id)->first();

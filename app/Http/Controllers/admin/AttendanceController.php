@@ -35,7 +35,7 @@ class AttendanceController extends Controller
      */
     public function attendanceList()
     {
-        $teamList = $this->teammodel->get();
+        $teamList = $this->teammodel->get(); 
         return view('admin/attendance/attendance-list', compact('teamList'));
     }
 
@@ -46,7 +46,6 @@ class AttendanceController extends Controller
      */
     public function attendanceListPagination(Request $request)
     {
-
         $fromdate = str_replace('/', '-', $request->from_date);
         $fromdateFormatChange = date("Y-m-d", strtotime($fromdate));
 

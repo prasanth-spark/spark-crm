@@ -20,4 +20,6 @@ class RoleModel extends Model
     {
         return $this->hasmany(UserDetails::class, 'role_id', 'id');
     }
+
+    
 }

@@ -28,7 +28,7 @@ class SideMenu
                 ]
             ],
             'Employee Management' => [
-                'icon' => 'home',
+                'icon' => 'user',
                 'title' => 'Employee Management',
                 'sub_menu' => [
                     'Employee List' => [
@@ -42,7 +42,7 @@ class SideMenu
                 ]
             ],    
             'Employee Attendance' => [
-                'icon' => 'home',
+                'icon' => 'calendar',
                 'title' => 'Employee Attendance',
                 'sub_menu' => [
                     'Employee List' => [
@@ -72,7 +72,7 @@ class SideMenu
                 ]
             ],  
             'Employee Task' => [
-                'icon' => 'home',
+                'icon' => 'twitch',
                 'title' => 'Employee Task',
                 'sub_menu' => [
                     'Employee List' => [
@@ -86,9 +86,17 @@ class SideMenu
                 ]
             ],   
             'Language' => [
-                'icon' => 'home',
+                'icon' => 'menu',
                 'route_name' => 'language-list',
                 'title' => 'Language',
+                'params' => [
+                    'layout' => 'side-menu',
+                ],
+            ],
+            'Roles' => [
+                'icon' => 'menu',
+                'route_name' => 'employee-role',
+                'title' => 'Roles',
                 'params' => [
                     'layout' => 'side-menu',
                 ],

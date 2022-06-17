@@ -43,7 +43,15 @@ class PermissionSeeder extends Seeder
                 ['name' => 'team-task', 'menu_name' => 'team-task'],
                 ['name' => 'attendance', 'menu_name' => 'attendance'],
                 ['name' => 'team-absent', 'menu_name' => 'team-absent'],
-                ['name' => 'team-permission', 'menu_name' => 'team-permission'],                
+                ['name' => 'team-permission', 'menu_name' => 'team-permission'],   
+                
+                ['name' => 'project-list', 'menu_name' => 'project-list'],
+                ['name' => 'project-form', 'menu_name' => 'project-form'],
+                ['name' => 'add-project-form', 'menu_name' => 'add-project-form'],
+                ['name' => 'edit-project', 'menu_name' => 'edit-project'],
+                ['name' => 'update-project', 'menu_name' => 'update-project'],
+                ['name' => 'delete-project', 'menu_name' => 'delete-project'],
+
             ]
         ]
     ];

@@ -7,6 +7,7 @@ use App\Http\Controllers\api\employee\AttendanceController;
 use App\Http\Controllers\api\employee\TaskController;
 use App\Http\Controllers\api\employee\ProjectAssignController;
 use App\Http\Controllers\api\employee\TeamAttendanceController;
+use App\Http\Controllers\api\employee\UserProfileController;
 use App\Http\Controllers\api\employee\TeamTaskController;
 use Illuminate\Support\Facades\Auth;
 

@@ -336,14 +336,13 @@
 
         <script>
             $(document).ready(function() {
-
                 $("#desigination").hide();
                 $("#team").hide();
                 $('#Role').on('change', function() {
-                    if (this.value == '4' || this.value == '3'){
+                    if (this.value == '6' || this.value == '7'){
                         $("#desigination").show();
                         $("#team").show();
-                        if(this.value == '3')
+                        if(this.value == '6')
                         {
                             $("#desigination").hide();
                         }
@@ -351,7 +350,7 @@
                         $("#team").hide();
                         $("#desigination").hide();
                     }
-                });
+                });     
             });
         </script>
 

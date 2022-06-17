@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\EmployeeController;
 use App\Http\Controllers\admin\AttendanceController;
 use App\Http\Controllers\admin\TaskController;
 use App\Http\Controllers\admin\LanguageController;
+use App\Http\Controllers\admin\RolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/approved/{id}', [EmployeeController::class, 'adminApproved'])->name('admin-approved');
         Route::get('/rejected/{id}', [EmployeeController::class, 'adminRejected'])->name('admin-rejected');
         Route::get('/employee-list-pagination', [EmployeeController::class, 'employeeListPagination'])->name('employee-list-pagination');
+       
+       //Roles and Permission
+        Route::get('/employee-role', [RolesController::class, 'roleList'])->name('employee-role');
+        Route::get('/add-role-form', [RolesController::class, 'roleAddform'])->name('add-role-form');
+       
+        Route::get('/roles-permission-list/{id}', [RolesController::class, 'rolesPermissionlist'])->name('role-permission-list');
+        Route::post('/add-permission-role', [RolesController::class, 'addPermissionrole'])->name('add-permission-role');
+        Route::post('/delete-role', [RolesController::class, 'roleDelete'])->name('delete-role');
 
 
 
