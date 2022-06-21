@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Helper\UuidModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Models\Role;
 
 class UserDetails extends Model
 {
@@ -30,7 +31,7 @@ class UserDetails extends Model
 
     public function roleToUserDetails()
     {
-        return $this->belongsTo(RoleModel::class, 'role_id', 'id');
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
 

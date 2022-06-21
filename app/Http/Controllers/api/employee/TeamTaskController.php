@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Models\User;
 use App\Models\Attendance;
@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 
 class TeamTaskController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet,Project $project)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet,Project $project)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;

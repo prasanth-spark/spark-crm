@@ -12,10 +12,9 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\LeaveRequest;
 use App\Models\Attendance;
-use App\Models\Permission;
-use App\Models\RoleModel;
-use Carbon\Carbon;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller

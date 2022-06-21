@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Models\User;
 use App\Models\Attendance;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TeamAttendanceController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;

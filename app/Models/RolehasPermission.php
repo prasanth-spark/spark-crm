@@ -11,5 +11,4 @@ class RolehasPermission extends Model
     protected $table = 'role_has_permissions';
     protected $guarded = [];
     public $timestamps = false;
-
 }

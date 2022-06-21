@@ -330,13 +330,13 @@
 <script>
     $(document).ready(function() {
         var role = $("#role_name").val()
-        if (role != '4') {
+        if (role != '7') {
             $("#desigination").hide();
         }
 
         $('#role_name').change(function() {
             var roleId = $(this).val();
-            if (roleId == '4') {
+            if (roleId == '7') {
                 $("#desigination").show();
             } else {
                 $("#desigination").hide();

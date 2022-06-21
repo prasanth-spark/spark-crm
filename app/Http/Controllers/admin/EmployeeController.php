@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Models\User;
 use App\Models\CsvData;
@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Session;
 class EmployeeController extends Controller
 {
     use ImageUpload;
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;
@@ -65,6 +65,7 @@ class EmployeeController extends Controller
      */
     public function employeeAdd(EmployeeValidationRequest $request)
     {
+        // dd($request->team_name);
         // try {
         $userCredentials = $this->user->create([
             'name' => $request->name,
@@ -85,34 +86,58 @@ class EmployeeController extends Controller
         $userCredentials->assignRole([$request->role]);
         $count = User::count();
 
-        if($userCredentials->role_id==2){
-            $designation = "Human Resources";
-            $request->team_name="1";
-        }
-        if($userCredentials->role_id==3){
-            $designation = "Deployment Head";
-            $request->team_name="1";
-        }
-        if($userCredentials->role_id==4){
-            $designation = "Development Head";
-            $request->team_name="1";
-        }
-        if($userCredentials->role_id==5){
-            $designation = "Project Manager";
-            $request->team_name="1";
-        }
-        if($userCredentials->role_id==6){
-            $designation = "Team Head";
+        // if($userCredentials->role_id==2){
+        //     $designation = "Human Resources";
+            // $request->team_name="1";
+        // }
+        // if($userCredentials->role_id==3){
+        //     $designation = "Deployment Head";
+        //     $request->team_name="1";
+        // }
+        // if($userCredentials->role_id==4){
+        //     $designation = "Development Head";
+        //     $request->team_name="1";
+        // }
+        // if($userCredentials->role_id==5){
+        //     $designation = "Project Manager";
+        //     $request->team_name="1";
+        // }
+        // if($userCredentials->role_id==6){
+        //     $designation = "Team Head";
      
-        }
-        if($userCredentials->role_id==7){
-            $designation = $request->designation;
-        }
-        if($userCredentials->role_id==8){
-            $designation = "Internship";
-            $request->team_name="9";
-        }
+        // }
+        // if($userCredentials->role_id==7){
+        //     $designation = $request->designation;
+        // }
+        // if($userCredentials->role_id==8){
+        //     $designation = "Internship";
+        //     $request->team_name="9";
+        // }
        
+        switch($userCredentials->role_id)
+        {
+        case $userCredentials->role_id==2:
+        $designation = "Human Resources";
+        break;
+        case $userCredentials->role_id==3:
+        $designation = "Deploy Head";
+        break;
+        case $userCredentials->role_id==4:
+        $designation = "Development Head";
+        break;
+        case $userCredentials->role_id==5:
+        $designation = "Project Manager";
+        break;
+        case $userCredentials->role_id==6:
+        $designation = "Team Head";
+        break; 
+        case $userCredentials->role_id==8:
+        $designation = "Intenship";
+        break;
+        default:
+        $designation = $request->desigination;
+        }
+
         $this->userdetails->create([
             'user_id' => $userCredentials->id,
             'employee_id' => 'SOT-' . ($count),
@@ -248,8 +273,6 @@ class EmployeeController extends Controller
             'role_id' => $request->role,
             'team_id' => $request->team_name,
             'designation' => $request->desigination,
-
-
         ]);
         return redirect('/admin/employee-list');
 

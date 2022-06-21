@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Http\Request\UserProfileRequest;
 use App\Models\LanguageSkill;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 class UserProfileController extends Controller
 {
 
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user)
     {
         $this->user        = $user;
         $this->userdetails = $userdetails;

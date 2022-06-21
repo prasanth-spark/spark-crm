@@ -51,8 +51,7 @@ Route::middleware('auth')->group(function () {
        
        //Roles and Permission
         Route::get('/employee-role', [RolesController::class, 'roleList'])->name('employee-role');
-        Route::get('/add-role-form', [RolesController::class, 'roleAddform'])->name('add-role-form');
-       
+        Route::post('/add-role', [RolesController::class, 'addRole'])->name('add-role');
         Route::get('/roles-permission-list/{id}', [RolesController::class, 'rolesPermissionlist'])->name('role-permission-list');
         Route::post('/add-permission-role', [RolesController::class, 'addPermissionrole'])->name('add-permission-role');
         Route::post('/delete-role', [RolesController::class, 'roleDelete'])->name('delete-role');

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Permission;
+use Spatie\Permission\Models\Permission;
 
 
 class PermissionSeeder extends Seeder

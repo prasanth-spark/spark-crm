@@ -7,10 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
 use App\Models\TeamModel;
-use App\Models\Permission;
-use App\Models\RolehasPermission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use App\Models\CsvData;
 use App\Jobs\VerfyUserEmailJob;
@@ -28,10 +27,11 @@ use  App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use App\Helper\ImageUpload;
 use Illuminate\Support\Facades\Session;
+use DB;
 
 class RolesController extends Controller
 {
-    public function __construct(RolehasPermission $rolehaspermission,UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user ,Permission $permission)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user ,Permission $permission)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;
@@ -52,21 +52,29 @@ class RolesController extends Controller
     public function rolesPermissionlist(Request $request)
     {
        $id = $request->id;
-       $permissionLists = $this->permission->get();
-       return view('admin/employee/roles-permission-list',compact('permissionLists','id'));
+       $permissionLists = $this->permission->with('roles')->get();
+       $role_permissions = DB::table('role_has_permissions')->where('role_id',$id)->get();
+       return view('admin/employee/roles-permission-list',compact('permissionLists','id','role_permissions'));
     }
 
-    public function roleAddform(Request $request)
+    public function addRole(Request $request)
     {
-        return view('admin/employee/add-role');
+        $web = "web";
+        $this->rolemodel->create([
+         'name' => $request->name,
+         'guard_name' => $web,
+        ]);
+        return redirect('admin/employee-role'); 
     }
 
     public function addPermissionrole(Request $request)
     {
-        $rolehaspermission = new RolehasPermission();
-        $rolehaspermission->permission()->sync($request->permission_ids);
-        $rolehaspermission->role_id = $request->role_id;
-        $rolehaspermission->save();
+        $role_id = $request->role_id;
+        $permission_ids = $request->permission_ids;
+        $role = Role::find($role_id);
+        $permission = Permission::find($permission_ids);
+        $role->syncPermissions($permission);
+        return redirect('admin/employee-role');
     }
 
     public function roleDelete(Request $request)
