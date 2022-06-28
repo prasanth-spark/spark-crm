@@ -117,15 +117,16 @@ else{
          if($userRole == 8 || $userRole == 6){
             $tlRole = 2;
             $userTeam=1;
-            $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
+            $teamLeadTeam=$this->user->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
             $teamLead=$teamLeadTeam->user_id; 
             $teamLeadDetail = User::find($teamLead);
   
         }else{
+
             $tlRole = $userRole-1;  
             $userTeam=$user->team_id;
-            $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
-            $teamLead=$teamLeadTeam->user_id; 
+            $teamLeadTeam=$this->user->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
+            $teamLead=$teamLeadTeam->id; 
             $teamLeadDetail = User::find($teamLead);
         }
             $teamLeadMail =$teamLeadDetail->email;
@@ -256,7 +257,7 @@ else{
         }
     }
     
-        //LEAVE PERMISSION FOR PROJECT MANAGER AND ARCHITECT  
+        //LEAVE AND PERMISSION FOR PROJECT MANAGER AND ARCHITECT  
     else{
         $attendanceValue = $request->status;
         $date = Carbon::now();
@@ -264,16 +265,15 @@ else{
         $userId= auth()->user()->id;     
         $user = User::find($userId);
         $userRole=$user->role_id; 
-        if($userRole != 2){
-            $tlRole = 2;
+        if($userRole == 3||$userRole == 4||$userRole == 5)
+        {
             $userTeam=1;
         }
-        $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
-        $teamLead=$teamLeadTeam->user_id; 
+        $teamLeadTeam=$this->user->where('role_id','=',$userTeam)->first();
+        $teamLead=$teamLeadTeam->id; 
         $teamLeadDetail = User::find($teamLead);    
         $teamLeadMail =$teamLeadDetail->email;
         $teamLeadName = $teamLeadDetail->name;
-
 
         if($attendanceValue == 0 && $leaveRequest=='Permission'){
                 $this->attendance->create([

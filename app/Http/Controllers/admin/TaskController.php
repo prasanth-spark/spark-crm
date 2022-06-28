@@ -62,7 +62,7 @@ class TaskController extends Controller
           $todateFormatChange = date("Y-m-d", strtotime($todate));
           $team       =   $request->team_name;
 
-          $taskList = $this->tasksheet->with('taskToUser', 'taskToUserDetails.teamToUserDetails', 'taskToUser.roleToUser');
+          $taskList = $this->tasksheet->with('taskToUser', 'taskToUser.teamToUser', 'taskToUser.roleToUser');
 
           $limit = $request->iDisplayLength;
           $offset = $request->iDisplayStart;
@@ -73,7 +73,7 @@ class TaskController extends Controller
                $taskList->whereHas('taskToUser', function ($q) use ($keyword) {
                     $q->where('name', 'like', '%' . $keyword . '%');
                });
-               $taskList->orwhereHas('taskToUserDetails.teamToUserDetails', function ($q) use ($keyword) {
+               $taskList->orwhereHas('taskToUser.teamToUser', function ($q) use ($keyword) {
                     $q->where('team', 'like', '%' . $keyword . '%');
                });
                $taskList->orwhereHas('taskToUser.roleToUser', function ($q) use ($keyword) {
@@ -92,11 +92,11 @@ class TaskController extends Controller
           );
 
           if ($fromdateFormatChange && $todateFormatChange && $team) {
-               $taskList = $taskList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('taskToUserDetails.teamToUserDetails', function ($query) use ($team) {
+               $taskList = $taskList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('taskToUser.teamToUser', function ($query) use ($team) {
                     $query->where('team_id', '=', $team);
                });
           } elseif ($team) {
-               $taskList = $taskList->whereHas('taskToUserDetails.teamToUserDetails', function ($query) use ($team) {
+               $taskList = $taskList->whereHas('taskToUser.teamToUser', function ($query) use ($team) {
                     $query->where('team_id', '=', $team);
                });
           }
@@ -109,7 +109,7 @@ class TaskController extends Controller
                $col['date'] = $value->date;
                $col['name'] = $value->taskToUser->name;
                $col['role'] = $value->taskToUser->roleToUser->name;
-               $col['team'] = $value->taskToUserDetails->teamToUserDetails->team;
+               $col['team'] = $value->taskToUser->teamToUser->team;
                $col['project_name'] = isset($value->projects['title']) ? $value->projects['title'] : 'general';
                $col['leave_status'] = ($value->status == 1) ? "pending" : "completed";
                $col['action'] = ' <a class="flex items-center mr-3" href="' . url('/') . '/admin/task-details/' . $value->id . '">

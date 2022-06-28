@@ -65,8 +65,15 @@ class EmployeeController extends Controller
      */
     public function employeeAdd(EmployeeValidationRequest $request)
     {
-        // dd($request->team_name);
-        // try {
+            if($request->team_name == null)
+            {
+             if($request->role == 3||$request->role == 4||$request->role == 5)
+             {
+                $request->team_name = "10";
+             }else{
+                $request->team_name;
+             }
+            }
         $userCredentials = $this->user->create([
             'name' => $request->name,
             'email' => $request->email,
@@ -86,34 +93,6 @@ class EmployeeController extends Controller
         $userCredentials->assignRole([$request->role]);
         $count = User::count();
 
-        // if($userCredentials->role_id==2){
-        //     $designation = "Human Resources";
-            // $request->team_name="1";
-        // }
-        // if($userCredentials->role_id==3){
-        //     $designation = "Deployment Head";
-        //     $request->team_name="1";
-        // }
-        // if($userCredentials->role_id==4){
-        //     $designation = "Development Head";
-        //     $request->team_name="1";
-        // }
-        // if($userCredentials->role_id==5){
-        //     $designation = "Project Manager";
-        //     $request->team_name="1";
-        // }
-        // if($userCredentials->role_id==6){
-        //     $designation = "Team Head";
-     
-        // }
-        // if($userCredentials->role_id==7){
-        //     $designation = $request->designation;
-        // }
-        // if($userCredentials->role_id==8){
-        //     $designation = "Internship";
-        //     $request->team_name="9";
-        // }
-       
         switch($userCredentials->role_id)
         {
         case $userCredentials->role_id==2:
@@ -160,8 +139,6 @@ class EmployeeController extends Controller
             'ifsc_code' => $request->ifsc_code,
             'branch_name' => $request->branch_name,
             'account_type_id' => $request->account_type,
-            'role_id' => $userCredentials->role_id,
-            'team_id' => $request->team_name,
         ]);
         return redirect('/admin/employee-list');
 
@@ -178,7 +155,7 @@ class EmployeeController extends Controller
     public function employeeList()
     {
         try {
-            $employeeList = $this->user->where('status', 1)->with('userDetail', 'userDetail.teamToUserDetails', 'userDetail.roleToUserDetails')->get();
+            $employeeList = $this->user->where('status', 1)->with('userDetail', 'teamToUser', 'roleToUser')->get();
             return view('admin/employee/employee-list', compact('employeeList'));
         } catch (\Throwable $exception) {
             Log::info($exception->getMessage());
@@ -195,7 +172,7 @@ class EmployeeController extends Controller
     {
         
         try {
-            $employeeView = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
+            $employeeView = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'user.roleToUser', 'user.teamToUser')->first();
             return view('admin/employee/employee-view', compact('employeeView'));
         } catch (\Throwable $exception) {
             Log::info($exception->getMessage());
@@ -212,7 +189,7 @@ class EmployeeController extends Controller
     {
         
         try {
-            $employeeEdit = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'roleToUserDetails', 'teamToUserDetails')->first();
+            $employeeEdit = $this->userdetails->where('user_id', $id)->with('bankNameToEmployee', 'accountTypeToEmployee', 'user', 'user.roleToUser', 'user.teamToUser')->first();
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
             $role = $this->rolemodel->where('id', '!=', 1)->get();
@@ -270,15 +247,9 @@ class EmployeeController extends Controller
             'ifsc_code' => $request->ifsc_code,
             'branch_name' => $request->branch_name,
             'account_type_id' => $request->account_type,
-            'role_id' => $request->role,
-            'team_id' => $request->team_name,
             'designation' => $request->desigination,
         ]);
         return redirect('/admin/employee-list');
-
-        // } catch (\Throwable $exception) {
-        //     Log::info($exception->getMessage());
-        //     } 
     }
 
     /**
@@ -307,21 +278,18 @@ class EmployeeController extends Controller
 
     public function employeeListPagination(Request $request)
     {
-
-
-        $employeeList = $this->user->where('status', 1)->with('userDetail', 'userDetail.teamToUserDetails', 'userDetail.roleToUserDetails');
+        $employeeList = $this->user->where('status', 1)->with('userDetail', 'teamToUser', 'roleToUser');
         $limit = $request->iDisplayLength;
         $offset = $request->iDisplayStart;
-
 
         if ($request->sSearch != '') {
             $keyword = $request->sSearch;
             $employeeList->where('name', 'like', '%' . $keyword . '%');
 
-            $employeeList->orwhereHas('userDetail.teamToUserDetails', function ($q) use ($keyword) {
+            $employeeList->orwhereHas('teamToUser', function ($q) use ($keyword) {
                 $q->where('team', 'like', '%' . $keyword . '%');
             });
-            $employeeList->orwhereHas('userDetail.roleToUserDetails', function ($q) use ($keyword) {
+            $employeeList->orwhereHas('roleToUser', function ($q) use ($keyword) {
                 return $q->where('name', 'like', '%' . $keyword . '%');
             });
         }       
@@ -343,8 +311,8 @@ class EmployeeController extends Controller
             $col['employee_id'] = isset($employeeList->userDetail->employee_id) ? $employeeList->userDetail->employee_id : '';
             $col['name'] = $employeeList->name;
             $col['phone_number'] = isset($employeeList->userDetail->phone_number) ? $employeeList->userDetail->phone_number : '';
-            $col['role_id'] = isset($employeeList->userDetail->roleToUserDetails->name) ? $employeeList->userDetail->roleToUserDetails->name : '';
-            $col['team_id'] = isset($employeeList->userDetail->teamToUserDetails->team) ? $employeeList->userDetail->teamToUserDetails->team : '';
+            $col['role_id'] = isset($employeeList->roleToUser->name) ? $employeeList->roleToUser->name : '';
+            $col['team_id'] = isset($employeeList->teamToUser->team) ? $employeeList->teamToUser->team : '';
             $col['action'] = '<div class="flex justify-center items-center">
                             <a class="flex items-center mr-3" href="' . url('/') . '/admin/employee-details/' . $employeeList->id . '">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye w-4 h-4 mr-1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>view
@@ -377,8 +345,6 @@ class EmployeeController extends Controller
                                 </form>
                             </div>
                         </div>';
-
-
 
             array_push($column, $col);
             $offset++;

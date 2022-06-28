@@ -45,9 +45,7 @@ class TeamAttendanceController extends Controller
         $teamAttendance=$this->userdetails->where('user_id',Auth::user()->id)->first();
         $teamId = $teamAttendance->team_id;
     if($teamId != 1){
-        $teamAttendance=$this->attendance->whereHas('attendanceToUserDetails', function ($query) use ($teamId) {
-            $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('attendanceToUser','attendanceToUserDetails')->get();
+        $teamAttendance=$this->attendance->whereHas('attendanceToUser')->get();
     }else{
         $teamAttendance= $this->attendance->get();
         }

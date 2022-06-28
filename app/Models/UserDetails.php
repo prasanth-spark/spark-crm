@@ -27,20 +27,6 @@ class UserDetails extends Model
         return $this->belongsTo(AccountType::class, 'account_type_id', 'id');
     }
 
-
-
-    public function roleToUserDetails()
-    {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
-    }
-
-
-    public function teamToUserDetails()
-    {
-        return $this->belongsTo(TeamModel::class, 'team_id', 'id');
-    }
-
-
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

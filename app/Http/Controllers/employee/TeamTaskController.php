@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use App\Models\TaskSheet;
+use Illuminate\Support\Arr;
 
 
 
@@ -44,12 +45,15 @@ class TeamTaskController extends Controller
      */
     public function teamTask()
     {
-        $teamTask=$this->userdetails->where('user_id',Auth::user()->id)->first();
-        $teamId = $teamTask->team_id;
-
-        $taskSheet=$this->tasksheet->whereHas('taskToUserDetails', function ($query) use ($teamId) {
-            $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('taskToUser','taskToUserDetails')->get(); 
+        $teamLead=$this->user->where('id',Auth::user()->id)->first();
+        $teamUsers = $this->user->where('team_id', '=' ,$teamLead->team_id)->where('role_id', '!=' ,$teamLead->role_id)->get();
+        $taskSheet= []; 
+        foreach($teamUsers as $teamUser){
+            $taskSheetDetail =$this->tasksheet->with('taskToUser')->whereHas('taskToUser', function ($query) use ($teamUser) {
+                $query->where('user_id',$teamUser->id);
+            })->latest()->get(); 
+            array_push($taskSheet,$taskSheetDetail);
+        }
         return view('employee/teamtask/teamtask-list', compact('taskSheet'));
     }
 

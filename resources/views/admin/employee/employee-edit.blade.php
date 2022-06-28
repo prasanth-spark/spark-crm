@@ -203,7 +203,7 @@
                                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Role<span style="color:red">*</span></label>
 
                                         <select placeholder="Role" type="text" class="tom-select w-full" id="role_name" name='role'>
-                                            <option value="{{$employeeEdit->roleToUserDetails->id}}">{{$employeeEdit->roleToUserDetails->name}}</option>
+                                            <option value="{{$employeeEdit->user->roleToUser->id}}">{{$employeeEdit->user->roleToUser->name}}</option>
                                             @foreach($role as $r)
                                             <option value="{{$r->id}}">{{$r->name}}</option>
                                             @endforeach
@@ -218,7 +218,7 @@
                                         <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Team<span style="color:red">*</span></label>
 
                                         <select placeholder="Team Name" type="text" class="tom-select w-full" id="regular-form-4" name='team_name'>
-                                            <option value="{{$employeeEdit->teamToUserDetails->id}}">{{$employeeEdit->teamToUserDetails->team}}</option>
+                                            <option value="{{$employeeEdit->user->teamToUser->id}}">{{$employeeEdit->user->teamToUser->team}}</option>
                                             @foreach($team as $t)
                                             <option value="{{$t->id}}">{{$t->team}}</option>
                                             @endforeach
