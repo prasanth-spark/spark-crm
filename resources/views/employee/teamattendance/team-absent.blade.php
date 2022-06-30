@@ -38,7 +38,7 @@
                 <tr>  
 
                     <td>{{$absent->leaverequestUser->name}}</td>
-                    <td>{{$absent->leaveToUserDetails->teamToUserDetails->team}}</td>
+                    <td>{{$absent->leaverequestUser->teamToUser->team}}</td>
                     <td>{{$absent->leaverequestUser->roleToUser->name}}</td>
                     <td>{{$absent->leaverequest->leave_type}}</td>
                     <td>

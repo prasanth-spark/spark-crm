@@ -41,13 +41,12 @@ class UserProfileController extends Controller
     public function userProfileForm()
     {
         $userId = Auth::user()->id;
-        $userdetails = $this->userdetails->where('user_id', $userId)->with('bankNameToEmployee', 'accountTypeToEmployee', 'teamToUserDetails')->first();
+        $userdetails = $this->user->where('id', $userId)->with('userDetail','teamToUser')->first();
         if (isset($userdetails)) {
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
             $team = $this->teammodel->get();
             $language = LanguageSkill::all();
-
             return view('employee/user-profile/user-profile-form', compact('bankName', 'accountType', 'team', 'userdetails','language'));
         }else{
             $bankName = $this->bankdetails->get();
@@ -92,8 +91,6 @@ class UserProfileController extends Controller
                 'ifsc_code' => $request->ifsc_code,
                 'branch_name' => $request->branch_name,
                 'account_type_id' => $request->account_type,
-                'role_id' => $user->role_id,
-                'team_id' => $request->team_name,
                 'status'=>'1',
 
             ]);
@@ -120,8 +117,6 @@ class UserProfileController extends Controller
             'ifsc_code' => $request->ifsc_code,
             'branch_name' => $request->branch_name,
             'account_type_id' => $request->account_type,
-            'role_id' => $user->role_id,
-            'team_id' => $request->team_name,
         ]);
         return redirect('/employee/employee_dashboard')->with('success', 'Profile Added Successfully');
         }  
@@ -167,7 +162,6 @@ class UserProfileController extends Controller
      */
     public function languageSkillAdd(Request $request)
     {
- 
         $languageLevels = array_combine($request->language,$request->language_level);
         foreach($languageLevels as $language =>$languageLevel){
         LanguageLevel::create([

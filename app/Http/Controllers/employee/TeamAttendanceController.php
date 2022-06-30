@@ -42,10 +42,15 @@ class TeamAttendanceController extends Controller
      */
     public function teamAttendanceList()
     {
-        $teamAttendance=$this->userdetails->where('user_id',Auth::user()->id)->first();
+        $teamAttendance=$this->user->where('id',Auth::user()->id)->first();
         $teamId = $teamAttendance->team_id;
-    if($teamId != 1){
-        $teamAttendance=$this->attendance->whereHas('attendanceToUser')->get();
+        $RoleId = $teamAttendance->role_id;
+
+        if($RoleId = 6 && $teamId != 1 && $teamId != 10){
+            $teamAttendance=$this->attendance->whereHas('attendanceToUser', function ($query) use ($teamId) {
+            $query->where('team_id',$teamId)->where('user_id','!=',Auth::user()->id);
+        })->with('attendanceToUser')->get();
+        
     }else{
         $teamAttendance= $this->attendance->get();
         }
@@ -59,14 +64,14 @@ class TeamAttendanceController extends Controller
      */
     public function teamAbsentList()
     {
-        $teamLead=$this->userdetails->where('user_id',Auth::user()->id)->first();
+        $teamLead=$this->user->where('id',Auth::user()->id)->first();
         $teamId = $teamLead->team_id;
-        if($teamId !=1){
-        $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->whereHas('leaveToUserDetails', function ($query) use ($teamId) {
-            $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails')->get();
+        if($RoleId = 6 && $teamId != 1 && $teamId != 10){
+        $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->whereHas('leaverequestUser', function ($query) use ($teamId) {
+            $query->where('team_id',$teamId)->where('user_id','!=',Auth::user()->id);
+        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser','leaverequestUser.teamToUser')->get();
         }else{
-        $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->with('leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails')->get();
+        $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->with('leaverequestUser', 'leaverequestUser.roleToUser')->get();
     }
         return view('employee/teamattendance/team-absent', compact('teamabsentList'));
     }
@@ -78,14 +83,14 @@ class TeamAttendanceController extends Controller
      */
     public function teamPermissionlist()
     {
-        $teamLead=$this->userdetails->where('user_id',Auth::user()->id)->first();
+        $teamLead=$this->user->where('id',Auth::user()->id)->first();
         $teamId = $teamLead->team_id;
         if($teamId !=1){
-        $teamPermissionList = $this->leaverequest->where('leave_type_id', '=', 1)->whereHas('leaveToUserDetails', function ($query) use ($teamId) {
-            $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails')->get();
+        $teamPermissionList = $this->leaverequest->where('leave_type_id', '=', 1)->whereHas('leaverequestUser', function ($query) use ($teamId) {
+            $query->where('team_id',$teamId)->where('user_id','!=',Auth::user()->id);
+        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser')->get();
     }else{
-        $teamPermissionList = $this->leaverequest->where('leave_type_id', '=', 1)->with( 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails')->get();
+        $teamPermissionList = $this->leaverequest->where('leave_type_id', '=', 1)->with( 'leaverequestUser', 'leaverequestUser.roleToUser')->get();
     }
         return view('employee/teamattendance/team-permission', compact('teamPermissionList'));
     }
