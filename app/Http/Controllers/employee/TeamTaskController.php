@@ -33,9 +33,7 @@ class TeamTaskController extends Controller
         $this->leaverequest  = $leaverequest;
         $this->tasksheet     = $tasksheet;
 
-        $this->middleware(['role:Team Leader']);
-
-
+        $this->middleware('permission:team-task', ['only' => ['teamTask']]);
     }
 
      /**

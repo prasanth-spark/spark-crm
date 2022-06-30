@@ -26,8 +26,13 @@ class AttendanceController extends Controller
         $this->userDetail= $userDetails;
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
-
-        $this->middleware(['role:Employee|Team Leader|Project Manager|Tech Architect|Project Architect|Others|Human Resource']);
+        $this->middleware('permission:attendance-module', ['only' => ['attendanceModule']]);
+        $this->middleware('permission:attendance-status', ['only' => ['attendanceStatus']]);
+        $this->middleware('permission:leave-response', ['only' => ['leaveResponse']]);
+        $this->middleware('permission:leave-status', ['only' => ['leaveStatus']]);
+        $this->middleware('permission:permission-response', ['only' => ['permissionResponse']]);
+        $this->middleware('permission:permission-status', ['only' => ['permissionStatus']]);
+        $this->middleware('permission:attendance-show', ['only' => ['attendanceList']]);
     }
     public function attendanceModule(Request $request){
 

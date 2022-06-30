@@ -21,10 +21,6 @@ class PermissionSeeder extends Seeder
                 ['name' => 'task-form', 'menu_name' => 'task-view'],
                 ['name' => 'task-add', 'menu_name' => 'task-add'],
                 ['name' => 'task-list', 'menu_name' => 'task-list'],
-                ['name' => 'taskDetails', 'menu_name' => 'taskDetails'],
-                ['name' => 'taskEdit', 'menu_name' => 'taskEdit'],
-                ['name' => 'taskUpdate', 'menu_name' => 'taskUpdate'],
-                ['name' => 'taskPagination', 'menu_name' => 'taskPagination'],
 
                 ['name' => 'attendance-module', 'menu_name' => 'attendance-module'],
                 ['name' => 'attendance-status', 'menu_name' => 'attendance-status'],

@@ -21,7 +21,9 @@ class LoginController extends Controller
     {
         $this->user = $user;
         $this->rolemodel = $rolemodel;
-
+        $this->middleware('permission:employee-dashboard', ['only' => ['employeeDashboard']]);
+        $this->middleware('permission:employee-logout', ['only' => ['logout']]);
+        
     }
 
     /**
