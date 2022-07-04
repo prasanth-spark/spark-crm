@@ -165,6 +165,7 @@ class UserProfileController extends Controller
      */
     public function languageSkillAdd(Request $request)
     {
+        dd($request->all());
         $languageLevels = array_combine($request->language,$request->language_level);
         foreach($languageLevels as $language =>$languageLevel){
         LanguageLevel::create([
@@ -174,8 +175,6 @@ class UserProfileController extends Controller
             ]);
         }
         return redirect('/employee/employee_dashboard')->with('success', 'Language Skill Added Successfully');
-        
-
     }
 
 }

@@ -35,6 +35,7 @@ class PermissionSeeder extends Seeder
                 ['name' => 'user-profile-add', 'menu_name' => 'user-profile-add'],
                 ['name' => 'user-reset-password', 'menu_name' => 'user-reset-password'],
                 ['name' => 'user-change-password', 'menu_name' => 'user-change-password'],
+                ['name' => 'user-language-add', 'menu_name' => 'user-language-add'],
 
                 ['name' => 'team-task', 'menu_name' => 'team-task'],
                 ['name' => 'attendance', 'menu_name' => 'attendance'],

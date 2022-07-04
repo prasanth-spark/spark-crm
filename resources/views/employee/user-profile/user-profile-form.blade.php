@@ -241,45 +241,47 @@
                     <div class="p-5">
                         <div class="preview">
                             <!-- BEGIN: Validation Form -->
-                            <form action="{{route('user-language-add')}}" method="post">
+                            <form action="{{route('user-language-add')}}" method="post" id="Form">
                                 @csrf
                                 <div class="grid grid-cols-12 gap-6 mt-5">
                                     <div class="col-span-12 md:col-span-6">
                                         <div id="tab_logic" class="flex justify-between">
-                                            <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">Language Skills</p>
+                                            <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row"  id="Language">Language Skills</p>
                                             <a class="btn btn-success w-40 mb-4 add-more">+ Add More</a>
-
-
                                         </div>
-                                        <select placeholder="Language Skill" type="text" class="tom-select w-full" id="laguage_skill" name='language[]' required>
-                                            <option value selected="selected" disabled="disabled">Language Skill</option>
-                                            @foreach($language as $skill)
-                                            <option value="{{$skill->id}}">{{$skill->language}}</option>
-                                            @endforeach
-                                        </select>
+                                        <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row"></label>
+                                    <select placeholder="Language Skill" type="text" class="tom-select w-full" id="Language-Skill" name='language[]'>
+                                        <option value selected="selected" disabled="disabled">Language Skill</option>
+                                        @foreach($language as $skill)
+                                        <option value="{{$skill->id}}">{{$skill->language}}</option>
+                                        @endforeach
+                                    </select>
                                     </div>
-
-
                                     <div class="col-span-12 md:col-span-6">
-                                        <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row">
+                                        <p for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="Levels">
                                             Level
                                         </p>
                                         <div class="flex items-center space-x-4">
 
-                                            <div class="flex items-center">
-                                                <input id="regular-form-4" type="radio" name='language_level[0]' value="1">
-                                                <label class="form-check-label text-black">Beginer</label>
-                                            </div>
+                                         <div class="form-check form-check-inline" >
+                                            <input class="form-check-input" style="display:none" type="radio" name='language_level[0]' id="level" value="0">
+                                          </div>
 
-                                            <div class="flex items-center">
-                                                <input id="regular-form-4" type="radio" name='language_level[0]' value="2">
-                                                <label class="form-check-label text-black">Intermediate</label>
-                                            </div>
+                                         <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name='language_level[0]'  value="1">
+                                            <label class="form-check-label text-black">Beginer</label>
+                                        </div>
 
-                                            <div class="flex items-center">
-                                                <input id="regular-form-4" type="radio" name='language_level[0]' value="3">
-                                                <label class="form-check-label text-black">Advanced</label>
-                                            </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name='language_level[0]' value="2">
+                                            <label class="form-check-label text-black">Intermediate</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name='language_level[0]' value="3">
+                                            <label class="form-check-label text-black">Advanced</label>
+                                        </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -330,5 +332,42 @@
             $("body").on("click", ".remove", function() {
                 $(this).parents("#tab_logic").remove();
             });
+            $("#Form").submit(function(e)
+             {
+            var Language = $("#Language-Skill").val();
+            if(Language == null || Language == "")
+                {
+                $("#Language").css({
+                'font-family': 'ArvoBold',
+                'color': 'red',
+                'font-size': '120%'
+                 });
+                e.preventDefault();
+               }        
+                if($('input[type=radio][name="language_level[0]"]:checked').length == 0)
+                {
+               $("#Levels").css({
+                'font-family': 'ArvoBold',
+                'color': 'red',
+                'font-size': '120%'
+                });
+                e.preventDefault();          
+                }   
+             });
+             $('select').on('change', function() {
+                $("#Language").css({
+                'font-family': 'unset',
+                'color': 'unset',
+                'font-size': 'unset'
+                 });
+            });
+            $('input[type=radio][name="language_level[0]"]').on('change', function() {
+                $("#Levels").css({
+                'font-family': 'unset',
+                'color': 'unset',
+                'font-size': 'unset'
+                 });
+            });
         });
+
     </script>
