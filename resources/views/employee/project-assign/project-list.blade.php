@@ -11,7 +11,7 @@
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto"></h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-        <button class="btn btn-primary shadow-md mb-4"><a href="{{route('project-assign-form')}}">Add Project</a></button>
+        <button class="btn btn-primary shadow-md mb-4"><a href="{{route('project-form')}}">Add Project</a></button>
     </div>
 </div>
 <!-- BEGIN: Data List -->

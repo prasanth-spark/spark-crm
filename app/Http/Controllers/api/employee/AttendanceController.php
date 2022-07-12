@@ -25,7 +25,7 @@ class AttendanceController extends Controller
         $this->userDetail= $userDetails;
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
-
+        
     }
 
     /*

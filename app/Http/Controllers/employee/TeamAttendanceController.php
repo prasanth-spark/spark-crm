@@ -46,13 +46,11 @@ class TeamAttendanceController extends Controller
         $teamAttendance=$this->user->where('id',Auth::user()->id)->first();
         $teamId = $teamAttendance->team_id;
         $RoleId = $teamAttendance->role_id;
-
         if($RoleId = 6 && $teamId != 1 && $teamId != 10){
             $teamAttendance=$this->attendance->whereHas('attendanceToUser', function ($query) use ($teamId) {
             $query->where('team_id',$teamId)->where('user_id','!=',Auth::user()->id);
         })->with('attendanceToUser')->get();
-        
-    }else{
+        }else{
         $teamAttendance= $this->attendance->get();
         }
         return view('employee/teamattendance/team-attendance', compact('teamAttendance'));
@@ -73,7 +71,7 @@ class TeamAttendanceController extends Controller
         })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser','leaverequestUser.teamToUser')->get();
         }else{
         $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->with('leaverequestUser', 'leaverequestUser.roleToUser')->get();
-    }
+        }
         return view('employee/teamattendance/team-absent', compact('teamabsentList'));
     }
 

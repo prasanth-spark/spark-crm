@@ -51,7 +51,6 @@ use App\Http\Controllers\employee\ProjectAssignController;
             Route::post('/task-add', [TaskController::class, 'taskAdd'])->name('task-add');
             Route::get('/task-list',[TaskController::class,'taskList'])->name('task-list');
             Route::get('/task-details/{taskView}', [TaskController::class, 'taskDetails'])->name('task-details');
-        //  Route::get('/task-edit/{taskEdit}', [TaskController::class, 'taskEdit'])->name('task-edit')->middleware('can:update,taskEdit');
             Route::get('/task-edit/{taskEdit}', [TaskController::class, 'taskEdit'])->name('task-edit');
             Route::post('/task-update', [TaskController::class, 'taskUpdate'])->name('task-update');
             Route::get('/task-pagination',[TaskController::class, 'taskPagination'])->name('task-pagination');
@@ -91,14 +90,10 @@ use App\Http\Controllers\employee\ProjectAssignController;
 
             //Add project
             Route::get('project-list',[ProjectAssignController::class,'ProjectList'])->name('project-list');
-            Route::get('project-form',[ProjectAssignController::class, 'ProjectForm'])->name('project-assign-form');
+            Route::get('project-form',[ProjectAssignController::class, 'ProjectForm'])->name('project-form');
             Route::post('add-project-form',[ProjectAssignController::class, 'addProject'])->name('add-project-form');
             Route::get('edit-project/{project}',[ProjectAssignController::class, 'editProject'])->name('edit-project');
             Route::post('update-project/{project}',[ProjectAssignController::class, 'updateProject'])->name('update-project');
             Route::Post('delete-project/{project}',[ProjectAssignController::class, 'deleteProject'])->name('delete-project');
-    
-
-
-
-        
+      
         });
