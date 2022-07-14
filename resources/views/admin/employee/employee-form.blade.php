@@ -388,7 +388,6 @@
             }
             
             function certificateDateofbirth() {
-                alert("as");
                 $("#Certificate_Date_of_Birth").css("border-color", 'unset');
             }
 

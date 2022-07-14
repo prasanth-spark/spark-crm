@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserDetails;
 use Spatie\Permission\Models\Role;
+use App\Models\RolehasPermission;
 use App\Http\Request\RegisterRequest;
 use App\Http\Request\LoginRequest;
 use App\Http\Request\ForgotPasswordRequest;
@@ -40,10 +41,12 @@ class LoginController extends Controller
                 DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
                 $token = $user->createToken('MyApp')->accessToken;
                 $users = User::where('email',$request->email)->with('userDetail')->first();
+                $role_id= $users->role_id;
+                $permission = RolehasPermission::where('role_id',$role_id)->get();
                 $data = array();
                 $data['token'] = $token;
                 $data['users'] = $users;
-
+                $data['permission_list'] = $permission;
                 return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$data]);
 
             } else {
