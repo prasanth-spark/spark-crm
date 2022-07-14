@@ -16,7 +16,7 @@ use App\Jobs\ForgotPassword;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 
 class LoginController extends Controller
