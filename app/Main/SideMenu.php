@@ -93,6 +93,14 @@ class SideMenu
                     'layout' => 'side-menu',
                 ],
             ],
+            'Roles' => [
+                'icon' => 'menu',
+                'route_name' => 'employee-role',
+                'title' => 'Roles',
+                'params' => [
+                    'layout' => 'side-menu',
+                ],
+            ],
         ];
     }
 }

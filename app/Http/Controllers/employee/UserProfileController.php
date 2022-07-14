@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Http\Request\UserProfileRequest;
 use App\Models\LanguageLevel;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user)
     {
         $this->user        = $user;
         $this->userdetails = $userdetails;
@@ -28,8 +28,11 @@ class UserProfileController extends Controller
         $this->rolemodel   = $rolemodel;
         $this->teammodel   = $teammodel;
 
-
-        $this->middleware(['role:Employee|Team Leader|Project Manager']);
+        $this->middleware('permission:user-profile-form', ['only' => ['userProfileForm']]);
+        $this->middleware('permission:user-profile-add', ['only' => ['userProfileAdd']]);
+        $this->middleware('permission:user-reset-password', ['only' => ['userResetForm']]);
+        $this->middleware('permission:user-change-password', ['only' => ['userChangePassword']]);
+        $this->middleware('permission:user-language-add', ['only' => ['languageSkillAdd']]);
 
     }
 
@@ -41,13 +44,12 @@ class UserProfileController extends Controller
     public function userProfileForm()
     {
         $userId = Auth::user()->id;
-        $userdetails = $this->userdetails->where('user_id', $userId)->with('bankNameToEmployee', 'accountTypeToEmployee', 'teamToUserDetails')->first();
+        $userdetails = $this->user->where('id', $userId)->with('userDetail','teamToUser')->first();
         if (isset($userdetails)) {
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
             $team = $this->teammodel->get();
             $language = LanguageSkill::all();
-
             return view('employee/user-profile/user-profile-form', compact('bankName', 'accountType', 'team', 'userdetails','language'));
         }else{
             $bankName = $this->bankdetails->get();
@@ -92,8 +94,6 @@ class UserProfileController extends Controller
                 'ifsc_code' => $request->ifsc_code,
                 'branch_name' => $request->branch_name,
                 'account_type_id' => $request->account_type,
-                'role_id' => $user->role_id,
-                'team_id' => $request->team_name,
                 'status'=>'1',
 
             ]);
@@ -120,8 +120,6 @@ class UserProfileController extends Controller
             'ifsc_code' => $request->ifsc_code,
             'branch_name' => $request->branch_name,
             'account_type_id' => $request->account_type,
-            'role_id' => $user->role_id,
-            'team_id' => $request->team_name,
         ]);
         return redirect('/employee/employee_dashboard')->with('success', 'Profile Added Successfully');
         }  
@@ -167,7 +165,7 @@ class UserProfileController extends Controller
      */
     public function languageSkillAdd(Request $request)
     {
- 
+        dd($request->all());
         $languageLevels = array_combine($request->language,$request->language_level);
         foreach($languageLevels as $language =>$languageLevel){
         LanguageLevel::create([
@@ -177,8 +175,6 @@ class UserProfileController extends Controller
             ]);
         }
         return redirect('/employee/employee_dashboard')->with('success', 'Language Skill Added Successfully');
-        
-
     }
 
 }

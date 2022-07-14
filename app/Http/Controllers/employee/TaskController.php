@@ -19,8 +19,9 @@ class TaskController extends Controller
         $this->taskSheet = $taskSheet;
         $this->taskStatus = $taskStatus;
         $this->project    = $project;
-
-        $this->middleware(['role:Employee|Team Leader|Others']);
+        $this->middleware('permission:task-form', ['only' => ['taskForm']]);
+        $this->middleware('permission:task-add', ['only' => ['taskAdd']]);
+        $this->middleware('permission:task-list', ['only' => ['taskList','taskPagination','taskDetails','taskEdit','taskUpdate']]);
     }
 
     /**
@@ -68,19 +69,18 @@ class TaskController extends Controller
         return view('employee/task/task-list');
     }
 
-
     public function taskPagination(Request $request)
     {
         $userId = Auth::user()->id;
         $tasks = $this->taskSheet->where('user_id', $userId)->with('projects');
         $limit = $request->iDisplayLength;
         $offset = $request->iDisplayStart;
-        $total_data = $tasks->count();
         $tasks = $tasks->when(($limit != '-1' && isset($offset)),
-            function ($q) use ($limit, $offset) {
+            function ($q) use($limit, $offset) {
                 return $q->offset($offset)->limit($limit);
             }
         );
+        $total_data = $tasks->count();
 
         if ($request->sSearch != '') {
             $keyword = $request->sSearch;
@@ -95,7 +95,7 @@ class TaskController extends Controller
         foreach ($data as $value) {
             $col['id'] = $offset + 1;
             $col['date'] = ($value->date) ? $value->date : "";
-            $col['project_id'] = isset($value->projects['title']) ? $value->projects['title'] : "general";
+            $col['project_id'] = isset($value->projects['title']) ? $value->projects['title'] : "General Project";
             $col['task_module'] = ($value->task_module) ? $value->task_module : "";
             $col['estimated_hours'] = ($value->estimated_hours) ? $value->estimated_hours : "";
             $col['worked_hours'] = ($value->worked_hours) ? $value->worked_hours : "-";

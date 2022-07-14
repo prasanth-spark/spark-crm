@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Models\User;
 use App\Models\Attendance;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TeamAttendanceController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;
@@ -36,11 +36,13 @@ class TeamAttendanceController extends Controller
 
     public function teamAttendanceList(Request $request)
     {
-        $teamAttendance=$this->userdetails->where('user_id',$request->user_id)->first();
+        $teamAttendance=$this->user->where('id',$request->user_id)->first();
         $teamId = $teamAttendance->team_id;
-        $teamAttendance=$this->attendance->whereHas('attendanceToUserDetails', function ($query) use ($teamId) {
-            $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('attendanceToUser','attendanceToUserDetails')->get(); 
+        $userId = $request->user_id;
+
+        $teamAttendance=$this->attendance->whereHas('attendanceToUser', function ($query) use ($teamId,$userId) {
+            $query->where('team_id',$teamId)->where('user_id','!=',$userId);
+        })->with('attendanceToUser')->get(); 
         return response()->json(['status'=>true,'message'=>'Team Attendance Details','data'=>$teamAttendance]);
     }
 
@@ -50,11 +52,12 @@ class TeamAttendanceController extends Controller
 
     public function teamAbsentlist(Request $request)
     {
-        $teamLead=$this->userdetails->where('user_id',$request->user_id)->first();
+        $teamLead=$this->user->where('id',$request->user_id)->first();
         $teamId = $teamLead->team_id;
-        $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->whereHas('leaveToUserDetails', function ($query) use ($teamId) {
-            $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails')->get();
+        $userId = $request->user_id;
+        $teamabsentList = $this->leaverequest->where('leave_type_id', '!=', 1)->whereHas('leaverequestUser', function ($query) use ($teamId,$userId) {
+            $query->where('team_id',$teamId)->where('user_id','!=',$userId);
+        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser','leaverequestUser.teamToUser')->get();
         return response()->json(['status'=>true,'message'=>'Team Absent Members Details','data'=>$teamabsentList]);
     }
 
@@ -64,11 +67,12 @@ class TeamAttendanceController extends Controller
 
     public function teamPermissionlist(Request $request)
     {
-        $teamLead=$this->userdetails->where('user_id',$request->user_id)->first();
+        $teamLead=$this->user->where('id',$request->user_id)->first();
         $teamId = $teamLead->team_id;
-        $teamPermissionList = $this->leaverequest->where('leave_type_id', '=', 1)->whereHas('leaveToUserDetails', function ($query) use ($teamId) {
-            $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails')->get();
+        $userId = $request->user_id;
+        $teamPermissionList = $this->leaverequest->where('leave_type_id', '=', 1)->whereHas('leaverequestUser', function ($query) use ($teamId,$userId) {
+            $query->where('team_id',$teamId)->where('user_id','!=',$userId);
+        })->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser')->get();
         return response()->json(['status'=>true,'message'=>'Team Absent Members Details','data'=>$teamPermissionList]);
     }
 }

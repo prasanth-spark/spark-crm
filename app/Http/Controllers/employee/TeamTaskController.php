@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use App\Models\TaskSheet;
+use Illuminate\Support\Arr;
 
 
 
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TeamTaskController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest,TaskSheet $tasksheet)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;
@@ -32,9 +33,7 @@ class TeamTaskController extends Controller
         $this->leaverequest  = $leaverequest;
         $this->tasksheet     = $tasksheet;
 
-        $this->middleware(['role:Team Leader']);
-
-
+        $this->middleware('permission:team-task', ['only' => ['teamTask']]);
     }
 
      /**
@@ -44,12 +43,15 @@ class TeamTaskController extends Controller
      */
     public function teamTask()
     {
-        $teamTask=$this->userdetails->where('user_id',Auth::user()->id)->first();
-        $teamId = $teamTask->team_id;
-
-        $taskSheet=$this->tasksheet->whereHas('taskToUserDetails', function ($query) use ($teamId) {
-            $query->where('team_id',$teamId)->where('role_id',4);
-        })->with('taskToUser','taskToUserDetails')->get(); 
+        $teamLead=$this->user->where('id',Auth::user()->id)->first();
+        $teamUsers = $this->user->where('team_id', '=' ,$teamLead->team_id)->where('role_id', '!=' ,$teamLead->role_id)->get();
+        $taskSheet= []; 
+        foreach($teamUsers as $teamUser){
+            $taskSheetDetail =$this->tasksheet->with('taskToUser')->whereHas('taskToUser', function ($query) use ($teamUser) {
+                $query->where('user_id',$teamUser->id);
+            })->latest()->get(); 
+            array_push($taskSheet,$taskSheetDetail);
+        }
         return view('employee/teamtask/teamtask-list', compact('taskSheet'));
     }
 

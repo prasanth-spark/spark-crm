@@ -5,7 +5,6 @@ namespace App\Http\Controllers\employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\RoleModel;
 use App\Http\Request\RegisterRequest;
 use App\Http\Request\LoginRequest;
 use App\Http\Request\ForgotPasswordRequest;
@@ -18,11 +17,13 @@ use Spatie\Permission\Models\Role;
 
 class LoginController extends Controller
 {
-    public function __construct(User $user, RoleModel $rolemodel)
+    public function __construct(User $user, Role $rolemodel)
     {
         $this->user = $user;
         $this->rolemodel = $rolemodel;
-
+        $this->middleware('permission:employee-dashboard', ['only' => ['employeeDashboard']]);
+        $this->middleware('permission:employee-logout', ['only' => ['logout']]);
+        
     }
 
     /**

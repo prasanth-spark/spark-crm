@@ -32,7 +32,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($taskSheet as $task)
+            @foreach($taskSheet as $tasklist)
+            @foreach($tasklist as $task)
             <tr>
                 <td>{{$task->date}}</td>
                 <td>{{$task->taskToUser->name}}</td>
@@ -42,6 +43,7 @@
                 <td>{{$task->worked_hours}}</td>
                 <td>{{($task->task_status == 1) ? "pending" : "completed";}}</td>
             </tr>
+            @endforeach
             @endforeach
         </tbody>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\api\employee\AttendanceController;
 use App\Http\Controllers\api\employee\TaskController;
 use App\Http\Controllers\api\employee\ProjectAssignController;
 use App\Http\Controllers\api\employee\TeamAttendanceController;
+use App\Http\Controllers\api\employee\UserProfileController;
 use App\Http\Controllers\api\employee\TeamTaskController;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,14 +21,13 @@ use Illuminate\Support\Facades\Auth;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['namespace'=>'api'], function(){
+       Route::group(['namespace'=>'api'], function(){
 
        //Login and Logout
 
        Route::post('/login-employee', [LoginController::class, 'loginEmployee']);
 
      
-        // Route::group(['middleware'=>'auth:api'],function () {
         
         //Attendance
         Route::post('attendance-status',[AttendanceController::class,'attendanceStatus']);
@@ -39,6 +39,7 @@ Route::group(['namespace'=>'api'], function(){
         Route::post('/task-update',[TaskController::class, 'taskUpdate']);
 
         //Project Manager Add Project Details
+
         Route::post('/project-list',[ProjectAssignController::class, 'projectList']);
         Route::get('/project-member',[ProjectAssignController::class, 'projectForm']);
         Route::post('/project-add',[ProjectAssignController::class, 'projectAdd']);
@@ -67,9 +68,6 @@ Route::group(['namespace'=>'api'], function(){
         Route::post('permission-status',[AttendanceController::class, 'permissionStatus']);
         Route::post('leave-list',[AttendanceController::class, 'attendanceList']);
 
-
-
-// });
 });
  
 

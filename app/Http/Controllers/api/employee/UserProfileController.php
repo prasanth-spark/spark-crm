@@ -7,19 +7,20 @@ use App\Models\User;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Http\Request\UserProfileRequest;
 use App\Models\LanguageSkill;
-use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserProfileController extends Controller
 {
 
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user)
     {
         $this->user        = $user;
         $this->userdetails = $userdetails;
@@ -31,19 +32,20 @@ class UserProfileController extends Controller
 
     public function userDetail(Request $request)
     {
-        $userId = $requset->user_id;
-        $userdetails = $this->userdetails->where('user_id', $userId)->with('bankNameToEmployee', 'accountTypeToEmployee', 'teamToUserDetails')->first();
+        $userId = $request->user_id;
+        $userdetails = $this->user->where('id', $userId)->with('userDetail','teamToUser')->first();
         if (isset($userdetails)) {
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
             $team = $this->teammodel->get();
             $language = LanguageSkill::all();
             $data = array();
+            $data['user_detail'] = $userdetails;
             $data['bankName'] = $bankName;
             $data['accountType'] = $accountType;
             $data['team'] = $team;
             $data['language'] = $language;   
-            return response()->json(['status'=>true,'message'=>'User Details','user_details'=>$data]);
+            return response()->json(['status'=>true,'message'=>'User Detail and Other details','data'=>$data]);
         }else{
             $bankName = $this->bankdetails->get();
             $accountType = $this->accountType->get();
@@ -55,7 +57,7 @@ class UserProfileController extends Controller
             return response()->json(['status'=>true,'message'=>'User Details','user_details'=>$data]);
         }
     }
-    public function userProfileAdd(UserProfileRequest $request)
+    public function userProfileAdd(Request $request)
     {
         $userID = $request->user_id;
         $user = $this->user->where('id', $userID)->first();
@@ -84,8 +86,6 @@ class UserProfileController extends Controller
                 'ifsc_code' => $request->ifsc_code,
                 'branch_name' => $request->branch_name,
                 'account_type_id' => $request->account_type,
-                'role_id' => $user->role_id,
-                'team_id' => $request->team_name,
                 'status'=>'1',
             ]);
             return response()->json(['status'=>true,'message'=>'User Profile updated successfully']);
@@ -109,8 +109,6 @@ class UserProfileController extends Controller
             'ifsc_code' => $request->ifsc_code,
             'branch_name' => $request->branch_name,
             'account_type_id' => $request->account_type,
-            'role_id' => $user->role_id,
-            'team_id' => $request->team_name,
         ]);
         return response()->json(['status'=>true,'message'=>'User Profile Created successfully']);
        }  
@@ -118,14 +116,22 @@ class UserProfileController extends Controller
 
     public function userChangePassword(Request $request)
     {
-        $request->validate([
-            'current_password' => ['required', new MatchOldPassword],
+        $validator = Validator::make($request->all(), [
+            'current_password' => ['required'],
             'new_password' => ['required'],
-            'new_confirm_password' => ['same:new_password'],
+            'new_confirm_password' => 'required|same:new_password',
         ]);
+        if($validator->fails()){ 
+        return response()->json(['status'=>true,'message'=>'Pls Fill all Fields']);
+         }else{
+        $user = User::where('id',$request->user_id)->first();
+        $password = $user->password;
+        if(Hash::check($request->current_password,$password)){
         User::find($request->user_id)->update(['password'=> Hash::make($request->new_password)]);
         return response()->json(['status'=>true,'message'=>'User New Passord Created successfully']);
-    }
-
-    
+        }else{
+        return response()->json(['status'=>true,'message'=>'Your Old Password is Incorrect']);
+        }
+       }
+    }  
 }

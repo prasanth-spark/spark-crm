@@ -2,7 +2,7 @@
 
 namespace App\Main\employee;
 
-use App\Models\UserDetails;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 
 class EmployeeSideMenu
@@ -15,7 +15,8 @@ class EmployeeSideMenu
      */
     public static function menu()
     {
-        $user = !empty(auth()->user()) ? auth()->user()->userDetail : null;
+        $user =auth()->user();
+        
         if ($user) {
             if ($user->role_id == 6) {
                 return [

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Http\Request\RegisterRequest;
 use App\Http\Request\LoginRequest;
 use App\Http\Request\ForgotPasswordRequest;
@@ -15,13 +15,12 @@ use App\Jobs\ForgotPassword;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 use DB;
 
 
 class LoginController extends Controller
 {
-    public function __construct(User $user, RoleModel $rolemodel ,UserDetails $userdetails)
+    public function __construct(User $user, Role $rolemodel ,UserDetails $userdetails)
     {
         $this->user = $user;
         $this->rolemodel = $rolemodel;

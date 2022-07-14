@@ -84,11 +84,11 @@
                             </div>
                             <div class="mr-auto flex items-center gap-5 my-4">
                                 <p class="font-medium w-4/12">Role:</p>
-                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->roleToUserDetails->name}}</div>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->user->roleToUser->name}}</div>
                             </div>
                             <div class="mr-auto flex items-center gap-5 my-4">
                                 <p class="font-medium w-4/12">Team:</p>
-                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->teamToUserDetails->team}}</div>
+                                <div class="text-slate-500 w-8/12 mt-1">{{$employeeView->user->teamToUser->team}}</div>
                             </div>
                             <div class="mr-auto flex items-center gap-5 my-4">
                                 <p class="font-medium w-4/12">Desigination:</p>

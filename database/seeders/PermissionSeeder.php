@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Permission;
+use Spatie\Permission\Models\Permission;
 
 
 class PermissionSeeder extends Seeder
@@ -21,10 +21,6 @@ class PermissionSeeder extends Seeder
                 ['name' => 'task-form', 'menu_name' => 'task-view'],
                 ['name' => 'task-add', 'menu_name' => 'task-add'],
                 ['name' => 'task-list', 'menu_name' => 'task-list'],
-                ['name' => 'taskDetails', 'menu_name' => 'taskDetails'],
-                ['name' => 'taskEdit', 'menu_name' => 'taskEdit'],
-                ['name' => 'taskUpdate', 'menu_name' => 'taskUpdate'],
-                ['name' => 'taskPagination', 'menu_name' => 'taskPagination'],
 
                 ['name' => 'attendance-module', 'menu_name' => 'attendance-module'],
                 ['name' => 'attendance-status', 'menu_name' => 'attendance-status'],
@@ -39,11 +35,20 @@ class PermissionSeeder extends Seeder
                 ['name' => 'user-profile-add', 'menu_name' => 'user-profile-add'],
                 ['name' => 'user-reset-password', 'menu_name' => 'user-reset-password'],
                 ['name' => 'user-change-password', 'menu_name' => 'user-change-password'],
+                ['name' => 'user-language-add', 'menu_name' => 'user-language-add'],
 
                 ['name' => 'team-task', 'menu_name' => 'team-task'],
                 ['name' => 'attendance', 'menu_name' => 'attendance'],
                 ['name' => 'team-absent', 'menu_name' => 'team-absent'],
-                ['name' => 'team-permission', 'menu_name' => 'team-permission'],                
+                ['name' => 'team-permission', 'menu_name' => 'team-permission'],   
+                
+                ['name' => 'project-list', 'menu_name' => 'project-list'],
+                ['name' => 'project-form', 'menu_name' => 'project-form'],
+                ['name' => 'add-project-form', 'menu_name' => 'add-project-form'],
+                ['name' => 'edit-project', 'menu_name' => 'edit-project'],
+                ['name' => 'update-project', 'menu_name' => 'update-project'],
+                ['name' => 'delete-project', 'menu_name' => 'delete-project'],
+
             ]
         ]
     ];

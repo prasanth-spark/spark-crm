@@ -11,6 +11,16 @@ use Illuminate\Http\Request;
 
 class ProjectAssignController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:project-list', ['only' => ['ProjectList']]);
+        $this->middleware('permission:project-form', ['only' => ['ProjectForm']]);
+        $this->middleware('permission:add-project-form', ['only' => ['addProject']]);
+        $this->middleware('permission:edit-project', ['only' => ['editProject']]);
+        $this->middleware('permission:update-project', ['only' => ['updateProject']]);
+        $this->middleware('permission:delete-project', ['only' => ['deleteProject']]);
+
+    }
 
     /**
      * Project List .
@@ -31,7 +41,7 @@ class ProjectAssignController extends Controller
      */
     public function ProjectForm()
     {
-        $users = User::whereNotIn('role_id', [1,2,3,4,5,6])->get();
+        $users = User::whereNotIn('role_id', [1,2,3,4,5])->get();
         return view('employee/project-assign/project-assign-form', compact('users'));
     }
 
@@ -61,7 +71,7 @@ class ProjectAssignController extends Controller
     public function editProject(Project $project)
     {
         $project = Project::with('users')->find($project->id);
-        $users = User::whereNotIn('role_id', [1,2,7,8])->get();
+        $users = User::whereNotIn('role_id', [1,2,3,4,5])->get();
         return view('employee/project-assign/project-edit-form', compact('project', 'users'));
     }
 
@@ -75,9 +85,7 @@ class ProjectAssignController extends Controller
         $project->title = $request->title;
         $project->description = $request->description;
         $project->save();
-
         $project->users()->sync($request->user_ids);
-
         return redirect()->route('project-list')->with('success', 'Project Updated Successfully');
     }
 

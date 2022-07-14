@@ -29,7 +29,7 @@
 
                                         Name<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, at least 2 characters</span>
                                     </label>
-                                    <input id="Name" type="text" class="form-control" placeholder="Name" name="name" onchange="name()">
+                                    <input id="Name" type="text" class="form-control" placeholder="Name" name="name" onchange="userName()">
                                     @error('name')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -93,7 +93,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelEmail">
                                         Email <span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, email address format</span>
                                     </label>
-                                    <input id="Email" type="email" class="form-control" placeholder="Email" name='email' onchange="email()">
+                                    <input id="Email" type="email" class="form-control" placeholder="Email" name='email' onchange="userEmail()">
                                     @error('email')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -189,7 +189,7 @@
                         <div class="col-span-12 md:col-span-6">
                                 <div>
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelRole">Role<span style="color:red">*</span></label>
-                                    <select placeholder="Role" type="text" class="tom-select w-full" id="Role" name='role' onchange="role()">
+                                    <select placeholder="Role" type="text" class="tom-select w-full" id="Role" name='role' onchange="userRole()">
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($role as $r)
                                         <option value="{{$r->id}}">{{$r->name}}</option>
@@ -205,7 +205,7 @@
                         <div class="col-span-12 md:col-span-12">
                                 <div id="team">
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelTeam">Team<span style="color:red">*</span></label>
-                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="Team" name='team_name' onchange="team()">
+                                    <select placeholder="Team Name" type="text" class="tom-select w-full" id="Team" name='team_name' onchange="userTeam()">
                                         <option value selected="selected" disabled="disabled"></option>
                                         @foreach($team as $t)
                                         <option value="{{$t->id}}">{{$t->team}}</option>
@@ -312,7 +312,7 @@
                                     <label for="regular-form-4" class="form-label w-full flex flex-col sm:flex-row" id="LabelPassword">
                                         Password<span style="color:red">*</span><span class="sm:ml-auto mt-1 sm:mt-0 text-xs text-gray-600">Required, Password</span>
                                     </label>
-                                    <input id="Password" type="password" class="form-control" placeholder="Password" name='password' onchange="password()">
+                                    <input id="Password" type="password" class="form-control" placeholder="Password" name='password' onchange="userPassword()">
                                     @error('password')
                                     <span style="color:red">{{$message}}</span>
                                     @enderror
@@ -333,7 +333,6 @@
             </div>
         </div>
         <script type="text/javascript" src="{{URL::asset('dist/js/jquery.min.js')}}"></script>
-
         <script>
             $(document).ready(function() {
                 $("#desigination").hide();
@@ -352,10 +351,7 @@
                     }
                 });     
             });
-        </script>
-
-        <script>
-            function name() {
+            function userName() {
                 $("#Name").css("border-color", 'unset');
             }
 
@@ -375,6 +371,10 @@
                 $("#Emergency_contact_number").css("border-color", 'unset');
             }
 
+            function userEmail() {
+                $("#Email").css("border-color", 'unset');
+            }
+
             function officialEmail() {
                 $("#Official_email").css("border-color", 'unset');
             }
@@ -388,7 +388,8 @@
             }
             
             function certificateDateofbirth() {
-                $("#Certificate_Date_of_birth").css("border-color", 'unset');
+                alert("as");
+                $("#Certificate_Date_of_Birth").css("border-color", 'unset');
             }
 
             function dateOfbirth() {
@@ -403,7 +404,7 @@
                 $("#Aadhar_number").css("border-color", 'unset');
             }
 
-            function team() {
+            function userTeam() {
                 $("#LabelTeam").css({
                     'font-family': 'unset',
                     'color': 'unset',
@@ -411,19 +412,15 @@
                 });
             }
 
-            function email() {
-                $("#Email").css("border-color", 'unset');
-            }
-
-            function role() {
+            function userRole() {
                 $("#LabelRole").css({
-                    'font-family': 'unset',
-                    'color': 'unset',
-                    'font-size': 'unset'
+                'font-family': 'unset',
+                'color': 'unset',
+                'font-size': 'unset'
                 });
             }
 
-            function password() {
+            function userPassword() {
                 $("#Password").css("border-color", 'unset');
             }
 
@@ -518,7 +515,7 @@
                     } else {
                         $("#Blood_group").css("border-color", 'unset');
                     }
-                    if(Role == "4" || Role == "3") {
+                    if(Role == "6" || Role == "7") {
                         if(Team == null || Team == "")
                         {
                             $("#LabelTeam").css({
@@ -533,7 +530,7 @@
                             'color': 'unset',
                             'font-size': 'unset'
                         });
-                    }    
+                        }    
                     }
                     if (Role == null || Role == "") {
                         $("#LabelRole").css({

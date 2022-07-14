@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Helper\UuidModel;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
@@ -59,7 +60,7 @@ class User extends Authenticatable
 
     public function roleToUser()
     {
-        return $this->belongsTo(RoleModel::class, 'role_id', 'id');
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 
 

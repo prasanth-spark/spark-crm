@@ -42,7 +42,7 @@
                 <tr>  
                     <td>{{$permission->created_at->todatestring()}}</td>
                     <td>{{$permission->leaverequestUser->name}}</td>
-                    <td>{{$permission->leaveToUserDetails->teamToUserDetails->team}}</td>
+                    <td>{{$permission->leaverequestUser->teamToUser->team}}</td>
                     <td>{{$permission->leaverequestUser->roleToUser->name}}</td>
                     <td>{{$permission->leaverequest->leave_type}}</td>
                     <td>

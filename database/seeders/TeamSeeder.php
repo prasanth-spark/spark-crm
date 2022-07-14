@@ -15,88 +15,73 @@ class TeamSeeder extends Seeder
     public function run()
     {
         TeamModel::insert([
-            [ 
-                'id' => '1',
-                'team' => 'MANAGEMENT',
+            [ 'id' => '1',
+                'team' => 'HR',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
-            [ 
-                'id' => '2',
-                'team' => 'DEVELOPMENT',
-                'status'=>'1',
-                'created_at' =>now(),
-                'updated_at' =>now()           
-            ],
-            [ 
-                'id' => '3',
-                'team' => 'DEPLOYMENT',
-                'status'=>'1',
-                'created_at' =>now(),
-                'updated_at' =>now()           
-            ],
-            [ 
-                'id' => '4',
-                'team' => 'PROJECT MANAGER',
-                'status'=>'1',
-                'created_at' =>now(),
-                'updated_at' =>now()           
-            ],
-            [ 
-                'id' => '5',
+            [ 'id' => '2',
                 'team' => 'PHP',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
-                'id' => '6',
+                'id' => '3',
                 'team' => 'JS',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
-                'id' => '7',
+                'id' => '4',
                 'team' => 'IOS',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
-                'id' => '8',
+                'id' => '5',
                 'team' => 'TESTING',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
-                'id' => '9',
+                'id' => '6',
                 'team' => 'ANDROID',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],[ 
-                'id' => '10',
+                'id' => '7',
                 'team' => 'DevOps',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],[ 
-                'id' => '11',
+                'id' => '8',
                 'team' => 'MARKETING',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
             ],
             [ 
-                'id' => '12',
+                'id' => '9',
                 'team' => 'INTERNSHIP',
                 'status'=>'1',
                 'created_at' =>now(),
                 'updated_at' =>now()           
+            ],
+            [ 
+                'id' => '10',
+                'team' => 'MANAGMENT',
+                'status'=>'1',
+                'created_at' =>now(),
+                'updated_at' =>now()           
             ]
-            ]);
+
+        ]);
     }
 }

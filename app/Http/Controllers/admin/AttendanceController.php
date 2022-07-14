@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\UserDetails;
 use App\Models\AccountType;
 use App\Models\BankDetails;
-use App\Models\RoleModel;
+use Spatie\Permission\Models\Role;
 use App\Models\TeamModel;
 use App\Models\User;
 use App\Models\Attendance;
@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, RoleModel $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest)
+    public function __construct(UserDetails $userdetails, AccountType $accountType, BankDetails $bankdetails, Role $rolemodel, TeamModel $teammodel, User $user, Attendance $attendance, LeaveRequest $leaverequest)
     {
         $this->userdetails = $userdetails;
         $this->accountType = $accountType;
@@ -53,7 +53,7 @@ class AttendanceController extends Controller
         $todateFormatChange = date("Y-m-d", strtotime($todate));
 
         $team       =   $request->team_name;
-        $attendanceList = $this->attendance->with('attendanceToUser', 'attendanceToUser.roleToUser', 'attendanceToUserDetails.teamToUserDetails');
+        $attendanceList = $this->attendance->with('attendanceToUser', 'attendanceToUser.roleToUser', 'attendanceToUser.teamToUser');
         $limit = $request->iDisplayLength;
         $offset = $request->iDisplayStart;
 
@@ -66,7 +66,7 @@ class AttendanceController extends Controller
             $attendanceList->orwhereHas('attendanceToUser.roleToUser', function ($q) use ($keyword) {
                 $q->where('role', 'like', '%' . $keyword . '%');
             });
-            $attendanceList->orwhereHas('attendanceToUserDetails.teamToUserDetails', function ($q) use ($keyword) {
+            $attendanceList->orwhereHas('attendanceToUser.teamToUser', function ($q) use ($keyword) {
                 return $q->where('team', 'like', '%' . $keyword . '%');
             });
         }
@@ -79,12 +79,12 @@ class AttendanceController extends Controller
         );
 
        if ($fromdateFormatChange && $todateFormatChange && $team) {
-            $attendanceList = $attendanceList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('attendanceToUserDetails', function ($query) use ($team) {
+            $attendanceList = $attendanceList->whereBetween('date', [$fromdateFormatChange, $todateFormatChange])->whereHas('attendanceToUser', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         }
         elseif($team) {
-            $attendanceList = $attendanceList->whereHas('attendanceToUserDetails', function ($query) use ($team) {
+            $attendanceList = $attendanceList->whereHas('attendanceToUser', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         }
@@ -95,7 +95,7 @@ class AttendanceController extends Controller
             $col['id'] = $offset + 1;
             $col['date'] = ($value->date) ? $value->date : "";
             $col['name'] = $value->attendanceToUser->name;
-            $col['team'] = $value->attendanceToUserDetails->teamToUserDetails->team;
+            $col['team'] = $value->attendanceToUser->teamToUser->team;
             $col['role'] = $value->attendanceToUser->roleToUser->name;
             $col['status'] = ($value->attendance_status == 1) ? "present" : "absent";
 
@@ -137,7 +137,7 @@ class AttendanceController extends Controller
         $todate = str_replace('/', '-', $request->to_date);
         $todateFormatChange = date("Y-m-d", strtotime($todate));
         $team       =   $request->team_name;
-        $absentList = $this->leaverequest->where('leave_type_id', '!=', 1)->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails');
+        $absentList = $this->leaverequest->where('leave_type_id', '!=', 1)->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaverequestUser.teamToUser');
         $limit = $request->iDisplayLength;
         $offset = $request->iDisplayStart;
 
@@ -150,7 +150,7 @@ class AttendanceController extends Controller
             $absentList->orwhereHas('leaverequestUser.roleToUser', function ($q) use ($keyword) {
                 $q->where('role', 'like', '%' . $keyword . '%')->where('leave_type_id', '!=', 1);
             });
-            $absentList->orwhereHas('leaveToUserDetails.teamToUserDetails', function ($q) use ($keyword) {
+            $absentList->orwhereHas('leaverequestUser.teamToUser', function ($q) use ($keyword) {
                 return $q->where('team', 'like', '%' . $keyword . '%')->where('leave_type_id', '!=', 1);
             });
         }
@@ -162,13 +162,14 @@ class AttendanceController extends Controller
             }
         );
 
-        if ($fromdateFormatChange && $todateFormatChange && $team) {
+        if($fromdateFormatChange && $todateFormatChange && $team) {
             $absentList = $absentList->where('start_date', '<=', $fromdateFormatChange)
-                ->where('end_date', '>=', $todateFormatChange)->whereHas('leaveToUserDetails', function ($query) use ($team) {
+                ->where('end_date', '>=', $todateFormatChange)->whereHas('leaverequestUser', function ($query) use ($team) {
                     $query->where('team_id', '=', $team);
                 });
-        } elseif ($team) {
-            $absentList = $absentList->whereHas('leaveToUserDetails', function ($query) use ($team) {
+
+        }elseif($team){
+            $absentList = $absentList->whereHas('leaverequestUser', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         }
@@ -191,7 +192,7 @@ class AttendanceController extends Controller
 
             $col['id'] = $offset + 1;
             $col['name'] = $value->leaverequestUser->name;
-            $col['team'] = $value->leaveToUserDetails->teamToUserDetails->team;
+            $col['team'] = $value->leaverequestUser->teamToUser->team;
             $col['role'] = $value->leaverequestUser->roleToUser->name;
             $col['leave_type'] = $value->leaverequest->leave_type;
             $col['leave_status'] = $leaveStatus;
@@ -235,7 +236,7 @@ class AttendanceController extends Controller
         $todate = str_replace('/', '-', $request->to_date);
         $todateFormatChange = date("Y-m-d", strtotime($todate));
         $team       =   $request->team_name;
-        $permissionList = $this->leaverequest->where('leave_type_id',  1)->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaveToUserDetails.teamToUserDetails', 'permissionType');
+        $permissionList = $this->leaverequest->where('leave_type_id',  1)->with('leaverequest', 'leaverequestUser', 'leaverequestUser.roleToUser', 'leaverequestUser.teamToUser', 'permissionType');
         $limit = $request->iDisplayLength;
         $offset = $request->iDisplayStart;
 
@@ -248,7 +249,7 @@ class AttendanceController extends Controller
             $permissionList->orwhereHas('leaverequestUser.roleToUser', function ($q) use ($keyword) {
                 $q->where('role', 'like', '%' . $keyword . '%')->where('leave_type_id',  1);
             });
-            $permissionList->orwhereHas('leaveToUserDetails.teamToUserDetails', function ($q) use ($keyword) {
+            $permissionList->orwhereHas('leaverequestUser.teamToUser', function ($q) use ($keyword) {
                 return $q->where('team', 'like', '%' . $keyword . '%')->where('leave_type_id',  1);
             });
         }
@@ -261,11 +262,11 @@ class AttendanceController extends Controller
         );
 
         if ($team) {
-            $permissionList = $permissionList->whereHas('leaveToUserDetails', function ($query) use ($team) {
+            $permissionList = $permissionList->whereHas('leaverequestUser', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         } elseif ($fromdateFormatChange && $todateFormatChange && $team) {
-            $permissionList = $permissionList->whereBetween('created_at', [$fromdateFormatChange, $todateFormatChange])->whereHas('leaveToUserDetails', function ($query) use ($team) {
+            $permissionList = $permissionList->whereBetween('created_at', [$fromdateFormatChange, $todateFormatChange])->whereHas('leaverequestUsers', function ($query) use ($team) {
                 $query->where('team_id', '=', $team);
             });
         }
@@ -292,7 +293,7 @@ class AttendanceController extends Controller
             $col['id'] = $offset + 1;
             $col['created_at']   =  $value->created_at->todatestring();
             $col['name'] = $value->leaverequestUser->name;
-            $col['team'] = $value->leaveToUserDetails->teamToUserDetails->team;
+            $col['team'] = $value->leaverequestUser->teamToUser->team;
             $col['role'] = $value->leaverequestUser->roleToUser->name;
             $col['leave_type'] = $value->leaverequest->leave_type;
             $col['permission_status'] = $leaveStatus;
