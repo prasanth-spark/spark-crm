@@ -25,7 +25,6 @@ class AttendanceController extends Controller
         $this->userDetail= $userDetails;
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
-        
     }
 
     /*
@@ -91,11 +90,10 @@ class AttendanceController extends Controller
         $userRole=$user->role_id; 
         $tlRole = $userRole-1;  
         $userTeam=$user->team_id;
-        $teamLeadTeam=$this->userDetail->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
+        $teamLeadTeam=$this->user->where('team_id','=',$userTeam)->where('role_id','=', $tlRole)->first();
         $teamLead=$teamLeadTeam->user_id; 
-        $teamLeadDetail = User::find($teamLead);
-        $teamLeadMail =$teamLeadDetail->email;
-        $teamLeadName = $teamLeadDetail->name;
+        $teamLeadMail =$teamLeadTeam->email;
+        $teamLeadName = $teamLeadTeam->name;
         $attendanceValue = $request->status;
         $date = Carbon::now();
         $date = $date->format("Y-m-d");

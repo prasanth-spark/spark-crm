@@ -88,7 +88,7 @@ class EmployeeController extends Controller
             $userCredentials->update(['photo' => $photos]);
         }
         $password = $request->password;
-        // dispatch(new VerfyUserEmailJob($userCredentials, $password));
+        dispatch(new VerfyUserEmailJob($userCredentials, $password));
 
         $userCredentials->assignRole([$request->role]);
         $count = User::count();

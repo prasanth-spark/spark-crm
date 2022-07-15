@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 
        //Login and Logout
 
-       Route::post('/login-employee', [LoginController::class, 'loginEmployee']);
+        Route::post('/login-employee', [LoginController::class, 'loginEmployee']);
 
      
         
