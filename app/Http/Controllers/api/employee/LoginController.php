@@ -48,7 +48,6 @@ class LoginController extends Controller
                 $data['users'] = $users;
                 $data['permission_list'] = $permission;
                 return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$data]);
-
             } else {
                 $response = ["message" => "Password mismatch"];
                 return response($response, 422);

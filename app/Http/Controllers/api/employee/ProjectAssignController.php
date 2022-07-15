@@ -15,6 +15,7 @@ class ProjectAssignController extends Controller
     public function __construct(Project $project)
     {
         $this->project    = $project;
+
     }
 
     /*
