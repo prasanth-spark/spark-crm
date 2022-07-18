@@ -4,6 +4,7 @@ namespace App\Main\employee;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Arr;
 
 class EmployeeSideMenu
 {
@@ -16,10 +17,10 @@ class EmployeeSideMenu
     public static function menu()
     {
         $user =auth()->user();
-        
-        if ($user) {
-            if ($user->role_id == 6) {
-                return [
+        if(isset($user))
+        {
+            if ($user->hasPermissionTo('employee-dashboard')) {
+                $permission[] = [
                     'dashboard' => [
                         'icon' => 'home',
                         'title' => 'Dashboard',
@@ -27,8 +28,11 @@ class EmployeeSideMenu
                         'params' => [
                             'layout' => 'side-menu',
                         ],
-
                     ],
+                ];
+            }
+            if ($user->hasPermissionTo('attendance-module')) {
+                $permission[] = [
                     'Attendance' => [
                         'icon' => 'calendar',
                         'route_name' => 'attendance-module',
@@ -37,6 +41,10 @@ class EmployeeSideMenu
                             'layout' => 'side-menu',
                         ],
                     ],
+                ];
+            }
+            if ($user->hasPermissionTo('task-list')) {
+                $permission[] = [
                     'Task' => [
                         'icon' => 'type',
                         'route_name' => 'task-list',
@@ -45,6 +53,11 @@ class EmployeeSideMenu
                             'layout' => 'side-menu',
                         ],
                     ],
+                ];
+            }
+            if ($user->hasPermissionTo('team-task')) {
+                $permission[] = [
+
                     'Team Task' => [
                         'icon' => 'twitch',
                         'route_name' => 'team-task',
@@ -53,6 +66,10 @@ class EmployeeSideMenu
                             'layout' => 'side-menu',
                         ],
                     ],
+                ];
+            }
+            if ($user->hasPermissionTo('team-attendance')) {
+                $permission[] = [
                     'Team Attendance' => [
                         'icon' => 'calendar',
                         'title' => 'Team Attendance',
@@ -80,191 +97,27 @@ class EmployeeSideMenu
                                     'layout' => 'side-menu',
                                 ],
                                 'title' => 'Team Permission'
-                            ]
-                        ]
-                    ],
-                ];
-            }elseif ($user->role_id == 5) {
-                return [
-                    'dashboard' => [
-                        'icon' => 'home',
-                        'title' => 'Dashboard',
-                        'route_name' => 'employee-dashboard',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-
-                    ],
-                    'Attendance' => [
-                        'icon' => 'calendar',
-                        'route_name' => 'attendance-module',
-                        'title' => 'Attendance',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                    'Add Project' => [
-                        'icon' => 'home',
-                        'route_name' => 'project-list',
-                        'title' => 'Add Project',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                ];
-            } elseif ($user->role_id == 4) {
-                return [
-                    'dashboard' => [
-                        'icon' => 'home',
-                        'title' => 'Dashboard',
-                        'route_name' => 'employee-dashboard',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-
-                    ],
-                    'Attendance' => [
-                        'icon' => 'calendar',
-                        'route_name' => 'attendance-module',
-                        'title' => 'Attendance',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                    'Add Project' => [
-                        'icon' => 'user-plus',
-                        'route_name' => 'project-list',
-                        'title' => 'Add Project',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                    'Team Task' => [
-                        'icon' => 'twitch',
-                        'route_name' => 'team-task',
-                        'title' => 'Team Task',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                ];
-            } 
-             elseif ($user->role_id == 3) {
-                return [
-                    'dashboard' => [
-                        'icon' => 'home',
-                        'title' => 'Dashboard',
-                        'route_name' => 'employee-dashboard',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-
-                    ],
-                    'Attendance' => [
-                        'icon' => 'calendar',
-                        'route_name' => 'attendance-module',
-                        'title' => 'Attendance',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                    'Add Project' => [
-                        'icon' => 'home',
-                        'route_name' => 'project-list',
-                        'title' => 'Add Project',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                    'Team Task' => [
-                        'icon' => 'twitch',
-                        'route_name' => 'team-task',
-                        'title' => 'Team Task',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                ];
-            } 
-            elseif($user->role_id == 2) {
-                return [
-                    'dashboard' => [
-                        'icon' => 'home',
-                        'title' => 'Dashboard',
-                        'route_name' => 'employee-dashboard',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                    'Attendance' => [
-                        'icon' => 'calendar',
-                        'route_name' => 'attendance-module',
-                        'title' => 'Attendance',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],  
-                    'Attendance List' => [
-                        'icon' => 'calendar',
-                        'title' => 'Employee Attendance',
-                        'sub_menu' => [
-                            'Employee Attendance' => [
-                                'icon' => '',
-                                'route_name' => 'attendance',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Employees Present List'
                             ],
-                            'Employee Attendance List' => [
-                                'icon' => '',
-                                'route_name' => 'team-absent',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Employees Absent List'
-                            ],
-                            'Employee Permission List' => [
-                                'icon' => '',
-                                'route_name' => 'team-permission',
-                                'params' => [
-                                    'layout' => 'side-menu',
-                                ],
-                                'title' => 'Employees Permission List'
-                            ]
-                        ]
-                    ],
-                ];
-            }
-            else {
-                return [
-                    'dashboard' => [
-                        'icon' => 'home',
-                        'title' => 'Dashboard',
-                        'route_name' => 'employee-dashboard',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-
-                    ],
-                    'Attendance' => [
-                        'icon' => 'calendar',
-                        'route_name' => 'attendance-module',
-                        'title' => 'Attendance',
-                        'params' => [
-                            'layout' => 'side-menu',
-                        ],
-                    ],
-                    'Task' => [
-                        'icon' => 'type',
-                        'route_name' => 'task-list',
-                        'title' => 'Task',
-                        'params' => [
-                            'layout' => 'side-menu',
                         ],
                     ],
                 ];
             }
-        } 
+            if ($user->hasPermissionTo('project-list')) 
+            {
+                $permission[] = [
+                    'Add Project' => [
+                        'icon' => 'home',
+                        'route_name' => 'project-list',
+                        'title' => 'Add Project',
+                        'params' => [
+                            'layout' => 'side-menu',
+                                 ],
+                         ],    
+                   ];
+            }
+            $permissions = Arr::collapse($permission);
+            return $permissions;
+
+        }
     }
 }

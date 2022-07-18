@@ -18,7 +18,7 @@
             <div class="side-nav__devider my-6"></div>
             <ul>
                 @foreach ($employee_side_menu as $menuKey => $menu)
-                    @if ($menu == 'devider')
+                @if ($menu == 'devider')
                         <li class="side-nav__devider my-6"></li>
                     @else
                         <li>

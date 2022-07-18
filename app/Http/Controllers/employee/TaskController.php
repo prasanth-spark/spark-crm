@@ -19,9 +19,7 @@ class TaskController extends Controller
         $this->taskSheet = $taskSheet;
         $this->taskStatus = $taskStatus;
         $this->project    = $project;
-        $this->middleware('permission:task-form', ['only' => ['taskForm']]);
-        $this->middleware('permission:task-add', ['only' => ['taskAdd']]);
-        $this->middleware('permission:task-list', ['only' => ['taskList','taskPagination','taskDetails','taskEdit','taskUpdate']]);
+        $this->middleware('permission:task-list', ['only' => ['taskList','taskPagination','taskDetails','taskEdit','taskUpdate','taskForm','taskAdd']]);
     }
 
     /**
