@@ -29,9 +29,7 @@ class TeamAttendanceController extends Controller
         $this->leaverequest  = $leaverequest;
         $this->tasksheet     = $tasksheet;
 
-        $this->middleware('permission:attendance', ['only' => ['teamAttendanceList']]);
-        $this->middleware('permission:team-absent', ['only' => ['teamAbsentList']]);
-        $this->middleware('permission:team-permission', ['only' => ['teamPermissionlist']]);
+        $this->middleware('permission:team-attendance', ['only' => ['teamAttendanceList','teamAbsentList','teamPermissionlist']]);
 
     }
 

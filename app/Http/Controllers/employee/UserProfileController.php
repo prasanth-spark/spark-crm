@@ -28,11 +28,7 @@ class UserProfileController extends Controller
         $this->rolemodel   = $rolemodel;
         $this->teammodel   = $teammodel;
 
-        $this->middleware('permission:user-profile-form', ['only' => ['userProfileForm']]);
-        $this->middleware('permission:user-profile-add', ['only' => ['userProfileAdd']]);
-        $this->middleware('permission:user-reset-password', ['only' => ['userResetForm']]);
-        $this->middleware('permission:user-change-password', ['only' => ['userChangePassword']]);
-        $this->middleware('permission:user-language-add', ['only' => ['languageSkillAdd']]);
+        $this->middleware('permission:user-profile', ['only' => ['userProfileForm','userProfileAdd','userResetForm','userChangePassword','languageSkillAdd']]);
 
     }
 
