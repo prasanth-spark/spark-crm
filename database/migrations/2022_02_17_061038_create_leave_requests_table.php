@@ -24,6 +24,7 @@ class CreateLeaveRequestsTable extends Migration
             $table->integer('leave_status')->nullable()->comment('0->leave_received,1->pending,2->approved,3->rejected');  
             $table->string('start_date');
             $table->string('end_date')->nullable();
+            $table->string('respond_status');
             $table->timestamps();
         });
     }

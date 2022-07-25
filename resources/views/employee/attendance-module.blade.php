@@ -46,9 +46,8 @@ content--dashboard
                     </div>
                 </div>
             </div>  
-  <input type="text" id="attendance_report" class=" text-black mt-4 font-normal"style="height:62px; width:350px"></input>
-          
 
+            <input type="text" id="attendance_report" class=" text-black mt-4 font-normal"style="height:62px; width:350px"></input>       
     </div>
     <div class="intro-y col-span-12 lg:col-span-6  p-4">
         <div id="inactive_side" style="display:none">

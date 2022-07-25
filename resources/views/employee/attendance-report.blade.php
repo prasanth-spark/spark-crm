@@ -16,6 +16,7 @@
     .full-calender{
         background: #fff;
     }
+
 </style>
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.1/main.min.css' rel='stylesheet' />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.3.1/main.min.js'></script>

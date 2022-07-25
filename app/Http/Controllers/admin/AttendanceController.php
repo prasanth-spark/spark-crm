@@ -97,8 +97,14 @@ class AttendanceController extends Controller
             $col['name'] = $value->attendanceToUser->name;
             $col['team'] = $value->attendanceToUser->teamToUser->team;
             $col['role'] = $value->attendanceToUser->roleToUser->name;
-            $col['status'] = ($value->attendance_status == 1) ? "present" : "absent";
-
+            if($value->attendance == 1){
+             $status = "Present";
+            }elseif($value->attendance == 0 && $value->in_active == 1){
+                $status = "Permission";
+            }else{
+                $status = "Absent"; 
+            } 
+          $col['status'] = $status;
             array_push($column, $col);
             $offset++;
         }
@@ -280,12 +286,14 @@ class AttendanceController extends Controller
                     break;
 
                 case ($value->leave_status == 1):
-                    $leaveStatus = 'permission accepted';
+                    $leaveStatus = 'permission Pending';
                     break;
                 case ($value->leave_status == 2):
-                    $leaveStatus = ' permission rejected';
+                    $leaveStatus = 'permission Approved';
                     break;
-
+                    case ($value->leave_status == 3):
+                        $leaveStatus = 'permission Rejected';
+                        break;
                 default:
                     $leaveStatus = 'permission denied';
             }

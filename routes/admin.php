@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\AttendanceController;
 use App\Http\Controllers\admin\TaskController;
 use App\Http\Controllers\admin\LanguageController;
 use App\Http\Controllers\admin\RolesController;
+use App\Http\Controllers\admin\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/delete-role', [RolesController::class, 'roleDelete'])->name('delete-role');
 
 
+        Route::get('/permission', [PermissionController::class, 'permissionDetail'])->name('permission-detail');
+        Route::get('permission-approvel/{id}/{leave_type_id}',[PermissionController::class, 'permissionApprovel'])->name('permission-approvrl');
+        Route::get('permission-deny/{id}/{leave_type_id}',[PermissionController::class, 'permissionDeny'])->name('permission-deny');
 
 
 

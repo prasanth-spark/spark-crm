@@ -10,10 +10,12 @@
 @section('subcontent')
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
         <h2 class="text-lg font-medium mr-auto"></h2>
+        @can('task-add')
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
            {{-- <button class="btn btn-primary shadow-md mr-2"><a href="{{route('file-upload')}}">File-Upload</a></button>   --}}
            <button class="btn btn-primary shadow-md mb-4"><a href="{{route('task-form')}}">Add Task</a></button>  
         </div>
+        @endcan
     </div>
         <!-- BEGIN: Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">

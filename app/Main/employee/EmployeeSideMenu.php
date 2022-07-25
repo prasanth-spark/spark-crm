@@ -17,6 +17,7 @@ class EmployeeSideMenu
     public static function menu()
     {
         $user =auth()->user();
+        $permission = [];
         if(isset($user))
         {
             if ($user->hasPermissionTo('employee-dashboard')) {

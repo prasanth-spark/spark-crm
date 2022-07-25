@@ -17,6 +17,7 @@
             </a>
             <div class="side-nav__devider my-6"></div>
             <ul>
+              
                 @foreach ($side_menu as $menuKey => $menu)
                     @if ($menu == 'devider')
                         <li class="side-nav__devider my-6"></li>
