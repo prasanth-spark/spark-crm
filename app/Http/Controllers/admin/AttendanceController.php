@@ -97,8 +97,14 @@ class AttendanceController extends Controller
             $col['name'] = $value->attendanceToUser->name;
             $col['team'] = $value->attendanceToUser->teamToUser->team;
             $col['role'] = $value->attendanceToUser->roleToUser->name;
-            $col['status'] = ($value->attendance_status == 1) ? "present" : "absent";
-
+            if($value->attendance == 1){
+             $status = "Present";
+            }elseif($value->attendance == 0 && $value->in_active == 1){
+                $status = "Permission";
+            }else{
+                $status = "Absent"; 
+            } 
+          $col['status'] = $status;
             array_push($column, $col);
             $offset++;
         }
@@ -273,23 +279,48 @@ class AttendanceController extends Controller
         $List = $permissionList->get();
         $column = array();
         foreach ($List as $value) {
+             if($value->leave_status == null)
+             {
+            switch ($value->permission_status) {
+                case ($value->permission_status == 0):
+                    $leaveStatus = 'Permission Received';
+                    break;
+
+                case ($value->permission_status == 1):
+                    $leaveStatus = 'Permission Approved';
+                    break;
+
+                case ($value->permission_status == 2):
+                    $leaveStatus = 'Permission Rejected';
+                    break;
+                    
+                default:
+                    $leaveStatus = 'Permission Denied';
+            }
+
+        }else{
 
             switch ($value->leave_status) {
                 case ($value->leave_status == 0):
-                    $leaveStatus = 'permission received';
+                    $leaveStatus = 'Leave received';
                     break;
 
                 case ($value->leave_status == 1):
-                    $leaveStatus = 'permission accepted';
+                    $leaveStatus = 'Leave Pending';
                     break;
+
                 case ($value->leave_status == 2):
-                    $leaveStatus = ' permission rejected';
+                    $leaveStatus = 'Leave Approved';
                     break;
+
+                case ($value->leave_status == 3):
+                     $leaveStatus = 'Leave Rejected';
+                      break;
 
                 default:
-                    $leaveStatus = 'permission denied';
+                    $leaveStatus = 'Leave Denied';
             }
-
+        }
             $col['id'] = $offset + 1;
             $col['created_at']   =  $value->created_at->todatestring();
             $col['name'] = $value->leaverequestUser->name;
@@ -300,9 +331,7 @@ class AttendanceController extends Controller
             $col['permission_hours_from'] = $value->permission_hours_from;
             $col['permission_hours_to'] = $value->permission_hours_to;
             $col['permission_hours'] = ($value->permissionType) ? $value->permissionType->permission_hours : "";
-
-
-
+            
             array_push($column, $col);
             $offset++;
         }

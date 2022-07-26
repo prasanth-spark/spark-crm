@@ -94,9 +94,17 @@ class SideMenu
                 ],
             ],
             'Roles' => [
-                'icon' => 'menu',
+                'icon' => 'twitch',
                 'route_name' => 'employee-role',
                 'title' => 'Roles',
+                'params' => [
+                    'layout' => 'side-menu',
+                ],
+            ],
+            'Permission Approvel' => [
+                'icon' => 'calendar',
+                'route_name' => 'permission-detail',
+                'title' => 'Permission Approvel',
                 'params' => [
                     'layout' => 'side-menu',
                 ],

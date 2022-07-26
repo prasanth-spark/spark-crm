@@ -18,6 +18,9 @@ class PermissionSeeder extends Seeder
             'menu_list' => [
                 ['name' => 'employee-dashboard', 'menu_name' => 'dashboard'],
                 ['name' => 'task-list', 'menu_name' => 'task-list'],
+                ['name' => 'task-view', 'menu_name' => 'task-view'],
+                ['name' => 'task-add', 'menu_name' => 'task-add'],
+                ['name' => 'task-edit', 'menu_name' => 'task-edit'],
 
                 ['name' => 'attendance-module', 'menu_name' => 'attendance-module'],
                 ['name' => 'leave-response', 'menu_name' => 'leave-response'],
@@ -30,6 +33,8 @@ class PermissionSeeder extends Seeder
                 ['name' => 'team-attendance', 'menu_name' => 'attendance'],
                 
                 ['name' => 'project-list', 'menu_name' => 'project-list'],
+                ['name' => 'project-add', 'menu_name' => 'project-add'],
+                ['name' => 'project-edit', 'menu_name' => 'project-edit'],
 
             ]
         ]

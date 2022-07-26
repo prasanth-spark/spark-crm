@@ -21,18 +21,20 @@ use Illuminate\Support\Facades\Auth;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-       Route::group(['namespace'=>'api'], function(){
 
        //Login and Logout
 
         Route::post('/login-employee', [LoginController::class, 'loginEmployee']);
 
      
-        
+        Route::group(['namespace'=>'api'], function(){
+
         //Attendance
+
         Route::post('attendance-status',[AttendanceController::class,'attendanceStatus']);
 
         //Task 
+        
         Route::post('/task-add',[TaskController::class, 'taskAdd']);
         Route::post('/task-Details',[TaskController::class, 'taskDetails']);
         Route::post('/assigned-Project',[TaskController::class, 'assignedProject']);

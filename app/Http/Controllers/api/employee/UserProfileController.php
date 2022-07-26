@@ -28,6 +28,7 @@ class UserProfileController extends Controller
         $this->bankdetails = $bankdetails;
         $this->rolemodel   = $rolemodel;
         $this->teammodel   = $teammodel;
+        $this->middleware('permission:user-profile,api', ['only' => ['userDetail','userProfileAdd','userChangePassword']]);
     }
 
     public function userDetail(Request $request)

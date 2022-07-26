@@ -25,6 +25,10 @@ class AttendanceController extends Controller
         $this->userDetail= $userDetails;
         $this->attendance =$attendance;
         $this->leave_request=$leaveRequest;
+        $this->middleware('permission:attendance-module,api', ['only' => ['attendanceModule','attendanceStatus']]);
+        $this->middleware('permission:leave-response,api', ['only' => ['leaveStatus']]);
+        $this->middleware('permission:permission-response,api', ['only' => ['permissionStatus']]);
+
     }
 
     /*
@@ -185,7 +189,7 @@ class AttendanceController extends Controller
                     'permission_type_id'=>$hourdiff,
                     'user_id' =>$userId,
                     'description'=>$reason, 
-                    'permission_status'=>2,
+                    'permission_status'=>1,
                     'leave_status'=>null,
                     'permission_hours_from'=>$request->permission_hours_from,
                     'permission_hours_to'=>$request->permission_hours_to,
@@ -260,6 +264,7 @@ class AttendanceController extends Controller
         LeaveRequest::where('user_id',$user->id)->update([
             'permission_status'=>1,
         ]);
+        return response()->json(['status'=>true,'message'=>'Your Permission Request Accept Successfull']);
         }else{
         Attendance::where('user_id',$user->id)->update([
             'attendance_status'=>4
@@ -267,10 +272,39 @@ class AttendanceController extends Controller
         LeaveRequest::where('user_id',$user->id)->update([
             'permission_status'=>2,
         ]);
+        return response()->json(['status'=>true,'message'=>'Your Permission Request Rejected']);
         }
-        $job = new PermissionResponse($permission_status,$user,$reason);
-        dispatch($job);
         return response()->json(['status'=>true,'message'=>'Response For Permission Request send Successfull']);
+    }
+
+    public function leaveStatus(Request $request)
+       {
+            $leaveType = $request->leave_type;
+            $reason = $request->rejected_reason;
+            $user = User::find($request->user_id);
+            $leave_status= $request->leave_response;
+            
+            if($leave_status == 2){
+                Attendance::where('user_id',$user->id)->update([
+                    'attendance_status'=>3
+                ]);
+                LeaveRequest::where('user_id',$user->id)->update([
+                    'leave_status'=>2,
+                    'respond_status'=>1,
+                ]);
+                return response()->json(['status'=>true,'message'=>'Your Leave Request Accept Successfull']); 
+            }
+            else{
+                Attendance::where('user_id',$user->id)->update([
+                    'attendance_status'=>4
+                ]);
+                LeaveRequest::where('user_id',$user->id)->update([
+                    'leave_status'=>3,
+                    'respond_status'=>1,
+                ]);
+                return response()->json(['status'=>true,'message'=>'Your Leave Request Rejected']); 
+            }
+            return response()->json(['status'=>true,'message'=>'Response For Leave Request send Successfull']);
         }
-     
+    
 }

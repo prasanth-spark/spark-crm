@@ -19,7 +19,11 @@ class TaskController extends Controller
         $this->taskSheet = $taskSheet;
         $this->taskStatus = $taskStatus;
         $this->project    = $project;
-        $this->middleware('permission:task-list', ['only' => ['taskList','taskPagination','taskDetails','taskEdit','taskUpdate','taskForm','taskAdd']]);
+        $this->middleware('permission:task-list', ['only' => ['taskList','taskPagination']]);
+        $this->middleware('permission:task-view', ['only' => ['taskDetails',]]);
+        $this->middleware('permission:task-add', ['only' => ['taskForm','taskAdd']]);
+        $this->middleware('permission:task-edit', ['only' => ['taskEdit','taskUpdate']]);
+
     }
 
     /**
@@ -98,13 +102,18 @@ class TaskController extends Controller
             $col['estimated_hours'] = ($value->estimated_hours) ? $value->estimated_hours : "";
             $col['worked_hours'] = ($value->worked_hours) ? $value->worked_hours : "-";
             $col['status'] = ($value->status == 1) ? 'pending' : 'completed';
-            $col['actions'] = '<a class="flex items-center mr-3" href="' . url('/') . '/employee/task-details/' . $value->id . '">
+            $col['actions'] = '';
+            if(Auth::user()->hasPermissionTo('task-view'))
+            {
+            $col['actions'] .= '<a class="flex items-center mr-3" href="' . url('/') . '/employee/task-details/' . $value->id . '">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="eye" data-lucide="eye" class="lucide lucide-eye block mx-auto"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View
-            </a>
-            <a class="flex items-center mr-3" href="' . url('/') . '/employee/task-edit/' . $value->id . '">
+            </a>';
+            }           
+             if(Auth::user()->hasPermissionTo('task-edit')){
+            $col['actions'] .= '<a class="flex items-center mr-3" href="' . url('/') . '/employee/task-edit/' . $value->id . '">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="edit" data-lucide="edit" class="lucide lucide-edit block mx-auto"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit
             </a>';
-
+             }
             array_push($column, $col);
             $offset++;
         }

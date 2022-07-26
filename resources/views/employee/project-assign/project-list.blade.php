@@ -11,8 +11,10 @@
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto"></h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-        <button class="btn btn-primary shadow-md mb-4"><a href="{{route('project-form')}}">Add Project</a></button>
-    </div>
+    @can('project-add')
+    <button class="btn btn-primary shadow-md mb-4"><a href="{{route('project-form')}}">Add Project</a></button>
+    @endcan
+</div>
 </div>
 <!-- BEGIN: Data List -->
 <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
@@ -42,12 +44,17 @@
                 </td>
 
                 <td class="text-center whitespace-nowrap">
+                @can('project-edit')
                     <a class="flex items-center mr-3" href="{{route('edit-project',[$project->id])}}">
                             <i data-feather="edit" class="w-4 h-4 mr-1"></i> Edit
                         </a>
+                 @endcan
+
+                        @can('project-add')
                     <a class="flex items-center text-theme-21" data-toggle="modal" data-target="#delete-confirmation-modal-{{$project->id}}">
                             <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete
                     </a>
+                    @endcan
                 </td>
             </tr>
              <!-- BEGIN: Delete Confirmation Modal -->

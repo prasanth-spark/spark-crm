@@ -15,7 +15,9 @@ class ProjectAssignController extends Controller
     public function __construct(Project $project)
     {
         $this->project    = $project;
-
+        $this->middleware('permission:project-list,api', ['only' => ['ProjectList']]);
+        $this->middleware('permission:project-add,api', ['only' => ['projectForm','projectAdd','projectDelete']]);
+        $this->middleware('permission:project-edit,api', ['only' => ['projectUpdate']]);
     }
 
     /*
