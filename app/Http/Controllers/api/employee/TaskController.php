@@ -20,6 +20,10 @@ class TaskController extends Controller
         $this->taskSheet = $taskSheet;
         $this->taskStatus = $taskStatus;
         $this->project    = $project;
+        $this->middleware('permission:task-view,api', ['only' => ['taskDetails',]]);
+        $this->middleware('permission:task-add,api', ['only' => ['taskAdd','assignedProject']]);
+        $this->middleware('permission:task-edit,api', ['only' => ['taskUpdate']]);
+
     }
 
     /*
@@ -34,7 +38,6 @@ class TaskController extends Controller
         $data = array();
         $data['projectId'] = $projectId;
         $data['projectName'] = $projectName;
-
         return response()->json(['status'=>true,'message'=>'User Project Details for Drop Down','project_details'=>$data]);
     }
 

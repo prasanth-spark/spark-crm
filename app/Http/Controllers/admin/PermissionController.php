@@ -20,47 +20,46 @@ class PermissionController extends Controller
     public function permissionApprovel($id,$leave_type_id)
     {   
       if($leave_type_id == 1){
-        Attendance::where('user_id',$id)->update([
-            'attendance_status'=>2
-        ]);
-        LeaveRequest::where('user_id',$id)->update([
-            'permission_status'=>1,
-            'respond_status'=>1,
-        ]);
+            Attendance::where('user_id',$id)->update([
+                'attendance_status'=>2
+            ]);
+            LeaveRequest::where('user_id',$id)->update([
+                'permission_status'=>1,
+                'respond_status'=>1,
+            ]);
         return redirect()->back();
         }else{
-        Attendance::where('user_id',$id)->update([
-          'attendance_status'=>3
-        ]);
-         LeaveRequest::where('user_id',$id)->update([
-          'leave_status'=>2,
-          'respond_status'=>1,
-          ]);
+            Attendance::where('user_id',$id)->update([
+              'attendance_status'=>3
+            ]);
+            LeaveRequest::where('user_id',$id)->update([
+              'leave_status'=>2,
+              'respond_status'=>1,
+              ]);
          return redirect()->back();
          }
     }
     public function permissionDeny($id,$leave_type_id)
     {   
         if($leave_type_id == 1){
-        Attendance::where('user_id',$id)->update([
-          'attendance_status'=>4
-         ]);
-         LeaveRequest::where('user_id',$id)->update([
-          'permission_status'=>2,
-           'respond_status'=>1,
-         ]);   
+              Attendance::where('user_id',$id)->update([
+                'attendance_status'=>4
+              ]);
+              LeaveRequest::where('user_id',$id)->update([
+                'permission_status'=>2,
+                'respond_status'=>1,
+              ]);   
          return redirect()->back();
          }else{
-         Attendance::where('user_id',$id)->update([
-         'attendance_status'=>4
-         ]);
-         LeaveRequest::where('user_id',$id)->update([
-         'leave_status'=>3,
-         'respond_status'=>1,
-         ]);
+              Attendance::where('user_id',$id)->update([
+              'attendance_status'=>4
+              ]);
+              LeaveRequest::where('user_id',$id)->update([
+              'leave_status'=>3,
+              'respond_status'=>1,
+              ]);
          return redirect()->back();
         }
     } 
-
 
 }
