@@ -88,7 +88,7 @@ class AttendanceController extends Controller
                 $query->where('team_id', '=', $team);
             });
         }
-        $List = $attendanceList->get();
+        $List = $attendanceList->latest()->get();
         $column = array();
         foreach ($List as $value) {
 
@@ -101,6 +101,9 @@ class AttendanceController extends Controller
              $status = "Present";
             }elseif($value->attendance == 0 && $value->in_active == 1){
                 $status = "Permission";
+            }
+            elseif($value->attendance == 0 && $value->in_active == 2){
+                $status = "Leave Permission";
             }else{
                 $status = "Absent"; 
             } 
@@ -124,7 +127,7 @@ class AttendanceController extends Controller
      */
     public function absentList()
     {
-        $teamList = $this->teammodel->get();
+        $teamList = $this->teammodel->latest()->get();
         return view('admin/absent/absent-list', compact('teamList'));
     }
 
@@ -179,7 +182,7 @@ class AttendanceController extends Controller
                 $query->where('team_id', '=', $team);
             });
         }
-        $List = $absentList->get();
+        $List = $absentList->latest()->get();
         $column = array();
         foreach ($List as $value) {
 
@@ -225,7 +228,7 @@ class AttendanceController extends Controller
      */
     public function permissionList()
     {
-        $teamList = $this->teammodel->get();
+        $teamList = $this->teammodel->latest()->get();
         return view('admin/absent/permission-list', compact('teamList'));
     }
 
@@ -276,10 +279,10 @@ class AttendanceController extends Controller
                 $query->where('team_id', '=', $team);
             });
         }
-        $List = $permissionList->get();
+        $List = $permissionList->latest()->get();
         $column = array();
         foreach ($List as $value) {
-             if($value->leave_status == null)
+             if($value->permission_status != null )
              {
             switch ($value->permission_status) {
                 case ($value->permission_status == 0):
@@ -293,32 +296,35 @@ class AttendanceController extends Controller
                 case ($value->permission_status == 2):
                     $leaveStatus = 'Permission Rejected';
                     break;
-                    
+
+                case ($value->permission_status == 3):
+                        $leaveStatus = 'Permission Deny';
+                        break;   
                 default:
-                    $leaveStatus = 'Permission Denied';
+                    $leaveStatus = 'Permission ';
             }
 
         }else{
 
             switch ($value->leave_status) {
                 case ($value->leave_status == 0):
-                    $leaveStatus = 'Leave received';
+                    $leaveStatus = 'Received';
                     break;
 
                 case ($value->leave_status == 1):
-                    $leaveStatus = 'Leave Pending';
+                    $leaveStatus = 'Pending';
                     break;
 
                 case ($value->leave_status == 2):
-                    $leaveStatus = 'Leave Approved';
+                    $leaveStatus = 'Approved';
                     break;
 
                 case ($value->leave_status == 3):
-                     $leaveStatus = 'Leave Rejected';
+                     $leaveStatus = 'Rejected';
                       break;
 
                 default:
-                    $leaveStatus = 'Leave Denied';
+                    $leaveStatus = 'Denied';
             }
         }
             $col['id'] = $offset + 1;

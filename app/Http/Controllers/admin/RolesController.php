@@ -27,7 +27,7 @@ use  App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use App\Helper\ImageUpload;
 use Illuminate\Support\Facades\Session;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class RolesController extends Controller
 {

@@ -8,58 +8,133 @@ use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 
 class PermissionController extends Controller
 {
     public function permissionDetail()
     {
-        $PermissionLists = LeaveRequest::where('respond_status', '=', 0)->with('leaverequestUser', 'leaverequestUser.roleToUser','leaverequestUser.teamToUser','permissionType')->latest()->get();
+        $PermissionLists = LeaveRequest::where('respond_status', '=', 0)->with('leaverequestUser','leaverequestUser.roleToUser','leaverequestUser.teamToUser','permissionType')->latest()->get();
         return view('admin/employee/permission-detail', compact('PermissionLists'));
     }
 
-    public function permissionApprovel($id,$leave_type_id)
+    public function permissionApprovel(Request $request)
     {   
-      if($leave_type_id == 1){
-            Attendance::where('user_id',$id)->update([
-                'attendance_status'=>2
-            ]);
-            LeaveRequest::where('user_id',$id)->update([
-                'permission_status'=>1,
-                'respond_status'=>1,
-            ]);
-        return redirect()->back();
-        }else{
-            Attendance::where('user_id',$id)->update([
-              'attendance_status'=>3
-            ]);
-            LeaveRequest::where('user_id',$id)->update([
-              'leave_status'=>2,
-              'respond_status'=>1,
-              ]);
-         return redirect()->back();
-         }
+      $date = Carbon::now();
+      $date = $date->format("Y-m-d");
+      if($request->type==1){
+        $data =  array(
+          'user_id' =>$request->user_id,
+          'attendance_status'=>1,
+          'date' => $date
+        );
+        $verify =  Attendance::where([
+          ['user_id','=',$request->user_id],
+          ['attendance_status','=',1],
+          ['attendance','=',0],
+          ['date','=',$date]
+          ]);
+        $verifyUser = $verify->first();
+        if(isset($verifyUser)){
+          $verifyUser->update(['attendance_status' => 1]);
+          }else{
+            Attendance::create($data);
+          }
+          LeaveRequest::where([
+          ['id',$request->id],['user_id',$request->user_id]
+          ])->update([
+            'permission_status'=>1,
+            'respond_status'=>1,
+        ]);
+    
+      }else{
+        $data =  array(
+          'user_id' =>$request->user_id,
+          'attendance_status'=>1,
+          'in_active'=>2,
+          'date' => $date
+        );
+        $verify =  Attendance::where([
+          ['user_id','=',$request->user_id],
+          ['attendance_status','=',1],
+          ['attendance','=',0],
+          ['in_active','=',2],
+          ['date','=',$date]
+          ]);
+        $verifyUser = $verify->first();
+        if(isset($verifyUser)){
+          $verifyUser->update(['attendance_status' => 2]);
+          }else{
+            Attendance::create($data);
+          }
+        LeaveRequest::where([
+          ['id',$request->id],['user_id',$request->user_id]
+          ])->update([
+            'leave_status'=>2,
+            'respond_status'=>1,
+        ]);
+    
+     }
     }
-    public function permissionDeny($id,$leave_type_id)
+    public function permissionDeny(Request $request)
     {   
-        if($leave_type_id == 1){
-              Attendance::where('user_id',$id)->update([
-                'attendance_status'=>4
-              ]);
-              LeaveRequest::where('user_id',$id)->update([
-                'permission_status'=>2,
-                'respond_status'=>1,
-              ]);   
-         return redirect()->back();
-         }else{
-              Attendance::where('user_id',$id)->update([
-              'attendance_status'=>4
-              ]);
-              LeaveRequest::where('user_id',$id)->update([
-              'leave_status'=>3,
-              'respond_status'=>1,
-              ]);
-         return redirect()->back();
+      $date = Carbon::now();
+      $date = $date->format("Y-m-d");
+      if($request->type==1){
+        $data =  array(
+          'user_id' =>$request->user_id,
+          'attendance_status'=>4,
+          'date' => $date
+        );
+        $verify =  Attendance::where([
+          ['user_id','=',$request->user_id],
+          ['attendance_status','=',1],
+          ['attendance','=',0],
+          ['date','=',$date]
+          ]);
+        $verifyUser = $verify->first();
+        if(isset($verifyUser)){
+          $verifyUser->update(['attendance_status' => 4]);
+          }else{
+            Attendance::create($data);
+          }
+          LeaveRequest::where([
+            ['id',$request->id],['user_id',$request->user_id]
+            ])->update([
+        'permission_status'=>2,
+        'respond_status'=>1,
+        ]);
+    
+    }else{
+      $data =  array(
+        'user_id' =>$request->user_id,
+        'attendance_status'=>4,
+        'date' => $date
+      );
+      $verify =  Attendance::where([
+        ['user_id','=',$request->user_id],
+        ['attendance_status','=',1],
+        ['attendance','=',0],
+        ['in_active','=',2],
+        ['date','=',$date]
+        ]);
+
+      $verifyUser = $verify->first();
+
+      if(isset($verifyUser)){
+        $verifyUser->update(['attendance_status' => 4]);
+        }else{
+          Attendance::create($data);
         }
-    } 
+        LeaveRequest::where([
+          ['id',$request->id],['user_id',$request->user_id]
+          ])->update([
+      'leave_status'=>3,
+      'respond_status'=>1,
+    ]);
+
+  }
+  } 
 
 }

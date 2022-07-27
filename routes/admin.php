@@ -59,8 +59,8 @@ Route::middleware('auth')->group(function () {
 
 
         Route::get('/permission', [PermissionController::class, 'permissionDetail'])->name('permission-detail');
-        Route::get('permission-approvel/{id}/{leave_type_id}',[PermissionController::class, 'permissionApprovel'])->name('permission-approvrl');
-        Route::get('permission-deny/{id}/{leave_type_id}',[PermissionController::class, 'permissionDeny'])->name('permission-deny');
+        Route::post('permission-approvel/',[PermissionController::class, 'permissionApprovel'])->name('permission-approvrl');
+        Route::post('permission-deny/',[PermissionController::class, 'permissionDeny'])->name('permission-deny');
 
 
 

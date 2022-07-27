@@ -35,8 +35,9 @@ class LoginController extends Controller
 
     public function loginEmployee(Request $request)
     {
+        
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            if (Auth::user()->role_id != 1) {
+            if (Hash::check($request->password, Auth::user()->password)) {
                 $token = Auth::user()->createToken('MyApp')->accessToken;        //         
                         $role_id= Auth::user()->role_id;
                         $permission = RolehasPermission::where('role_id',$role_id)->get();
@@ -46,35 +47,15 @@ class LoginController extends Controller
                         $data['users'] = Auth::user();
                         $data['permission_list'] = $permission;
                         return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$data]);
-                }else{
-                Auth::logout();
-                $response = ["message" => "user not allowed"];
+    
+            }else{
+                $response = ["message" => "Password Mismatch"];
                 return response($response, 422);
             }
+        
         }else{
             return response()->json(['status'=>false,'message'=>'Login failed']);
         }
-        // $user = User::where('email', $request->email)->first();
-        // if ($user) {
-        //     if (Hash::check($request->password, $user->password)) {
-        //         DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
-        //         $token = $user->createToken('MyApp')->accessToken;
-        //         $users = User::where('email',$request->email)->with('userDetail')->first();
-        //         $role_id= $users->role_id;
-        //         $permission = RolehasPermission::where('role_id',$role_id)->get();
-        //         $data = array();
-        //         $data['token'] = $token;
-        //         $data['users'] = $users;
-        //         $data['permission_list'] = $permission;
-        //         return response()->json(['status'=>true,'message'=>'Login Successfull','data'=>$data]);
-        //     } else {
-        //         $response = ["message" => "Password mismatch"];
-        //         return response($response, 422);
-        //     }
-        // } else {
-        //     $response = ["message" =>'User does not exist'];
-        //     return response($response, 422);
-        // }
     }
 
 }
