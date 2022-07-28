@@ -138,7 +138,7 @@ class AttendanceController extends Controller
                 'user_id'=>$userId,
                 'attendance'=>$attendanceValue,
                 'date'=>$date,
-                'attendance_status'=>2,
+                'attendance_status'=>1,
                 'in_active'=>$request->inactive_type,
                 'status'=> 1
             ]);
@@ -194,11 +194,11 @@ class AttendanceController extends Controller
         //PERMISSION WILL BE ACCEPTED WITHOUT SUPERIORS ACCEPTION INCASE PERMISSION HOUR IS 1
 
         else if($attendanceValue == 0 && $leaveRequest=='Permission'){
-                $this->attendance->create([
+            $this->attendance->create([
                 'user_id'=>$userId,
                 'attendance'=>$attendanceValue,
                 'date'=>$date,
-                'attendance_status'=>2,
+                'attendance_status'=>1,
                 'in_active'=>$request->inactive_type,
                 'status'=> 1
             ]);
@@ -209,7 +209,7 @@ class AttendanceController extends Controller
                     'user_id' =>$userId,
                     'description'=>$reason, 
                     'permission_status'=>1,
-                    'leave_status'=>2,
+                    'leave_status'=>null,
                     'permission_hours_from'=>$request->permission_hours_from,
                     'permission_hours_to'=>$request->permission_hours_to,
                     'start_date'=>$today_date,
@@ -234,7 +234,7 @@ class AttendanceController extends Controller
                 'user_id' =>$userId,
                 'description'=>$reason, 
                 'permission_status'=>0,
-                'leave_status'=>1,
+                'leave_status'=>null,
                 'permission_hours_from'=>$request->permission_hours_from,
                 'permission_hours_to'=>$request->permission_hours_to,
                 'start_date'=>$today_date,
@@ -291,7 +291,7 @@ class AttendanceController extends Controller
                 'user_id' =>$userId,
                 'description'=>$reason, 
                 'permission_status'=>1,
-                'leave_status'=>2,
+                'leave_status'=>null,
                 'permission_hours_from'=>$request->permission_hours_from,
                 'permission_hours_to'=>$request->permission_hours_to,
                 'start_date'=>$today_date,

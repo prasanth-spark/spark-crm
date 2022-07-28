@@ -36,7 +36,7 @@
             </tr>
         </thead>
       <tbody>
-      @foreach($PermissionLists as $permission)
+      @foreach($PermissionLists as $key => $permission)
                 <tr>  
                     <td>{{$loop->index+1}}</td>
                     <td>{{$permission->leaverequestUser->name}}</td>
@@ -48,11 +48,14 @@
                     <td>{{date('d-m-Y', strtotime($permission->end_date));}}</td>
                     <td style="text-align: center; vertical-align: middle;">{{$permission->leave_counts == null ? '-' : $permission->leave_counts}}</td>
                     <td style="text-align: center; vertical-align: middle;">{{$permission->permissionType == null ? '-' : $permission->permissionType->permission_hours}}</td>
-                    <td>
-                   <div class="flex justify-center items-center"> 
-                   <a href={{"permission-approvel/".$permission->leaverequestUser['id'].'/'.$permission->leave_type_id}}><img src="{{asset('dist/images/sparkout/check-circle (2).svg')}}" alt=""></a>
-                   <a href={{"permission-deny/".$permission->leaverequestUser['id'].'/'.$permission->leave_type_id}}><img src="{{asset('dist/images/sparkout/x-circle.svg')}}" alt=""></a>
-                   </div>
+                    <input type="hidden"  name="user_id" id="user_id_{{$key}}" value="{{$permission->user_id}}">                  
+                   <input type="hidden"  name="type" id="type_id_{{$key}}" value="{{$permission->leave_type_id}}">
+                   <input type="hidden"  name="id" id="id_{{$key}}" value="{{$permission->id}}">
+                   <td>
+                   <div class="flex justify-center items-center">                   
+                   <button type="button" onclick="approve('{{$key}}')"><img src="{{asset('dist/images/sparkout/check-circle (2).svg')}}" alt=""></button>
+                   <button type="button" onclick="deny('{{$key}}')"><img src="{{asset('dist/images/sparkout/x-circle.svg')}}" alt=""></button>
+                </div>
                 </td>
                 </tr>
         @endforeach
@@ -71,7 +74,52 @@
             ]
         });
     });
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    function approve(key) {
+        var id = $('#id_'+key).val();
+        var user_id = $('#user_id_'+key).val();
+        var type = $('#type_id_'+key).val();
+        var url = "{{ url('/')}}/admin/permission-approvel";
+        $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          id:id,
+          user_id:user_id,
+          type:type,
+        },
+        success: function(response) {
+            window.location = "{{ url('/')}}/admin/permission";
+        },
+        error: function(error) {
+          alert("Error");
+        },
+      });
+   }
+   function deny(key) {
+    var id = $('#id_'+key).val();
+    var user_id = $('#user_id_'+key).val();
+    var type = $('#type_id_'+key).val();
+    var url = "{{ url('/')}}/admin/permission-deny";
+        $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          id:id,
+          user_id:user_id,
+          type:type,
+        },
+        success: function(response) {
+            window.location = "{{ url('/')}}/admin/permission";
+        },
+        error: function(error) {
+          alert("Error");
+        },
+      });
+   }
 </script>
-
-
 @endsection

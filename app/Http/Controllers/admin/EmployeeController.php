@@ -300,7 +300,7 @@ class EmployeeController extends Controller
             }
         );
 
-        $employeeLists = $employeeList->get();
+        $employeeLists = $employeeList->latest()->get();
 
         $column = array();
         $employeeListData = [];
