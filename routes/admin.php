@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
 
 
         Route::get('/permission', [PermissionController::class, 'permissionDetail'])->name('permission-detail');
-        Route::post('permission-approvel/',[PermissionController::class, 'permissionApprovel'])->name('permission-approvrl');
+        Route::post('permission-approvel/',[PermissionController::class, 'permissionApprovel'])->name('permission-approvel');
         Route::post('permission-deny/',[PermissionController::class, 'permissionDeny'])->name('permission-deny');
 
 

@@ -65,15 +65,21 @@ class EmployeeController extends Controller
      */
     public function employeeAdd(EmployeeValidationRequest $request)
     {
-            if($request->team_name == null)
-            {
-             if($request->role == 3||$request->role == 4||$request->role == 5)
-             {
-                $request->team_name = "10";
-             }else{
-                $request->team_name;
-             }
-            }
+        if($request->team_name == null)
+        {
+         if($request->role == 3||$request->role == 4||$request->role == 5)
+         {
+            $request->team_name = "10";
+
+         }elseif($request->role == 2){
+
+            $request->team_name = "1";
+         } 
+         else{
+            $request->team_name;
+         }
+        }
+
         $userCredentials = $this->user->create([
             'name' => $request->name,
             'email' => $request->email,

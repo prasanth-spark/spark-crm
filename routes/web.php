@@ -8,6 +8,8 @@ use App\Http\Controllers\employee\UserProfileController;
 use App\Http\Controllers\employee\TeamTaskController;
 use App\Http\Controllers\employee\TeamAttendanceController;
 use App\Http\Controllers\employee\ProjectAssignController;
+use App\Http\Controllers\employee\EmployeeController;
+use App\Http\Controllers\employee\PermissionController;
 
 
 
@@ -95,5 +97,19 @@ use App\Http\Controllers\employee\ProjectAssignController;
             Route::get('edit-project/{project}',[ProjectAssignController::class, 'editProject'])->name('edit-project');
             Route::post('update-project/{project}',[ProjectAssignController::class, 'updateProject'])->name('update-project');
             Route::Post('delete-project/{project}',[ProjectAssignController::class, 'deleteProject'])->name('delete-project');
-      
+           
+           
+            Route::get('/employeelist', [EmployeeController::class, 'employeeList'])->name('employeelist');
+            Route::get('/employee-pagination', [EmployeeController::class, 'employeeListPagination'])->name('employee-pagination');
+            Route::get('/employeeform', [EmployeeController::class, 'employeeForm'])->name('employeeform');
+            Route::post('/employeeadd', [EmployeeController::class, 'employeeAdd'])->name('employeeadd');
+            Route::get('/employee-details/{id}', [EmployeeController::class, 'employeeDetails'])->name('employee-details');
+            Route::get('/employee-edit/{id}', [EmployeeController::class, 'employeeEdit'])->name('employee-edit');
+            Route::post('/employeeupdate', [EmployeeController::class, 'employeeUpdate'])->name('employeeupdate');
+            Route::post('/employeedelete', [EmployeeController::class, 'employeeDelete'])->name('employeedelete');
+
+            Route::get('/permission', [PermissionController::class, 'permissionDetail'])->name('permission');
+            Route::post('permission-approvel/',[PermissionController::class, 'permissionApprovel'])->name('permission-approvel');
+            Route::post('permission-deny/',[PermissionController::class, 'permissionDeny'])->name('permission-deny');
+    
         });

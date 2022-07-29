@@ -36,6 +36,16 @@ class PermissionSeeder extends Seeder
                 ['name' => 'project-add', 'menu_name' => 'project-add'],
                 ['name' => 'project-edit', 'menu_name' => 'project-edit'],
 
+                ['name' => 'employee-list', 'menu_name' => 'employee-list'],
+                ['name' => 'employee-add', 'menu_name' => 'employee-add'],
+                ['name' => 'employee-detail', 'menu_name' => 'employee-detail'],
+                ['name' => 'employee-edit', 'menu_name' => 'employee-edit'],
+                ['name' => 'employee-delete', 'menu_name' => 'employee-delete'],
+
+                ['name' => 'permission-detail', 'menu_name' => 'permission-detail'],
+                ['name' => 'permission-approvel', 'menu_name' => 'permission-approvel'],
+                ['name' => 'permission-deny', 'menu_name' => 'permission-deny'],
+
             ]
         ]
     ];
