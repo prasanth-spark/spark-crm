@@ -31,8 +31,8 @@ class AttendanceController extends Controller
         $this->middleware('permission:permission-response', ['only' => ['permissionResponse','permissionStatus']]);
         $this->middleware('permission:attendance-show', ['only' => ['attendanceList']]);
     }
-    public function attendanceModule(Request $request){
-
+    public function attendanceModule(Request $request)
+    {
         $userId= auth()->user()->id;
         $user=$this->user->find($userId); 
         $date = Carbon::now();

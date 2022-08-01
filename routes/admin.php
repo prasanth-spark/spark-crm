@@ -63,8 +63,6 @@ Route::middleware('auth')->group(function () {
         Route::post('permission-deny/',[PermissionController::class, 'permissionDeny'])->name('permission-deny');
 
 
-
-
         //Admin add Employee in Excel File
         Route::get('/file-upload', [EmployeeController::class, 'fileUpload'])->name('file-upload');
         Route::post('/employee-list-import', [EmployeeController::class, 'employeeListImport'])->name('employee-list-import');
@@ -82,11 +80,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/absent-list-pagination', [AttendanceController::class, 'absentListPagination'])->name('absent-list-pagination');
 
 
-
         //Permission List
         Route::get('/permission-list', [AttendanceController::class, 'permissionList'])->name('permission-list');
         Route::get('/permission-list-pagination', [AttendanceController::class, 'permissionListPagination'])->name('permission-list-pagination');
-
 
 
         //Task List
@@ -94,6 +90,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/task-details/{taskList}', [TaskController::class, 'taskDetails'])->name('task-details');
         Route::get('/task-list-pagination', [TaskController::class, 'taskListPagination'])->name('task-list-pagination');
 
+        
         //Language List
         Route::get('/language-list', [LanguageController::class, 'languageList'])->name('language-list');
         Route::get('/language-add', [LanguageController::class, 'addLanguageForm'])->name('add-language');
@@ -102,8 +99,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/language-update', [LanguageController::class, 'updateLanguage'])->name('language-update');
         Route::post('/language-delete', [LanguageController::class, 'deleteLanguage'])->name('language-delete');
         Route::get('/language-list-pagination', [LanguageController::class, 'languageListPagination'])->name('language-list-pagination');
-
-
 
 
 });

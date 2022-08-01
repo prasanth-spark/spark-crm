@@ -112,4 +112,13 @@ use App\Http\Controllers\employee\PermissionController;
             Route::post('permission-approvel/',[PermissionController::class, 'permissionApprovel'])->name('permission-approvel');
             Route::post('permission-deny/',[PermissionController::class, 'permissionDeny'])->name('permission-deny');
     
+            Route::get('/attendance-list', [EmployeeController::class, 'attendanceList'])->name('attendance-list');
+            Route::get('/attendance-list-pagination', [EmployeeController::class, 'attendanceListPagination'])->name('attendance-list-pagination');
+    
+            Route::get('/absent-list', [EmployeeController::class, 'absentList'])->name('absent-list');
+            Route::get('/absent-list-pagination', [EmployeeController::class, 'absentListPagination'])->name('absent-list-pagination');
+    
+            Route::get('/permission-list', [EmployeeController::class, 'permissionList'])->name('permission-list');
+            Route::get('/permission-list-pagination', [EmployeeController::class, 'permissionListPagination'])->name('permission-list-pagination');
+         
         });
