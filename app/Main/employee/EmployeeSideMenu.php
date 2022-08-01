@@ -116,6 +116,38 @@ class EmployeeSideMenu
                          ],    
                    ];
             }
+            if ($user->hasPermissionTo('employee-list')) 
+             {
+            $permission[] = [
+                'Employee Management' => [
+                'icon' => 'user',
+                'title' => 'Employee Management',
+                'sub_menu' => [
+                    'Employee List' => [
+                        'icon' => '',
+                        'route_name' => 'employeelist',
+                        'params' => [
+                            'layout' => 'side-menu',
+                        ],
+                        'title' => 'Employee List'
+                    ],
+                ]
+            ],    
+            ];
+        }
+        if ($user->hasPermissionTo('permission-detail')) {
+            $permission[] = [
+
+                'Team Task' => [
+                    'icon' => 'twitch',
+                    'route_name' => 'permission',
+                    'title' => 'Permission Detail',
+                    'params' => [
+                        'layout' => 'side-menu',
+                    ],
+                ],
+            ];
+        }
             $permissions = Arr::collapse($permission);
             return $permissions;
 
