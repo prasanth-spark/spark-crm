@@ -229,7 +229,7 @@ class EmployeeController extends Controller
             'branch_name' => $request->branch_name,
             'account_type_id' => $request->account_type,
         ]);
-        return redirect('employee/employee-pagination');
+        return redirect('employee/employeelist');
     }
     public function employeeDetails($id)
     {
@@ -297,7 +297,7 @@ class EmployeeController extends Controller
             'account_type_id' => $request->account_type,
             'designation' => $request->desigination,
         ]);
-        return redirect('employee/employee-pagination');
+        return redirect('employee/employeelist');
     }
     public function employeeDelete(Request $request)
     {
