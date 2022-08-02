@@ -26,7 +26,7 @@ function attendanceFilter() {
         "lengthChange": true,
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": window.location.origin+"/employee/attendance-list-pagination",
+        "sAjaxSource": window.location.origin+"/employee/attendancelistpagination",
         "bScrollInfinite": true,
         "fnServerParams": function(aoData) {
             aoData.push({

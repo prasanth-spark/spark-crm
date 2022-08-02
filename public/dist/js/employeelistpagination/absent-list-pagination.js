@@ -26,7 +26,7 @@ function absentFilter() {
         "lengthChange": true,
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": window.location.origin+"/employee/absent-list-pagination",
+        "sAjaxSource": window.location.origin+"/employee/absentlistpagination",
         "bScrollInfinite": true,
         "fnServerParams": function(aoData) {
             aoData.push({

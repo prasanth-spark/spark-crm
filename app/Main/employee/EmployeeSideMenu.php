@@ -148,6 +148,38 @@ class EmployeeSideMenu
                 ],
             ];
         }
+            $permission[] = [
+                'Employee Attendance' => [
+                    'icon' => 'calendar',
+                    'title' => 'Employee Attendance',
+                    'sub_menu' => [
+                        'Employee List' => [
+                            'icon' => '',
+                            'route_name' => 'attendancelist',
+                            'params' => [
+                                'layout' => 'side-menu',
+                            ],
+                            'title' => 'Attendance List'
+                        ],
+                        [
+                            'icon' => '',
+                            'route_name' => 'absentlist',
+                            'params' => [
+                                'layout' => 'side-menu',
+                            ],
+                            'title' => 'Absent List'
+                        ],
+                        [
+                            'icon' => '',
+                            'route_name' => 'permissionlist',
+                            'params' => [
+                                'layout' => 'side-menu',
+                            ],
+                            'title' => 'Permission List'
+                        ],
+                    ]
+                ],  
+             ];
             $permissions = Arr::collapse($permission);
             return $permissions;
 

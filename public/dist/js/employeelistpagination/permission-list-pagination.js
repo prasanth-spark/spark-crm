@@ -26,7 +26,7 @@ function permissionFilter() {
         "lengthChange": true,
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": window.location.origin+"/employee/permission-list-pagination",
+        "sAjaxSource": window.location.origin+"/employee/permissionlistpagination",
         "bScrollInfinite": true,
         "fnServerParams": function(aoData) {
             aoData.push({
