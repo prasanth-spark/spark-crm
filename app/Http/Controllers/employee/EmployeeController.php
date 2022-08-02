@@ -48,7 +48,9 @@ class EmployeeController extends Controller
         $this->middleware('permission:employee-detail', ['only' => ['employeeDetails']]);
         $this->middleware('permission:employee-edit', ['only' => ['employeeEdit','employeeUpdate']]);
         $this->middleware('permission:employee-delete', ['only' => ['employeeDelete']]);
+        $this->middleware('permission:employee-attendance', ['only' => ['attendanceList','attendanceListPagination','absentList','absentListPagination','permissionList','permissionListPangination']]);
     }
+    
     public function employeeList()
     {
         try {

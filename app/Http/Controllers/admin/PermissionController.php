@@ -27,7 +27,8 @@ class PermissionController extends Controller
         $data =  array(
           'user_id' =>$request->user_id,
           'attendance_status'=>1,
-          'date' => $date
+          'date' => $date,
+          'status'=> 1
         );
         $verify =  Attendance::where([
           ['user_id','=',$request->user_id],
@@ -53,7 +54,8 @@ class PermissionController extends Controller
           'user_id' =>$request->user_id,
           'attendance_status'=>1,
           'in_active'=>2,
-          'date' => $date
+          'date' => $date,
+          'status'=> 1
         );
         $verify =  Attendance::where([
           ['user_id','=',$request->user_id],
@@ -85,7 +87,8 @@ class PermissionController extends Controller
         $data =  array(
           'user_id' =>$request->user_id,
           'attendance_status'=>4,
-          'date' => $date
+          'date' => $date,
+          'status'=> 1
         );
         $verify =  Attendance::where([
           ['user_id','=',$request->user_id],
@@ -110,7 +113,8 @@ class PermissionController extends Controller
       $data =  array(
         'user_id' =>$request->user_id,
         'attendance_status'=>4,
-        'date' => $date
+        'date' => $date,
+        'status'=> 1
       );
       $verify =  Attendance::where([
         ['user_id','=',$request->user_id],

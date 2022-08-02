@@ -554,7 +554,7 @@ class EmployeeController extends Controller
                     $UserDetails->$ab = $csv1[$field];
                 }
             }
-
+            
             $UserDetails->save();
         }
         return redirect()->route('file-upload');

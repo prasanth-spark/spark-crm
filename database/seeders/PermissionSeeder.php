@@ -45,7 +45,8 @@ class PermissionSeeder extends Seeder
                 ['name' => 'permission-detail', 'menu_name' => 'permission-detail'],
                 ['name' => 'permission-approvel', 'menu_name' => 'permission-approvel'],
                 ['name' => 'permission-deny', 'menu_name' => 'permission-deny'],
-
+              
+                ['name' => 'employee-attendance', 'menu_name' => 'employee-attendance'],
             ]
         ]
     ];

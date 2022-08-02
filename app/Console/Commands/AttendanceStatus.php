@@ -84,6 +84,7 @@ class AttendanceStatus extends Command
             'start_date'=>$user->start_date,
             'end_date'=>$user->end_date,
             'leave_counts'=>$user->leave_counts,
+            'respond_status'=>1
          ]);
         }
         else{

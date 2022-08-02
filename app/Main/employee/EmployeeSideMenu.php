@@ -148,6 +148,8 @@ class EmployeeSideMenu
                 ],
             ];
         }
+        if ($user->hasPermissionTo('employee-attendance')) {
+
             $permission[] = [
                 'Employee Attendance' => [
                     'icon' => 'calendar',
@@ -180,6 +182,7 @@ class EmployeeSideMenu
                     ]
                 ],  
              ];
+            }
             $permissions = Arr::collapse($permission);
             return $permissions;
 
